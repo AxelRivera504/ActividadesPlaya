@@ -556,3 +556,132 @@ BEGIN TRY
 	END CATCH
 END
 GO
+
+ --****************************************************UDP Y VISTA Encargados  *************************************************************************--
+ /*Encargados Vista*/
+ GO
+ CREATE OR ALTER VIEW Acti.VW_tbEncargados 
+ AS 
+ SELECT enca.enca_id, enca_Nombres, 
+ enca_Apellidos, enca_DNI, 
+ enca_Email, enca_Telefono, 
+ enca_Sexo, enca.esci_id, 
+ enca_FechaNac, enca_Estado, 
+ enca_UsuarioCreador,[UsuarioCreador].usua_Usuario AS enca_UsuarioCreador_Nombre, enca_FechaCreacion, 
+ enca_UsuarioModificador,[UsuarioModificador].usua_Usuario AS enca_UsuarioModificador_Nombre, enca_FechaModificacion
+ FROM Acti.tbEncargados enca INNER JOIN Acce.tbUsuarios [UsuarioCreador]
+ ON enca.enca_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
+ ON enca.enca_UsuarioModificador = [UsuarioModificador].usua_ID INNER JOIN Gral.tbEstadosCiviles [EstadoCivil]
+ ON enca.esci_id = [EstadoCivil].esci_id
+ WHERE enca_Estado = 1
+
+ /*Encargados Vista UDP*/
+ GO
+ CREATE OR ALTER PROCEDURE Acti.UDP_tbEncargados_VW
+ AS
+ BEGIN
+ SELECT * FROM Acti.VW_tbEncargados 
+ END
+
+ /*Encargados Insert*/
+ GO
+ CREATE OR ALTER PROCEDURE Acti.UDP_tbEncargados_Insertar
+ @enca_Nombre			VARCHAR(300),
+ @enca_Apellidos		VARCHAR(300),
+ @enca_DNI				CHAR(13),
+ @enca_Email			NVARCHAR(300),
+ @enca_Telefono			CHAR(8),
+ @enca_Sexo				CHAR,
+ @esci_id				INT,
+ @enca_FechaNac			DATE,
+ @enca_UsuarioCreador	INT
+ AS
+ BEGIN
+	BEGIN TRY
+			IF NOT EXISTS (SELECT enca_DNI FROM Acti.tbEncargados WHERE enca_DNI = @enca_DNI)
+				BEGIN
+					INSERT INTO Acti.tbEncargados 
+					(enca_Nombres, 
+					enca_Apellidos, enca_DNI, 
+					enca_Email, enca_Telefono, 
+					enca_Sexo, esci_id, 
+					enca_FechaNac, enca_Estado, 
+					enca_UsuarioCreador, enca_FechaCreacion, 
+					enca_UsuarioModificador, enca_FechaModificacion)
+					VALUES(@enca_Nombre,@enca_Apellidos,
+					@enca_DNI,@enca_Email,
+					@enca_Telefono,@enca_Sexo,
+					@esci_id,@enca_FechaNac,
+					1,@enca_UsuarioCreador,
+					GETDATE(),NULL,NULL)
+					SELECT 1
+				END
+				ELSE
+			BEGIN
+					SELECT 2
+				END 
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+ END
+
+ /*Encargados Update*/
+ GO
+ CREATE OR ALTER PROCEDURE Acti.UDP_tbEncargados_Update
+ @enca_id					INT,
+ @enca_Nombre				VARCHAR(300),
+ @enca_Apellidos			VARCHAR(300),
+ @enca_DNI					CHAR(13),
+ @enca_Email				NVARCHAR(300),
+ @enca_Telefono				CHAR(8),
+ @enca_Sexo					CHAR,
+ @esci_id					INT,
+ @enca_FechaNac				DATE,
+ @enca_UsuarioModificador	INT
+ AS
+ BEGIN
+	BEGIN TRY
+		IF NOT EXISTS(SELECT enca_DNI FROM Acti.tbEncargados WHERE enca_DNI = enca_DNI AND enca_id != enca_id)
+			BEGIN
+				UPDATE Acti.tbEncargados
+				SET enca_Nombres = @enca_Nombre,
+					enca_Apellidos = @enca_Apellidos,
+					enca_DNI = @enca_DNI,
+					enca_Email = @enca_Email,
+					enca_Telefono = @enca_Telefono,
+					enca_Sexo = @enca_Sexo,
+					esci_id = @esci_id,
+					enca_FechaNac = @enca_FechaNac,
+					enca_UsuarioModificador = @enca_UsuarioModificador,
+					enca_FechaModificacion = GETDATE()
+				WHERE enca_id = @enca_id
+				SELECT 1
+			END
+			BEGIN
+				SELECT 2
+			END
+	END TRY
+
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+ END
+
+ /*Encargados Delete*/
+ GO
+ CREATE OR ALTER PROCEDURE Acti.UDP_tbEncargados_Delete
+ @enca_id INT
+ AS
+ BEGIN
+	BEGIN TRY
+		UPDATE Acti.tbEncargados
+		SET enca_Estado = 0
+		WHERE enca_id = @enca_id
+		SELECT 1
+	END TRY
+
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+ END
