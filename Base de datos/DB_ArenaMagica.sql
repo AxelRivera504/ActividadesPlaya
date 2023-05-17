@@ -96,6 +96,7 @@ CREATE TABLE Acti.tbPlayas
   play_Id     INT IDENTITY(1,1), 
   play_Playa  NVARCHAR(250),
   dire_Id     INT,
+  play_ImgUrl NVARCHAR(MAX),
 
   play_Estado					INT DEFAULT 1,
   play_UsuarioCreador			INT DEFAULT 1,
@@ -154,11 +155,12 @@ GO
 
 CREATE TABLE Acti.tbActividades 
 (
-   acti_Id     INT IDENTITY(1,1),
-   acti_Nombre  NVARCHAR(250),
-   acti_Cupo    INT,
-   acti_Precio  DECIMAL(8,2),
-   play_Id      INT,
+   acti_Id						INT IDENTITY(1,1),
+   acti_Nombre					NVARCHAR(250),
+   acti_PersActual				INT,
+   acti_Cupo					INT,
+   acti_Precio					DECIMAL(8,2),
+   play_Id						INT,
    
    acti_Estado					INT DEFAULT 1,
    acti_UsuarioCreador			INT DEFAULT 1,
@@ -384,6 +386,5 @@ CREATE TABLE Acce.tbUsuarios(
 
 	CONSTRAINT PK_Acce_tbUsuarios_usua_ID PRIMARY KEY (usua_ID), 
 	CONSTRAINT UQ_Acce_tbUsuarios_usua_Usuario UNIQUE (usua_Usuario),
-    
 )
 GO
