@@ -362,7 +362,7 @@ SELECT			play_id,
 				play_FechaCreacion,
 				play_UsuarioModificador,
 				play_FechaModificacion
-FROM			Gral.tbPlayas t1
+FROM			Acti.tbPlayas t1
 INNER JOIN		Gral.tbDirecciones t2
 ON				t1.dire_id = t2.dire_id
 INNER JOIN		Gral.tbMunicipios t3
