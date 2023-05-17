@@ -43,9 +43,9 @@ GO
 
 --CREACION DE TABLA tbMunicipios
 CREATE TABLE Gral.tbMunicipios(
-	dept_id						CHAR(2),
 	muni_id						CHAR(4),
 	muni_Descripcion			NVARCHAR(200),
+	dept_id						CHAR(2),
 	muni_Estado					INT DEFAULT 1,
 	muni_UsuarioCreador			INT DEFAULT 1,
 	muni_FechaCreacion			DATETIME DEFAULT GETDATE(),

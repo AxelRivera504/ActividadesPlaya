@@ -616,11 +616,18 @@ GO
 					GETDATE(),NULL,NULL)
 					SELECT 1
 				END
-				ELSE
-			BEGIN
-					SELECT 2
-				END 
-	END TRY
+				ELSE IF EXISTS (SELECT enca_DNI FROM Acti.tbEncargados WHERE enca_DNI = @enca_DNI AND enca_Estado = 0)
+						BEGIN
+							UPDATE	Acti.tbEncargados
+							SET enca_Estado = 1
+							WHERE enca_DNI = @enca_DNI
+							SELECT 1
+						END
+				ELSE 
+					BEGIN
+						SELECT 1
+					END
+	END TRY	
 	BEGIN CATCH
 		SELECT 0
 	END CATCH
@@ -689,7 +696,17 @@ GO
   --****************************************************//////UDP Y VISTA Encargados  *************************************************************************--
 
   --****************************************************UDP Y VISTA Equipos  *************************************************************************--
-  --GO
-  --CREATE OR ALTER VIEW Acti.VW_tbEquipos
+  GO
+  CREATE OR ALTER VIEW Acti.VW_tbEquipos
+  AS
+  SELECT equi_Id, equi_Descripcion, 
+  equi_UsoActual, equi_UsoLimite, 
+  equi_Estado, equi_UsuarioCreador,[UsuarioCreador].usua_Usuario AS equi_UsuarioCreador_Nombre, 
+  equi_FechaCreacion, equi_UsuarioModificador,[UsuarioModificador].usua_Usuario AS equi_UsuarioModificador_Nombre, 
+  equi_FechaModificacion
+  FROM Acti.tbEquipos equi INNER JOIN Acce.tbUsuarios [UsuarioCreador]
+  ON equi.equi_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
+  ON equi.equi_UsuarioModificador = [UsuarioModificador].usua_ID
+  WHERE equi_Estado = 0
 	
   --****************************************************//////UDP Y VISTA Equipos  *************************************************************************--
