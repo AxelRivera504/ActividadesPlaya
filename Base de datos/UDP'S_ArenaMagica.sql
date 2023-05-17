@@ -565,7 +565,7 @@ GO
  SELECT enca.enca_id, enca_Nombres, 
  enca_Apellidos, enca_DNI, 
  enca_Email, enca_Telefono, 
- enca_Sexo, enca.esci_id, 
+ enca_Sexo, enca.esci_id,[EstadoCivil].esci_Descripcion, 
  enca_FechaNac, enca_Estado, 
  enca_UsuarioCreador,[UsuarioCreador].usua_Usuario AS enca_UsuarioCreador_Nombre, enca_FechaCreacion, 
  enca_UsuarioModificador,[UsuarioModificador].usua_Usuario AS enca_UsuarioModificador_Nombre, enca_FechaModificacion
@@ -685,3 +685,11 @@ GO
 		SELECT 0
 	END CATCH
  END
+
+  --****************************************************//////UDP Y VISTA Encargados  *************************************************************************--
+
+  --****************************************************UDP Y VISTA Equipos  *************************************************************************--
+  --GO
+  --CREATE OR ALTER VIEW Acti.VW_tbEquipos
+	
+  --****************************************************//////UDP Y VISTA Equipos  *************************************************************************--
