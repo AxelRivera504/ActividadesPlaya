@@ -94,6 +94,7 @@ CREATE TABLE Gral.tbPlayas
   play_Id     INT, 
   play_Playa  NVARCHAR(250),
   dire_Id     INT,
+  play_ImgUrl NVARCHAR(MAX),
 
   play_Estado					INT DEFAULT 1,
   play_UsuarioCreador			INT DEFAULT 1,
@@ -382,6 +383,5 @@ CREATE TABLE Acce.tbUsuarios(
 
 	CONSTRAINT PK_Acce_tbUsuarios_usua_ID PRIMARY KEY (usua_ID), 
 	CONSTRAINT UQ_Acce_tbUsuarios_usua_Usuario UNIQUE (usua_Usuario),
-    
 )
 GO
