@@ -153,11 +153,12 @@ GO
 
 CREATE TABLE Acti.tbActividades 
 (
-   acti_Id     INT IDENTITY(1,1),
-   acti_Nombre  NVARCHAR(250),
-   acti_Cupo    INT,
-   acti_Precio  DECIMAL(8,2),
-   play_Id      INT,
+   acti_Id						INT IDENTITY(1,1),
+   acti_Nombre					NVARCHAR(250),
+   acti_PersActual				INT,
+   acti_Cupo					INT,
+   acti_Precio					DECIMAL(8,2),
+   play_Id						INT,
    
    acti_Estado					INT DEFAULT 1,
    acti_UsuarioCreador			INT DEFAULT 1,

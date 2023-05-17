@@ -766,8 +766,17 @@ GO
 		IF NOT EXISTS(SELECT equi_Descripcion FROM Acti.tbEquipos WHERE equi_Descripcion = @equi_Descripcion AND equi_Id != @equi_id)
 			BEGIN
 				UPDATE Acti.tbEquipos
-				SET equi_Descripcion = @equi_Descripcio
+				SET equi_Descripcion = @equi_Descripcion,
+					equi_UsoLimite = @equi_UsoLimite,
+					equi_FechaModificacion = GETDATE(),
+					equi_UsuarioModificador = @equi_UsuarioModificador
+				WHERE equi_Id = @equi_id
+				SELECT 1
 			END
+			ELSE
+				BEGIN
+					SELECT 2
+				END
 	END TRY
 
 	BEGIN CATCH
@@ -775,5 +784,38 @@ GO
 	END CATCH
   END
  
+ /*Equipos Delete*/
+ GO
+ CREATE OR ALTER PROCEDURE Acti.UDP_tbEquipos_Delete
+ @equi_Id INT
+ AS
+ BEGIN 
+	BEGIN TRY
+		UPDATE Acti.tbEquipos
+		SET equi_Estado = 0
+		WHERE equi_Id = @equi_Id
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+ END
+
 	
-  --****************************************************//////UDP Y VISTA Equipos  *************************************************************************--
+  --******************* *********************************//////UDP Y VISTA Equipos  *************************************************************************--
+
+    --******************* ********************************UDP Y VISTA Actividades  *************************************************************************--
+	/*Vista Actividades*/
+	GO
+	CREATE OR ALTER VIEW Acti.VW_tbActividades
+	AS
+	SELECT acti_Id, acti_Nombre, 
+	acti_PersActual, acti_Cupo, 
+	acti_Precio, play_Id, 
+	acti_Estado, acti_UsuarioCreador,[UsuarioCreador].usua_Usuario AS acti_UsuarioCreador_Nombre, 
+	acti_FechaCreacion, acti_UsuarioModificador,[UsuarioModificador].usua_Usuario AS acti_UsuarioModificador_Nombre, 
+	acti_FechaModificacion
+	FROM Acti.tbActividades	acti INNER JOIN Acce.tbUsuarios [UsuarioCreador]
+	ON acti.acti_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador] 
+	ON acti.acti_UsuarioModificador = [UsuarioModificador].usua_ID
+	WHERE acti_Estado = 1
+	--******************* ********************************////UDP Y VISTA Actividades  *************************************************************************--
