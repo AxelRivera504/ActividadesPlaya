@@ -215,6 +215,7 @@ CREATE TABLE Acti.tbEquipos
 (
   equi_Id                       INT IDENTITY(1,1),
   equi_Descripcion              NVARCHAR(250),
+  equi_UsoActual				INT,
   equi_UsoLimite                INT,
   equi_Estado                   INT,
 
