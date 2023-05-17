@@ -818,4 +818,9 @@ GO
 	ON acti.acti_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador] 
 	ON acti.acti_UsuarioModificador = [UsuarioModificador].usua_ID
 	WHERE acti_Estado = 1
+
+	--/*Vista Actividades UDP*/
+	--GO
+	--CREATE OR ALTER VIEW Acti.UDP_tbActividades_VW
+
 	--******************* ********************************////UDP Y VISTA Actividades  *************************************************************************--
