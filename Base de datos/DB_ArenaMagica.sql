@@ -17,13 +17,13 @@ go
 CREATE SCHEMA Acti
 
 CREATE TABLE Gral.tbEstadosCiviles(
-	esci_id					INT IDENTITY(1,1),
-	esci_Descripcion			VARCHAR(200),
+	esci_id					CHAR(1),
+	esci_Descripcion	    VARCHAR(200),
 	esci_Estado				INT DEFAULT (1),
 	esci_UsuarioCreador		INT DEFAULT 1,
 	esci_FechaCreacion		DATETIME DEFAULT GETDATE(),
 	esci_UsuarioModificador	INT,
-	esci_FechaModificacion	DATETIME,
+	esci_FechaModificacion	DATETIME
 	CONSTRAINT PK_gral_tbEstadosCiviles_estciv_Id PRIMARY KEY (esci_id)
 )
 GO
@@ -74,7 +74,7 @@ CREATE TABLE Gral.tbMetodosPago(
 GO
 
 CREATE TABLE Gral.tbDirecciones(
-    dire_Id                     INT, 
+    dire_Id                     INT IDENTITY(1,1), 
     dire_DireccionExacta        NVARCHAR(MAX),
 	muni_Id                     CHAR(4),
 
@@ -91,9 +91,9 @@ CREATE TABLE Gral.tbDirecciones(
 )
 GO
 
-CREATE TABLE Gral.tbPlayas
+CREATE TABLE Acti.tbPlayas
 (
-  play_Id     INT, 
+  play_Id     INT IDENTITY(1,1), 
   play_Playa  NVARCHAR(250),
   dire_Id     INT,
 
@@ -118,7 +118,7 @@ CREATE TABLE Acti.tbEncargados
 	enca_Email					NVARCHAR(300),
 	enca_Telefono				CHAR(8),
 	enca_Sexo					CHAR(1),
-	esci_id			     		INT,
+	esci_id			     		CHAR(1),
 	enca_FechaNac               DATE,
 	enca_Estado					INT DEFAULT 1,
 	enca_UsuarioCreador			INT DEFAULT 1,
@@ -168,7 +168,7 @@ CREATE TABLE Acti.tbActividades
 
    CONSTRAINT PK_Acti_tbActividades_acti_Id PRIMARY KEY (acti_id),
    CONSTRAINT FK_Actil_tbActividades_play_id_Acti_tbPlayas_play_Id FOREIGN KEY(play_id)
-    REFERENCES Gral.tbPlayas(play_id)
+    REFERENCES Acti.tbPlayas(play_id)
 )
 GO
 
