@@ -232,7 +232,7 @@ CREATE TABLE Acti.tbEquipos
 )
 GO
 
-CREATE TABLE Acti.EquipoXActividades 
+CREATE TABLE Acti.tbEquipoXActividades 
 (
   eqac_Id       INT IDENTITY(1,1),
   acti_Id       INT,
@@ -251,7 +251,7 @@ CREATE TABLE Acti.EquipoXActividades
 )
 GO
 
-CREATE TABLE Acti.EncargadosXActividades
+CREATE TABLE Acti.tbEncargadosXActividades
 (
   enac_Id    INT,
   enca_Id    INT,

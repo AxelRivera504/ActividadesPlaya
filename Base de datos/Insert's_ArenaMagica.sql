@@ -1369,6 +1369,10 @@ VALUES (4, 5);
 INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
 VALUES (5, 1);
 
+
+
+
+
 /****************************************Insert tbEquipos************************************/
 INSERT INTO Acti.tbEquipos (equi_Descripcion, equi_UsoActual, equi_UsoLimite, equi_Estado)
 VALUES ('Tanque de Buceo', 2, 10, 1);
@@ -1404,6 +1408,9 @@ select * from [Acti].[tbActividades]
 select * from [Acti].[tbEquipos]
 
 
+
+
+
 /****************************Insert tbEquipoXActividades************************************/
 INSERT INTO Acti.EquipoXActividades (acti_Id, equi_Id)
 VALUES (1, 1);
@@ -1434,3 +1441,6 @@ VALUES (4, 5);
 
 INSERT INTO Acti.EquipoXActividades (acti_Id, equi_Id)
 VALUES (5, 1);
+
+
+/*******************************INSERT Acti.tbEncargadosXActividades
