@@ -1443,4 +1443,13 @@ INSERT INTO Acti.EquipoXActividades (acti_Id, equi_Id)
 VALUES (5, 1);
 
 
-/*******************************INSERT Acti.tbEncargadosXActividades
+/*******************************INSERT Acti.tbEncargadosXActividades***********************************/
+GO
+
+INSERT INTO Acti.EncargadosXActividades(enca_Id,acti_Id)
+VALUES(1,1)
+GO
+
+INSERT INTO Acti.EncargadosXActividades(enca_Id,acti_Id)
+VALUES(2,2)
+
