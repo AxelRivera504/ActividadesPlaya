@@ -384,6 +384,3 @@ CREATE TABLE Acce.tbUsuarios(
     
 )
 GO
-
-
-
