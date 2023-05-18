@@ -168,91 +168,77 @@ GO
 --Vista
 CREATE OR ALTER VIEW Gral.VW_tbEstadosCiviles
 AS
-SELECT	esci_Id, 
-		esci_Descripcion,
-		esci_UsuarioCreador,
-		esci_FechaCreacion,
-		esci_UsuarioModificador,
-		esci_FechaModificacion
-FROM Gral.tbEstadosCiviles
+SELECT	esci_id, esci_Descripcion, 
+esci_Estado, esci_UsuarioCreador,[UsuarioCreador].usua_Usuario AS esci_UsuarioCreador_Nombre,
+esci_FechaCreacion, esci_UsuarioModificador,[UsuarioModificador].usua_Usuario AS esci_UsuarioModificador_Nombre, 
+esci_FechaModificacion
+FROM Gral.tbEstadosCiviles esci INNER JOIN Acce.tbUsuarios [UsuarioCreador]
+ON esci.esci_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
+ON esci.esci_UsuarioModificador = [UsuarioModificador].usua_ID
 
-GO
+
 
 --Insertar Estados Civiles
+GO
 CREATE OR ALTER  PROCEDURE gral.UDP_tbEstadosCiviles_Insertar
-@esci_Id						CHAR(1),
 @esci_Descripcion				NVARCHAR(150),	
-@esci_UsuarioCreador			INT,
-@status							INT OUTPUT
+@esci_UsuarioCreador			INT
 AS
 BEGIN 
 	BEGIN TRY
-		IF EXISTS(SELECT esci_Id FROM gral.tbEstadosCiviles WHERE esci_Descripcion = @esci_Descripcion) AND EXISTS(SELECT esci_Id FROM gral.tbEstadosCiviles WHERE esci_Id = @esci_Id)
-		BEGIN
-			SET @status = 1
-		END
+		IF NOT EXISTS (SELECT @esci_Descripcion FROM Gral.tbEstadosCiviles WHERE esci_Descripcion =  @esci_Descripcion)
+			BEGIN
+				INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, 
+				esci_UsuarioCreador, esci_FechaCreacion, 
+				esci_UsuarioModificador, esci_FechaModificacion)
+				VALUES(@esci_Descripcion,1,@esci_UsuarioCreador,GETDATE(),NULL,NULL)
+				SELECT 1
+			END
+		IF EXISTS (SELECT @esci_Descripcion FROM Gral.tbEstadosCiviles WHERE esci_Descripcion =  @esci_Descripcion AND esci_Estado = 0)
+			BEGIN
+				UPDATE Gral.tbEstadosCiviles
+				SET esci_Estado = 1
+				WHERE esci_Descripcion = @esci_Descripcion
+			END
 		ELSE
 		BEGIN
-			IF EXISTS(SELECT esci_Id FROM gral.tbEstadosCiviles WHERE esci_Id = @esci_Id) 
-			BEGIN
-				SET @status = 2
-			END
-			ELSE
-			BEGIN
-				IF EXISTS(SELECT esci_Id FROM gral.tbEstadosCiviles WHERE esci_Descripcion = @esci_Descripcion) 
-				BEGIN
-						SET @status = 3
-				END
-				ELSE
-				BEGIN
-						INSERT INTO gral.tbEstadosCiviles(esci_Id,esci_Descripcion,esci_UsuarioCreador)
-						VALUES (@esci_Id,@esci_Descripcion, @esci_UsuarioCreador)
-						SET  @status = 4
-				END
-			END
+			SELECT 2
 		END
 	END TRY
 	BEGIN CATCH
-		SET  @status = 5
+		SELECT 0
 	END CATCH
 END
 
-GO
-
 --Editar Estados Civiles
+GO
 CREATE OR ALTER PROCEDURE gral.UDP_tbEstadosCiviles_Update
 @esci_Id						CHAR(1),
 @esci_Descripcion				NVARCHAR(150),	
-@esci_UsuarioModificador		INT,
-@status							INT OUTPUT
+@esci_UsuarioModificador		INT
 AS
 BEGIN
-	DECLARE @esci_IdEdit char(1) = (SELECT esci_Id FROM gral.tbEstadosCiviles WHERE esci_Descripcion = @esci_Descripcion)
-	BEGIN TRY		
-		IF (@esci_Id <> @esci_IdEdit)
-			BEGIN
-				SET @status = 3
-			END
-		ELSE
-			BEGIN
-				UPDATE	gral.tbEstadosCiviles							
-				SET		esci_Descripcion			=@esci_Descripcion,	
-						esci_UsuarioModificador		=@esci_UsuarioModificador,
-						esci_FechaModificacion      = GETDATE()
-				WHERE	esci_Id = @esci_Id
-				SET @status = 1
-			END
-	END TRY
-	BEGIN CATCH
-		SET @status = 2
-	END CATCH
+	IF NOT EXISTS (SELECT esci_Descripcion FROM Gral.tbEstadosCiviles WHERE esci_Descripcion = @esci_Descripcion AND esci_id = @esci_Id)
+		BEGIN
+			UPDATE Gral.tbEstadosCiviles
+			SET esci_Descripcion = @esci_Descripcion,
+				esci_FechaModificacion = GETDATE(),
+				esci_UsuarioModificador = @esci_UsuarioModificador
+			WHERE esci_id = @esci_Id
+			SELECT 1
+		END
+	ELSE
+	BEGIN
+		SELECT 0
+	END
 END
 
 --**************************************************** /UDP Y VISTA ESTADOS CIVILES ***************************************************************--
- GO
+
  --****************************************************UDP Y VISTA METODOS DE PAGO  ***************************************************************--
 
  --Vista
+  GO
 CREATE OR ALTER VIEW Gral_tbMetodosPago
 AS
 SELECT	mepa_id,
@@ -927,3 +913,7 @@ GO
 
 
 	--******************* ********************************////UDP Y VISTA Actividades  *************************************************************************--
+
+	--******************* ********************************  UDP Y VISTA Reservaciones  *************************************************************************--
+
+	--******************* ********************************///UDP Y VISTA Reservaciones  *************************************************************************--
