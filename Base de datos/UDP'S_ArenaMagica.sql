@@ -241,45 +241,45 @@ END
 GO
 CREATE OR ALTER VIEW Gral_tbMetodosPago
 AS
-SELECT	mepa_id,
-		mepa_Descripcion,
-		mepa_UsuarioCreador,
-		mepa_FechaCreacion,
-		mepa_UsuarioModificador,
-		mepa_FechaModificacion
-FROM	Gral.tbMetodosPago
+SELECT mepa_id, mepa_Descripcion, 
+mepa_Estado, mepa_UsuarioCreador,[UsuarioCreador].usua_Usuario AS mepa_UsuarioCreador_Nombre, 
+mepa_FechaCreacion, mepa_UsuarioModificador,[UsuarioModificador].usua_Usuario AS mepa_UsuarioModificador_Nombre, 
+mepa_FechaModificacion
+FROM	Gral.tbMetodosPago mepa INNER JOIN Acce.tbUsuarios [UsuarioCreador]
+ON mepa.mepa_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
+ON mepa.mepa_UsuarioModificador = [UsuarioModificador].usua_ID
 WHERE   mepa_Estado  = 1
 
-GO
-
 --Insertar Metodos de pago
+GO
 CREATE OR ALTER PROCEDURE Gral.UDP_tbMetodosPago_InsertarMetodosPago
 @mepa_Descripcion		NVARCHAR(150),
-@mepa_UsuarioCreador	INT,
-@status					INT OUTPUT
+@mepa_UsuarioCreador	INT
 AS
 BEGIN
 	BEGIN TRY
-	IF NOT EXISTS (SELECT * FROM Gral.tbMetodosPago WHERE mepa_Descripcion = @mepa_Descripcion AND mepa_Estado = 1)
+		IF NOT EXISTS (SELECT mepa_Descripcion FROM Gral.tbMetodosPago WHERE mepa_Descripcion = @mepa_Descripcion)
 			BEGIN
-				INSERT INTO Gral.tbMetodosPago (mepa_Descripcion, mepa_Estado, mepa_UsuarioCreador, mepa_FechaCreacion, mepa_UsuarioModificador, mepa_FechaModificacion)
-				VALUES (@mepa_Descripcion,1,@mepa_UsuarioCreador, GETDATE(), NULL, NULL);
-
-				SET  @status = 1
+				INSERT INTO Gral.tbMetodosPago (mepa_Descripcion, 
+				mepa_Estado, mepa_UsuarioCreador, 
+				mepa_FechaCreacion, mepa_UsuarioModificador, 
+				mepa_FechaModificacion)
+				VALUES(@mepa_Descripcion,1,@mepa_UsuarioCreador,GETDATE(),NULL,NULL)
+				SELECT 1
 			END
-		ELSE 
+		ELSE
 		BEGIN
-			SET  @status = 0
+			SELECT 2
 		END
 	END TRY
+
 	BEGIN CATCH
-		SET  @status = 2
+		SELECT 0
 	END CATCH
 END
 
-GO
-
 --Editar Metodos de pago
+GO
 CREATE OR ALTER PROCEDURE Gral.UDP_tbMetodosPago_EditarMetodosPago
 @mepa_id					INT,
 @mepa_Descripcion			NVARCHAR(150),
