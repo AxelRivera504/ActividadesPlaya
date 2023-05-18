@@ -348,59 +348,62 @@ END
  --****************************************************UDP Y VISTA PLAYA  *************************************************************************--
 
  --Vista
- CREATE OR ALTER VIEW Gral_tbPlayas
+ CREATE OR ALTER VIEW Acti.VW_tbPlayas
 AS
-SELECT			play_id,
-				play_Playa,
-				t2.dire_id,
-				t2.dire_DireccionExacta,
-				t3.muni_id,
-				t3.muni_Descripcion,
-				t4.dept_id,
-				t4.dept_Descripcion
-				play_UsuarioCreador,
-				play_FechaCreacion,
-				play_UsuarioModificador,
-				play_FechaModificacion
-FROM			Acti.tbPlayas t1
-INNER JOIN		Gral.tbDirecciones t2
-ON				t1.dire_id = t2.dire_id
-INNER JOIN		Gral.tbMunicipios t3
-ON				t2.muni_id = t3.muni_id
-INNER JOIN		Gral.tbDepartamentos t4
-ON				t3.dept_id = t4.dept_id
-WHERE			play_Estado  = 1
+SELECT play_Id, play_Playa, 
+play.dire_Id,dire.dire_DireccionExacta, play_ImgUrl, 
+play_Estado, play_UsuarioCreador,[UsuarioCreador].usua_Usuario AS play_UsuarioCreador_Nombre,
+play_FechaCreacion, 
+play_UsuarioModificador,[UsuarioModificador].usua_Usuario AS play_UsuarioModificador_Nombre, 
+play_FechaModificacion
+FROM Acti.tbPlayas play INNER JOIN [Gral].[tbDirecciones] dire
+ON play.dire_Id = dire.dire_Id INNER JOIN Acce.tbUsuarios [UsuarioCreador]
+ON play.play_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
+ON play.play_UsuarioModificador = [UsuarioModificador].usua_ID
 
-GO
+/*Vista Playas UDP*/
+--GO
+--CREATE OR ALTER PROCEDURE 
 
 --Insertar Playa
+GO
 CREATE OR ALTER PROCEDURE Gral.UDP_tbPlayas_InsertarPlayas
 	@play_Playa				NVARCHAR(150),
 	@dire_id				INT,
-	@play_UsuarioCreador	INT,
-	@Status					INT OUTPUT
+	@play_ImgUrl			NVARCHAR(MAX),
+	@play_UsuarioCreador	INT
 AS
 BEGIN
 BEGIN TRY
-	IF EXISTS (SELECT * FROM Gral.tbPlayas WHERE play_Playa = @play_Playa AND dire_id = @dire_id)
-	BEGIN 
-		SET @Status = 1
-	END
+	IF NOT EXISTS (SELECT play_Playa FROM Acti.tbPlayas WHERE play_Playa = @play_Playa)
+		BEGIN
+			INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, 
+			play_ImgUrl, play_Estado, 
+			play_UsuarioCreador, play_FechaCreacion, 
+			play_UsuarioModificador, play_FechaModificacion)
+			VALUES (@play_Playa,@dire_id,@play_ImgUrl,1,@play_UsuarioCreador,GETDATE(),NULL,NULL)
+			SELECT 1
+		END
+	ELSE IF EXISTS(SELECT play_Playa FROM Acti.tbPlayas WHERE play_Playa = @play_Playa AND play_Estado = 1)
+		BEGIN
+			UPDATE Acti.tbPlayas
+			SET play_Estado = 1
+			WHERE play_Playa = @play_Playa
+			SELECT 1
+		END	
 	ELSE
 	BEGIN
-		INSERT INTO [Gral].[tbPlayas](play_Playa ,dire_id,play_Estado,play_UsuarioCreador,play_FechaCreacion,play_UsuarioModificador,play_FechaModificacion)
-				VALUES(@play_Playa,@dire_id,1,@play_UsuarioCreador,GETDATE(),NULL,NULL)
-				SET @Status = 2
+		SELECT 2
 	END
 END TRY
+
 BEGIN CATCH
-	SET @Status = 3
+	SELECT 0
 END CATCH
 END
 
-GO
-
 --Editar Playa
+GO
 CREATE OR ALTER PROCEDURE Gral.UDP_tbPlayas_EditarPlayas
 	@play_Id					INT,
 	@play_Playa					NVARCHAR(150),
