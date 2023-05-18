@@ -18,7 +18,7 @@ CREATE SCHEMA Acti
 CREATE TABLE Gral.tbEstadosCiviles(
 	esci_id					INT IDENTITY(1,1),
 	esci_Descripcion	    VARCHAR(200),
-	esci_Estado				INT DEFAULT (1),
+	esci_Estado				BIT DEFAULT (1),
 	esci_UsuarioCreador		INT DEFAULT 1,
 	esci_FechaCreacion		DATETIME DEFAULT GETDATE(),
 	esci_UsuarioModificador	INT,
@@ -32,7 +32,7 @@ GO
 CREATE TABLE Gral.tbDepartamentos(
 	dept_id						CHAR(2),
 	dept_Descripcion			NVARCHAR(200),
-	dept_Estado					INT DEFAULT (1),
+	dept_Estado					BIT DEFAULT (1),
 	dept_UsuarioCreador			INT DEFAULT 1,
 	dept_FechaCreacion			DATETIME DEFAULT GETDATE(),
 	dept_UsuarioModificador		INT,
@@ -47,7 +47,7 @@ CREATE TABLE Gral.tbMunicipios(
 	muni_id						CHAR(4),
 	muni_Descripcion			NVARCHAR(200),
 	dept_id						CHAR(2),
-	muni_Estado					INT DEFAULT 1,
+	muni_Estado					BIT DEFAULT 1,
 	muni_UsuarioCreador			INT DEFAULT 1,
 	muni_FechaCreacion			DATETIME DEFAULT GETDATE(),
 	muni_UsuarioModificador		INT,
@@ -62,7 +62,7 @@ GO
 CREATE TABLE Gral.tbMetodosPago(
 	mepa_id						INT IDENTITY(1,1),
 	mepa_Descripcion			NVARCHAR (200),
-	mepa_Estado					INT DEFAULT 1,
+	mepa_Estado					BIT DEFAULT 1,
 	mepa_UsuarioCreador			INT DEFAULT 1,
 	mepa_FechaCreacion			DATETIME DEFAULT GETDATE(),
 	mepa_UsuarioModificador		INT,
@@ -77,7 +77,7 @@ CREATE TABLE Gral.tbDirecciones(
     dire_DireccionExacta        NVARCHAR(MAX),
 	muni_Id                     CHAR(4),
 
-	dire_Estado					INT DEFAULT 1,
+	dire_Estado					BIT DEFAULT 1,
     dire_UsuarioCreador			INT DEFAULT 1,
     dire_FechaCreacion			DATETIME DEFAULT GETDATE(),
     dire_UsuarioModificador		INT,
@@ -97,7 +97,7 @@ CREATE TABLE Acti.tbPlayas
   dire_Id     INT,
   play_ImgUrl NVARCHAR(MAX),
 
-  play_Estado					INT DEFAULT 1,
+  play_Estado					BIT DEFAULT 1,
   play_UsuarioCreador			INT DEFAULT 1,
   play_FechaCreacion			DATETIME DEFAULT GETDATE(),
   play_UsuarioModificador		INT,
@@ -120,7 +120,7 @@ CREATE TABLE Acti.tbEncargados
 	enca_Sexo					CHAR(1),
 	esci_id			     		INT,
 	enca_FechaNac               DATE,
-	enca_Estado					INT DEFAULT 1,
+	enca_Estado					BIT DEFAULT 1,
 	enca_UsuarioCreador			INT DEFAULT 1,
 	enca_FechaCreacion			DATETIME DEFAULT GETDATE(),
 	enca_UsuarioModificador		INT,
@@ -141,7 +141,7 @@ CREATE TABLE Acti.tbClientes
 	clie_Email					NVARCHAR(300),
 	clie_Sexo					CHAR(1),
     clie_FechaNac               DATE,    
-	clie_Estado					INT DEFAULT 1,
+	clie_Estado					BIT DEFAULT 1,
 	clie_UsuarioCreador			INT DEFAULT 1,
 	clie_FechaCreacion			DATETIME DEFAULT GETDATE(),
 	clie_UsuarioModificador		INT,
@@ -156,12 +156,11 @@ CREATE TABLE Acti.tbActividades
 (
    acti_Id						INT IDENTITY(1,1),
    acti_Nombre					NVARCHAR(250),
-   acti_PersActual				INT,
    acti_Cupo					INT,
    acti_Precio					DECIMAL(8,2),
    play_Id						INT,
    
-   acti_Estado					INT DEFAULT 1,
+   acti_Estado					BIT DEFAULT 1,
    acti_UsuarioCreador			INT DEFAULT 1,
    acti_FechaCreacion			DATETIME DEFAULT GETDATE(),
    acti_UsuarioModificador		INT,
@@ -173,13 +172,15 @@ CREATE TABLE Acti.tbActividades
 )
 GO
 
+
 CREATE TABLE Acti.tbReservaciones
 (
-  rese_Id       INT IDENTITY(1,1), 
-  rese_Cantidad INT,
-  acti_Id       INT,
-  
-  rese_Estado					INT DEFAULT 1,
+  rese_Id                   INT IDENTITY(1,1), 
+  rese_Cantidad             INT,
+  acti_Id                   INT,
+  rese_FechaReservacion  	Date,
+
+  rese_Estado				    BIT DEFAULT 1,
   rese_UsuarioCreador			INT DEFAULT 1,
   rese_FechaCreacion			DATETIME DEFAULT GETDATE(),
   rese_UsuarioModificador		INT,
@@ -198,7 +199,7 @@ CREATE TABLE Acti.tbClienteXReservacion
    clie_Id                      INT, 
    rese_Id                      INT,
 
-   clre_Estado					INT DEFAULT 1,
+   clre_Estado					BIT DEFAULT 1,
    clre_UsuarioCreador			INT DEFAULT 1,
    clre_FechaCreacion			DATETIME DEFAULT GETDATE(),
    clre_UsuarioModificador		INT,
@@ -218,7 +219,7 @@ CREATE TABLE Acti.tbEquipos
   equi_Descripcion              NVARCHAR(250),
   equi_UsoActual				INT,
   equi_UsoLimite                INT,
-  equi_Estado                   INT,
+  equi_Estado                   BIT DEFAULT 1,
 
    
   equi_UsuarioCreador			INT DEFAULT 1,
@@ -256,7 +257,7 @@ CREATE TABLE Acti.tbEncargadosXActividades
   enca_Id    INT,
   acti_Id    INT,
 
-  enac_Estado					INT DEFAULT 1,
+  enac_Estado					BIT DEFAULT 1,
   enac_UsuarioCreador			INT,
   enac_FechaCreacion			DATETIME DEFAULT GETDATE(),
   enac_UsuarioModificador		INT,
@@ -274,7 +275,7 @@ CREATE TABLE Acti.tbMantenimiento
   mant_Id                       INT IDENTITY(1,1),
   mant_Descricion               NVARCHAR(MAX),
 
-  mant_Estado					INT DEFAULT 1,
+  mant_Estado					BIT DEFAULT 1,
   mant_UsuarioCreador			INT,
   mant_FechaCreacion			DATETIME DEFAULT GETDATE(),
   mant_UsuarioModificador		INT,
@@ -292,7 +293,7 @@ CREATE TABLE Acti.tbMantenimientoXEquipo
   equi_Id      INT, 
   mant_Id      INT,
 
-  maeq_Estado					INT DEFAULT 1,
+  maeq_Estado					BIT DEFAULT 1,
   maeq_UsuarioCreador			INT,
   maeq_FechaCreacion			DATETIME DEFAULT GETDATE(),
   maeq_UsuarioModificador		INT,
@@ -314,7 +315,7 @@ CREATE TABLE Acti.tbFactura
   fuct_Isv   Decimal (8,2),
   fuct_Total  Decimal(8,2),
 
-  fuct_Estado					INT DEFAULT 1,
+  fuct_Estado					BIT DEFAULT 1,
   fuct_UsuarioCreador			INT,
   fuct_FechaCreacion			DATETIME DEFAULT GETDATE(),
   fuct_UsuarioModificador		INT,
@@ -326,11 +327,31 @@ CREATE TABLE Acti.tbFactura
 )
 GO
 
+CREATE TABLE Acti.ActividadesXFecha
+(
+  acfe_Id              INT IDENTITY(1,1),
+  acti_Id              INT,
+  acfe_Fecha           DATE,
+  acfe_Cantidad        INT, 
+
+  acfe_Estado					BIT DEFAULT 1,
+  acfe_UsuarioCreador			INT,
+  acfe_FechaCreacion			DATETIME DEFAULT GETDATE(),
+  acfe_UsuarioModificador		INT,
+  acfe_FechaModificacion		DATETIME
+
+
+  CONSTRAINT FK_Acti_tbActi_acti_Id FOREIGN KEY (acti_Id) REFERENCES Acti.tbActividades(acti_Id),
+
+)
+GO
+
 
 CREATE TABLE Acce.tbRoles(
 	role_ID						INT IDENTITY(1,1),
 	role_Descripcion			VARCHAR(250),
-	role_Estado					INT DEFAULT 1,
+	
+	role_Estado					BIT DEFAULT 1,
 	role_UsuarioCreador			INT DEFAULT 1,
 	role_FechaCreacion			DATETIME DEFAULT GETDATE(),
 	role_UsuarioModificador		INT,
@@ -343,7 +364,8 @@ GO
 CREATE TABLE Acce.tbPantallas(
 	pant_ID						INT IDENTITY(1,1),
 	pant_Descripcion			VARCHAR (250),
-	pant_Estado					INT DEFAULT 1,
+	
+	pant_Estado					BIT DEFAULT 1,
 	pant_UsuarioCreador			INT DEFAULT	1,
 	pant_FechaCreacion			DATETIME DEFAULT GETDATE(),
 	pant_UsuarioModificador		INT,
@@ -357,7 +379,8 @@ CREATE TABLE Acce.tbRolesXPantallas(
 	roleXpant_ID					INT IDENTITY(1,1),
 	role_ID							INT,
 	pant_ID							INT,
-	roleXpant_Estado				INT DEFAULT 1,
+	
+	roleXpant_Estado				BIT DEFAULT 1,
 	roleXpant_UsuarioCreador		INT DEFAULT 1,
 	roleXpant_FechaCreacion			DATETIME DEFAULT GETDATE(),
 	roleXpant_UsuarioModificador	INT,
@@ -377,7 +400,8 @@ CREATE TABLE Acce.tbUsuarios(
 	usua_EsAdmin				INT,
 	enca_ID						INT,
 	role_ID                     INT,
-	usua_Estado					INT DEFAULT 1,
+	
+	usua_Estado					BIT DEFAULT 1,
 	usua_UsuarioCreador			INT,
 	usua_FechaCreacion			DATETIME DEFAULT GETDATE(),
 	usua_UsuarioModificador		INT,

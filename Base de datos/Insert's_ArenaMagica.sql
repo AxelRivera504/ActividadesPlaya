@@ -1259,151 +1259,150 @@ GO
 
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
 VALUES ('Juan', 'Pérez', '1234567890123', 'juan.perez@example.com', '12345678', 'M', 2, '1990-01-01');
-
+GO
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
 VALUES ('María', 'González', '9876543210987', 'maria.gonzalez@example.com', '87654321', 'F', 1, '1985-05-10');
-
+GO
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
 VALUES ('Pedro', 'López', '4567890123456', 'pedro.lopez@example.com', '54321098', 'M', 5, '1998-07-15');
-
+GO
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
 VALUES ('Ana', 'Martínez', '7890123456789', 'ana.martinez@example.com', '98765432', 'F', 4, '1982-03-20');
-
+GO
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
 VALUES ('Carlos', 'Rodríguez', '3210987654321', 'carlos.rodriguez@example.com', '67890123', 'M', 3, '1995-11-25');
-
+GO
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
 VALUES ('Luisa', 'Hernández', '6543210987654', 'luisa.hernandez@example.com', '01234567', 'F', 2, '1993-09-12');
-
+GO
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
 VALUES ('Javier', 'Gómez', '2109876543210', 'javier.gomez@example.com', '76543210', 'M', 1, '1997-02-18');
-
+GO
 
 /**************************************INSERT tbClientes****************************************************************/
 INSERT INTO Acti.tbClientes (clie_Nombres, clie_Apellidos, clie_DNI, clie_Email, clie_Sexo, clie_FechaNac)
 VALUES ('Juan', 'Martinez', '1234896890123', 'juan.martinez@example.com', 'M', '1990-01-01');
-
+GO
 INSERT INTO Acti.tbClientes (clie_Nombres, clie_Apellidos, clie_DNI, clie_Email, clie_Sexo, clie_FechaNac)
 VALUES ('María', 'Sanchez', '9876123210987', 'maria.sanchez@example.com', 'F', '1985-05-10');
-
+GO
 INSERT INTO Acti.tbClientes (clie_Nombres, clie_Apellidos, clie_DNI, clie_Email, clie_Sexo, clie_FechaNac)
 VALUES ('Pedro', 'Paulin', '4567889623456', 'pedro.paulin@example.com', 'M', '1998-07-15');
-
+GO
 INSERT INTO Acti.tbClientes (clie_Nombres, clie_Apellidos, clie_DNI, clie_Email, clie_Sexo, clie_FechaNac)
 VALUES ('Ana', 'Mariel', '7890123123789', 'ana.mariel@example.com', 'F', '1982-03-20');
-
+GO
 INSERT INTO Acti.tbClientes (clie_Nombres, clie_Apellidos, clie_DNI, clie_Email, clie_Sexo, clie_FechaNac)
 VALUES ('Carlos', 'Rodiguer', '3214587654321', 'carlos.rodiguer@example.com', 'M', '1995-11-25');
-
+GO
 INSERT INTO Acti.tbClientes (clie_Nombres, clie_Apellidos, clie_DNI, clie_Email, clie_Sexo, clie_FechaNac)
 VALUES ('Luisa', 'Sabillon', '6543370987654', 'luisa.sabillon@example.com', 'F', '1993-09-12');
-
+GO
 INSERT INTO Acti.tbClientes (clie_Nombres, clie_Apellidos, clie_DNI, clie_Email, clie_Sexo, clie_FechaNac)
 VALUES ('Javier', 'Costum', '2109846543210', 'javier.costum@example.com', 'M', '1997-02-18');
-
+GO
 INSERT INTO Acti.tbClientes (clie_Nombres, clie_Apellidos, clie_DNI, clie_Email, clie_Sexo, clie_FechaNac)
 VALUES ('Laura', 'Caliz', '9876543370123', 'laura.caliz@example.com', 'F', '1991-12-05');
-
+GO
 INSERT INTO Acti.tbClientes (clie_Nombres, clie_Apellidos, clie_DNI, clie_Email, clie_Sexo, clie_FechaNac)
 VALUES ('Hugo', 'Cali', '1234509879743', 'hugo.cali@example.com', 'M', '1996-09-28');
-
-
+GO
 /************************************tb Actividades*************************************/
 INSERT INTO Acti.tbActividades (acti_Nombre, acti_Cupo, acti_Precio, play_Id)
 VALUES ('clase de surf', 15, 10000.50, 1);
-
+GO
 INSERT INTO Acti.tbActividades (acti_Nombre, acti_Cupo, acti_Precio, play_Id)
 VALUES ('remo', 10, 2500.00, 2);
-
+GO
 INSERT INTO Acti.tbActividades (acti_Nombre, acti_Cupo, acti_Precio, play_Id)
 VALUES ('clase esnórquel', 20, 8000.00, 3);
 
 INSERT INTO Acti.tbActividades (acti_Nombre, acti_Cupo, acti_Precio, play_Id)
 VALUES ('crucero de observación de delfines', 12, 15000.00, 1);
-
+GO
 INSERT INTO Acti.tbActividades (acti_Nombre, acti_Cupo, acti_Precio, play_Id)
 VALUES ('bautizo de buceo', 8, 2000.00, 4);
-
+GO
 INSERT INTO Acti.tbActividades (acti_Nombre, acti_Cupo, acti_Precio, play_Id)
 VALUES ('Voleyball', 10, 1200.50, 5);
-
+GO
 INSERT INTO Acti.tbActividades (acti_Nombre, acti_Cupo, acti_Precio, play_Id)
 VALUES ('Excursión en Barco', 30, 40000.00, 2);
-
+GO
 INSERT INTO Acti.tbActividades (acti_Nombre, acti_Cupo, acti_Precio, play_Id)
 VALUES ('Futbol de playa', 6, 8000.00, 3);
-
+GO
 INSERT INTO Acti.tbActividades (acti_Nombre, acti_Cupo, acti_Precio, play_Id)
 VALUES ('Moto Acuatica', 15, 1000.00, 5);
-
+GO
 INSERT INTO Acti.tbActividades (acti_Nombre, acti_Cupo, acti_Precio, play_Id)
 VALUES ('Visita Guiada', 20, 5000.50, 4);
-
+GO
 
 /**************************Insert tbReservaciones*********************************/
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id)
-VALUES (2, 1);
-
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id)
-VALUES (3, 2);
-
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id)
-VALUES (1, 3);
-
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id)
-VALUES (4, 1);
-
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id)
-VALUES (2, 4);
-
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id)
-VALUES (5, 5);
-
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id)
-VALUES (2, 2);
-
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id)
-VALUES (3, 3);
-
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id)
-VALUES (1, 5);
-
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id)
-VALUES (4, 4);
-
+INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
+VALUES (2, 1,'05-6-2023');
+GO
+INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
+VALUES (3, 2,'06-6-2023');
+GO
+INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
+VALUES (1, 3,'07-6-2023');
+GO
+INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
+VALUES (4, 1,'10-6-2023');
+GO
+INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
+VALUES (2, 4,'11-6-2023');
+GO
+INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
+VALUES (5, 5,'16-6-2023');
+GO
+INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
+VALUES (2, 2,'05-7-2023');
+GO
+INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
+VALUES (3, 3,'10-7-2023');
+GO
+INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
+VALUES (1, 5,'02-7-2023');
+GO
+INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
+VALUES (4, 4,'01-7-2023');
+GO
 
 
 /***************************Insert ClientesXReservaciones**********************/
 INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
 VALUES (1, 1);
-
+GO
 INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
 VALUES (2, 2);
-
+GO
 INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
 VALUES (3, 3);
-
+GO
 INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
 VALUES (4, 4);
-
+GO
 INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
 VALUES (5, 5);
-
+GO
 INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
 VALUES (1, 2);
-
+GO
 INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
 VALUES (2, 3);
-
+GO
 INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
 VALUES (3, 4);
-
+GO
 INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
 VALUES (4, 5);
-
+GO
 INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
 VALUES (5, 1);
-
+GO
 
 
 
@@ -1550,6 +1549,7 @@ INSERT INTO Acti.tbMantenimientoXEquipo (equi_Id, mant_Id, maeq_UsuarioCreador, 
 VALUES (6, 6, 2
 , GETDATE());
 
+GO
 
 
 /***************************Insertar tbFactura****************************/
@@ -1646,9 +1646,7 @@ VALUES ('Usuarios',1, GETDATE());
 INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
 VALUES ('Roles',1, GETDATE());
 
-
-select * from Acce.tbPantallas
-select * from Acce.tbRoles
+GO
 	  -------Insertar RolesXPantallas-----
 INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
 VALUES (1,1,1);
@@ -1697,7 +1695,7 @@ VALUES (2,17,1);
 
 
 
-
+GO
 ALTER TABLE gral.tbEstadosCiviles
 ADD CONSTRAINT FK_gral_tbEstadosCiviles_esci_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY (esci_UsuarioCreador) REFERENCES acce.tbUsuarios (usua_ID),
 	CONSTRAINT FK_gral_tbEstadosCiviles_esci_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY (esci_UsuarioModificador) REFERENCES acce.tbUsuarios (usua_ID)	
