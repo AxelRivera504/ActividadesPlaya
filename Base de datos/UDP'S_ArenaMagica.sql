@@ -238,7 +238,7 @@ END
  --****************************************************UDP Y VISTA METODOS DE PAGO  ***************************************************************--
 
  --Vista
-  GO
+GO
 CREATE OR ALTER VIEW Gral_tbMetodosPago
 AS
 SELECT	mepa_id,
