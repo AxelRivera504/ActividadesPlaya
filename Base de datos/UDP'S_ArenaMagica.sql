@@ -820,7 +820,104 @@ GO
 	WHERE acti_Estado = 1
 
 	--/*Vista Actividades UDP*/
-	--GO
-	--CREATE OR ALTER VIEW Acti.UDP_tbActividades_VW
+	GO 
+	CREATE OR ALTER PROCEDURE Acti.UDP_tbActividades_VW
+	AS
+	BEGIN
+	SELECT * FROM Acti.VW_tbActividades
+	END
+
+	/*Actividades Insert*/
+	GO
+	CREATE OR ALTER PROCEDURE Acti.UDP_tbActividades_Insert
+	@acti_Nombre				VARCHAR(250),
+	@acti_Cupo					INT,
+	@acti_Precio				DECIMAL(18,2),
+	@play_Id					INT,
+	@acti_UsuarioCreador		INT
+	AS
+	BEGIN
+		BEGIN TRY
+			IF NOT EXISTS (SELECT acti_Nombre FROM Acti.tbActividades WHERE acti_Nombre = @acti_Nombre)
+				BEGIN
+					INSERT INTO Acti.tbActividades(acti_Nombre, 
+					acti_PersActual, acti_Cupo, 
+					acti_Precio, play_Id, 
+					acti_Estado, acti_UsuarioCreador, 
+					acti_FechaCreacion, acti_UsuarioModificador, 
+					acti_FechaModificacion)
+					VALUES(@acti_Nombre,0,@acti_Cupo,@acti_Precio,@play_Id,1,@acti_UsuarioCreador,GETDATE(),NULL,NULL)
+					SELECT 1
+				END
+			IF EXISTS (SELECT acti_Nombre FROM Acti.tbActividades WHERE acti_Nombre = @acti_Nombre AND acti_Estado = 0)
+				BEGIN
+					UPDATE Acti.tbActividades
+					SET acti_Estado = 1
+					WHERE acti_Nombre = @acti_Nombre
+					SELECT 1
+				END
+			ELSE
+				BEGIN
+					SELECT 2
+				END
+		END TRY
+
+		BEGIN CATCH
+		 SELECT 0
+		END CATCH
+	END
+
+	/*Actividades Update*/
+	GO
+	CREATE OR ALTER PROCEDURE Acti.UDP_tbActividades_Update
+	@acti_Id					INT,
+	@acti_Nombre				VARCHAR(250),
+	@acti_Cupo					INT,
+	@acti_Precio				DECIMAL(18,2),
+	@play_Id					INT,
+	@acti_UsuarioModificador	INT
+	AS
+	BEGIN
+		BEGIN TRY
+			IF NOT EXISTS(SELECT acti_Nombre FROM acti.tbActividades WHERE acti_Nombre = @acti_Nombre AND acti_Id != @acti_Id)
+				BEGIN
+					UPDATE Acti.tbActividades
+					SET	acti_Nombre = @acti_Nombre,
+					acti_Cupo = @acti_Cupo,
+					acti_Precio = @acti_Precio,
+					play_Id = @play_Id,
+					acti_UsuarioModificador = @acti_UsuarioModificador,
+					acti_FechaModificacion = GETDATE()
+					WHERE acti_Id = @acti_Id
+					SELECT 1
+				END
+				BEGIN
+					SELECT 2
+				END
+		END TRY
+
+		BEGIN CATCH
+			SELECT 0
+		END CATCH
+	END
+
+	/*Actividades Delete*/
+	GO 
+	CREATE OR ALTER PROCEDURE Acti.UDP_tbActividades_Delete
+	@acti_Id INT
+	AS
+	BEGIN
+		BEGIN TRY
+			UPDATE Acti.tbActividades
+			SET acti_Estado = 0
+			WHERE acti_Id = @acti_Id
+			SELECT 1
+		END TRY
+
+		BEGIN CATCH
+			SELECT 0
+		END CATCH
+	END
+
 
 	--******************* ********************************////UDP Y VISTA Actividades  *************************************************************************--
