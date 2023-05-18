@@ -1173,35 +1173,35 @@ GO
 --**************************************************** INSERTS tbPlayas ******************************************************************--
 
 INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa Buena Vista',1,'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/f3/48/a3/river-mouth-east-end.jpg?w=1200&h=-1&s=1',1,1,GETDATE(),NULL,NULL);
+VALUES('Playa Buena Vista',1,'https://e1.pxfuel.com/desktop-wallpaper/946/286/desktop-wallpaper-honduras-beach-honduras.jpg',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa de Cienaguita',1,'https://www.honduras.com/wp-content/uploads/2022/03/playa-cieneguita-e1470168554868-z.jpg',1,1,GETDATE(),NULL,NULL);
+VALUES('Playa de Cienaguita',1,'https://w0.peakpx.com/wallpaper/926/933/HD-wallpaper-the-beach-beach-water-honduras-blue.jpg',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa de Rio Mar',1,'https://1001beach.com/img/posts/1652/1200/rio_mar-1.webp',1,1,GETDATE(),NULL,NULL);
+VALUES('Playa de Rio Mar',1,'https://e1.pxfuel.com/desktop-wallpaper/970/585/desktop-wallpaper-honduras.jpg',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa Utila',1,'https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcRK_PH1atNjb1DvlZYN4vZg0ctk1gexHBQHWTcFh1viCOWc2TMzM1h-VUV5LvZpqCQUYVvSnjDdan5Rfv9Bu7J0JQ',1,1,GETDATE(),NULL,NULL);
+VALUES('Playa Utila',1,'https://miviaje.com/wp-content/uploads/2018/10/playa-roatan-honduras.jpg',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa del Faro',1,'https://turismo.marbella.es/media/k2/items/cache/f0e0e9a5214b4f9d278913b10aa6423d_L.jpg',1,1,GETDATE(),NULL,NULL);
+VALUES('Playa del Faro',1,'https://e1.pxfuel.com/desktop-wallpaper/409/83/desktop-wallpaper-honduras.jpg',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa de Mareja y Vacacional',1,'https://lh3.googleusercontent.com/p/AF1QipNqW1tF48VDjQfxPtt8UEijVZybxu7W6A27Rg5T=w296-h202-n-k-rw-no-v1',1,1,GETDATE(),NULL,NULL);
+VALUES('Playa de Mareja y Vacacional',1,'https://e0.pxfuel.com/wallpapers/486/935/desktop-wallpaper-honduras.jpg',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa de la Coca Cola',1,'https://cdn.fazwaz.com/nw/N_MlbcSb1WZzhMKEd1BRHR4dwxA/520x350/sub-place/2060/playa-de-la-coca-cola.jpg',1,1,GETDATE(),NULL,NULL);
+VALUES('Playa de la Coca Cola',1,'https://cdn.forbescentroamerica.com/2021/02/Honduras-turismo-1-1-1024x683.jpg',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Mar de Plata Omoa',1,'https://lh3.googleusercontent.com/p/AF1QipMQ96rzJ2aF-S0tlzZTn2Q705w5V1lNr7joVXS-=w296-h202-n-k-rw-no-v1',1,1,GETDATE(),NULL,NULL);
+VALUES('Mar de Plata Omoa',1,'https://p4.wallpaperbetter.com/wallpaper/224/626/575/sunset-beach-landscape-sky-honduras-hd-wallpaper-preview.jpg',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
@@ -1213,7 +1213,7 @@ VALUES('Brisas del Caribe Beach',1,'https://media.solwayscuba.com/photos/Hotel/2
 GO
 
 INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa de Santo Tomás',1,'https://www.civitatis.com/f/espana/menorca/guia/playa-santo-tomas.jpg',1,1,GETDATE(),NULL,NULL);
+VALUES('Playa de Santo Tomás',1,'https://e0.pxfuel.com/wallpapers/57/159/desktop-wallpaper-nature-of-belize-high-quality-nature-honduras-landscape.jpg',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
@@ -1233,23 +1233,23 @@ VALUES('Playa Punta Manabique',1,'https://www.guatemala.com/fotos/201712/Punta-d
 GO
 
 INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa Marejada',1,'https://y.cdrst.com/foto/hotel-sf/7a9a0/granderesp/hotel-costa-azul-faro-marejada-general-7c53f76.jpg',1,1,GETDATE(),NULL,NULL);
+VALUES('Playa Marejada',1,'https://c4.wallpaperflare.com/wallpaper/494/937/297/palmetto-bay-roatan-island-honduras-wallpaper-preview.jpg',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa de Puerto Cortes. Honduras',1,'https://www.honduras.com/wp-content/uploads/2022/03/DJI_0119-z-Medium.jpg',1,1,GETDATE(),NULL,NULL);
+VALUES('Playa de Puerto Cortes. Honduras',1,'https://e0.pxfuel.com/wallpapers/640/832/desktop-wallpaper-landscape-honduras-landscape.jpg',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa Amatique Bay',1,'https://www.guatemala.com/fotos/201702/Bahia-de-Amatique-885x500.jpg',1,1,GETDATE(),NULL,NULL);
+VALUES('Playa Amatique Bay',1,'https://e1.pxfuel.com/desktop-wallpaper/341/76/desktop-wallpaper-honduras-8750-honduras.jpg',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('San Juan del Mar',1,'https://www.palmasdelmar.com/v2/wp-content/uploads/2016/11/SJ-Slide-12.png',1,1,GETDATE(),NULL,NULL);
+VALUES('San Juan del Mar',1,'https://w0.peakpx.com/wallpaper/558/175/HD-wallpaper-sunset-in-san-juan-s-beach-beach-dawn-horizon-ocean-summer-nature-palm-sunset.jpg',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('PUEBLO NUEVO , OMOA',1,'https://hondurasaldia.news/wp-content/uploads/2022/10/omoa-y-sus-atractivos-para-disfrutar-con-familia-o-amigos-7.webp',1,1,GETDATE(),NULL,NULL);
+VALUES('PUEBLO NUEVO , OMOA',1,'https://www.honduras.com/wp-content/uploads/2021/08/cabanas-pueblo-nuevo-9.jpg',1,1,GETDATE(),NULL,NULL);
 GO
 
 
@@ -1692,6 +1692,35 @@ INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreado
 VALUES (2,16,1);
 INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
 VALUES (2,17,1);
+
+
+
+
+CREATE TABLE Acti.ActividadesXFecha
+(
+  acfe_Id              INT IDENTITY(1,1),
+  acti_Id              INT,
+  acfe_Fecha           DATE,
+  acfe_Cantidad        INT, 
+
+  acfe_Estado					BIT DEFAULT 1,
+  acfe_UsuarioCreador			INT,
+  acfe_FechaCreacion			DATETIME DEFAULT GETDATE(),
+  acfe_UsuarioModificador		INT,
+  acfe_FechaModificacion		DATETIME
+
+
+  CONSTRAINT FK_Acti_tbActi_acti_Id FOREIGN KEY (acti_Id) REFERENCES Acti.tbActividades(acti_Id),
+)
+GO
+
+
+
+INSERT INTO Acti.ActividadesXFecha(acti_Id,acfe_Fecha,acfe_Cantidad)
+VALUES(1,'2023-05-06',15)
+
+
+
 
 
 
