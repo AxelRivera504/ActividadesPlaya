@@ -5,7 +5,6 @@
 CREATE DATABASE DB_ArenaMagica
 go
 use DB_ArenaMagica
-
 go 
 
 CREATE SCHEMA Gral
@@ -17,7 +16,7 @@ go
 CREATE SCHEMA Acti
 
 CREATE TABLE Gral.tbEstadosCiviles(
-	esci_id					CHAR(1),
+	esci_id					INT IDENTITY(1,1),
 	esci_Descripcion	    VARCHAR(200),
 	esci_Estado				INT DEFAULT (1),
 	esci_UsuarioCreador		INT DEFAULT 1,
@@ -119,7 +118,7 @@ CREATE TABLE Acti.tbEncargados
 	enca_Email					NVARCHAR(300),
 	enca_Telefono				CHAR(8),
 	enca_Sexo					CHAR(1),
-	esci_id			     		CHAR(1),
+	esci_id			     		INT,
 	enca_FechaNac               DATE,
 	enca_Estado					INT DEFAULT 1,
 	enca_UsuarioCreador			INT DEFAULT 1,
@@ -253,7 +252,7 @@ GO
 
 CREATE TABLE Acti.tbEncargadosXActividades
 (
-  enac_Id    INT,
+  enac_Id    INT IDENTITY(1,1),
   enca_Id    INT,
   acti_Id    INT,
 

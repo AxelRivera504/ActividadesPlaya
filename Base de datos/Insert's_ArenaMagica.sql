@@ -2,32 +2,67 @@ USE DB_ArenaMagica
 
 GO
 
+
+DECLARE @tableA TABLE(
+	pass VARBINARY(MAX)
+)
+
+DECLARE @tableB TABLE(
+	pass VARCHAR(MAX)
+)
+
+DECLARE @x VARCHAR(MAX) = 'awsd'
+DECLARE @p1 VARBINARY(MAX) = HASHBYTES('SHA2_512', @x)
+DECLARE @p2 VARCHAR(MAX) = HASHBYTES('SHA2_512', @x)
+
+INSERT INTO @tableA
+VALUES(@p1)
+
+INSERT INTO @tableB
+VALUES(@p2)
+
+SELECT * FROM @tableA 
+SELECT * FROM @tableA WHERE pass = @p1
+SELECT * FROM @tableB 
+SELECT * FROM @tableB WHERE pass = @p2
+
+INSERT INTO acce.tbUsuarios(usua_Usuario, usua_Clave, usua_EsAdmin, enca_ID, role_ID,usua_UsuarioCreador)
+VALUES ('juan', @p2, 1, 1,2, 1),
+	   ('awsd', @p2, 1, 1,1, 1)
+       
+
+
+
+
+
+
+
 --************************************************ INSERTS DE LA DB_ArenaMagica *****************************************************************--
 
 --***************************************************** INSERTS tbEstadosCiviles ***************************************************************--
 
-INSERT INTO Gral.tbEstadosCiviles(esci_id,esci_Descripcion, esci_Estado, esci_UsuarioCreador, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES('S','Soltero(a)',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
+VALUES(1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Gral.tbEstadosCiviles(esci_id, esci_Descripcion, esci_Estado, esci_UsuarioCreador, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES ('C','Casado(a)',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
+VALUES (1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Gral.tbEstadosCiviles(esci_id, esci_Descripcion, esci_Estado, esci_UsuarioCreador, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES ('D','Divorciado(a)',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado,esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
+VALUES (1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Gral.tbEstadosCiviles(esci_id, esci_Descripcion, esci_Estado, esci_UsuarioCreador, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES ('U','Union Libre',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
+VALUES (1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Gral.tbEstadosCiviles(esci_id, esci_Descripcion, esci_Estado, esci_UsuarioCreador, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES ('V','Viudo(a)',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
+VALUES (1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Gral.tbEstadosCiviles(esci_id, esci_Descripcion, esci_Estado, esci_UsuarioCreador, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES('A','Amante',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
+VALUES(1,1,GETDATE(),NULL,NULL);
 GO
 
 --**************************************************** /INSERTS tbEstadosCiviles ***************************************************************--
@@ -1223,25 +1258,25 @@ GO
 
 
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
-VALUES ('Juan', 'Pérez', '1234567890123', 'juan.perez@example.com', '12345678', 'M', 'c', '1990-01-01');
+VALUES ('Juan', 'Pérez', '1234567890123', 'juan.perez@example.com', '12345678', 'M', 2, '1990-01-01');
 
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
-VALUES ('María', 'González', '9876543210987', 'maria.gonzalez@example.com', '87654321', 'F', 's', '1985-05-10');
+VALUES ('María', 'González', '9876543210987', 'maria.gonzalez@example.com', '87654321', 'F', 1, '1985-05-10');
 
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
-VALUES ('Pedro', 'López', '4567890123456', 'pedro.lopez@example.com', '54321098', 'M', 'C', '1998-07-15');
+VALUES ('Pedro', 'López', '4567890123456', 'pedro.lopez@example.com', '54321098', 'M', 5, '1998-07-15');
 
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
-VALUES ('Ana', 'Martínez', '7890123456789', 'ana.martinez@example.com', '98765432', 'F', 'C', '1982-03-20');
+VALUES ('Ana', 'Martínez', '7890123456789', 'ana.martinez@example.com', '98765432', 'F', 4, '1982-03-20');
 
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
-VALUES ('Carlos', 'Rodríguez', '3210987654321', 'carlos.rodriguez@example.com', '67890123', 'M', 's', '1995-11-25');
+VALUES ('Carlos', 'Rodríguez', '3210987654321', 'carlos.rodriguez@example.com', '67890123', 'M', 3, '1995-11-25');
 
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
-VALUES ('Luisa', 'Hernández', '6543210987654', 'luisa.hernandez@example.com', '01234567', 'F', 'S', '1993-09-12');
+VALUES ('Luisa', 'Hernández', '6543210987654', 'luisa.hernandez@example.com', '01234567', 'F', 2, '1993-09-12');
 
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
-VALUES ('Javier', 'Gómez', '2109876543210', 'javier.gomez@example.com', '76543210', 'M', 'C', '1997-02-18');
+VALUES ('Javier', 'Gómez', '2109876543210', 'javier.gomez@example.com', '76543210', 'M', 1, '1997-02-18');
 
 
 /**************************************INSERT tbClientes****************************************************************/
@@ -1404,52 +1439,406 @@ VALUES ('Red de Vóley Playa', 2, 8, 1);
 INSERT INTO Acti.tbEquipos (equi_Descripcion, equi_UsoActual, equi_UsoLimite, equi_Estado)
 VALUES ('Colchoneta Inflable', 3, 12, 1);
 
-select * from [Acti].[tbActividades]
-select * from [Acti].[tbEquipos]
-
 
 
 
 
 /****************************Insert tbEquipoXActividades************************************/
-INSERT INTO Acti.EquipoXActividades (acti_Id, equi_Id)
+INSERT INTO Acti.tbEquipoXActividades(acti_Id, equi_Id)
 VALUES (1, 1);
 
-INSERT INTO Acti.EquipoXActividades (acti_Id, equi_Id)
+INSERT INTO Acti.tbEquipoXActividades (acti_Id, equi_Id)
 VALUES (2, 2);
 
-INSERT INTO Acti.EquipoXActividades (acti_Id, equi_Id)
+INSERT INTO Acti.tbEquipoXActividades (acti_Id, equi_Id)
 VALUES (1, 3);
 
-INSERT INTO Acti.EquipoXActividades (acti_Id, equi_Id)
+INSERT INTO Acti.tbEquipoXActividades (acti_Id, equi_Id)
 VALUES (4, 4);
 
-INSERT INTO Acti.EquipoXActividades (acti_Id, equi_Id)
+INSERT INTO Acti.tbEquipoXActividades (acti_Id, equi_Id)
 VALUES (5, 5);
 
-INSERT INTO Acti.EquipoXActividades (acti_Id, equi_Id)
+INSERT INTO Acti.tbEquipoXActividades (acti_Id, equi_Id)
 VALUES (1, 2);
 
-INSERT INTO Acti.EquipoXActividades (acti_Id, equi_Id)
+INSERT INTO Acti.tbEquipoXActividades (acti_Id, equi_Id)
 VALUES (2, 3);
 
-INSERT INTO Acti.EquipoXActividades (acti_Id, equi_Id)
+INSERT INTO Acti.tbEquipoXActividades (acti_Id, equi_Id)
 VALUES (3, 4);
 
-INSERT INTO Acti.EquipoXActividades (acti_Id, equi_Id)
+INSERT INTO Acti.tbEquipoXActividades (acti_Id, equi_Id)
 VALUES (4, 5);
 
-INSERT INTO Acti.EquipoXActividades (acti_Id, equi_Id)
+INSERT INTO Acti.tbEquipoXActividades (acti_Id, equi_Id)
 VALUES (5, 1);
+
+
+
+
 
 
 /*******************************INSERT Acti.tbEncargadosXActividades***********************************/
 GO
 
-INSERT INTO Acti.EncargadosXActividades(enca_Id,acti_Id)
+INSERT INTO Acti.tbEncargadosXActividades(enca_Id,acti_Id)
 VALUES(1,1)
 GO
 
-INSERT INTO Acti.EncargadosXActividades(enca_Id,acti_Id)
+INSERT INTO Acti.tbEncargadosXActividades(enca_Id,acti_Id)
 VALUES(2,2)
 
+INSERT INTO Acti.tbEncargadosXActividades(enca_Id,acti_Id)
+VALUES(3,3)
+
+
+INSERT INTO Acti.tbEncargadosXActividades(enca_Id,acti_Id)
+VALUES(4,4)
+
+
+INSERT INTO Acti.tbEncargadosXActividades(enca_Id,acti_Id)
+VALUES(5,5)
+
+
+INSERT INTO Acti.tbEncargadosXActividades(enca_Id,acti_Id)
+VALUES(6,6)
+
+
+INSERT INTO Acti.tbEncargadosXActividades(enca_Id,acti_Id)
+VALUES(7,7)
+
+
+/****************************Insert Acti.tbMantenimiento*********************************/
+INSERT INTO Acti.tbMantenimiento (mant_Descricion, mant_UsuarioCreador, mant_FechaCreacion) 
+VALUES ('LLenado de tanques', 1, GETDATE());
+
+INSERT INTO Acti.tbMantenimiento (mant_Descricion, mant_UsuarioCreador, mant_FechaCreacion) 
+VALUES ('Limpieza de utencilios', 2, GETDATE());
+
+INSERT INTO Acti.tbMantenimiento (mant_Descricion, mant_UsuarioCreador, mant_FechaCreacion) 
+VALUES ('Reparacion', 1, GETDATE());
+
+INSERT INTO Acti.tbMantenimiento (mant_Descricion, mant_UsuarioCreador, mant_FechaCreacion) 
+VALUES ('Limaduras', 1, GETDATE());
+
+INSERT INTO Acti.tbMantenimiento (mant_Descricion, mant_UsuarioCreador, mant_FechaCreacion) 
+VALUES ('Barometro', 2, GETDATE());
+
+INSERT INTO Acti.tbMantenimiento (mant_Descricion, mant_UsuarioCreador, mant_FechaCreacion) 
+VALUES ('Costura', 1, GETDATE());
+
+
+
+/****************************Insertar Acti.tbMantenimientoXEquipo *******************************/
+INSERT INTO Acti.tbMantenimientoXEquipo (equi_Id, mant_Id, maeq_UsuarioCreador, maeq_FechaCreacion)
+VALUES (1, 1, 1, GETDATE());
+
+INSERT INTO Acti.tbMantenimientoXEquipo (equi_Id, mant_Id, maeq_UsuarioCreador, maeq_FechaCreacion) 
+VALUES (2, 1, 2, GETDATE());
+
+INSERT INTO Acti.tbMantenimientoXEquipo (equi_Id, mant_Id, maeq_UsuarioCreador, maeq_FechaCreacion) 
+VALUES (3, 4, 1, GETDATE());
+
+INSERT INTO Acti.tbMantenimientoXEquipo (equi_Id, mant_Id, maeq_UsuarioCreador, maeq_FechaCreacion) 
+VALUES (4, 2, 1, GETDATE());
+
+INSERT INTO Acti.tbMantenimientoXEquipo (equi_Id, mant_Id, maeq_UsuarioCreador, maeq_FechaCreacion) 
+VALUES (5, 5, 2, GETDATE());
+
+INSERT INTO Acti.tbMantenimientoXEquipo (equi_Id, mant_Id, maeq_UsuarioCreador, maeq_FechaCreacion) 
+VALUES (6, 6, 2
+, GETDATE());
+
+
+
+/***************************Insertar tbFactura****************************/
+INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
+VALUES (1, 100.00, 15.00, 115.00, 1, GETDATE());
+
+INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
+VALUES (2, 200.00, 30.00, 230.00, 2, GETDATE());
+
+INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
+VALUES (3, 150.00, 22.50, 172.50, 1, GETDATE());
+
+INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
+VALUES (4, 180.00, 27.00, 207.00, 1, GETDATE());
+
+INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
+VALUES (5, 250.00, 37.50, 287.50, 2, GETDATE());
+
+INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
+VALUES (6, 300.00, 45.00, 345.00, 1, GETDATE());
+
+INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
+VALUES (7, 220.00, 33.00, 253.00, 1, GETDATE());
+
+INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
+VALUES (8, 190.00, 28.50, 218.50, 2, GETDATE());
+
+INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
+VALUES (9, 280.00, 42.00, 322.00, 1, GETDATE());
+
+INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
+VALUES (10, 150.00, 22.50, 172.50, 1, GETDATE());
+
+/***************************Insertar tbRoles ****************************/
+INSERT INTO Acce.tbRoles(role_Descripcion,role_UsuarioCreador)
+vALUES ('Digitador',1);
+       
+INSERT INTO Acce.tbRoles(role_Descripcion,role_UsuarioCreador)
+vALUES('Administrador',1);   
+GO
+	
+	-------Insertar Pantallas-----
+INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
+VALUES('Cliente',1, GETDATE());
+      
+INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
+VALUES ('Cliente/reservacion',1, GETDATE());	  
+	  
+INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
+VALUES ('Reservacion',1, GETDATE());
+      	  
+INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
+VALUES ('Mantenimientos',1, GETDATE()); 
+	  	  
+INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
+VALUES ('Mantenimientos/Equipos',1, GETDATE());
+      
+	  
+INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
+VALUES ('Playas',1, GETDATE()); 
+	  
+	  
+INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
+VALUES ('Departamentos',1, GETDATE());
+	  
+	  
+INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
+VALUES ('Municipios',1, GETDATE());
+      	  
+INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
+VALUES ('Playa',1, GETDATE());
+	  
+INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
+VALUES ('MetodosPago',1, GETDATE());
+	  
+INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
+VALUES ('Direccion',1, GETDATE());
+      	  
+INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
+VALUES ('EstadosCiviles',1, GETDATE());
+	  
+INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
+VALUES ('Equipo/Actividades',1, GETDATE());
+      
+INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
+VALUES ('Facturas',1, GETDATE());
+
+INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
+VALUES ('Equipos',1, GETDATE()); 	  
+	  
+INSERT INTO [acce].[tbPantallas](pant_Descripcion, pant_UsuarioCreador, pant_FechaCreacion)
+VALUES ('Usuarios',1, GETDATE());
+	  
+INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
+VALUES ('Roles',1, GETDATE());
+
+
+select * from Acce.tbPantallas
+select * from Acce.tbRoles
+	  -------Insertar RolesXPantallas-----
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (1,1,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (1,2,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (1,10,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (1,11,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (1,15,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (1,17,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (2,1,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (2,2,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (2,3,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (2,4,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (2,6,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (2,7,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (2,8,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (2,9,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (2,10,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (2,11,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (2,12,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (2,13,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (2,14,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (2,15,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (2,16,1);
+INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
+VALUES (2,17,1);
+
+
+
+
+ALTER TABLE gral.tbEstadosCiviles
+ADD CONSTRAINT FK_gral_tbEstadosCiviles_esci_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY (esci_UsuarioCreador) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_gral_tbEstadosCiviles_esci_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY (esci_UsuarioModificador) REFERENCES acce.tbUsuarios (usua_ID)	
+GO
+
+
+ALTER TABLE gral.tbDepartamentos
+ADD CONSTRAINT FK_gral_tbDepartamentos_dept_UsuarioCreador_acce_tbUsuarios_usua_ID	FOREIGN KEY (dept_UsuarioCreador) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_gral_tbDepartamentos_dept_UsuarioModificador_acce_tbUsuarios_usua_ID	FOREIGN KEY (dept_UsuarioModificador) REFERENCES acce.tbUsuarios (usua_ID)
+GO	
+
+
+ALTER TABLE gral.tbMunicipios
+ADD CONSTRAINT FK_gral_tbMunicipios_muni_UsuarioCreador_acce_tbUsuarios_usua_ID	FOREIGN KEY (muni_UsuarioCreador) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_gral_tbMunicipios_muni_UsuarioModificador_acce_tbUsuarios_usua_ID	FOREIGN KEY (muni_UsuarioModificador) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+
+ALTER TABLE gral.tbMetodosPago
+ADD CONSTRAINT FK_gral_tbMetodosPago_pago_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY (mepa_UsuarioCreador) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_gral_tbMetodosPago_pago_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY (mepa_UsuarioModificador) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+
+ALTER TABLE acce.tbRoles
+ADD CONSTRAINT FK_acce_tbRoles_role_UsuarioCreador_tbUsuarios_usua_ID FOREIGN KEY (role_UsuarioCreador) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_acce_tbRoles_role_UsuarioModificador_tbUsuarios_usua_ID FOREIGN KEY (role_UsuarioModificador) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+ALTER TABLE acce.tbPantallas
+ADD CONSTRAINT FK_acce_tbPantallas_pant_UsuarioCreador_tbUsuarios_usua_ID FOREIGN KEY (pant_UsuarioCreador) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_acce_tbPantallas_pant_UsuarioModificador_tbUsuarios_usua_ID FOREIGN KEY (pant_UsuarioModificador) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+
+ALTER TABLE acce.tbRolesXPantallas
+ADD	CONSTRAINT FK_acce_tbRolesXPantallas_roleXpant_UsuarioCreador_tbUsuarios_usua_ID FOREIGN KEY (roleXpant_UsuarioCreador) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_acce_tbRolesXPantallas_roleXpant_UsuarioModificador_tbUsuarios_usua_ID FOREIGN KEY (roleXpant_UsuarioModificador) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+
+
+ALTER TABLE acce.tbUsuarios
+ADD CONSTRAINT FK_acce_tbUsuarios_cons_tbEmpleados_empl_ID FOREIGN KEY (enca_ID) REFERENCES [Acti].[tbEncargados](enca_ID),
+	CONSTRAINT FK_acce_tbUsuarios_usua_UsuarioCreador_tbUsuarios_usua_ID FOREIGN KEY (usua_UsuarioCreador) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_acce_tbUsuarios_usua_UsuarioModificador_tbUsuarios_usua_ID FOREIGN KEY (usua_UsuarioModificador) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+
+ALTER TABLE [Acti].[tbPlayas]
+ADD	
+	CONSTRAINT FK_cons_tbPlayas_play_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY (play_UsuarioCreador) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_cons_tbPlayas_play_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY (play_UsuarioModificador) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+
+ALTER TABLE Acti.tbEncargados
+ADD	
+	CONSTRAINT FK_cons_tbEncargados_enca_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY (enca_UsuarioCreador) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_cons_tbEncargados_enca_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY (enca_UsuarioModificador) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+
+ALTER TABLE Acti.tbMantenimiento
+ADD	
+	CONSTRAINT FK_acti_tbMantenimiento_mant_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY (mant_UsuarioCreador) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_acti_tbMantenimiento_mant_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY (mant_UsuarioModificador) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+------------------------------------------------------
+ALTER TABLE [Acti].[tbEncargados]
+ADD	
+	CONSTRAINT FK_Acti_tbEncargados_enca_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY (enca_UsuarioCreador) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_Acti_tbEncargados_enca_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY (enca_UsuarioModificador) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+
+ALTER TABLE [Acti].[tbEncargadosXActividades]
+ADD	
+	CONSTRAINT FK_cons_tbEncargadosXActividades_enac_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY ([enac_UsuarioCreador]) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_cons_tbEncargadosXActividades_enac_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY ([enac_UsuarioModificador]) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+
+-------------------------------------
+ALTER TABLE [Acti].[tbEquipos]
+ADD	
+	CONSTRAINT FK_Acti_tbEquipos_acti_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY ([equi_UsuarioCreador]) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_Acti_tbEquipos_acti_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY ([equi_UsuarioModificador]) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+
+
+ALTER TABLE [Acti].[tbEquipoXActividades]
+ADD	CONSTRAINT FK_acti_tbEquipoXActividades_eqac_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY ([eqac_UsuarioCreador]) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_acti_tbEquipoXActividades_eqac_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY ([eqac_UsuarioModificador]) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+---------------------------------------------
+ALTER TABLE [Acti].[tbFactura]
+ADD	
+	CONSTRAINT FK_Acti_tbFactura_fact_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY ([fuct_UsuarioCreador]) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_Acti_tbFactura_fact_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY ([fuct_UsuarioModificador]) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+---------------------------------------------
+ALTER TABLE [Acti].[tbMantenimientoXEquipo]
+ADD	
+	CONSTRAINT FK_acti_tbMantenimientoXEquipo_fabr_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY ([maeq_UsuarioCreador]) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_acti_tbMantenimientoXEquipo_fabr_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY ([maeq_UsuarioModificador]) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+
+ALTER TABLE [Acti].[tbReservaciones]
+ADD	
+	CONSTRAINT FK_acti_tbReservaciones_mate_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY ([rese_UsuarioCreador]) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_acti_tbReservaciones_mate_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY ([rese_UsuarioModificador]) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+
+ALTER TABLE [Gral].[tbDirecciones]
+ADD	
+	CONSTRAINT FK_acti_tbtbDirecciones_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY ([dire_UsuarioCreador]) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_acti_tbtbDirecciones_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY ([dire_UsuarioModificador]) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+
+ALTER TABLE Acti.tbActividades
+ADD	
+	CONSTRAINT FK_acti_tbActividades_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY ([acti_UsuarioCreador]) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_acti_tbActividades_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY ([acti_UsuarioModificador]) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+ALTER TABLE Acti.tbClientes
+ADD	
+	CONSTRAINT FK_acti_tbClientes_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY ([clie_UsuarioCreador]) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_acti_tbClientes_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY ([clie_UsuarioModificador]) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+ALTER TABLE Acti.tbClienteXReservacion
+ADD	
+	CONSTRAINT FK_acti_tbClienteXReservacion_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY ([clre_UsuarioCreador]) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_acti_tbClienteXReservacion_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY ([clre_UsuarioModificador]) REFERENCES acce.tbUsuarios (usua_ID)
+GO
