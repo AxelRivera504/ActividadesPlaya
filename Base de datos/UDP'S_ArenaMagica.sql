@@ -806,8 +806,8 @@ GO
 	GO
 	CREATE OR ALTER VIEW Acti.VW_tbActividades
 	AS
-	SELECT acti_Id, acti_Nombre, 
-	acti_PersActual, acti_Cupo, 
+	SELECT acti_Id, acti_Nombre,  
+	acti_Cupo, 
 	acti_Precio, play_Id, 
 	acti_Estado, acti_UsuarioCreador,[UsuarioCreador].usua_Usuario AS acti_UsuarioCreador_Nombre, 
 	acti_FechaCreacion, acti_UsuarioModificador,[UsuarioModificador].usua_Usuario AS acti_UsuarioModificador_Nombre, 
@@ -838,8 +838,8 @@ GO
 		BEGIN TRY
 			IF NOT EXISTS (SELECT acti_Nombre FROM Acti.tbActividades WHERE acti_Nombre = @acti_Nombre)
 				BEGIN
-					INSERT INTO Acti.tbActividades(acti_Nombre, 
-					acti_PersActual, acti_Cupo, 
+					INSERT INTO Acti.tbActividades(acti_Nombre,  
+					acti_Cupo, 
 					acti_Precio, play_Id, 
 					acti_Estado, acti_UsuarioCreador, 
 					acti_FechaCreacion, acti_UsuarioModificador, 
@@ -945,41 +945,115 @@ GO
 
 	/*Reservaciones Insert*/
 	GO
-	CREATE OR ALTER PROCEDURE Acti.UDP_tbReservaciones_Insert
-	@rese_Cantidad INT,
-	@acti_Id INT,
-	@rese_UsuarioCreador INT,
-	@resultado INT OUTPUT
+	CREATE OR ALTER PROCEDURE Acti.InsertarReservacion
+	(
+	  @acti_Id INT,
+	  @rese_Cantidad INT,
+	  @rese_FechaReservacion DATE,
+	  @resultado INT OUT
+	)
 	AS
+	BEGIN
+	  -- Verificar si hay cupo disponible
+	  DECLARE @cuposDisponibles INT
+	  SELECT @cuposDisponibles = acti_Cupo - ISNULL(SUM(acfe_Cantidad), 0)
+	  FROM Acti.tbActividades a
+	  LEFT JOIN Acti.ActividadesXFecha axf ON a.acti_Id = axf.acti_Id
+	  WHERE a.acti_Id = @acti_Id
+	    AND axf.acfe_Fecha = @rese_FechaReservacion
+	  GROUP BY a.acti_Cupo
+	
+	  -- Insertar reservación si hay cupo disponible
+	  IF @cuposDisponibles >= @rese_Cantidad
+	  BEGIN
+	    INSERT INTO Acti.tbReservaciones (acti_Id, rese_Cantidad, rese_FechaReservacion)
+	    VALUES (@acti_Id, @rese_Cantidad, @rese_FechaReservacion)
+	    
+	    SET @resultado = 1 -- Éxito: reservación insertada
+	  END
+	  ELSE
+	  BEGIN
+	    SET @resultado = 0 -- Error: no hay cupo disponible
+	  END
+	END
+	GO
+
+	/*Reservacion Update*/
+	GO
+	CREATE PROCEDURE Acti.ActualizarReservacion
+(
+  @rese_Id INT,
+  @rese_Cantidad INT,
+  @rese_FechaReservacion DATE,
+  @resultado INT OUT
+)
+AS
 BEGIN
-    SET NOCOUNT ON;
+  -- Obtener la actividad asociada a la reservación
+  DECLARE @acti_Id INT
+  SELECT @acti_Id = acti_Id
+  FROM Acti.tbReservaciones
+  WHERE rese_Id = @rese_Id
 
-    DECLARE @cupo INT;
+  -- Verificar si hay cupo disponible
+  DECLARE @cuposDisponibles INT
+  SELECT @cuposDisponibles = acti_Cupo - ISNULL(SUM(acfe_Cantidad), 0)
+  FROM Acti.tbActividades a
+  LEFT JOIN Acti.ActividadesXFecha axf ON a.acti_Id = axf.acti_Id
+  WHERE a.acti_Id = @acti_Id
+    AND axf.acfe_Fecha = @rese_FechaReservacion
+  GROUP BY a.acti_Cupo
 
-	BEGIN TRY
-			    -- Verificar si hay cupo disponible
-		SELECT @cupo = acti_Cupo - acti_PersActual
-		FROM Acti.tbActividades
-		WHERE acti_Id = @acti_Id;
+  -- Actualizar reservación si hay cupo disponible
+  IF @cuposDisponibles >= (@rese_Cantidad - (SELECT rese_Cantidad FROM Acti.tbReservaciones WHERE rese_Id = @rese_Id))
+  BEGIN
+    UPDATE Acti.tbReservaciones
+    SET rese_Cantidad = @rese_Cantidad,
+        rese_FechaReservacion = @rese_FechaReservacion,
+        rese_FechaModificacion = GETDATE()
+    WHERE rese_Id = @rese_Id
 
-		IF @cupo >= @rese_Cantidad
-		BEGIN
-		    -- Insertar la reserva
-		    INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id, rese_UsuarioCreador, rese_FechaCreacion)
-		    VALUES (@rese_Cantidad, @acti_Id, 1, GETDATE());
-
-		    SET @resultado = 1;
-		END
-		ELSE
-		BEGIN
-		    SET @resultado = 2;
-		END
-	END TRY
-
-	BEGIN CATCH
-		SET @resultado = 0
-	END CATCH
+    SET @resultado = 1 -- Éxito: reservación actualizada
+  END
+  ELSE
+  BEGIN
+    SET @resultado = 0 -- Error: no hay cupo disponible
+  END
 END
+GO
+
+
+/*Reservaciones Delete*/
+GO
+CREATE PROCEDURE Acti.UDP_tbReservacion_Delete
+(
+  @rese_Id INT,
+  @resultado INT OUT
+)
+AS
+BEGIN
+  -- Verificar si la fecha de la reservación es anterior a la fecha actual
+  DECLARE @fechaReservacion DATE
+  SELECT @fechaReservacion = rese_FechaReservacion
+  FROM Acti.tbReservaciones
+  WHERE rese_Id = @rese_Id
+
+  IF @fechaReservacion < GETDATE()
+  BEGIN
+    -- Eliminar la reservación
+    DELETE FROM Acti.tbReservaciones
+    WHERE rese_Id = @rese_Id
+
+    SET @resultado = 1 -- Éxito: reservación eliminada
+  END
+  ELSE
+  BEGIN
+    SET @resultado = 0 -- Error: no se puede eliminar una reservación futura
+  END
+END
+GO
+
+
 
 
 	--******************* ********************************///UDP Y VISTA Reservaciones  *************************************************************************--
