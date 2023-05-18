@@ -360,14 +360,19 @@ FROM Acti.tbPlayas play INNER JOIN [Gral].[tbDirecciones] dire
 ON play.dire_Id = dire.dire_Id INNER JOIN Acce.tbUsuarios [UsuarioCreador]
 ON play.play_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
 ON play.play_UsuarioModificador = [UsuarioModificador].usua_ID
+WHERE play_Estado = 1
 
 /*Vista Playas UDP*/
---GO
---CREATE OR ALTER PROCEDURE 
+GO
+CREATE OR ALTER PROCEDURE Acti.UDP_tbPlayas_VW
+AS
+BEGIN
+	SELECT * FROM Acti.VW_tbPlayas
+END
 
 --Insertar Playa
 GO
-CREATE OR ALTER PROCEDURE Gral.UDP_tbPlayas_InsertarPlayas
+CREATE OR ALTER PROCEDURE Acti.UDP_tbPlayas_InsertarPlayas
 	@play_Playa				NVARCHAR(150),
 	@dire_id				INT,
 	@play_ImgUrl			NVARCHAR(MAX),
@@ -404,55 +409,53 @@ END
 
 --Editar Playa
 GO
-CREATE OR ALTER PROCEDURE Gral.UDP_tbPlayas_EditarPlayas
+CREATE OR ALTER PROCEDURE Acti.UDP_tbPlayas_EditarPlayas
 	@play_Id					INT,
 	@play_Playa					NVARCHAR(150),
 	@dire_id					INT,
+	@play_ImgUrl				NVARCHAR(MAX),
 	@play_UsuarioModificador	INT,
 	@Status						INT OUTPUT
 AS
 BEGIN 
-	DECLARE @Id INT;
 	BEGIN TRY
-		SELECT @Id = @play_Id FROM tbPlayas WHERE play_Playa = @play_Playa AND dire_id = @dire_id;
-		IF (@play_Id <> @Id)
+		IF NOT EXISTS(SELECT play_Playa FROM Acti.tbPlayas WHERE play_Playa = @play_Playa AND play_Id != @play_Id)
+			BEGIN 
+				UPDATE Acti.tbPlayas
+				SET play_Playa = @play_Playa,
+					dire_Id = @dire_id,
+					play_ImgUrl = @play_ImgUrl,
+					play_UsuarioModificador = @play_UsuarioModificador,
+					play_FechaModificacion = GETDATE()
+				WHERE play_Id = @play_Id
+				SELECT 1
+			END
+		ELSE 
 		BEGIN
-			SET @Status = 1
-		END
-		ELSE
-		BEGIN
-			UPDATE [Gral].[tbPlayas]
-			   SET [play_Playa] = @play_Playa
-				  ,[dire_id] = @dire_id
-				  ,[play_UsuarioModificador] = @play_UsuarioModificador
-				  ,[play_FechaModificacion] = GETDATE()
-			 WHERE play_Id = @play_Id
-			 SET @Status = 2
+			SELECT 2
 		END
 	END TRY
+
 	BEGIN CATCH
-		SET @Status = 3
+		SELECT 0
 	END CATCH
 END
 
-GO
-
 --Eliminar Playas
+GO
 CREATE OR ALTER PROCEDURE Gral.UDP_tbPlayas_EliminarPlayas
-@play_id			INT,
-@status				INT OUTPUT
+@play_id			INT
 AS
 BEGIN
 BEGIN TRY		
 	
-		UPDATE	[Gral].[tbPlayas]						
+		UPDATE	Acti.tbPlayas					
 		SET		play_Estado = 0
 		WHERE	play_id = @play_id
-		SET @status = 1;
-			
+		SELECT 1
 	END TRY
 	BEGIN CATCH
-		SET @status = 0;
+		SELECT 0
 	END CATCH
 END
 
