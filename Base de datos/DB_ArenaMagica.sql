@@ -179,6 +179,7 @@ CREATE TABLE Acti.tbReservaciones
   rese_Id       INT IDENTITY(1,1), 
   rese_Cantidad INT,
   acti_Id       INT,
+  rese_FechaReservacion DATE,
   
   rese_Estado					INT DEFAULT 1,
   rese_UsuarioCreador			INT DEFAULT 1,

@@ -948,17 +948,38 @@ GO
 	CREATE OR ALTER PROCEDURE Acti.UDP_tbReservaciones_Insert
 	@rese_Cantidad INT,
 	@acti_Id INT,
-	@rese_UsuarioCreador INT
+	@rese_UsuarioCreador INT,
+	@resultado INT OUTPUT
 	AS
-	BEGIN
-		BEGIN TRY
-			/*Hacer el codigo aqui*/
-		END TRY
+BEGIN
+    SET NOCOUNT ON;
 
-		BEGIN CATCH
-			SELECT 0
-		END CATCH
-	END
+    DECLARE @cupo INT;
+
+	BEGIN TRY
+			    -- Verificar si hay cupo disponible
+		SELECT @cupo = acti_Cupo - acti_PersActual
+		FROM Acti.tbActividades
+		WHERE acti_Id = @acti_Id;
+
+		IF @cupo >= @rese_Cantidad
+		BEGIN
+		    -- Insertar la reserva
+		    INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id, rese_UsuarioCreador, rese_FechaCreacion)
+		    VALUES (@rese_Cantidad, @acti_Id, 1, GETDATE());
+
+		    SET @resultado = 1;
+		END
+		ELSE
+		BEGIN
+		    SET @resultado = 2;
+		END
+	END TRY
+
+	BEGIN CATCH
+		SET @resultado = 0
+	END CATCH
+END
 
 
 	--******************* ********************************///UDP Y VISTA Reservaciones  *************************************************************************--
