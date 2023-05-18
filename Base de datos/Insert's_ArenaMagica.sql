@@ -1356,7 +1356,7 @@ INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
 VALUES (2, 4,'11-6-2023');
 GO
 INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
-VALUES (5, 5,'16-6-2023');
+VALUES (5, 5,'10-6-2023');
 GO
 INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
 VALUES (2, 2,'05-7-2023');
