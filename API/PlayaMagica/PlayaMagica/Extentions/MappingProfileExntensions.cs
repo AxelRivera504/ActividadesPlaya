@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using PlayaMagica.Entities.Entities;
 using PlayaMagica.Models;
+using PlayaMagica.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +20,10 @@ namespace PlayaMagica.Extentions
             CreateMap<EncargadosViewModel, tbEncargados>().ReverseMap();
             CreateMap<ClientesViewModel, tbClientes>().ReverseMap();
             CreateMap<PlayasViewModel, tbPlayas>().ReverseMap();
+            CreateMap<RolesViewModel, tbRoles>().ReverseMap();
+            CreateMap<RolesPorPantallaViewModel, tbRolesXPantallas>().ReverseMap();
+            CreateMap<tbPantallas,PantallasViewModel>().ReverseMap();
+            CreateMap<tbUsuarios, UsuariosViewModel>().ReverseMap();
         }
     }
 }

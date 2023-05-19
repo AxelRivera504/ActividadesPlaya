@@ -13,3 +13,18 @@ C:\Users\LAB02\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.DataAccess\o
 C:\Users\LAB02\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.dll
 C:\Users\LAB02\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.DataAccess\obj\Debug\net5.0\ref\PlayaMagica.DataAccess.dll
 C:\Users\LAB02\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.pdb
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.DataAccess\bin\Debug\net5.0\PlayaMagica.DataAccess.deps.json
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.DataAccess\bin\Debug\net5.0\PlayaMagica.DataAccess.dll
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.DataAccess\bin\Debug\net5.0\ref\PlayaMagica.DataAccess.dll
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.DataAccess\bin\Debug\net5.0\PlayaMagica.DataAccess.pdb
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.DataAccess\bin\Debug\net5.0\PlayaMagica.Entities.dll
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.DataAccess\bin\Debug\net5.0\PlayaMagica.Entities.pdb
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.csproj.AssemblyReference.cache
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.AssemblyInfoInputs.cache
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.AssemblyInfo.cs
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.csproj.CopyComplete
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.dll
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.DataAccess\obj\Debug\net5.0\ref\PlayaMagica.DataAccess.dll
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.pdb
