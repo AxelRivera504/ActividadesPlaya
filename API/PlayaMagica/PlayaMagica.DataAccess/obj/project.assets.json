@@ -5960,11 +5960,19 @@
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\LAB01\\Documents\\GitHub\\Nueva\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj",
       "projectName": "PlayaMagica.DataAccess",
       "projectPath": "C:\\Users\\LAB01\\Documents\\GitHub\\Nueva\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj",
       "packagesPath": "C:\\Users\\LAB01\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\LAB01\\Documents\\GitHub\\Nueva\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.DataAccess\\obj\\",
+=======
+      "projectUniqueName": "C:\\Users\\LAB01\\Documents\\GitHub\\Nueva\\ActividadesPlaya\\API\\PlayaMagica - copia\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj",
+      "projectName": "PlayaMagica.DataAccess",
+      "projectPath": "C:\\Users\\LAB01\\Documents\\GitHub\\Nueva\\ActividadesPlaya\\API\\PlayaMagica - copia\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj",
+      "packagesPath": "C:\\Users\\LAB01\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\LAB01\\Documents\\GitHub\\Nueva\\ActividadesPlaya\\API\\PlayaMagica - copia\\PlayaMagica.DataAccess\\obj\\",
+>>>>>>> parent of 787a193 (Merge Exitoso)
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\LAB01\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5981,8 +5989,13 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
+<<<<<<< HEAD
             "C:\\Users\\LAB01\\Documents\\GitHub\\Nueva\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {
               "projectPath": "C:\\Users\\LAB01\\Documents\\GitHub\\Nueva\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj"
+=======
+            "C:\\Users\\LAB01\\Documents\\GitHub\\Nueva\\ActividadesPlaya\\API\\PlayaMagica - copia\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {
+              "projectPath": "C:\\Users\\LAB01\\Documents\\GitHub\\Nueva\\ActividadesPlaya\\API\\PlayaMagica - copia\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj"
+>>>>>>> parent of 787a193 (Merge Exitoso)
             }
           }
         }
