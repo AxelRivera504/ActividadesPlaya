@@ -14,6 +14,9 @@ namespace PlayaMagica.Extentions
         {
             CreateMap<DepartamentosViewModel, tbDepartamentos>().ReverseMap();
             CreateMap<MunicipiosViewModel, tbMunicipios>().ReverseMap();
+            CreateMap<EstadosCivilesViewModel, tbEstadosCiviles>().ReverseMap();
+            CreateMap<MetodosPagoViewModel, tbMetodosPago>().ReverseMap();
+            CreateMap<DireccionesViewModel, tbDirecciones>().ReverseMap();
         }
     }
 }

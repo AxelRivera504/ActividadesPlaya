@@ -19,18 +19,23 @@ namespace PlayaMagica.DataAccess.Context
         {
         }
 
-        public virtual DbSet<ActividadesXFecha> ActividadesXFecha { get; set; }
-        public virtual DbSet<Gral_tbMetodosPago> Gral_tbMetodosPago { get; set; }
         public virtual DbSet<VW_tbActividades> VW_tbActividades { get; set; }
+        public virtual DbSet<VW_tbClientes> VW_tbClientes { get; set; }
         public virtual DbSet<VW_tbDepartamentos> VW_tbDepartamentos { get; set; }
         public virtual DbSet<VW_tbDirecciones> VW_tbDirecciones { get; set; }
         public virtual DbSet<VW_tbEncargados> VW_tbEncargados { get; set; }
         public virtual DbSet<VW_tbEquipos> VW_tbEquipos { get; set; }
         public virtual DbSet<VW_tbEstadosCiviles> VW_tbEstadosCiviles { get; set; }
+        public virtual DbSet<VW_tbFactura> VW_tbFactura { get; set; }
+        public virtual DbSet<VW_tbMantenimiento> VW_tbMantenimiento { get; set; }
+        public virtual DbSet<VW_tbMetodosPago> VW_tbMetodosPago { get; set; }
         public virtual DbSet<VW_tbMunicipios> VW_tbMunicipios { get; set; }
         public virtual DbSet<VW_tbPlayas> VW_tbPlayas { get; set; }
         public virtual DbSet<VW_tbReservaciones> VW_tbReservaciones { get; set; }
+        public virtual DbSet<VW_tbRoles> VW_tbRoles { get; set; }
+        public virtual DbSet<VW_tbUsuarios> VW_tbUsuarios { get; set; }
         public virtual DbSet<tbActividades> tbActividades { get; set; }
+        public virtual DbSet<tbActividadesXFecha> tbActividadesXFecha { get; set; }
         public virtual DbSet<tbClienteXReservacion> tbClienteXReservacion { get; set; }
         public virtual DbSet<tbClientes> tbClientes { get; set; }
         public virtual DbSet<tbDepartamentos> tbDepartamentos { get; set; }
@@ -56,47 +61,6 @@ namespace PlayaMagica.DataAccess.Context
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
 
-            modelBuilder.Entity<ActividadesXFecha>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("ActividadesXFecha", "Acti");
-
-                entity.Property(e => e.acfe_Estado).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.acfe_Fecha).HasColumnType("date");
-
-                entity.Property(e => e.acfe_FechaCreacion)
-                    .HasColumnType("datetime")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.acfe_FechaModificacion).HasColumnType("datetime");
-
-                entity.Property(e => e.acfe_Id).ValueGeneratedOnAdd();
-
-                entity.HasOne(d => d.acti)
-                    .WithMany()
-                    .HasForeignKey(d => d.acti_Id)
-                    .HasConstraintName("FK_Acti_tbActi_acti_Id");
-            });
-
-            modelBuilder.Entity<Gral_tbMetodosPago>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("Gral_tbMetodosPago");
-
-                entity.Property(e => e.mepa_Descripcion).HasMaxLength(200);
-
-                entity.Property(e => e.mepa_FechaCreacion).HasColumnType("datetime");
-
-                entity.Property(e => e.mepa_FechaModificacion).HasColumnType("datetime");
-
-                entity.Property(e => e.mepa_UsuarioCreador_Nombre).HasMaxLength(100);
-
-                entity.Property(e => e.mepa_UsuarioModificador_Nombre).HasMaxLength(100);
-            });
-
             modelBuilder.Entity<VW_tbActividades>(entity =>
             {
                 entity.HasNoKey();
@@ -114,6 +78,48 @@ namespace PlayaMagica.DataAccess.Context
                 entity.Property(e => e.acti_UsuarioCreador_Nombre).HasMaxLength(100);
 
                 entity.Property(e => e.acti_UsuarioModificador_Nombre).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<VW_tbClientes>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_tbClientes", "Acti");
+
+                entity.Property(e => e.clie_Apellidos)
+                    .HasMaxLength(300)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.clie_DNI)
+                    .HasMaxLength(13)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.clie_Email).HasMaxLength(300);
+
+                entity.Property(e => e.clie_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.clie_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.clie_FechaNac).HasColumnType("date");
+
+                entity.Property(e => e.clie_NombreCompleto)
+                    .IsRequired()
+                    .HasMaxLength(600)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.clie_Nombres)
+                    .HasMaxLength(300)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.clie_Sexo)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.clie_UsuarioCreador_Nombre).HasMaxLength(100);
+
+                entity.Property(e => e.clie_UsuarioModificador_Nombre).HasMaxLength(100);
             });
 
             modelBuilder.Entity<VW_tbDepartamentos>(entity =>
@@ -243,6 +249,59 @@ namespace PlayaMagica.DataAccess.Context
                 entity.Property(e => e.esci_UsuarioModificador_Nombre).HasMaxLength(100);
             });
 
+            modelBuilder.Entity<VW_tbFactura>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_tbFactura", "Acti");
+
+                entity.Property(e => e.fuct_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.fuct_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.fuct_Isv).HasColumnType("decimal(8, 2)");
+
+                entity.Property(e => e.fuct_Subtotal).HasColumnType("decimal(8, 2)");
+
+                entity.Property(e => e.fuct_Total).HasColumnType("decimal(8, 2)");
+
+                entity.Property(e => e.fuct_UsuarioCreador_Nombre).HasMaxLength(100);
+
+                entity.Property(e => e.fuct_UsuarioModificador_Nombre).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<VW_tbMantenimiento>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_tbMantenimiento", "Acti");
+
+                entity.Property(e => e.mant_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.mant_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.mant_UsuarioCreador_Nombre).HasMaxLength(100);
+
+                entity.Property(e => e.mant_UsuarioModificador_Nombre).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<VW_tbMetodosPago>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_tbMetodosPago", "Gral");
+
+                entity.Property(e => e.mepa_Descripcion).HasMaxLength(200);
+
+                entity.Property(e => e.mepa_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.mepa_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.mepa_UsuarioCreador_Nombre).HasMaxLength(100);
+
+                entity.Property(e => e.mepa_UsuarioModificador_Nombre).HasMaxLength(100);
+            });
+
             modelBuilder.Entity<VW_tbMunicipios>(entity =>
             {
                 entity.HasNoKey();
@@ -304,6 +363,53 @@ namespace PlayaMagica.DataAccess.Context
                 entity.Property(e => e.rese_UsuarioModificador_Nombre).HasMaxLength(100);
             });
 
+            modelBuilder.Entity<VW_tbRoles>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_tbRoles", "Acce");
+
+                entity.Property(e => e.role_Descripcion)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.role_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.role_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.role_UsuarioCreador_Nombre).HasMaxLength(100);
+
+                entity.Property(e => e.role_UsuarioModificador_Nombre).HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<VW_tbUsuarios>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_tbUsuarios", "Acce");
+
+                entity.Property(e => e.enca_NombreCompleto)
+                    .IsRequired()
+                    .HasMaxLength(600)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.role_Descripcion)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.usua_Clave).IsUnicode(false);
+
+                entity.Property(e => e.usua_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.usua_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.usua_Usuario).HasMaxLength(100);
+
+                entity.Property(e => e.usua_UsuarioCreador_Nombre).HasMaxLength(100);
+
+                entity.Property(e => e.usua_UsuarioModificador_Nombre).HasMaxLength(100);
+            });
+
             modelBuilder.Entity<tbActividades>(entity =>
             {
                 entity.HasKey(e => e.acti_Id)
@@ -329,6 +435,29 @@ namespace PlayaMagica.DataAccess.Context
                     .WithMany(p => p.tbActividades)
                     .HasForeignKey(d => d.play_Id)
                     .HasConstraintName("FK_Actil_tbActividades_play_id_Acti_tbPlayas_play_Id");
+            });
+
+            modelBuilder.Entity<tbActividadesXFecha>(entity =>
+            {
+                entity.HasKey(e => e.acfe_Id)
+                    .HasName("PL_Acti_tbActi_acfe_Id");
+
+                entity.ToTable("tbActividadesXFecha", "Acti");
+
+                entity.Property(e => e.acfe_Estado).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.acfe_Fecha).HasColumnType("date");
+
+                entity.Property(e => e.acfe_FechaCreacion)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.acfe_FechaModificacion).HasColumnType("datetime");
+
+                entity.HasOne(d => d.acti)
+                    .WithMany(p => p.tbActividadesXFecha)
+                    .HasForeignKey(d => d.acti_Id)
+                    .HasConstraintName("FK_Acti_tbActi_acti_Id");
             });
 
             modelBuilder.Entity<tbClienteXReservacion>(entity =>
