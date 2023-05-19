@@ -20,7 +20,15 @@ ON dept.dept_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios
 ON dept.dept_UsuarioModificador = [UsuarioModificador].usua_UsuarioModificador
 GO
 
+/*Vista Departamentos UDP*/
+CREATE OR ALTER PROCEDURE Gral.UDP_tbDepartamentos_VW
+AS
+BEGIN
+	SELECT * FROM Gral.VW_tbDepartamentos
+END
+
 --Insertar Departamentos
+GO
 CREATE OR ALTER PROCEDURE Gral.UDP_tbDepartamentos_InsertarDepartamentos
 	@dept_Descripcion		NVARCHAR(150),
 	@dept_UsuarioCreador	INT,
@@ -80,10 +88,11 @@ BEGIN TRY
 END
 
 --***************************************************** /UDP Y VISTA DEPARTAMENTOS ***********************************************************--
-GO
+
 --***************************************************** UDP Y VISTA MUNICIPIOS ***************************************************************--
 
 /*Vista Municipios*/
+GO
 CREATE OR ALTER VIEW Gral.VW_tbMunicipios
 AS
 SELECT	muni_Id, 
@@ -97,9 +106,16 @@ SELECT	muni_Id,
 FROM Gral.tbMunicipios T1 INNER JOIN Gral.tbDepartamentos T2
 ON T1.dept_Id = T2.dept_Id
 
+/*Vista Municipios UDP*/
 GO
+CREATE OR ALTER PROCEDURE Gral.UDP_tbMunicipios_VW
+AS
+BEGIN
+	SELECT * FROM Gral.VW_tbMunicipios
+END
 
 --Insertar Municipios
+GO
 CREATE OR ALTER PROCEDURE Gral_tbMunicipios_InsertarMunicipios
 @dept_Id				CHAR(2),
 @muni_Descripcion		NVARCHAR(150),
@@ -177,7 +193,13 @@ FROM Gral.tbEstadosCiviles esci INNER JOIN Acce.tbUsuarios [UsuarioCreador]
 ON esci.esci_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
 ON esci.esci_UsuarioModificador = [UsuarioModificador].usua_ID
 
-
+/*Vista Estados Civiles UDP*/
+GO
+CREATE OR ALTER PROCEDURE Gral.UDP_tbEstadosCiviles_VW
+AS
+BEGIN
+	SELECT * FROM Gral.VW_tbEstadosCiviles
+END
 
 --Insertar Estados Civiles
 GO
@@ -251,6 +273,14 @@ FROM	Gral.tbMetodosPago mepa INNER JOIN Acce.tbUsuarios [UsuarioCreador]
 ON mepa.mepa_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
 ON mepa.mepa_UsuarioModificador = [UsuarioModificador].usua_ID
 WHERE   mepa_Estado  = 1
+
+/*Vista Metodos de Pago UDP*/
+GO
+CREATE OR ALTER PROCEDURE Gral.UDP_tbMetodosPago_VW
+AS
+BEGIN
+	SELECT * FROM Gral.VW_tbMetodosPago
+END
 
 --Insertar Metodos de pago
 GO
@@ -945,7 +975,7 @@ GO
 
 	/*Reservaciones Insert*/
 	GO
-	CREATE OR ALTER PROCEDURE Acti.InsertarReservacion
+	CREATE OR ALTER PROCEDURE Acti.UDP_tbReservaciones_Insert
 	(
 	  @acti_Id INT,
 	  @rese_Cantidad INT,
@@ -980,7 +1010,7 @@ GO
 
 	/*Reservacion Update*/
 	GO
-	CREATE OR ALTER PROCEDURE Acti.ActualizarReservacion
+	CREATE OR ALTER PROCEDURE Acti.UDP_tbReservaciones_Update
 (
   @rese_Id INT,
   @rese_Cantidad INT,
@@ -1589,7 +1619,7 @@ END
 --***************************************************UDP Y VISTA MantenimientoXEquipo ****************************************************************************--
 /*Vista MantenimientoXEquipo*/
 GO
-CREATE OR ALTER PROCEDURE Acti.UDP_tbMantenimientoXEquipo_UDP
+CREATE OR ALTER PROCEDURE Acti.UDP_tbMantenimientoXEquipo_Select
 AS
 BEGIN
 	SELECT maeq_Id, equi_Id, 
@@ -1624,7 +1654,7 @@ END
 
 /*MantenimientoXEquipo Update*/
 GO
-CREATE OR ALTER PROCEDURE Acti.UDP_tbMantenimientoXEquipo_Insert
+CREATE OR ALTER PROCEDURE Acti.UDP_tbMantenimientoXEquipo_Update
 @maeq_Id INT,
 @equi_Id INT,
 @mant_Id INT,

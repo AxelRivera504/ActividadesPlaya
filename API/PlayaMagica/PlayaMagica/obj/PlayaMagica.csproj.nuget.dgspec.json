@@ -1,177 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica\\PlayaMagica.csproj": {}
+    "C:\\Users\\LAB02\\Desktop\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica\\PlayaMagica.csproj": {}
   },
   "projects": {
-    "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.BussinessLogic\\PlayaMagica.BussinessLogic.csproj": {
+    "C:\\Users\\LAB02\\Desktop\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica\\PlayaMagica.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.BussinessLogic\\PlayaMagica.BussinessLogic.csproj",
-        "projectName": "PlayaMagica.BussinessLogic",
-        "projectPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.BussinessLogic\\PlayaMagica.BussinessLogic.csproj",
-        "packagesPath": "C:\\Users\\axel2\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.BussinessLogic\\obj\\",
+        "projectUniqueName": "C:\\Users\\LAB02\\Desktop\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica\\PlayaMagica.csproj",
+        "projectName": "PlayaMagica",
+        "projectPath": "C:\\Users\\LAB02\\Desktop\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica\\PlayaMagica.csproj",
+        "packagesPath": "C:\\Users\\LAB02\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\LAB02\\Desktop\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\axel2\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net5.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
-            "projectReferences": {
-              "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj": {
-                "projectPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.414\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj",
-        "projectName": "PlayaMagica.DataAccess",
-        "projectPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj",
-        "packagesPath": "C:\\Users\\axel2\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.DataAccess\\obj\\",
-        "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
-        "configFilePaths": [
-          "C:\\Users\\axel2\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net5.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
-            "projectReferences": {
-              "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {
-                "projectPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj"
-              }
-            }
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
-          "dependencies": {
-            "Dapper": {
-              "target": "Package",
-              "version": "[2.0.123, )"
-            },
-            "Microsoft.AspNetCore.Http.Features": {
-              "target": "Package",
-              "version": "[5.0.17, )"
-            },
-            "Microsoft.AspNetCore.Mvc.Core": {
-              "target": "Package",
-              "version": "[2.2.5, )"
-            },
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[5.0.0, )"
-            },
-            "Microsoft.EntityFrameworkCore.SqlServer": {
-              "target": "Package",
-              "version": "[5.0.0, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.414\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
-        "projectName": "PlayaMagica.Entities",
-        "projectPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
-        "packagesPath": "C:\\Users\\axel2\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.Entities\\obj\\",
-        "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
-        "configFilePaths": [
-          "C:\\Users\\axel2\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\LAB02\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -184,73 +28,6 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {}
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.414\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica\\PlayaMagica.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica\\PlayaMagica.csproj",
-        "projectName": "PlayaMagica",
-        "projectPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica\\PlayaMagica.csproj",
-        "packagesPath": "C:\\Users\\axel2\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica\\obj\\",
-        "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
-        "configFilePaths": [
-          "C:\\Users\\axel2\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "net5.0"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
-            "projectReferences": {
-              "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.BussinessLogic\\PlayaMagica.BussinessLogic.csproj": {
-                "projectPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.BussinessLogic\\PlayaMagica.BussinessLogic.csproj"
-              },
-              "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {
-                "projectPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj"
-              }
-            }
           }
         },
         "warningProperties": {
@@ -312,7 +89,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.414\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.413\\RuntimeIdentifierGraph.json"
         }
       }
     }
