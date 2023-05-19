@@ -24,7 +24,16 @@ namespace PlayaMagica.DataAccess.Repositories.Gral
 
         public RequestStatus Insert(tbDepartamentos item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@dept_Descripcion", item.dept_Descripcion, DbType.String, ParameterDirection.Input);
+            parametros.Add("@dept_UsuarioCreador", item.dept_UsuarioCreador, DbType.Int32, ParameterDirection.Input);
+
+            var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbDepartamentos_Insert, parametros, commandType: CommandType.StoredProcedure);
+
+            result.CodeStatus = answer;
+            return result;
         }
 
         public IEnumerable<VW_tbDepartamentos> List()

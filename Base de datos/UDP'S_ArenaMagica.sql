@@ -31,8 +31,7 @@ END
 GO
 CREATE OR ALTER PROCEDURE Gral.UDP_tbDepartamentos_InsertarDepartamentos
 	@dept_Descripcion		NVARCHAR(150),
-	@dept_UsuarioCreador	INT,
-	@Status					INT OUTPUT
+	@dept_UsuarioCreador	INT
 AS
 BEGIN
 	BEGIN TRY
@@ -46,26 +45,31 @@ BEGIN
                 INSERT INTO gral.tbDepartamentos (dept_id, dept_Descripcion, dept_Estado, dept_UsuarioCreador, dept_FechaCreacion, dept_UsuarioModificador, dept_FechaModificacion)
                 VALUES (@NextNewIdDepto,@dept_Descripcion,1,@dept_UsuarioCreador,GETDATE(),NULL,NULL);
 
-                SET @Status = 1
+               SELECT 1
             END
-        ELSE 
-        BEGIN
-            SET @Status = 2 
-        END
+        ELSE IF EXISTS(SELECT * FROM Gral.tbDepartamentos WHERE dept_Descripcion = @dept_Descripcion AND dept_Estado = 0 )
+		BEGIN
+			UPDATE Gral.tbDepartamentos 
+			SET dept_Estado = 1
+			WHERE dept_Descripcion = @dept_Descripcion
+			SELECT 1
+		END
+		ELSE
+		BEGIN
+			SELECT 2
+		END
     END TRY
     BEGIN CATCH
-        SET @Status = 0
+      SELECT 0
     END CATCH
 END
 
-GO
-
 --Editar Departamentos
+GO
 CREATE OR ALTER PROCEDURE Gral.UDP_tbDepartamentos_EditarDepartamentos
 @dept_Id					CHAR(2),
 @dept_Descripcion			NVARCHAR(100),
-@dept_UsuarioModificador	INT,
-@Status						INT OUTPUT
+@dept_UsuarioModificador	INT
 AS
 BEGIN
 BEGIN TRY
@@ -75,15 +79,15 @@ BEGIN TRY
 				SET		dept_Descripcion			=@dept_Descripcion			,
 						dept_UsuarioModificador		=@dept_UsuarioModificador		
 				WHERE	dept_Id = @dept_Id
-				SET @Status = 1
+				SELECT 1
 			END
 		ELSE
 			BEGIN
-				SET @Status = 2
+		SELECT 2
 			END
 	END TRY
 	BEGIN CATCH
-		SET @Status = 3
+		SELECT 0
 	END CATCH
 END
 
