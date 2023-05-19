@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlayaMagica.Entities.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace PlayaMagica.DataAccess.Repositories.Acce
 {
-    public class RolesRepository : IRepository<tbRoles>
+    public class RolesRepository : IRepository<tbRoles, VW_tbRoles>
     {
-        public RequestStatus Delete(tbRoles item)
+        public RequestStatus Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public tbRoles Find(int? id)
+        public VW_tbRoles Find(int id)
         {
             throw new NotImplementedException();
         }
@@ -23,7 +24,7 @@ namespace PlayaMagica.DataAccess.Repositories.Acce
             throw new NotImplementedException();
         }
 
-        public IEnumerable<tbRoles> List()
+        public IEnumerable<VW_tbRoles> List()
         {
             throw new NotImplementedException();
         }
