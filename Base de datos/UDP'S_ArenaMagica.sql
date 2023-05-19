@@ -1568,6 +1568,11 @@ GO
 CREATE OR ALTER PROCEDURE Acti.UDP_tbMantenimientoXEquipo_UDP
 AS
 BEGIN
-
+	SELECT maeq_Id, equi_Id, 
+	mant_Id, maeq_Estado, 
+	maeq_UsuarioCreador, maeq_FechaCreacion, 
+	maeq_UsuarioModificador, maeq_FechaModificacion
+	FROM [Acti].[tbMantenimientoXEquipo]
+	WHERE maeq_Estado = 1
 END
 --***************************************************///UDP Y VISTA MantenimientoXEquipo ****************************************************************************--
