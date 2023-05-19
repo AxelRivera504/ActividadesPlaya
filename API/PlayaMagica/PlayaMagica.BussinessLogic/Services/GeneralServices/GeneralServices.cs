@@ -1,4 +1,5 @@
 ﻿using PlayaMagica.DataAccess.Repositories.Gral;
+using PlayaMagica.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,19 @@ namespace PlayaMagica.BussinessLogic.Services.GeneralServices
         }
 
         #region Departamentos
-
+        public IEnumerable<VW_tbDepartamentos> ListarDepartamentos()
+        {
+            try
+            {
+                var list = _departamentosRepository.List();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                
+                return Enumerable.Empty<VW_tbDepartamentos>();
+            }
+        }
         #endregion
 
         #region Municipios

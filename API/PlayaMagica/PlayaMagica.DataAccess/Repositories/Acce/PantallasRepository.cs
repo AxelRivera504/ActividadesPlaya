@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlayaMagica.Entities.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace PlayaMagica.DataAccess.Repositories.Acce
 {
-    public class PantallasRepository : IRepository<tbPantallas>
+    public class PantallasRepository : IRepository<tbPantallas, tbPantallas>
     {
-        public RequestStatus Delete(tbPantallas item)
+        public RequestStatus Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public tbPantallas Find(int? id)
+        public tbPantallas Find(int id)
         {
             throw new NotImplementedException();
         }

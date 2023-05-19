@@ -5,9 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\ActividadesServices\**" />
+    <EmbeddedResource Remove="Services\ActividadesServices\**" />
+    <None Remove="Services\ActividadesServices\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Services\AccesoServices\" />
     <Folder Include="Services\GeneralServices\" />
-    <Folder Include="Services\ActividadesServices\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PlayaMagica.DataAccess\PlayaMagica.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

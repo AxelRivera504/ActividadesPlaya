@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace PlayaMagica.DataAccess
 {
-    class RequestStatus
+    public class RequestStatus
     {
+        public int CodeStatus { get; set; }
+        public string MessageStatus { get; set; }
     }
 }
