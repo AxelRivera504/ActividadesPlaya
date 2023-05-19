@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using PlayaMagica.BussinessLogic.Services.AccesoServices;
 using PlayaMagica.BussinessLogic.Services.GeneralServices;
 using PlayaMagica.DataAccess;
 using PlayaMagica.DataAccess.Repositories.Acce;
@@ -30,6 +31,7 @@ namespace PlayaMagica.BussinessLogic
         public static void BussinessLogic(this IServiceCollection services)
         {
             services.AddScoped<GeneralServices>();
+            services.AddScoped<AccesoServices>();
         }
     }
 }

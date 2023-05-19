@@ -1450,7 +1450,7 @@ BEGIN
 				role_ID, usua_Estado, 
 				usua_UsuarioCreador, usua_FechaCreacion, 
 				usua_UsuarioModificador, usua_FechaModificacion)
-				VALUES(@usua_Usuario,@contraEncriptada,
+				VALUES(@usua_Usuario,@contraEncriptada,@enca_ID,
 				@role_ID,1,@usua_UsuarioCreador,
 				GETDATE(),NULL,NULL)
 				SELECT 1

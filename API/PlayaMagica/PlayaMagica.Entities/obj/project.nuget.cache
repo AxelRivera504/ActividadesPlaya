@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7sJ71xa/Vhjg4putMRiDdeoTX9h71nIaBcpSPpshxuNcv5ImWQwYkzBFP4wlBGSQCy5fyYgti5XdI9EGpvh+1g==",
+  "dgSpecHash": "s80UfLwI2en9j55X2EeXptonl0j4eJmX6Eust6HbkT1rx32SJNfkgvCtUjsjBnzkGZgpr8JyQrYSGpY0F/TfUA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\LAB01\\Documents\\GitHub\\Nueva\\ActividadesPlaya\\API\\PlayaMagica - copia\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
+  "projectFilePath": "C:\\Users\\LAB01\\Documents\\GitHub\\Nueva\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

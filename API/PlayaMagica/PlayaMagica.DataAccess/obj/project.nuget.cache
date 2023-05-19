@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "B+LBjhxvo0fwY7fPHnU57Q+JhZoBYHW3g5LbKiS8+ZVo2F4je1qXX/3mQCjfry4KQ9QBVmetrGikH0PIY4IAVQ==",
+  "dgSpecHash": "GJm7SBkg1m7kcPaY35VG0/eAz2ogEGGSGwnf6HycMKvr6NTVN3kC6BwAlkwZMpoziyj8+Uh7cG9vkLzctCwumQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\LAB01\\Documents\\GitHub\\Nueva\\ActividadesPlaya\\API\\PlayaMagica - copia\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj",
+  "projectFilePath": "C:\\Users\\LAB01\\Documents\\GitHub\\Nueva\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\LAB01\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\LAB01\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
