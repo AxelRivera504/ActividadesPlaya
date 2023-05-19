@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "v1yNvJpo4fh3rO6cAHUVXzRuAJyFiiTI16J0DNm84g69amuCiEivZT+Vr1cH7hbollOfGYdI/4ilIWPihzxN5Q==",
+  "dgSpecHash": "t4jFXzQjIRb/Sa4aUAyLfEGzqIrEIgL3nObgEwrCMoJA8VFxvqHc0cx8YG+E7ndMM1c5VeuLJjqd+Ve5CoOLyA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj",
+  "projectFilePath": "C:\\Users\\axel2\\OneDrive\\Documentos\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\axel2\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\axel2\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",

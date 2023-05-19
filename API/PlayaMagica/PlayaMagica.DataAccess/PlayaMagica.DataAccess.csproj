@@ -6,8 +6,11 @@
 
   <ItemGroup>
     <Folder Include="Repositories\Acce\" />
-    <Folder Include="Repositories\Acti\" />
     <Folder Include="Repositories\Gral\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PlayaMagica.Entities\PlayaMagica.Entities.csproj" />
   </ItemGroup>
 
 </Project>

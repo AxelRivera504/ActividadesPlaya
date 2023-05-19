@@ -530,13 +530,16 @@
           "lib/net5.0/Microsoft.Extensions.DependencyInjection.dll": {}
         }
       },
-      "Microsoft.Extensions.DependencyInjection.Abstractions/5.0.0": {
+      "Microsoft.Extensions.DependencyInjection.Abstractions/7.0.0": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
+          "lib/netstandard2.1/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
+          "lib/netstandard2.1/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {}
+        },
+        "build": {
+          "buildTransitive/netcoreapp2.0/Microsoft.Extensions.DependencyInjection.Abstractions.targets": {}
         }
       },
       "Microsoft.Extensions.DependencyModel/2.1.0": {
@@ -2009,6 +2012,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0",
           "PlayaMagica.DataAccess": "1.0.0"
         },
         "compile": {
@@ -2701,24 +2705,33 @@
         "version.txt"
       ]
     },
-    "Microsoft.Extensions.DependencyInjection.Abstractions/5.0.0": {
-      "sha512": "ORj7Zh81gC69TyvmcUm9tSzytcy8AVousi+IVRAI8nLieQjOFryRusSFh7+aLk16FN9pQNqJAiMd7BTKINK0kA==",
+    "Microsoft.Extensions.DependencyInjection.Abstractions/7.0.0": {
+      "sha512": "h3j/QfmFN4S0w4C2A6X7arXij/M/OVw3uQHSOFxnND4DyAzO1F9eMX7Eti7lU/OkSthEE0WzRsfT/Dmx86jzCw==",
       "type": "package",
-      "path": "microsoft.extensions.dependencyinjection.abstractions/5.0.0",
+      "path": "microsoft.extensions.dependencyinjection.abstractions/7.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
-        "lib/net461/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
-        "lib/net461/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "buildTransitive/net461/Microsoft.Extensions.DependencyInjection.Abstractions.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/Microsoft.Extensions.DependencyInjection.Abstractions.targets",
+        "lib/net462/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/net462/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "lib/net6.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/net6.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "lib/net7.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/net7.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
-        "microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",
+        "lib/netstandard2.1/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/netstandard2.1/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
         "microsoft.extensions.dependencyinjection.abstractions.nuspec",
-        "useSharedDesignerContext.txt",
-        "version.txt"
+        "useSharedDesignerContext.txt"
       ]
     },
     "Microsoft.Extensions.DependencyModel/2.1.0": {
@@ -6975,11 +6988,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica\\PlayaMagica.csproj",
+      "projectUniqueName": "C:\\Users\\axel2\\OneDrive\\Documentos\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica\\PlayaMagica.csproj",
       "projectName": "PlayaMagica",
-      "projectPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica\\PlayaMagica.csproj",
+      "projectPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica\\PlayaMagica.csproj",
       "packagesPath": "C:\\Users\\axel2\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica\\obj\\",
+      "outputPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -7002,11 +7015,11 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.BussinessLogic\\PlayaMagica.BussinessLogic.csproj": {
-              "projectPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.BussinessLogic\\PlayaMagica.BussinessLogic.csproj"
+            "C:\\Users\\axel2\\OneDrive\\Documentos\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.BussinessLogic\\PlayaMagica.BussinessLogic.csproj": {
+              "projectPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.BussinessLogic\\PlayaMagica.BussinessLogic.csproj"
             },
-            "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {
-              "projectPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj"
+            "C:\\Users\\axel2\\OneDrive\\Documentos\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {
+              "projectPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj"
             }
           }
         }

@@ -6,8 +6,11 @@
 
   <ItemGroup>
     <Folder Include="Services\AccesoServices\" />
-    <Folder Include="Services\GeneralServices\" />
     <Folder Include="Services\ActividadesServices\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PlayaMagica.DataAccess\PlayaMagica.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

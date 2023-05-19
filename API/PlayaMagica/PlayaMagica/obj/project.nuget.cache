@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9EayEul5ATVDa+A4r674judhQ52YnvjLNpktS0yEQeWwFygqxpOMe1N1TqajiwRBXr71YRz6ys5JAQNor9FZfg==",
+  "dgSpecHash": "zt5XIXuK7MATTQ5pByQ9I0PVPT8uR7l5/Vmc06/i/+m6MqAKOEucqtfn3UU2TVBO/JzB8BXSFHsPrnaqc9SVug==",
   "success": true,
-  "projectFilePath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica\\PlayaMagica.csproj",
+  "projectFilePath": "C:\\Users\\axel2\\OneDrive\\Documentos\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica\\PlayaMagica.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\axel2\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\axel2\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\7.0.0\\automapper.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512",
@@ -40,7 +40,7 @@
     "C:\\Users\\axel2\\.nuget\\packages\\microsoft.extensions.caching.memory\\5.0.0\\microsoft.extensions.caching.memory.5.0.0.nupkg.sha512",
     "C:\\Users\\axel2\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\axel2\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\5.0.0\\microsoft.extensions.dependencyinjection.5.0.0.nupkg.sha512",
-    "C:\\Users\\axel2\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\axel2\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\axel2\\.nuget\\packages\\microsoft.extensions.dependencymodel\\2.1.0\\microsoft.extensions.dependencymodel.2.1.0.nupkg.sha512",
     "C:\\Users\\axel2\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\2.2.0\\microsoft.extensions.fileproviders.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\axel2\\.nuget\\packages\\microsoft.extensions.hosting.abstractions\\2.2.0\\microsoft.extensions.hosting.abstractions.2.2.0.nupkg.sha512",

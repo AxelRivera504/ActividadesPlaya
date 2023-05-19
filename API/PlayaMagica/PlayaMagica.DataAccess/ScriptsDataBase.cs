@@ -22,10 +22,6 @@ namespace PlayaMagica.DataAccess
 
         #endregion
 
-        #region Playas
-
-        #endregion
-
         #region TipoDePago
 
         #endregion
@@ -38,25 +34,77 @@ namespace PlayaMagica.DataAccess
 
         #region Acceso UDP'S
 
-            #region Usuarios
+        #region Usuarios
 
-            #endregion
+        #endregion
 
-            #region Roles
+        #region Roles
 
-            #endregion
+        #endregion
 
-            #region RolesPorPantalla
+        #region RolesPorPantalla
 
-            #endregion
+        #endregion
 
-            #region Pantallas
+        #region Pantallas
 
-            #endregion                          
+        #endregion
 
         #endregion
 
         #region Actividades UDP'S
+
+        #region Playas
+
+        #endregion
+
+        #region Encargados
+
+        #endregion
+
+        #region Clientes
+
+        #endregion
+
+        #region Actividades
+
+        #endregion
+
+        #region Reservaciones
+
+        #endregion
+
+        #region ClienteXReservacion
+
+        #endregion
+
+        #region Equipos
+
+        #endregion
+
+        #region EquipoXActividades
+
+        #endregion
+
+        #region EncargadosXActividades
+
+        #endregion
+
+        #region Mantenimiento
+
+        #endregion
+
+        #region MantenimientoXEquipo
+
+        #endregion
+
+        #region Factura
+
+        #endregion
+
+        #region ActividadesXFecha
+
+        #endregion
 
         #endregion
 

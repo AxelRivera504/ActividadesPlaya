@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {}
+    "C:\\Users\\axel2\\OneDrive\\Documentos\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {}
   },
   "projects": {
-    "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {
+    "C:\\Users\\axel2\\OneDrive\\Documentos\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
+        "projectUniqueName": "C:\\Users\\axel2\\OneDrive\\Documentos\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
         "projectName": "PlayaMagica.Entities",
-        "projectPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
+        "projectPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
         "packagesPath": "C:\\Users\\axel2\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\PlayaMagica\\PlayaMagica.Entities\\obj\\",
+        "outputPath": "C:\\Users\\axel2\\OneDrive\\Documentos\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

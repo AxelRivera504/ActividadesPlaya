@@ -4,31 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlayaMagica.DataAccess.Repositories.Gral
+namespace PlayaMagica.DataAccess.Repositories.Acti
 {
-    public class PlayasRepository : IRepository<tbPlayas>
+    public class ActividadesRepository : IRepository<tbActividades>
     {
-        public RequestStatus Delete(tbPlayas item)
+        public RequestStatus Delete(tbActividades item)
         {
             throw new NotImplementedException();
         }
 
-        public tbPlayas Find(int? id)
+        public tbActividades Find(int? id)
         {
             throw new NotImplementedException();
         }
 
-        public RequestStatus Insert(tbPlayas item)
+        public RequestStatus Insert(tbActividades item)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<tbPlayas> List()
+        public IEnumerable<tbActividades> List()
         {
             throw new NotImplementedException();
         }
 
-        public RequestStatus Update(tbPlayas item)
+        public RequestStatus Update(tbActividades item)
         {
             throw new NotImplementedException();
         }
