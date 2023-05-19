@@ -5,12 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Repositories\Acti\**" />
-    <EmbeddedResource Remove="Repositories\Acti\**" />
-    <None Remove="Repositories\Acti\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Repositories\Acce\" />
   </ItemGroup>
 

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace PlayaMagica.Entities.Entities
 {
-    public partial class ActividadesXFecha
+    public partial class tbActividadesXFecha
     {
         public int acfe_Id { get; set; }
         public int? acti_Id { get; set; }
