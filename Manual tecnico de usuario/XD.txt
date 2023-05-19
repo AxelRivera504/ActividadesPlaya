@@ -1,0 +1,49 @@
+
+tbMantenimientoXEquipo
+tbFactura
+EncargadosXActividades
+EquipoXActividades
+tbClienteXReservacion
+tbReservaciones
+
+
+tbActividades listo
+tbPlayas listo
+tbEquipos listo
+tbMantenimiento listo
+tbRoles  listo
+tbPantallas listo
+tbRolesXPantallas listo
+tbUsuarios listo
+tbClienteslisto
+tbEncargados listo
+tbDirecciones listo
+tbMetodosPago listo
+tbMunicipios listo
+tbDepartamentos listo
+tbEstadosCiviles listo
+
+
+
+tbActividadesXFecha 
+EncargadosXActividades 
+tbMantenimientoXEquipo listo
+tbClienteXReservacion 
+EquipoXActividades 
+tbFactura listo
+tbReservaciones listo
+tbActividades listo
+tbPlayas listo
+tbEquipos listo
+tbMantenimiento listo
+tbRoles  listo
+tbPantallas listo
+tbRolesXPantallas listo
+tbUsuarios listo
+tbClientes listo
+tbEncargados listo
+tbDirecciones listo
+tbMetodosPago listo
+tbMunicipios listo
+tbDepartamentos listo
+tbEstadosCiviles listo
