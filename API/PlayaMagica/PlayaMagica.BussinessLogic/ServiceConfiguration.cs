@@ -19,7 +19,6 @@ namespace PlayaMagica.BussinessLogic
             services.AddScoped<DireccionesRepository>();
             services.AddScoped<EstadosCivilesRepository>();
             services.AddScoped<MunicipiosRepository>();
-            services.AddScoped<PlayasRepository>();
             services.AddScoped<TipoDePagoRepository>();
             services.AddScoped<PantallasRepository>();
             services.AddScoped<RolesPantallaRepository>();

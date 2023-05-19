@@ -9,3 +9,15 @@ C:\Users\LAB02\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj
 C:\Users\LAB02\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.dll
 C:\Users\LAB02\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\ref\PlayaMagica.Entities.dll
 C:\Users\LAB02\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.pdb
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.Entities\bin\Debug\net5.0\PlayaMagica.Entities.deps.json
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.Entities\bin\Debug\net5.0\PlayaMagica.Entities.dll
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.Entities\bin\Debug\net5.0\ref\PlayaMagica.Entities.dll
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.Entities\bin\Debug\net5.0\PlayaMagica.Entities.pdb
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.csproj.AssemblyReference.cache
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.AssemblyInfoInputs.cache
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.AssemblyInfo.cs
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.csproj.CoreCompileInputs.cache
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.dll
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.Entities\obj\Debug\net5.0\ref\PlayaMagica.Entities.dll
+C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.pdb
