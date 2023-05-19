@@ -1,0 +1,161 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "DB_ArenamagicaContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Context",
+   "ProjectRootNamespace": "PlayaMagica.DataAccess",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 1,
+   "Tables": [
+      {
+         "Name": "[Acce].[tbPantallas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acce].[tbRoles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acce].[tbRolesXPantallas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acce].[tbUsuarios]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acti].[ActividadesXFecha]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acti].[tbActividades]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acti].[tbClientes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acti].[tbClienteXReservacion]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acti].[tbEncargados]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acti].[tbEncargadosXActividades]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acti].[tbEquipos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acti].[tbEquipoXActividades]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acti].[tbFactura]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acti].[tbMantenimiento]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acti].[tbMantenimientoXEquipo]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acti].[tbPlayas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acti].[tbReservaciones]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Gral].[tbDepartamentos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Gral].[tbDirecciones]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Gral].[tbEstadosCiviles]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Gral].[tbMetodosPago]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Gral].[tbMunicipios]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[Acti].[VW_tbActividades]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[Acti].[VW_tbEncargados]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[Acti].[VW_tbEquipos]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[Acti].[VW_tbPlayas]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[Acti].[VW_tbReservaciones]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[Gral_tbMetodosPago]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[Gral].[VW_tbDepartamentos]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[Gral].[VW_tbDirecciones]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[Gral].[VW_tbEstadosCiviles]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[Gral].[VW_tbMunicipios]",
+         "ObjectType": 3
+      }
+   ],
+   "UiHint": "DESKTOP-9F25UTB\\SQLEXPRESS.DB_ArenaMagica",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

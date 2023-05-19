@@ -342,7 +342,6 @@ CREATE TABLE Acti.tbActividadesXFecha
 
   CONSTRAINT PL_Acti_tbActi_acfe_Id PRIMARY KEY (acfe_Id),
   CONSTRAINT FK_Acti_tbActi_acti_Id FOREIGN KEY (acti_Id) REFERENCES Acti.tbActividades(acti_Id),
-
 )
 GO
 

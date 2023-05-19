@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Services\ActividadesServices\**" />
+    <EmbeddedResource Remove="Services\ActividadesServices\**" />
+    <None Remove="Services\ActividadesServices\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\AccesoServices\" />
+    <Folder Include="Services\GeneralServices\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PlayaMagica.DataAccess\PlayaMagica.DataAccess.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1435,8 +1435,7 @@ END
 GO
 CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Insert
 @usua_Usuario NVARCHAR(100),
-@usua_Clave VARCHAR(MAX),
-@usua_EsAdmin INT,
+@usua_Clave   NVARCHAR(MAX),
 @enca_ID INT,
 @role_ID INT,
 @usua_UsuarioCreador INT
@@ -1447,12 +1446,11 @@ BEGIN
 			BEGIN
 				DECLARE @contraEncriptada NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Clave);
 				INSERT INTO Acce.tbUsuarios(usua_Usuario, usua_Clave, 
-				usua_EsAdmin, enca_ID, 
+				enca_ID, 
 				role_ID, usua_Estado, 
 				usua_UsuarioCreador, usua_FechaCreacion, 
 				usua_UsuarioModificador, usua_FechaModificacion)
 				VALUES(@usua_Usuario,@contraEncriptada,
-				@usua_EsAdmin,@enca_ID,
 				@role_ID,1,@usua_UsuarioCreador,
 				GETDATE(),NULL,NULL)
 				SELECT 1
