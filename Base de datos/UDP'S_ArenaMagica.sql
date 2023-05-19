@@ -241,7 +241,7 @@ END
 
 /*Vista Metodos de Pago*/
 GO
-CREATE OR ALTER VIEW Gral_tbMetodosPago
+CREATE OR ALTER VIEW Gral.VW_tbMetodosPago
 AS
 SELECT mepa_id, mepa_Descripcion, 
 mepa_Estado, mepa_UsuarioCreador,[UsuarioCreador].usua_Usuario AS mepa_UsuarioCreador_Nombre, 
@@ -429,7 +429,7 @@ END
 
 --Eliminar Playas
 GO
-CREATE OR ALTER PROCEDURE Gral.UDP_tbPlayas_EliminarPlayas
+CREATE OR ALTER PROCEDURE Acti.UDP_tbPlayas_EliminarPlayas
 @play_id			INT
 AS
 BEGIN
@@ -1187,7 +1187,7 @@ END
 --******************* ********************************UDP Y VISTA Roles  ****************************************************************************--
 /*Vista Roles*/
 GO
-CREATE OR ALTER VIEW Acce.VW_Roles
+CREATE OR ALTER VIEW Acce.VW_tbRoles
 AS
 SELECT role.role_ID, role_Descripcion, 
 role_Estado, role_UsuarioCreador,[UsuarioCreador].usua_Usuario AS role_UsuarioCreador_Nombre, 
@@ -1203,7 +1203,7 @@ GO
 CREATE OR ALTER PROCEDURE Acce.UDP_tbRoles_VW
 AS
 BEGIN
-	SELECT * FROM Acce.VW_Roles
+	SELECT * FROM Acce.VW_tbRoles
 END
 
 /*Roles Insert*/
@@ -1355,6 +1355,31 @@ END
 --******************* ********************************///UDP Y VISTA Pantallas ****************************************************************************--
 
 --******************* ********************************UDP Y VISTA Usuarios ****************************************************************************--
+/*Vista Usuarios*/
+GO
+CREATE OR ALTER VIEW Acce.VW_tbUsuarios
+AS
+SELECT usua.usua_ID, usua.usua_Usuario, 
+usua.usua_Clave, usua.usua_EsAdmin, 
+usua.enca_ID,CONCAT(enca.enca_Nombres,enca.enca_Apellidos) AS enca_NombreCompleto, usua.role_ID,role.role_Descripcion, 
+usua.usua_Estado, usua.usua_UsuarioCreador, [UsuarioCreador].usua_Usuario AS usua_UsuarioCreador_Nombre,
+usua.usua_FechaCreacion, usua.usua_UsuarioModificador, [UsuarioModificador].usua_Usuario AS usua_UsuarioModificador_Nombre,
+usua.usua_FechaModificacion
+FROM Acce.tbUsuarios usua INNER JOIN Acti.tbEncargados enca
+ON usua.enca_id = enca.enca_id INNER JOIN Acce.tbRoles role
+ON usua.role_ID = role.role_ID  INNER JOIN Acce.tbUsuarios [UsuarioCreador]
+ON usua.usua_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
+ON usua.usua_UsuarioModificador = [UsuarioModificador].usua_ID
+WHERE usua.usua_Estado = 1
+
+/*Vista Usuarios UDP*/
+GO
+CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_VW
+AS
+BEGIN
+	SELECT * FROM Acce.VW_tbUsuarios
+END
+
 /*Login*/
 GO
 CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Login
@@ -1362,7 +1387,7 @@ CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Login
 @usua_Clave VARCHAR(MAX)
 AS
 BEGIN
-	DECLARE @contraEncriptada NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Clave);
+DECLARE @contraEncriptada NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Clave);
 	SELECT usua_ID, usua_Usuario, usua_Clave, usua_EsAdmin, usua.enca_ID,
 	CONCAT(enca.enca_Nombres,enca.enca_Apellidos) AS enca_NombreCompleto, role_ID 
 	FROM Acce.tbUsuarios usua INNER JOIN Acti.tbEncargados enca
@@ -1447,8 +1472,7 @@ CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Delete
 AS
 BEGIN
 	BEGIN TRY
-		UPDATE Acce.tbUsuarios
-		SET usua_Estado = 0
+		DELETE Acce.tbUsuarios
 		WHERE usua_ID = @usua_ID
 		SELECT 1
 	END TRY
@@ -1575,4 +1599,124 @@ BEGIN
 	FROM [Acti].[tbMantenimientoXEquipo]
 	WHERE maeq_Estado = 1
 END
+
+/*MantenimientoXEquipo Insert*/
+GO
+CREATE OR ALTER PROCEDURE Acti.UDP_tbMantenimientoXEquipo_Insert
+@equi_Id INT,
+@mant_Id INT,
+@maeq_UsuarioCreador INT
+AS
+BEGIN
+	BEGIN TRY
+		INSERT INTO Acti.tbMantenimientoXEquipo (equi_Id, mant_Id, 
+		maeq_Estado, maeq_UsuarioCreador, 
+		maeq_FechaCreacion, maeq_UsuarioModificador, 
+		maeq_FechaModificacion)
+		VALUES(@equi_Id,@mant_Id,1,@maeq_UsuarioCreador,GETDATE(),NULL,NULL)
+		SELECT 1
+	END TRY
+
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+
+/*MantenimientoXEquipo Update*/
+GO
+CREATE OR ALTER PROCEDURE Acti.UDP_tbMantenimientoXEquipo_Insert
+@maeq_Id INT,
+@equi_Id INT,
+@mant_Id INT,
+@maeq_UsuarioModificador INT
+AS
+BEGIN
+	BEGIN TRY
+		UPDATE Acti.tbMantenimientoXEquipo
+		SET equi_Id = @equi_Id,
+			mant_Id = @mant_Id,
+			maeq_UsuarioModificador = @maeq_UsuarioModificador,
+			maeq_FechaModificacion = GETDATE()
+		WHERE maeq_Id = @maeq_Id
+		SELECT 1
+	END TRY
+
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+
+/*MantenimientoXEquipo Delete*/
+GO
+CREATE OR ALTER PROCEDURE Acti.UDP_MantenimientoXEquipo_Delete
+@maeq_Id INT
+AS
+BEGIN
+	UPDATE Acti.tbMantenimientoXEquipo
+	SET maeq_Estado = 0
+	WHERE maeq_Id = @maeq_Id
+END
 --***************************************************///UDP Y VISTA MantenimientoXEquipo ****************************************************************************--
+
+--***************************************************UDP Y VISTA Factura****************************************************************************--
+/*Vista Factura*/
+GO
+CREATE OR ALTER VIEW Acti.VW_tbFactura
+AS
+SELECT fuct_Id, rese_Id, 
+fuct_Subtotal, fuct_Isv, 
+fuct_Total, fuct_Estado, 
+fuct_UsuarioCreador,[UsuarioCreador].usua_Usuario AS fuct_UsuarioCreador_Nombre, fuct_FechaCreacion, 
+fuct_UsuarioModificador,[UsuarioModificador].usua_Usuario AS fuct_UsuarioModificador_Nombre, fuct_FechaModificacion
+FROM [Acti].[tbFactura] fuct INNER JOIN  Acce.tbUsuarios [UsuarioCreador]
+ON fuct.fuct_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
+ON fuct.fuct_UsuarioModificador = [UsuarioModificador].usua_ID
+WHERE fuct_Estado = 1
+
+/*Vista Factura UDP*/
+GO
+CREATE OR ALTER PROCEDURE Acti.UDP_tbFactura_VW
+AS
+BEGIN
+	SELECT * FROM Acti.VW_tbFactura
+END
+
+/*Vista Factura Insert*/
+GO
+CREATE OR ALTER PROCEDURE Acti.UDP_tbFactura_Insert
+@rese_Id INT,
+@fuct_Subtotal DECIMAL(18,2),
+@fuct_Isv DECIMAL(18,2),
+@fuct_Total DECIMAL(18,2),
+@fuct_UsuarioCreador INT
+AS
+BEGIN
+	BEGIN TRY
+		INSERT INTO Acti.tbFactura(rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_Estado, fuct_UsuarioCreador, fuct_FechaCreacion, fuct_UsuarioModificador, fuct_FechaModificacion)
+		VALUES(@rese_Id,@fuct_Subtotal,@fuct_Isv,@fuct_Total,1,@fuct_UsuarioCreador,GETDATE(),NULL,NULL)
+		SELECT 1
+	END TRY
+
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+
+/*Vista Factura Delete*/
+GO
+CREATE OR ALTER PROCEDURE Acti.UDP_tbFactura_Delete
+@fuct_Id INT
+AS
+BEGIN
+	BEGIN TRY
+		UPDATE Acti.tbFactura
+		SET fuct_Estado = 0
+		WHERE fuct_Id = @fuct_Id
+		SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+GO
+--***************************************************///UDP Y VISTA Factura****************************************************************************--
