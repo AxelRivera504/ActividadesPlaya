@@ -15,15 +15,13 @@ namespace PlayaMagica.BussinessLogic.Services.GeneralServices
         private readonly MunicipiosRepository _municipiosRepository;
         private readonly TipoDePagoRepository _tipoPagoRepository;
         private readonly DireccionesRepository _direccionesRepository;
-        private readonly PlayasRepository _playasRepository; 
-        public GeneralServices(PlayasRepository playasRepository, DireccionesRepository direccionesRepository, TipoDePagoRepository tipoPagoRepository, MunicipiosRepository municipiosRepository, EstadosCivilesRepository estadosCivilesRepository, DepartamentosRepository departamentosRepository)
+        public GeneralServices( DireccionesRepository direccionesRepository, TipoDePagoRepository tipoPagoRepository, MunicipiosRepository municipiosRepository, EstadosCivilesRepository estadosCivilesRepository, DepartamentosRepository departamentosRepository)
         {
             _departamentosRepository = departamentosRepository;
             _estadosCivilesRepository = estadosCivilesRepository;
             _municipiosRepository = municipiosRepository;
             _tipoPagoRepository = tipoPagoRepository;
             _direccionesRepository = direccionesRepository;
-            _playasRepository = playasRepository;
         }
 
         #region Departamentos
