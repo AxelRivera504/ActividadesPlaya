@@ -30,11 +30,11 @@
          "ObjectType": 0
       },
       {
-         "Name": "[Acti].[ActividadesXFecha]",
+         "Name": "[Acti].[tbActividades]",
          "ObjectType": 0
       },
       {
-         "Name": "[Acti].[tbActividades]",
+         "Name": "[Acti].[tbActividadesXFecha]",
          "ObjectType": 0
       },
       {
@@ -102,7 +102,19 @@
          "ObjectType": 0
       },
       {
+         "Name": "[Acce].[VW_tbRoles]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[Acce].[VW_tbUsuarios]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[Acti].[VW_tbActividades]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[Acti].[VW_tbClientes]",
          "ObjectType": 3
       },
       {
@@ -114,15 +126,19 @@
          "ObjectType": 3
       },
       {
+         "Name": "[Acti].[VW_tbFactura]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[Acti].[VW_tbMantenimiento]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[Acti].[VW_tbPlayas]",
          "ObjectType": 3
       },
       {
          "Name": "[Acti].[VW_tbReservaciones]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[Gral_tbMetodosPago]",
          "ObjectType": 3
       },
       {
@@ -135,6 +151,10 @@
       },
       {
          "Name": "[Gral].[VW_tbEstadosCiviles]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[Gral].[VW_tbMetodosPago]",
          "ObjectType": 3
       },
       {

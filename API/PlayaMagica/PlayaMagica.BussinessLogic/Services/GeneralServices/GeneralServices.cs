@@ -36,14 +36,85 @@ namespace PlayaMagica.BussinessLogic.Services.GeneralServices
             }
             catch (Exception ex)
             {
-                
+                string mensaje = ex.Message;
                 return Enumerable.Empty<VW_tbDepartamentos>();
+            }
+        }
+        public ServiceResult InsertarDepartamentos(tbDepartamentos item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var resultado = _departamentosRepository.Insert(item);
+                return result.Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+                throw;
+            }
+        }
+
+        public ServiceResult EditarDepartamentos(tbDepartamentos item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var resultado = _departamentosRepository.Update(item);
+                return result.Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+                throw;
             }
         }
         #endregion
 
         #region Municipios
+        public IEnumerable<VW_tbMunicipios> ListarMunicipios()
+        {
+            try
+            {
+                var list = _municipiosRepository.List();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                string mensaje = ex.Message;
+                return Enumerable.Empty<VW_tbMunicipios>();
+            }
+        }
 
+        public ServiceResult InsertarMunicipios(tbMunicipios item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var resultado = _municipiosRepository.Insert(item);
+                return result.Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+                throw;
+            }
+        }
+
+        public ServiceResult EditarMunicipios(tbMunicipios item)
+        {
+            var result = new ServiceResult();
+            try
+            {
+                var resultado = _municipiosRepository.Update(item);
+                return result.Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return result.Error(ex.Message);
+                throw;
+            }
+        }
         #endregion
 
         #region Direcciones

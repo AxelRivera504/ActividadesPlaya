@@ -13,12 +13,12 @@ namespace PlayaMagica.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DepartamentosController : ControllerBase
+    public class MunicipiosController : ControllerBase
     {
         private readonly GeneralServices _generalServices;
         private readonly IMapper _mapper;
 
-        public DepartamentosController(GeneralServices generalServices, IMapper mapper)
+        public MunicipiosController(GeneralServices generalServices, IMapper mapper)
         {
             _generalServices = generalServices;
             _mapper = mapper;
@@ -27,23 +27,23 @@ namespace PlayaMagica.Controllers
         [HttpGet]
         public IActionResult List()
         {
-            var list = _generalServices.ListarDepartamentos();
+            var list = _generalServices.ListarMunicipios();
             return Ok(list);
         }
 
         [HttpPost("Insert")]
-        public IActionResult Insert(DepartamentosViewModel item)
+        public IActionResult Insert(MunicipiosViewModel item)
         {
-            var listadoMapeado = _mapper.Map<tbDepartamentos>(item);
-            var listado = _generalServices.InsertarDepartamentos(listadoMapeado);
+            var listadoMapeado = _mapper.Map<tbMunicipios>(item);
+            var listado = _generalServices.InsertarMunicipios(listadoMapeado);
             return Ok(listado);
         }
 
         [HttpPost("Update")]
-        public IActionResult Update(DepartamentosViewModel item)
+        public IActionResult Update(MunicipiosViewModel item)
         {
-            var listadoMapeado = _mapper.Map<tbDepartamentos>(item);
-            var listado = _generalServices.EditarDepartamentos(listadoMapeado);
+            var listadoMapeado = _mapper.Map<tbMunicipios>(item);
+            var listado = _generalServices.EditarMunicipios(listadoMapeado);
             return Ok(listado);
         }
     }

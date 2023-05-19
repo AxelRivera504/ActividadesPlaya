@@ -45,7 +45,17 @@ namespace PlayaMagica.DataAccess.Repositories.Gral
 
         public RequestStatus Update(tbDepartamentos item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@dept_Id", item.dept_id, DbType.String, ParameterDirection.Input);
+            parametros.Add("@dept_Descripcion", item.dept_Descripcion, DbType.String, ParameterDirection.Input);
+            parametros.Add("@dept_UsuarioModificador", item.dept_UsuarioModificador, DbType.Int32, ParameterDirection.Input);
+
+            var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbDepartamentos_Update, parametros, commandType: CommandType.StoredProcedure);
+
+            result.CodeStatus = answer;
+            return result;
         }
     }
 }

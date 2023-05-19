@@ -30,11 +30,11 @@
          "ObjectType": 0
       },
       {
-         "Name": "[Acti].[ActividadesXFecha]",
+         "Name": "[Acti].[tbActividades]",
          "ObjectType": 0
       },
       {
-         "Name": "[Acti].[tbActividades]",
+         "Name": "[Acti].[tbActividadesXFecha]",
          "ObjectType": 0
       },
       {
@@ -139,10 +139,6 @@
       },
       {
          "Name": "[Acti].[VW_tbReservaciones]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[Gral_tbMetodosPago]",
          "ObjectType": 3
       },
       {

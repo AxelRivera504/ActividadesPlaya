@@ -327,7 +327,7 @@ CREATE TABLE Acti.tbFactura
 )
 GO
 
-CREATE TABLE Acti.ActividadesXFecha
+CREATE TABLE Acti.tbActividadesXFecha
 (
   acfe_Id              INT IDENTITY(1,1),
   acti_Id              INT,
