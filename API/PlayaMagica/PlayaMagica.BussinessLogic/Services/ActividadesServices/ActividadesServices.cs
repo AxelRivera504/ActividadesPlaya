@@ -31,7 +31,7 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
             catch (Exception ex)
             {
-
+                string message = ex.Message;
                 return Enumerable.Empty<VW_tbEncargados>();
             }
         }
@@ -93,7 +93,7 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
             catch (Exception ex)
             {
-
+                string message = ex.Message;
                 return Enumerable.Empty<VW_tbClientes>();
             }
         }
@@ -155,7 +155,7 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
             catch (Exception ex)
             {
-
+                string message = ex.Message;
                 return Enumerable.Empty<VW_tbPlayas>();
             }
         }
