@@ -57,11 +57,11 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             try
             {
                 var insert = _usuariosRepository.Insert(item);
-                if (insert.MessageStatus == "Registro agregado exitosamente")
+                if (insert.CodeStatus == 1)
                 {
                     return result.Ok(insert.MessageStatus);
                 }
-                else if (insert.MessageStatus == "Un registro con este nombre ya existe")
+                else if (insert.CodeStatus == 2)
                 {
                     return result.Conflict(insert.MessageStatus);
                 }
@@ -82,7 +82,7 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             try
             {
                 var insert = _usuariosRepository.Update(item);
-                if (insert.MessageStatus == "Registro editado exitosamente")
+                if (insert.CodeStatus == 1)
                 {
                     return result.Ok(insert.MessageStatus);
                 }
@@ -103,7 +103,7 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             try
             {
                 var delete = _usuariosRepository.Delete(id);
-                if (delete.MessageStatus == "Registro eliminado exitosamente")
+                if (delete.CodeStatus == 1)
                 {
                     return result.Ok(delete.MessageStatus);
                 }
@@ -148,11 +148,11 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             try
             {
                 var insert = _rolesRepository.Insert(item);
-                if (insert.MessageStatus == "Registro agregado exitosamente")
+                if (insert.CodeStatus == 1)
                 {
                     return result.Ok(insert.MessageStatus);
                 }
-                else if (insert.MessageStatus == "Un registro con este nombre ya existe")
+                else if (insert.CodeStatus == 2)
                 {
                     return result.Conflict(insert.MessageStatus);
                 }
@@ -173,7 +173,7 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             try
             {
                 var insert = _rolesRepository.Update(item);
-                if (insert.MessageStatus == "Registro editado exitosamente")
+                if (insert.CodeStatus == 1)
                 {
                     return result.Ok(insert.MessageStatus);
                 }
@@ -194,7 +194,7 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             try
             {
                 var delete = _rolesRepository.Delete(id);
-                if (delete.MessageStatus == "Registro eliminado exitosamente")
+                if (delete.CodeStatus == 1)
                 {
                     return result.Ok(delete.MessageStatus);
                 }
@@ -223,11 +223,11 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             try
             {
                 var insert = _rolesPorPantallaRepository.Insert(item);
-                if (insert.MessageStatus == "Registro agregado exitosamente")
+                if (insert.CodeStatus == 1)
                 {
                     return result.Ok(insert.MessageStatus);
                 }
-                else if (insert.MessageStatus == "Un registro con este nombre ya existe")
+                else if (insert.CodeStatus == 2)
                 {
                     return result.Conflict(insert.MessageStatus);
                 }
