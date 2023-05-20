@@ -11,6 +11,11 @@ export const MENU: MenuItem[] = [
     link: '/dashboard'
   },
   {
+    label: 'Prueba',
+    icon: 'home',
+    link: '/prueba'
+  },
+  {
     label: 'Web Apps',
     isTitle: true
   },

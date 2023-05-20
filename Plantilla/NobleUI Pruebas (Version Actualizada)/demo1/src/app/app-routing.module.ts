@@ -45,6 +45,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/tables/tables.module').then(m => m.TablesModule)
       },
       {
+        path: 'prueba',
+        loadChildren: () => import('./views/pages/prueba/prueba.module').then(m => m.PruebaModule)
+      },
+      {
         path: 'icons',
         loadChildren: () => import('./views/pages/icons/icons.module').then(m => m.IconsModule)
       },
