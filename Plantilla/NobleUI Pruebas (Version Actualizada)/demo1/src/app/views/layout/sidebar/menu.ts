@@ -11,9 +11,29 @@ export const MENU: MenuItem[] = [
     link: '/dashboard'
   },
   {
-    label: 'Prueba',
+    label: 'Departamentos',
     icon: 'home',
-    link: '/prueba'
+    link: '/departamentos'
+  },
+  {
+    label: 'Municipios',
+    icon: 'home',
+    link: '/municipios'
+  },
+  {
+    label: 'Estados Civiles',
+    icon: 'home',
+    link: '/estadosciviles'
+  },
+  {
+    label: 'Metodos de Pago',
+    icon: 'home',
+    link: '/metodospago'
+  },
+  {
+    label: 'Direcciones',
+    icon: 'home',
+    link: '/direcciones'
   },
   {
     label: 'Web Apps',
