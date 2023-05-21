@@ -31,6 +31,15 @@ VALUES ('juan', @p2, 1, 1,2, 1),
 	   ('awsd', @p2, 1, 1,1, 1)
        
 
+DECLARE @Pass AS NVARCHAR(MAX), @Clave AS NVARCHAR(250);
+SET @Clave = '123';
+SET @Pass = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @Clave),2)
+
+INSERT INTO acce.tbUsuarios
+VALUES('admin', @Pass,  1, 2, 1,1);
+GO
+
+
 
 
 

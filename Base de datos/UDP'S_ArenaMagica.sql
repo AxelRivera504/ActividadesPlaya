@@ -379,7 +379,7 @@ play_FechaModificacion
 FROM Acti.tbPlayas play INNER JOIN [Gral].[tbDirecciones] dire
 ON play.dire_Id = dire.dire_Id INNER JOIN Acce.tbUsuarios [UsuarioCreador]
 ON play.play_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
-ON play.play_UsuarioModificador = [UsuarioModificador].usua_ID
+ON play.play_UsuarioModificador = [UsuarioModificador].usua_ID INNER JOIN 
 WHERE play_Estado = 1
 
 /*Vista Playas UDP*/
@@ -740,7 +740,7 @@ GO
   FROM Acti.tbEquipos equi INNER JOIN Acce.tbUsuarios [UsuarioCreador]
   ON equi.equi_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
   ON equi.equi_UsuarioModificador = [UsuarioModificador].usua_ID
-  WHERE equi_Estado = 0
+  WHERE equi_Estado = 1
 
   /*Vista Equipos UDP*/
   GO
@@ -842,13 +842,14 @@ GO
 	AS
 	SELECT acti_Id, acti_Nombre,  
 	acti_Cupo, 
-	acti_Precio, play_Id, 
+	acti_Precio, play_playa,play_id, 
 	acti_Estado, acti_UsuarioCreador,[UsuarioCreador].usua_Usuario AS acti_UsuarioCreador_Nombre, 
 	acti_FechaCreacion, acti_UsuarioModificador,[UsuarioModificador].usua_Usuario AS acti_UsuarioModificador_Nombre, 
 	acti_FechaModificacion
 	FROM Acti.tbActividades	acti INNER JOIN Acce.tbUsuarios [UsuarioCreador]
 	ON acti.acti_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador] 
-	ON acti.acti_UsuarioModificador = [UsuarioModificador].usua_ID
+	ON acti.acti_UsuarioModificador = [UsuarioModificador].usua_ID INNER JOIN Acti.Playas playa
+	ON	acti.play_id = playa.play_id
 	WHERE acti_Estado = 1
 
 	--/*Vista Actividades UDP*/
@@ -1422,7 +1423,7 @@ CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Login
 AS
 BEGIN
 DECLARE @contraEncriptada NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Clave);
-	SELECT usua_ID, usua_Usuario, usua_Clave, usua_EsAdmin, usua.enca_ID,
+	SELECT usua_ID, usua_Usuario, usua_Clave,usua.enca_ID,
 	CONCAT(enca.enca_Nombres,enca.enca_Apellidos) AS enca_NombreCompleto, role_ID 
 	FROM Acce.tbUsuarios usua INNER JOIN Acti.tbEncargados enca
 	ON usua.enca_ID = enca.enca_id
@@ -1430,6 +1431,41 @@ DECLARE @contraEncriptada NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Clave);
 	AND usua_Clave = @usua_Clave 
 	AND usua_Estado = 1
 END
+go
+
+CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Login
+(
+	@usua_Usuario  NVARCHAR(100),
+	@usua_Clave    NVARCHAR(MAX)
+)
+AS
+BEGIN
+	DECLARE @Pass AS NVARCHAR(MAX);
+	SET @Pass = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @usua_Clave), 2);
+	IF EXISTS (SELECT * FROM Acce.tbUsuarios WHERE usua_Usuario = @usua_Usuario AND usua_Clave = @usua_Clave)
+		BEGIN
+			SELECT 2
+		END
+	ELSE
+	BEGIN
+	SELECT	usua_ID , 
+			usua_Usuario,
+			tb1.role_ID,
+			tb3.role_Descripcion,
+		    tb2.enca_id,
+			tb2.enca_Nombres + ' ' + tb2.enca_Apellidos AS enca_NombreCompleto
+					    			
+	  FROM   Acce . tbUsuarios  tb1
+INNER JOIN  Acti.tbEncargados tb2
+		ON  tb1.enca_ID = tb2.enca_id
+INNER JOIN   Acce.tbRoles tb3 
+		ON  tb1.role_Id =tb3.role_Id
+	 WHERE   usua_Usuario  = @usua_Usuario AND  usua_Clave  = @Pass
+	   AND   usua_Estado  = 1
+	   END
+END
+GO
+
 
 /*Usuarios Insert*/
 GO

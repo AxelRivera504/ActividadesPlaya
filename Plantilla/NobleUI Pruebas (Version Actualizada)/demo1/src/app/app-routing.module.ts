@@ -4,7 +4,6 @@ import { BaseComponent } from './views/layout/base/base.component';
 import { AuthGuard } from './core/guard/auth.guard';
 import { ErrorPageComponent } from './views/pages/error-page/error-page.component';
 
-
 const routes: Routes = [
   { path:'auth', loadChildren: () => import('./views/pages/auth/auth.module').then(m => m.AuthModule) },
   {
@@ -13,8 +12,32 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: 'dashboard',
+        path: 'dashboard',  
         loadChildren: () => import('./views/pages/dashboard/dashboard.module').then(m => m.DashboardModule)
+      },
+      {
+        path: 'listplayitas',
+        loadChildren: () => import('./views/pages/listplayitas/listplayitas.module').then(m => m.ListplayitasModule)
+      },
+      {
+        path: 'equipos',
+        loadChildren: () => import('./views/pages/equipos/equipos.module').then(m => m.EquiposModule)
+      },
+      {
+        path: 'mantenimientos',
+        loadChildren: () => import('./views/pages/mantenimientos/mantenimientos.module').then(m => m.MantenimientosModule)
+      },
+      {
+        path: 'clientes',
+        loadChildren: () => import('./views/pages/clientes/clientes.module').then(m => m.ClientesModule)
+      },
+      {
+        path: 'encargados',
+        loadChildren: () => import('./views/pages/encargados/encargados.module').then(m => m.EncargadosModule)
+      },
+      {
+        path: 'actividades',
+        loadChildren: () => import('./views/pages/actividades/actividades.module').then(m => m.ActividadesModule)
       },
       {
         path: 'apps',
