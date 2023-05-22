@@ -52,8 +52,5 @@ export class ListplayitasComponent implements OnInit, AfterViewInit {
       }
     };
 
-    setTimeout(() => {
-      const dataTable = new DataTable(this.table.nativeElement, dataTableOptions);
-    }, 0);
   }
 }

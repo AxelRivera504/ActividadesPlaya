@@ -140,11 +140,6 @@ Editar(i:number){
       }
     };
 
-    
-
-    setTimeout(() => {
-      const dataTable = new DataTable(this.table.nativeElement, dataTableOptions);
-    }, 0);
   }
 
   cancelar() {

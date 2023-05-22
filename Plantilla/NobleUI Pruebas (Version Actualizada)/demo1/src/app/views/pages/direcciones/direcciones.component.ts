@@ -46,10 +46,6 @@ export class DireccionesComponent implements OnInit {
         noResults: "No hay coincidencias",
       }
     };
-
-    setTimeout(() => {
-      const dataTable = new DataTable(this.table.nativeElement, dataTableOptions);
-    }, 0);
   }
 
 }

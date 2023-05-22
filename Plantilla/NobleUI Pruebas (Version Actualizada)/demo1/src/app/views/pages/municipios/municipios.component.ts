@@ -49,9 +49,6 @@ export class MunicipiosComponent implements OnInit {
       }
     };
 
-    setTimeout(() => {
-      const dataTable = new DataTable(this.table.nativeElement, dataTableOptions);
-    }, 0);
   }
 
 }

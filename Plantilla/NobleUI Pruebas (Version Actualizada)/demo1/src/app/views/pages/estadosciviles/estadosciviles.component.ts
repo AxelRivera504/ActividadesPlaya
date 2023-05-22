@@ -103,9 +103,6 @@ export class EstadoscivilesComponent implements OnInit {
       }
     };
 
-    setTimeout(() => {
-      const dataTable = new DataTable(this.table.nativeElement, dataTableOptions);
-    }, 0);
   }
 
   cancelar() {
