@@ -1,9 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataTable } from 'simple-datatables';
-import { municipios } from '../Model/municipios';
-import { ServicesService } from '../Service/services.service';
-
+import { municipios } from 'src/app/Models/municipios';
+import { ServicesService } from 'src/app/Service/services.service';
 
 @Component({
   selector: 'app-municipios',

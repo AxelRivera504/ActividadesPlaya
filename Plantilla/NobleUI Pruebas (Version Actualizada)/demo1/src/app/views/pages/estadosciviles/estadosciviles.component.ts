@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataTable } from 'simple-datatables';
-import { estadosciviles } from '../Model/estadosciviles';
-import { ServicesService } from '../Service/services.service';
+import { estadosciviles } from 'src/app/Models/estadosciviles';
+import { ServicesService } from 'src/app/Service/services.service';
 
 @Component({
   selector: 'app-estadosciviles',

@@ -10,12 +10,11 @@ namespace PlayaMagica.Models
     {
         public int usua_ID { get; set; }
         public string usua_Usuario { get; set; }
-        public string usua_Clave { get; set; }  
+        public string usua_Clave { get; set; }
+        public int? usua_EsAdmin { get; set; }
         public int? enca_ID { get; set; }
         [NotMapped]
-        public string enca_NombreCompleto { get; set; }
-        [NotMapped]
-        public string role_Descripcion { get; set; }
+        public string clie_NombreCompleto { get; set; }
         public int? role_ID { get; set; }
         public bool? usua_Estado { get; set; }
         public int? usua_UsuarioCreador { get; set; }

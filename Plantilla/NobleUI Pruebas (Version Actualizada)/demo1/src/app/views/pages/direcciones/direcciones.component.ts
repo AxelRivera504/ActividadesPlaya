@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataTable } from 'simple-datatables';
-import { direcciones } from '../Model/direcciones';
-import { ServicesService } from '../Service/services.service';
+import { direcciones } from 'src/app/Models/direcciones';
+import { ServicesService } from 'src/app/Service/services.service';
 
 @Component({
   selector: 'app-direcciones',

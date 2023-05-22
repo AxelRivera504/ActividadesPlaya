@@ -3,29 +3,37 @@
     <div class="card">
       <div class="row">
         <div class="col-md-4 pe-md-0">
-          <div class="auth-side-wrapper" [ngStyle]="{ 'background-image': 'url(https://static.vecteezy.com/system/resources/previews/007/276/045/original/beach-background-flat-design-style-free-vector.jpg)' }">
+          <div class="auth-side-wrapper" [ngStyle]="{ 'background-image': 'url(https://via.placeholder.com/219x452)' }">
+
           </div>
         </div>
         <div class="col-md-8 ps-md-0">
           <div class="auth-form-wrapper px-4 py-5">
-            <a routerLink="." class="nobleui-logo d-block mb-2">Arena<span>Mágica</span></a>
-            <h5 class="text-muted fw-normal mb-4">¡Bienvenido nuevamente! Inicia sesión con tu cuenta.</h5>
-            <form class="forms-sample" [ngClass]="{ 'ng-submitted': submitted, 'needs-validation': submitted }" (ngSubmit)="onLoggedin($event)">
+            <a routerLink="." class="nobleui-logo d-block mb-2">Noble<span>UI</span></a>
+            <h5 class="text-muted fw-normal mb-4">Welcome back! Log in to your account.</h5>
+            <form class="forms-sample">
               <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Nombre de usuario</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" #requried="ngModel" required placeholder="Nombre de usuario"
-                  [(ngModel)]="usuario" name="usuario" [ngClass]="{ 'is-invalid': submitted && requried?.invalid }">
-                <div class="invalid-feedback" *ngIf="requried?.errors?.required && submitted">Nombre de usuario requerido</div>
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" value="admin@demo.com">
               </div>
               <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" #contra="ngModel" required autocomplete="current-password"
-                  placeholder="Contraseña" name="password" [(ngModel)]="password" [ngClass]="{ 'is-invalid': submitted && contra?.invalid }">
-                <div class="invalid-feedback" *ngIf="contra?.errors?.required && submitted">Contraseña requerida</div>
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" autocomplete="current-password" placeholder="Password" value="12345678">
+              </div>
+              <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" id="authCheck">
+                <label class="form-check-label" for="authCheck">
+                  Remember me
+                </label>
               </div>
               <div>
-                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0">Inicia sesión</button>
+                <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" (click)="onLoggedin($event)">Login</button>
+                <button type="button" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
+                  <i class="feather icon-twitter btn-icon-prepend"></i>
+                  Login with twitter
+                </button>
               </div>
+              <a routerLink="/auth/register" class="d-block mt-3 text-muted">Not a user? Sign up</a>
             </form>
           </div>
         </div>
