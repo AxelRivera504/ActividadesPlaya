@@ -1,7 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using PlayaMagica.BussinessLogic.Services.AccesoServices;
+using PlayaMagica.BussinessLogic.Services.ActividadesServices;
 using PlayaMagica.BussinessLogic.Services.GeneralServices;
 using PlayaMagica.DataAccess;
 using PlayaMagica.DataAccess.Repositories.Acce;
+using PlayaMagica.DataAccess.Repositories.Acti;
 using PlayaMagica.DataAccess.Repositories.Gral;
 using System;
 using System.Collections.Generic;
@@ -24,12 +27,22 @@ namespace PlayaMagica.BussinessLogic
             services.AddScoped<RolesPantallaRepository>();
             services.AddScoped<RolesRepository>();
             services.AddScoped<UsuariosRepository>();
+
+            services.AddScoped<PlayasRepository>();
+            services.AddScoped<ClientesRepository>();
+            services.AddScoped<EncargadosRepository>();
+            services.AddScoped<MantenimientoRepository>();
+            services.AddScoped<EquipoRepository>();
+            services.AddScoped<ActividadesRepository>();
+
             PlayaMagicaContext.BuildConnectionString(connection);
         }
 
         public static void BussinessLogic(this IServiceCollection services)
         {
             services.AddScoped<GeneralServices>();
+            services.AddScoped<ActividadesServices>();
+            services.AddScoped<AccesoServices>();
         }
     }
 }

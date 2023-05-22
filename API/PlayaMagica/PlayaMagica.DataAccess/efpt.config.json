@@ -162,7 +162,7 @@
          "ObjectType": 3
       }
    ],
-   "UiHint": "DESKTOP-9F25UTB\\SQLEXPRESS.DB_ArenaMagica",
+   "UiHint": "DESKTOP-B2FSPCF\\SQLEXPRESS.DB_ArenaMagica",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDbContextSplitting": false,
