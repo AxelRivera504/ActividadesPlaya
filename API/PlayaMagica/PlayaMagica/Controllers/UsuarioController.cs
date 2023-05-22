@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace PlayaMagica.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
     public class UsuarioController : Controller
