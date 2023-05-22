@@ -7,48 +7,6 @@ import { NgbModal,NgbModalRef  } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
 
-const basicModal = {
-  htmlCode: 
-`<!-- Button trigger modal -->
-<button class="btn btn-primary" (click)="openBasicModal(basicModal)">Launch demo modal</button>
-<!-- Modal -->
-<ng-template #basicModal let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
-  </div>
-  <div class="modal-body">
-    <p>Modal body</p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
-    <button type="button" class="btn btn-primary" (click)="modal.close('by: save button')">Save changes</button>
-  </div>
-</ng-template>
-<!-- Close result -->
-<p *ngIf="basicModalCloseResult != ''" class="mt-2">{{basicModalCloseResult}}</p>`,
-  tsCode: 
-`import { Component } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-@Component({
-  selector: 'app-modal',
-  templateUrl: './modal.component.html'
-})
-export class ModalComponent {
-  
-  basicModalCloseResult: string = '';
-
-  constructor(private modalService: NgbModal) { }
-
-  openBasicModal(content: TemplateRef<any>) {
-    this.modalService.open(content, {}).result.then((result) => {
-      this.basicModalCloseResult = "Modal closed" + result
-    }).catch((res) => {});
-  }
-}`
-}
-
 @Component({
   selector: 'app-mantenimientos',
   templateUrl: './mantenimientos.component.html',
@@ -69,7 +27,6 @@ export class MantenimientosComponent implements OnInit {
     this.service.getMantenimientos().subscribe(data => {
       console.log(data);
       this.Mantenimiento = data;
-      this.basicModalCode = basicModal;
       // Inicializar DataTable después de asignar los datos
       this.initializeDataTable();
     });

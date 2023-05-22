@@ -49,13 +49,11 @@
         </div>
         <form class="forms-sample" [ngClass]="{ 'ng-submitted': submitted, 'needs-validation': submitted }" (ngSubmit)="InsertarMantenimiento($event)">
             <div class="modal-body">
-              <form>
                 <label for="exampleInputEmail1" class="form-label">Mantenimiento</label>
                 <input type="text" class="form-control" id="exampleInputEmail1" required placeholder="Mantenimiento"
                   [(ngModel)]="mantenimientoValue" name="mantenimientoValue" #mantenimientoInput="ngModel"
                   [ngClass]="{ 'is-invalid': submitted && mantenimientoInput.invalid }">
                 <div class="invalid-feedback" *ngIf="mantenimientoInput?.errors?.required && submitted">Mantenimiento requerido</div>
-              </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" (click)="cancelar(); modal.close('by: close button')">Cerrar</button>
