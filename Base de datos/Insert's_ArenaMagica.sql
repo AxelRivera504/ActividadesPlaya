@@ -51,27 +51,27 @@ GO
 --***************************************************** INSERTS tbEstadosCiviles ***************************************************************--
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES(1,1,GETDATE(),NULL,NULL);
+VALUES(1,'Soltero(a)',GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES (1,1,GETDATE(),NULL,NULL);
+VALUES (1,'Casado(a)',GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado,esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES (1,1,GETDATE(),NULL,NULL);
+VALUES (1,'Viudo(a)',GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES (1,1,GETDATE(),NULL,NULL);
+VALUES (1,'Union Libre',GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES (1,1,GETDATE(),NULL,NULL);
+VALUES (1,'Divorciado(a)',GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES(1,1,GETDATE(),NULL,NULL);
+VALUES(1,'Amante',GETDATE(),NULL,NULL);
 GO
 
 --**************************************************** /INSERTS tbEstadosCiviles ***************************************************************--

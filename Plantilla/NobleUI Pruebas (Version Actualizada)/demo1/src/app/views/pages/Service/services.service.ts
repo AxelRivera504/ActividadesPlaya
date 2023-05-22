@@ -71,4 +71,8 @@ export class ServicesService {
   getEditEstadosCiviles(ID?: number){
     return this.http.post<estadoscivilesEdit[]>(this.Url + "/EstadosCiviles/find", estadosciviles);
   }
+
+  EditarEstadosCiviles(estadosciviles: estadosciviles){
+    return this.http.post<estadosciviles[]>(this.Url + "/EstadosCiviles/Insert", estadosciviles);
+  }
 }

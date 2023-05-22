@@ -38,10 +38,12 @@
                 <ng-template #basicModal1 let-modal>
                   <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel2">Editar registro</h5>
+                    <input type="text" disabled hidden value="{{item.esci_id}}" >
                   </div>
                       <div class="modal-body">
                           <label for="exampleInput" class="form-label">Estado Civil</label>
-                          <input type="text" class="form-control" id="exampleInput" required placeholder="Estado Civil" value="{{item.esci_Descripcion}}" >
+                          <input type="text" class="form-control" id="exampleInput" required placeholder="Estado Civil" value="{{item.esci_Descripcion}}" 
+                          >
                       </div>
                       <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" (click)="cancelar(); modal.close('by: close button')">Cerrar</button>
@@ -60,8 +62,12 @@
         </div>
             <div class="modal-body">
                 <label for="exampleInput" class="form-label">Estado Civil</label>
-                <input type="text" class="form-control" id="exampleInput" required placeholder="Estado Civil" [(ngModel)]="estadosciviles.esci_Descripcion" >
-            </div>
+                <input type="text" class="form-control" id="exampleInput" required placeholder="Estado Civil" [(ngModel)]="estadosciviles.esci_Descripcion" 
+                name="estadosciviles.esci_Descripcion" #estadoCivil="ngModel"
+                [ngClass]="{ 'is-invalid': submitted && estadoCivil.invalid }"
+                >
+                <div class="invalid-feedback" *ngIf="estadoCivil?.errors?.required && submitted">Estado civil requerido</div>
+              </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" (click)="cancelar(); modal.close('by: close button')">Cerrar</button>
               <button type="button" class="btn btn-primary" (click)="Guardar()">Guardar</button>

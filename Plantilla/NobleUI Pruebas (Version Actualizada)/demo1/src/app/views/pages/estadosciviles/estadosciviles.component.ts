@@ -21,6 +21,7 @@ export class EstadoscivilesComponent implements OnInit {
   EstadosCiviles: string = '';
   submitted: boolean = false;
   modalRef: NgbModalRef | undefined;
+
   estadosciviles: estadosciviles = new estadosciviles();
 
   estadoscivilesEdit : estadoscivilesEdit = new estadoscivilesEdit();
@@ -48,7 +49,26 @@ export class EstadoscivilesComponent implements OnInit {
   }
 
   Guardar(){
+    if (!this.estadosciviles.esci_Descripcion) {
+      this.submitted = true;
+      Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 6000,
+        timerProgressBar: true,
+      }).fire({
+        title: '¡ERROR!, El campo de estado civil no puede estar vacio',
+        icon: 'error'
+      });
+      return;
+    }
+
+
     const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
+    if (idUsuario !== undefined) {
+      this.estadosciviles.esci_UsuarioCreador = idUsuario;
+    }
     this.service.CreateEstadosCiviles(this.estadosciviles).
     subscribe(data=>{
       console.log(this.estadosciviles);
@@ -105,7 +125,25 @@ export class EstadoscivilesComponent implements OnInit {
 
   }
 
+  Editar(){
+    if (!this.estadosciviles.esci_Descripcion) {
+      this.submitted = true;
+      Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 6000,
+        timerProgressBar: true,
+      }).fire({
+        title: '¡ERROR!, El campo de estado civil no puede estar vacio',
+        icon: 'error'
+      });
+      return;
+    }
+  }
+
   cancelar() {
-    this.estadosciviles.esci_Descripcion = ''; // Restablecer el valor del campo
+    this.estadosciviles.esci_Descripcion = ''; 
+    this.submitted = false;// Restablecer el valor del campo
   }
 }
