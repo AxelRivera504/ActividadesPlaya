@@ -40,6 +40,26 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/actividades/actividades.module').then(m => m.ActividadesModule)
       },
       {
+        path: 'departamentos',
+        loadChildren: () => import('./views/pages/departamentos/departamentos.module').then(m => m.DepartamentosModule)
+      },
+      {
+        path: 'municipios',
+        loadChildren: () => import('./views/pages/municipios/municipios.module').then(m => m.MunicipiosModule)
+      },
+      {
+        path: 'estadosciviles',
+        loadChildren: () => import('./views/pages/estadosciviles/estadosciviles.module').then(m => m.EstadoscivilesModule)
+      },
+      {
+        path: 'metodospago',
+        loadChildren: () => import('./views/pages/metodospago/metodospago.module').then(m => m.MetodospagoModule)
+      },
+      {
+        path: 'direcciones',
+        loadChildren: () => import('./views/pages/direcciones/direcciones.module').then(m => m.DireccionesModule)
+      },
+      {
         path: 'apps',
         loadChildren: () => import('./views/pages/apps/apps.module').then(m => m.AppsModule)
       },

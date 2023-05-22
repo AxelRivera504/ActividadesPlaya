@@ -6,40 +6,60 @@ import { Mantenimiento } from '../Model/Mantenimiento';
 import { Cliente } from '../Model/Clientes';
 import { Encargados } from '../Model/Encargados';
 import { Actividades } from '../Model/Actividades';
+import { departamentos } from '../Model/departamentos';
+import { municipios } from '../Model/municipios';
+import { metodospago } from '../Model/metodospago';
+import { estadosciviles } from '../Model/estadosciviles';
+import { direcciones } from '../Model/direcciones';
 @Injectable({
   providedIn: 'root'
 })
 export class ServicesService {
 
   constructor(private http:HttpClient) { }
-    Url1 = "https://localhost:44312/api/Equipos/ListarEquipos"
-    Url2 = "https://localhost:44312/api/Actividades/ListarActividades"
-    Url5 = "https://localhost:44312/api/Playas/ListarPlayas"
-    Url3 = "https://localhost:44312/api/Mantenimientos/ListarMantenimientos"
-    Url4 = "https://localhost:44312/api/Clientes/ListarClientes"
-    Url6 = "https://localhost:44312/api/Encargados/ListarEncargados"
-
+    Url = "https://localhost:44312/api"
+    
   getEquipos(){
-    return this.http.get<Equipos[]>(this.Url1);
+    return this.http.get<Equipos[]>(this.Url + "/Equipos/ListarEquipos");
   }
 
   getPlayas(){
-    return this.http.get<playas[]>(this.Url5);
+    return this.http.get<playas[]>(this.Url + "/Playas/ListarPlayas");
   }
   
   getMantenimientos(){
-    return this.http.get<[Mantenimiento]>(this.Url3);
+    return this.http.get<[Mantenimiento]>(this.Url + "/Mantenimientos/ListarMantenimientos");
   }
 
   getCliente(){
-    return this.http.get<Cliente[]>(this.Url4);
+    return this.http.get<Cliente[]>(this.Url + "/Clientes/ListarClientes");
   }
 
   getEncargados(){
-    return this.http.get<Encargados[]>(this.Url6);
+    return this.http.get<Encargados[]>(this.Url + "/Encargados/ListarEncargados");
   }
 
   getActividades(){
-    return this.http.get<Actividades[]>(this.Url2);
+    return this.http.get<Actividades[]>(this.Url + "/Actividades/ListarActividades");
+  }
+
+  getDepartamentos(){
+    return this.http.get<departamentos[]>(this.Url + "/Departamentos");
+  }
+
+  getMunicipios(){
+    return this.http.get<municipios[]>(this.Url + "/Municipios");
+  }
+
+  getEstadosCiviles(){
+    return this.http.get<estadosciviles[]>(this.Url + "/EstadosCiviles");
+  }
+
+  getMetodosPago(){
+    return this.http.get<metodospago[]>(this.Url + "/MetodosPago");
+  }
+
+  getDirecciones(){
+    return this.http.get<direcciones[]>(this.Url + "/Direcciones");
   }
 }
