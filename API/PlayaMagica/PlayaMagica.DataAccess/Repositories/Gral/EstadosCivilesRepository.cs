@@ -43,6 +43,14 @@ namespace PlayaMagica.DataAccess.Repositories.Gral
             return db.Query<VW_tbEstadosCiviles>(ScriptsDataBase.UDP_tbEstadosCiviles_Select, null, commandType: CommandType.StoredProcedure);
         }
 
+        public IEnumerable<tbEstadosCiviles> FindEstadoCivil(int id)
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@esci_Id", id, DbType.Int32, ParameterDirection.Input);
+            return db.Query<tbEstadosCiviles>(ScriptsDataBase.UDP_tbEstadosCiviles_Find, parametros, commandType: CommandType.StoredProcedure);
+        }
+
         public RequestStatus Update(tbEstadosCiviles item)
         {
             using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);

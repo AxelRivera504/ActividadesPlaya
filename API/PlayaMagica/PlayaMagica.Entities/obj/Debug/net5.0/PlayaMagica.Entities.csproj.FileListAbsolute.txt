@@ -33,3 +33,4 @@ C:\Users\axel2\OneDrive\Documentos\ActividadesPlaya\API\PlayaMagica\PlayaMagica.
 C:\Users\axel2\OneDrive\Documentos\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.dll
 C:\Users\axel2\OneDrive\Documentos\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\ref\PlayaMagica.Entities.dll
 C:\Users\axel2\OneDrive\Documentos\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.pdb
+C:\Users\LAB02\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.csproj.AssemblyReference.cache

@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { departamentos } from '../Model/departamentos';
 import { ServicesService } from '../Service/services.service';
+import { Subject } from 'rxjs';
 
 
 @Component({
@@ -22,7 +23,8 @@ export class DepartamentosComponent implements OnInit {
     private router:Router,) { }
 
   @ViewChild('myTable', { static: false }) table!: ElementRef;
-
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject <any> = new Subject<any>();
 
   basicModalCloseResult: string = '';
   openBasicModal(content: TemplateRef<any>) {
@@ -30,16 +32,22 @@ export class DepartamentosComponent implements OnInit {
       this.basicModalCloseResult = "Modal closed" + result
     }).catch((res) => {});
   }
-
+   
 
   ngOnInit(): void {
     this.service.getDepartamentos().subscribe(data => {
       console.log(data);
       this.departamento = data;
-
       // Inicializar DataTable después de asignar los datos
       this.initializeDataTable();
+      this.dtTrigger.next(null);
     });
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+      }
+    };
   }
   ngAfterViewInit(): void {
     // No es necesario inicializar DataTable aquí

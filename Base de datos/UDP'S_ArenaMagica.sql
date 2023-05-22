@@ -204,6 +204,20 @@ AS
 BEGIN
 	SELECT * FROM Gral.VW_tbEstadosCiviles
 END
+GO
+
+
+
+--Find Estados Civiles
+CREATE OR ALTER PROCEDURE Gral.UDP_tbEstadosCiviles_Find
+	@esci_id		INT
+AS
+BEGIN
+	SELECT	esci_id
+			esci_Descripcion
+	FROM	Gral.tbEstadosCiviles
+	WHERE	esci_id = @esci_id
+END
 
 --Insertar Estados Civiles
 GO

@@ -3,6 +3,7 @@ import { Cliente } from '../Model/Clientes';
 import { ServicesService } from '../Service/services.service';
 import { Router } from '@angular/router';
 import { DataTable } from 'simple-datatables';
+import { Subject } from 'rxjs';
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
@@ -12,16 +13,22 @@ export class ClientesComponent implements OnInit {
   Cliente!: Cliente[];
   @ViewChild('myTable', { static: false }) table!: ElementRef;
   constructor(private service: ServicesService, private router: Router) { }
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject <any> = new Subject<any>();
 
 
   ngOnInit(): void {
     this.service.getCliente().subscribe(data => {
       console.log(data);
       this.Cliente = data;
-
-      // Inicializar DataTable después de asignar los datos
-      this.initializeDataTable();
+      this.dtTrigger.next(null);
     });
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+      }
+    };
   }
 
   ngAfterViewInit(): void {

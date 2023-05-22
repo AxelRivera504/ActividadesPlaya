@@ -10,6 +10,7 @@ import { departamentos } from '../Model/departamentos';
 import { municipios } from '../Model/municipios';
 import { metodospago } from '../Model/metodospago';
 import { estadosciviles } from '../Model/estadosciviles';
+import { estadoscivilesEdit } from '../Model/EstadosCivilesEdit';
 import { direcciones } from '../Model/direcciones';
 @Injectable({
   providedIn: 'root'
@@ -61,5 +62,13 @@ export class ServicesService {
 
   getDirecciones(){
     return this.http.get<direcciones[]>(this.Url + "/Direcciones");
+  }
+
+  CreateEstadosCiviles(estadosciviles: estadosciviles){
+    return this.http.post<estadosciviles[]>(this.Url + "/EstadosCiviles/Insert", estadosciviles);
+  }
+
+  getEditEstadosCiviles(ID?: number){
+    return this.http.post<estadoscivilesEdit[]>(this.Url + "/EstadosCiviles/find", estadosciviles);
   }
 }

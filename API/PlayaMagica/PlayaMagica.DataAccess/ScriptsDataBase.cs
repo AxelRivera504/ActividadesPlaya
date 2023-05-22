@@ -37,6 +37,7 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbEstadosCiviles_Select = "Gral.UDP_tbEstadosCiviles_VW";
         public static string UDP_tbEstadosCiviles_Insert = "gral.UDP_tbEstadosCiviles_Insertar";
         public static string UDP_tbEstadosCiviles_Update = "gral.UDP_tbEstadosCiviles_Update";
+        public static string UDP_tbEstadosCiviles_Find = "Gral.UDP_tbEstadosCiviles_Find";
         #endregion
 
         #endregion

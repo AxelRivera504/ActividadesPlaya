@@ -3,6 +3,7 @@ import { Encargados } from '../Model/Encargados';
 import { ServicesService } from '../Service/services.service';
 import { Router } from '@angular/router';
 import { DataTable } from 'simple-datatables';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-encargados',
@@ -13,6 +14,8 @@ export class EncargadosComponent implements OnInit {
   Encargados!: Encargados[];
   @ViewChild('myTable', { static: false }) table!: ElementRef;
   constructor(private service: ServicesService, private router: Router) { }
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject <any> = new Subject<any>();
 
 
   ngOnInit(): void {
@@ -20,9 +23,14 @@ export class EncargadosComponent implements OnInit {
       console.log(data);
       this.Encargados = data;
 
-      // Inicializar DataTable después de asignar los datos
-      this.initializeDataTable();
+      this.dtTrigger.next(null);
     });
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+      }
+    };
   }
 
   ngAfterViewInit(): void {

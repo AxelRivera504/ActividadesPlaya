@@ -11,6 +11,8 @@ import { AppComponent } from './app.component';
 import { ErrorPageComponent } from './views/pages/error-page/error-page.component';
 
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { DataTablesModule } from 'angular-datatables';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +24,9 @@ import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
     BrowserAnimationsModule,
     LayoutModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    DataTablesModule
+
   ],
   providers: [
     AuthGuard,
