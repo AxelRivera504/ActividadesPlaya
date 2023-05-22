@@ -10,6 +10,7 @@ namespace PlayaMagica.Entities.Entities
     {
         public tbActividades()
         {
+            tbActividadesXFecha = new HashSet<tbActividadesXFecha>();
             tbEncargadosXActividades = new HashSet<tbEncargadosXActividades>();
             tbEquipoXActividades = new HashSet<tbEquipoXActividades>();
             tbReservaciones = new HashSet<tbReservaciones>();
@@ -27,6 +28,7 @@ namespace PlayaMagica.Entities.Entities
         public DateTime? acti_FechaModificacion { get; set; }
 
         public virtual tbPlayas play { get; set; }
+        public virtual ICollection<tbActividadesXFecha> tbActividadesXFecha { get; set; }
         public virtual ICollection<tbEncargadosXActividades> tbEncargadosXActividades { get; set; }
         public virtual ICollection<tbEquipoXActividades> tbEquipoXActividades { get; set; }
         public virtual ICollection<tbReservaciones> tbReservaciones { get; set; }

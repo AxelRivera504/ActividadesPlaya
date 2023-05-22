@@ -25,6 +25,13 @@ namespace PlayaMagica.Controllers
             _mapper = mapper;
         }
 
+        [HttpPost("PantallasXRol/{id}")]
+        public IActionResult Listar(int id)
+        {
+            var listado = _accesoService.ListadoPantallas(id);
+            return Ok(listado);
+        }
+
         [HttpPost("Insertar")]
         public IActionResult Create(RolesPorPantallaViewModel item)
         {

@@ -1,4 +1,5 @@
 ﻿using PlayaMagica.DataAccess.Repositories.Acti;
+using PlayaMagica.Entities.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,87 +10,201 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
 {
     public class ActividadesServices
     {
-        private readonly ActividadesRepository _actividadesRepository;
-        private readonly ActividadesXFechaRepository _actividadesXFechaRepository;
         private readonly ClientesRepository _clientesRepository;
-        private readonly ClienteXReservacionRepository _clienteXReservacionRepository;
         private readonly EncargadosRepository _encargadosRepository;
-        private readonly EncargadosXActividadesRepository _encargadosXActividadesRepository;
-        private readonly EquiposRepository _equiposRepository;
-        private readonly EquipoXActividadesRepository _equipoXActividadesRepository;
-        private readonly FacturaRepository _facturaRepository;
-        private readonly MantenimientoRepository _mantenimientoRepository;
-        private readonly MantenimientoXEquipoRepository _mantenimientoXEquipoRepository;
         private readonly PlayasRepository _playasRepository;
-        private readonly ReservacionesRepository _reservacionesRepository;
-
-        public ActividadesServices(ReservacionesRepository reservacionesRepository, PlayasRepository playasRepository, MantenimientoXEquipoRepository mantenimientoXEquipoRepository, MantenimientoRepository mantenimientoRepository, FacturaRepository facturaRepository, EquipoXActividadesRepository equipoXActividadesRepository, EquiposRepository equiposRepository, EncargadosXActividadesRepository encargadosXActividadesRepository, EncargadosRepository encargadosRepository, ClienteXReservacionRepository clienteXReservacionRepository, ClientesRepository clientesRepository, ActividadesRepository actividadesRepository, ActividadesXFechaRepository actividadesXFechaRepository)
+        public ActividadesServices(EncargadosRepository encargadosRepository, ClientesRepository clientesRepository, PlayasRepository playasRepository)
         {
-            _actividadesRepository = actividadesRepository;
-            _actividadesXFechaRepository = actividadesXFechaRepository;
             _clientesRepository = clientesRepository;
-            _clienteXReservacionRepository = clienteXReservacionRepository;
             _encargadosRepository = encargadosRepository;
-            _encargadosXActividadesRepository = encargadosXActividadesRepository;
-            _equiposRepository = equiposRepository;
-            _equipoXActividadesRepository = equipoXActividadesRepository;
-            _facturaRepository = facturaRepository;
-            _mantenimientoRepository = mantenimientoRepository;
-            _mantenimientoXEquipoRepository = mantenimientoXEquipoRepository;
             _playasRepository = playasRepository;
-            _reservacionesRepository = reservacionesRepository;
-        } 
+        }
 
-        #region Playas
-
-        #endregion
 
         #region Encargados
+        public IEnumerable<VW_tbEncargados> ListarEncargados()
+        {
+            try
+            {
+                var list = _encargadosRepository.ListarEncargados();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return Enumerable.Empty<VW_tbEncargados>();
+            }
+        }
 
+
+        public ServiceResult InsetarEncargados(tbEncargados item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Encargados = _encargadosRepository.InsertarEncargados(item);
+                return resultado.Ok(Encargados);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult UpdateEncargados(tbEncargados item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Encargados = _encargadosRepository.UpdateEncargados(item);
+                return resultado.Ok(Encargados);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult DeleteEncargados(tbEncargados item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Encargados = _encargadosRepository.DeleteEncargados(item);
+                return resultado.Ok(Encargados);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
         #endregion
 
         #region Clientes
+        public IEnumerable<VW_tbClientes> ListarClientes()
+        {
+            try
+            {
+                var list = _clientesRepository.ListarClientes();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return Enumerable.Empty<VW_tbClientes>();
+            }
+        }
 
+
+        public ServiceResult InsertarClientes(tbClientes item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Encargados = _clientesRepository.InsertarClientes(item);
+                return resultado.Ok(Encargados);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult UpdateClientes(tbClientes item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Encargados = _clientesRepository.UpdateClientes(item);
+                return resultado.Ok(Encargados);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult DeleteClientes(tbClientes item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Encargados = _clientesRepository.DeleteClientes(item);
+                return resultado.Ok(Encargados);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
         #endregion
 
-        #region Actividades
+        #region Playas
+        public IEnumerable<VW_tbPlayas> ListarPlayas()
+        {
+            try
+            {
+                var list = _playasRepository.ListarPlayas();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return Enumerable.Empty<VW_tbPlayas>();
+            }
+        }
 
-        #endregion
 
-        #region Reservaciones
+        public ServiceResult InsertarPlayas(tbPlayas item)
+        {
+            var resultado = new ServiceResult();
 
-        #endregion
+            try
+            {
+                var Playas = _playasRepository.InsertarPlayas(item);
+                return resultado.Ok(Playas);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
 
-        #region ClienteXReservacion
+        public ServiceResult UpdatePlayas(tbPlayas item)
+        {
+            var resultado = new ServiceResult();
 
-        #endregion
+            try
+            {
+                var Playas = _playasRepository.UpdatePlayas(item);
+                return resultado.Ok(Playas);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
 
-        #region Equipos
+        public ServiceResult DeletePlayas(tbPlayas item)
+        {
+            var resultado = new ServiceResult();
 
-        #endregion
-
-        #region EquipoXActividades
-
-        #endregion
-
-        #region EncargadosXActividades
-
-        #endregion
-
-        #region Mantenimiento
-
-        #endregion
-
-        #region MantenimientoXEquipo
-
-        #endregion
-
-        #region Factura
-
-        #endregion
-
-        #region ActividadesXFecha
-
+            try
+            {
+                var Playas = _playasRepository.DeletePlayas(item);
+                return resultado.Ok(Playas);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
         #endregion
     }
 }

@@ -51,7 +51,7 @@ CREATE TABLE Gral.tbMunicipios(
 	muni_UsuarioCreador			INT DEFAULT 1,
 	muni_FechaCreacion			DATETIME DEFAULT GETDATE(),
 	muni_UsuarioModificador		INT,
-	muni_FechaModificacion		DATETIME,
+	muni_FechaModificacion		DATETIME
 	CONSTRAINT PK_gral_tbMunicipios_muni_Id PRIMARY KEY (muni_id),
 	CONSTRAINT FK_gral_tbMunicipios_tbDepartamentos_dept_Id FOREIGN KEY(dept_id) 
 	REFERENCES gral.tbDepartamentos (dept_id),
@@ -66,7 +66,7 @@ CREATE TABLE Gral.tbMetodosPago(
 	mepa_UsuarioCreador			INT DEFAULT 1,
 	mepa_FechaCreacion			DATETIME DEFAULT GETDATE(),
 	mepa_UsuarioModificador		INT,
-	mepa_FechaModificacion		DATETIME,
+	mepa_FechaModificacion		DATETIME
 
 	CONSTRAINT PK_gral_tbMetodosPago_pago_Id PRIMARY KEY (mepa_id),
 )
@@ -124,7 +124,7 @@ CREATE TABLE Acti.tbEncargados
 	enca_UsuarioCreador			INT DEFAULT 1,
 	enca_FechaCreacion			DATETIME DEFAULT GETDATE(),
 	enca_UsuarioModificador		INT,
-	enca_FechaModificacion		DATETIME,
+	enca_FechaModificacion		DATETIME
 
 	CONSTRAINT PK_gral_tbEncargados_empl_Id PRIMARY KEY (enca_id),
 	CONSTRAINT FK_gral_tbEncargados_estciv_id_gral_tbEstadosCiviles_estciv_Id FOREIGN KEY(esci_id)
@@ -145,7 +145,7 @@ CREATE TABLE Acti.tbClientes
 	clie_UsuarioCreador			INT DEFAULT 1,
 	clie_FechaCreacion			DATETIME DEFAULT GETDATE(),
 	clie_UsuarioModificador		INT,
-	clie_FechaModificacion		DATETIME,
+	clie_FechaModificacion		DATETIME
 
 	CONSTRAINT PK_Acti_tbClientes_clie_Id PRIMARY KEY (clie_id),
 )
@@ -164,7 +164,7 @@ CREATE TABLE Acti.tbActividades
    acti_UsuarioCreador			INT DEFAULT 1,
    acti_FechaCreacion			DATETIME DEFAULT GETDATE(),
    acti_UsuarioModificador		INT,
-   acti_FechaModificacion		DATETIME,
+   acti_FechaModificacion		DATETIME
 
    CONSTRAINT PK_Acti_tbActividades_acti_Id PRIMARY KEY (acti_id),
    CONSTRAINT FK_Actil_tbActividades_play_id_Acti_tbPlayas_play_Id FOREIGN KEY(play_id)
@@ -184,7 +184,7 @@ CREATE TABLE Acti.tbReservaciones
   rese_UsuarioCreador			INT DEFAULT 1,
   rese_FechaCreacion			DATETIME DEFAULT GETDATE(),
   rese_UsuarioModificador		INT,
-  rese_FechaModificacion		DATETIME,
+  rese_FechaModificacion		DATETIME
 
   CONSTRAINT PK_Acti_tbReservaciones_rese_Id PRIMARY KEY (rese_Id),
   CONSTRAINT FK_Acti_tbReservaciones_rese_id_Acti_tbActividades_acti_Id FOREIGN KEY(acti_id)
@@ -203,7 +203,7 @@ CREATE TABLE Acti.tbClienteXReservacion
    clre_UsuarioCreador			INT DEFAULT 1,
    clre_FechaCreacion			DATETIME DEFAULT GETDATE(),
    clre_UsuarioModificador		INT,
-   clre_FechaModificacion		DATETIME,
+   clre_FechaModificacion		DATETIME
 
    CONSTRAINT PK_Acti_tbClienteXReservacion_clre_Id PRIMARY KEY (clre_Id),
    CONSTRAINT FK_Acti_ClienteXReservacion_rese_id_Acti_tbreservacion_rese_Id FOREIGN KEY(rese_Id)
@@ -225,7 +225,7 @@ CREATE TABLE Acti.tbEquipos
   equi_UsuarioCreador			INT DEFAULT 1,
   equi_FechaCreacion			DATETIME DEFAULT GETDATE(),
   equi_UsuarioModificador		INT,
-  equi_FechaModificacion		DATETIME,
+  equi_FechaModificacion		DATETIME
 
    CONSTRAINT PK_Acti_tbEquipos_equi_Id PRIMARY KEY (equi_Id),
 
@@ -261,7 +261,7 @@ CREATE TABLE Acti.tbEncargadosXActividades
   enac_UsuarioCreador			INT,
   enac_FechaCreacion			DATETIME DEFAULT GETDATE(),
   enac_UsuarioModificador		INT,
-  enac_FechaModificacion		DATETIME,
+  enac_FechaModificacion		DATETIME
 
   CONSTRAINT PK_Acti_EncargadosXActividades_enac_Id PRIMARY KEY (enac_Id), 
   CONSTRAINT FK_Acti_EncargadosXActividades_enca_Id FOREIGN KEY (enca_Id) REFERENCES Acti.tbEncargados (enca_Id),
@@ -340,8 +340,9 @@ CREATE TABLE Acti.tbActividadesXFecha
   acfe_UsuarioModificador		INT,
   acfe_FechaModificacion		DATETIME
 
-
+  CONSTRAINT PL_Acti_tbActi_acfe_Id PRIMARY KEY (acfe_Id),
   CONSTRAINT FK_Acti_tbActi_acti_Id FOREIGN KEY (acti_Id) REFERENCES Acti.tbActividades(acti_Id),
+
 )
 GO
 
@@ -354,7 +355,7 @@ CREATE TABLE Acce.tbRoles(
 	role_UsuarioCreador			INT DEFAULT 1,
 	role_FechaCreacion			DATETIME DEFAULT GETDATE(),
 	role_UsuarioModificador		INT,
-	role_FechaModificacion		DATETIME,
+	role_FechaModificacion		DATETIME
 	CONSTRAINT PK_Acce_tbRoles_role_ID PRIMARY KEY (role_ID),
 )
 GO
@@ -368,7 +369,7 @@ CREATE TABLE Acce.tbPantallas(
 	pant_UsuarioCreador			INT DEFAULT	1,
 	pant_FechaCreacion			DATETIME DEFAULT GETDATE(),
 	pant_UsuarioModificador		INT,
-	pant_FechaModificacion		DATETIME,
+	pant_FechaModificacion		DATETIME
 	CONSTRAINT PK_Acce_tbPantallas_pant_ID	PRIMARY KEY (pant_ID),
 )
 GO
@@ -383,7 +384,7 @@ CREATE TABLE Acce.tbRolesXPantallas(
 	roleXpant_UsuarioCreador		INT DEFAULT 1,
 	roleXpant_FechaCreacion			DATETIME DEFAULT GETDATE(),
 	roleXpant_UsuarioModificador	INT,
-	roleXpant_FechaModificacion		DATETIME,
+	roleXpant_FechaModificacion		DATETIME
 
 	CONSTRAINT PK_Acce_tbRolesXPantallas_roleXpant_ID PRIMARY KEY (roleXpant_ID),
 	CONSTRAINT FK_Acce_tbRolesXPantallas_tbRoles_role_ID FOREIGN KEY (role_ID) REFERENCES Acce.tbRoles (role_ID),
@@ -404,7 +405,7 @@ CREATE TABLE Acce.tbUsuarios(
 	usua_UsuarioCreador			INT,
 	usua_FechaCreacion			DATETIME DEFAULT GETDATE(),
 	usua_UsuarioModificador		INT,
-	usua_FechaModificacion		DATETIME,
+	usua_FechaModificacion		DATETIME
 
 	CONSTRAINT PK_Acce_tbUsuarios_usua_ID PRIMARY KEY (usua_ID), 
 	CONSTRAINT UQ_Acce_tbUsuarios_usua_Usuario UNIQUE (usua_Usuario),

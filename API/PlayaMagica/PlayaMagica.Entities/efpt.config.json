@@ -30,11 +30,11 @@
          "ObjectType": 0
       },
       {
-         "Name": "[Acti].[ActividadesXFecha]",
+         "Name": "[Acti].[tbActividades]",
          "ObjectType": 0
       },
       {
-         "Name": "[Acti].[tbActividades]",
+         "Name": "[Acti].[tbActividadesXFecha]",
          "ObjectType": 0
       },
       {
@@ -142,10 +142,6 @@
          "ObjectType": 3
       },
       {
-         "Name": "[dbo].[Gral_tbMetodosPago]",
-         "ObjectType": 3
-      },
-      {
          "Name": "[Gral].[VW_tbDepartamentos]",
          "ObjectType": 3
       },
@@ -166,7 +162,7 @@
          "ObjectType": 3
       }
    ],
-   "UiHint": "DESKTOP-9F25UTB\\SQLEXPRESS.DB_ArenaMagica",
+   "UiHint": "DESKTOP-B2FSPCF\\SQLEXPRESS.DB_ArenaMagica",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDbContextSplitting": false,

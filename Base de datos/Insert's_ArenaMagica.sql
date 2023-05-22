@@ -1172,84 +1172,84 @@ GO
 
 --**************************************************** INSERTS tbPlayas ******************************************************************--
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa Buena Vista',1,'https://e1.pxfuel.com/desktop-wallpaper/946/286/desktop-wallpaper-honduras-beach-honduras.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('Playa Buena Vista',1,1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa de Cienaguita',1,'https://w0.peakpx.com/wallpaper/926/933/HD-wallpaper-the-beach-beach-water-honduras-blue.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('Playa de Cienaguita',1,1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa de Rio Mar',1,'https://e1.pxfuel.com/desktop-wallpaper/970/585/desktop-wallpaper-honduras.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('Playa de Rio Mar',1,1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa Utila',1,'https://miviaje.com/wp-content/uploads/2018/10/playa-roatan-honduras.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('Playa Municipal Rio Ulua',1,1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa del Faro',1,'https://e1.pxfuel.com/desktop-wallpaper/409/83/desktop-wallpaper-honduras.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('Playa del Faro',1,1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa de Mareja y Vacacional',1,'https://e0.pxfuel.com/wallpapers/486/935/desktop-wallpaper-honduras.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('Playa de Mareja y Vacacional',1,1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa de la Coca Cola',1,'https://cdn.forbescentroamerica.com/2021/02/Honduras-turismo-1-1-1024x683.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('Playa de la Coca Cola',1,1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Mar de Plata Omoa',1,'https://p4.wallpaperbetter.com/wallpaper/224/626/575/sunset-beach-landscape-sky-honduras-hd-wallpaper-preview.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('Mar de Plata Omoa',1,1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa La Ensenada',1,'https://i.pinimg.com/originals/b5/70/bf/b570bfc41c1a12c659375035c66f19c7.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('Playa La Ensenada',1,1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Brisas del Caribe Beach',1,'https://media.solwayscuba.com/photos/Hotel/2018/hotel/hotel-brisas-del-caribe-116-1.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('Brisas del Caribe Beach',1,1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa de Santo Tomás',1,'https://e0.pxfuel.com/wallpapers/57/159/desktop-wallpaper-nature-of-belize-high-quality-nature-honduras-landscape.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('Playa de Santo Tomás',1,1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Punta de Palma',1,'https://elfotobus.com/wp-content/uploads/2018/12/car.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('Punta de Palma',1,1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('santa maria del mar',1,'https://elfotobus.com/wp-content/uploads/2018/12/car.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('santa maria del mar',1,1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa Capitania',1,'https://www.guatemala.com/fotos/2021/09/Playa-Capitania-un-destino-de-aguas-cristalinas-y-arena-blanca-en-Livingston-885x500.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('Playa Capitania',1,1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa Punta Manabique',1,'https://www.guatemala.com/fotos/201712/Punta-de-Manabique-885x500.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('Playa Punta Manabique',1,1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa Marejada',1,'https://c4.wallpaperflare.com/wallpaper/494/937/297/palmetto-bay-roatan-island-honduras-wallpaper-preview.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('Playa Marejada',1,1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa de Puerto Cortes. Honduras',1,'https://e0.pxfuel.com/wallpapers/640/832/desktop-wallpaper-landscape-honduras-landscape.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('Playa de Puerto Cortes. Honduras',1,1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa Amatique Bay',1,'https://e1.pxfuel.com/desktop-wallpaper/341/76/desktop-wallpaper-honduras-8750-honduras.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('Playa Amatique Bay',1,1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('San Juan del Mar',1,'https://w0.peakpx.com/wallpaper/558/175/HD-wallpaper-sunset-in-san-juan-s-beach-beach-dawn-horizon-ocean-summer-nature-palm-sunset.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('San Juan del Mar',1,1,1,GETDATE(),NULL,NULL);
 GO
 
-INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('PUEBLO NUEVO , OMOA',1,'https://www.honduras.com/wp-content/uploads/2021/08/cabanas-pueblo-nuevo-9.jpg',1,1,GETDATE(),NULL,NULL);
+INSERT INTO Acti.tbPlayas(play_Playa, dire_Id, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
+VALUES('PUEBLO NUEVO , OMOA',1,1,1,GETDATE(),NULL,NULL);
 GO
 
 
@@ -1692,35 +1692,6 @@ INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreado
 VALUES (2,16,1);
 INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
 VALUES (2,17,1);
-
-
-
-
-CREATE TABLE Acti.ActividadesXFecha
-(
-  acfe_Id              INT IDENTITY(1,1),
-  acti_Id              INT,
-  acfe_Fecha           DATE,
-  acfe_Cantidad        INT, 
-
-  acfe_Estado					BIT DEFAULT 1,
-  acfe_UsuarioCreador			INT,
-  acfe_FechaCreacion			DATETIME DEFAULT GETDATE(),
-  acfe_UsuarioModificador		INT,
-  acfe_FechaModificacion		DATETIME
-
-
-  CONSTRAINT FK_Acti_tbActi_acti_Id FOREIGN KEY (acti_Id) REFERENCES Acti.tbActividades(acti_Id),
-)
-GO
-
-
-
-INSERT INTO Acti.ActividadesXFecha(acti_Id,acfe_Fecha,acfe_Cantidad)
-VALUES(1,'2023-05-06',15)
-
-
-
 
 
 

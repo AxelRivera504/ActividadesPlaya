@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { BaseComponent } from './views/layout/base/base.component';
 import { AuthGuard } from './core/guard/auth.guard';
 import { ErrorPageComponent } from './views/pages/error-page/error-page.component';
+import { PruebaComponent } from './views/pages/prueba/prueba.component';
+import { DepartamentosComponent } from './views/pages/departamentos/departamentos.component';
 
 
 const routes: Routes = [
@@ -44,6 +46,37 @@ const routes: Routes = [
         path: 'tables',
         loadChildren: () => import('./views/pages/tables/tables.module').then(m => m.TablesModule)
       },
+      {
+        path: 'prueba',component:PruebaComponent
+      },
+      {
+        path: 'departamentos',
+        loadChildren: () => import('./views/pages/departamentos/departamentos.module').then(m => m.DepartamentosModule)
+      },
+      {
+        path: 'municipios',
+        loadChildren: () => import('./views/pages/municipios/municipios.module').then(m => m.MunicipiosModule)
+      },
+      {
+        path: 'estadosciviles',
+        loadChildren: () => import('./views/pages/estadosciviles/estadosciviles.module').then(m => m.EstadoscivilesModule)
+      },
+      {
+        path: 'metodospago',
+        loadChildren: () => import('./views/pages/metodospago/metodospago.module').then(m => m.MetodospagoModule)
+      },
+      {
+        path: 'direcciones',
+        loadChildren: () => import('./views/pages/direcciones/direcciones.module').then(m => m.DireccionesModule)
+      },     
+      {
+        path: 'roles',
+        loadChildren: () => import('./views/pages/roles/roles.modules').then(m => m.RolesModule)
+      },         
+      {
+        path: 'usuarios',
+        loadChildren: () => import('./views/pages/usuarios/usuarios.module').then(m => m.UsuariosModule)
+      }, 
       {
         path: 'icons',
         loadChildren: () => import('./views/pages/icons/icons.module').then(m => m.IconsModule)

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.BussinessLogic\\PlayaMagica.BussinessLogic.csproj": {}
+    "C:\\Users\\Juan\\Desktop\\RamaCrist\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.BussinessLogic\\PlayaMagica.BussinessLogic.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.BussinessLogic\\PlayaMagica.BussinessLogic.csproj": {
+    "C:\\Users\\Juan\\Desktop\\RamaCrist\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.BussinessLogic\\PlayaMagica.BussinessLogic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.BussinessLogic\\PlayaMagica.BussinessLogic.csproj",
+        "projectUniqueName": "C:\\Users\\Juan\\Desktop\\RamaCrist\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.BussinessLogic\\PlayaMagica.BussinessLogic.csproj",
         "projectName": "PlayaMagica.BussinessLogic",
-        "projectPath": "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.BussinessLogic\\PlayaMagica.BussinessLogic.csproj",
+        "projectPath": "C:\\Users\\Juan\\Desktop\\RamaCrist\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.BussinessLogic\\PlayaMagica.BussinessLogic.csproj",
         "packagesPath": "C:\\Users\\Juan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.BussinessLogic\\obj\\",
+        "outputPath": "C:\\Users\\Juan\\Desktop\\RamaCrist\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.BussinessLogic\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -34,8 +34,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj": {
-                "projectPath": "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj"
+              "C:\\Users\\Juan\\Desktop\\RamaCrist\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj": {
+                "projectPath": "C:\\Users\\Juan\\Desktop\\RamaCrist\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj"
               }
             }
           }
@@ -68,14 +68,14 @@
         }
       }
     },
-    "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj": {
+    "C:\\Users\\Juan\\Desktop\\RamaCrist\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj",
+        "projectUniqueName": "C:\\Users\\Juan\\Desktop\\RamaCrist\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj",
         "projectName": "PlayaMagica.DataAccess",
-        "projectPath": "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj",
+        "projectPath": "C:\\Users\\Juan\\Desktop\\RamaCrist\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.DataAccess\\PlayaMagica.DataAccess.csproj",
         "packagesPath": "C:\\Users\\Juan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.DataAccess\\obj\\",
+        "outputPath": "C:\\Users\\Juan\\Desktop\\RamaCrist\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -98,8 +98,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {
-                "projectPath": "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj"
+              "C:\\Users\\Juan\\Desktop\\RamaCrist\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {
+                "projectPath": "C:\\Users\\Juan\\Desktop\\RamaCrist\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj"
               }
             }
           }
@@ -150,14 +150,14 @@
         }
       }
     },
-    "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {
+    "C:\\Users\\Juan\\Desktop\\RamaCrist\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
+        "projectUniqueName": "C:\\Users\\Juan\\Desktop\\RamaCrist\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
         "projectName": "PlayaMagica.Entities",
-        "projectPath": "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
+        "projectPath": "C:\\Users\\Juan\\Desktop\\RamaCrist\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
         "packagesPath": "C:\\Users\\Juan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\obj\\",
+        "outputPath": "C:\\Users\\Juan\\Desktop\\RamaCrist\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

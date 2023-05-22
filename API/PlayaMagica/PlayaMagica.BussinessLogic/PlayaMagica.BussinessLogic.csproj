@@ -5,12 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Services\ActividadesServices\**" />
-    <EmbeddedResource Remove="Services\ActividadesServices\**" />
-    <None Remove="Services\ActividadesServices\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Services\AccesoServices\" />
     <Folder Include="Services\GeneralServices\" />
   </ItemGroup>
