@@ -342,7 +342,6 @@ CREATE TABLE Acti.tbActividadesXFecha
 
   CONSTRAINT PL_Acti_tbActi_acfe_Id PRIMARY KEY (acfe_Id),
   CONSTRAINT FK_Acti_tbActi_acti_Id FOREIGN KEY (acti_Id) REFERENCES Acti.tbActividades(acti_Id),
-
 )
 GO
 
@@ -397,7 +396,6 @@ CREATE TABLE Acce.tbUsuarios(
 	usua_ID						INT IDENTITY(1,1), 
 	usua_Usuario				NVARCHAR(100), 
 	usua_Clave					VARCHAR(MAX),
-	usua_EsAdmin				INT,
 	enca_ID						INT,
 	role_ID                     INT,
 	

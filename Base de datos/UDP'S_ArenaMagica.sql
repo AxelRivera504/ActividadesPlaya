@@ -30,24 +30,20 @@ END
 --Insertar Departamentos
 GO
 CREATE OR ALTER PROCEDURE Gral.UDP_tbDepartamentos_InsertarDepartamentos
+	@dept_Id				CHAR(2),
 	@dept_Descripcion		NVARCHAR(150),
 	@dept_UsuarioCreador	INT
 AS
 BEGIN
 	BEGIN TRY
-        IF NOT EXISTS (SELECT * FROM Gral.tbDepartamentos WHERE dept_Descripcion = @dept_Descripcion)
+        IF NOT EXISTS (SELECT * FROM Gral.tbDepartamentos WHERE dept_id = @dept_Id)
             BEGIN
-                DECLARE @IdDepto AS CHAR(2);
-                SELECT @IdDepto = dept_Id FROM Gral.tbDepartamentos ORDER BY dept_Id ASC
-                DECLARE @NextNewIdDepto AS CHAR(2);
-                SET @NextNewIdDepto = CONVERT(CHAR(2), CONVERT(INT, @IdDepto) + 1);
-
                 INSERT INTO gral.tbDepartamentos (dept_id, dept_Descripcion, dept_Estado, dept_UsuarioCreador, dept_FechaCreacion, dept_UsuarioModificador, dept_FechaModificacion)
-                VALUES (@NextNewIdDepto,@dept_Descripcion,1,@dept_UsuarioCreador,GETDATE(),NULL,NULL);
+                VALUES (@dept_Id,@dept_Descripcion,1,@dept_UsuarioCreador,GETDATE(),NULL,NULL);
 
                SELECT 1
             END
-        ELSE IF EXISTS(SELECT * FROM Gral.tbDepartamentos WHERE dept_Descripcion = @dept_Descripcion AND dept_Estado = 0 )
+        ELSE IF EXISTS(SELECT * FROM Gral.tbDepartamentos WHERE dept_id = @dept_Id AND dept_Estado = 0 )
 		BEGIN
 			UPDATE Gral.tbDepartamentos 
 			SET dept_Estado = 1
@@ -364,10 +360,11 @@ BEGIN TRY
 END
 
 --**************************************************** /UDP Y VISTA METODOS DE PAGO ***************************************************************--
- GO
+
  --****************************************************UDP Y VISTA PLAYA  *************************************************************************--
 
  /*Vista Playa*/
+  GO
  CREATE OR ALTER VIEW Acti.VW_tbPlayas
 AS
 SELECT play_Id, play_Playa, 
@@ -740,7 +737,7 @@ GO
   FROM Acti.tbEquipos equi INNER JOIN Acce.tbUsuarios [UsuarioCreador]
   ON equi.equi_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
   ON equi.equi_UsuarioModificador = [UsuarioModificador].usua_ID
-  WHERE equi_Estado = 0
+  WHERE equi_Estado = 1
 
   /*Vista Equipos UDP*/
   GO
@@ -842,13 +839,14 @@ GO
 	AS
 	SELECT acti_Id, acti_Nombre,  
 	acti_Cupo, 
-	acti_Precio, play_Id, 
+	acti_Precio, play_playa,playa.play_id, 
 	acti_Estado, acti_UsuarioCreador,[UsuarioCreador].usua_Usuario AS acti_UsuarioCreador_Nombre, 
 	acti_FechaCreacion, acti_UsuarioModificador,[UsuarioModificador].usua_Usuario AS acti_UsuarioModificador_Nombre, 
 	acti_FechaModificacion
 	FROM Acti.tbActividades	acti INNER JOIN Acce.tbUsuarios [UsuarioCreador]
 	ON acti.acti_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador] 
-	ON acti.acti_UsuarioModificador = [UsuarioModificador].usua_ID
+	ON acti.acti_UsuarioModificador = [UsuarioModificador].usua_ID INNER JOIN Acti.tbPlayas playa
+	ON	acti.play_id = playa.play_id
 	WHERE acti_Estado = 1
 
 	--/*Vista Actividades UDP*/
@@ -1394,7 +1392,7 @@ GO
 CREATE OR ALTER VIEW Acce.VW_tbUsuarios
 AS
 SELECT usua.usua_ID, usua.usua_Usuario, 
-usua.usua_Clave, usua.usua_EsAdmin, 
+usua.usua_Clave,
 usua.enca_ID,CONCAT(enca.enca_Nombres,enca.enca_Apellidos) AS enca_NombreCompleto, usua.role_ID,role.role_Descripcion, 
 usua.usua_Estado, usua.usua_UsuarioCreador, [UsuarioCreador].usua_Usuario AS usua_UsuarioCreador_Nombre,
 usua.usua_FechaCreacion, usua.usua_UsuarioModificador, [UsuarioModificador].usua_Usuario AS usua_UsuarioModificador_Nombre,
@@ -1422,7 +1420,7 @@ CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Login
 AS
 BEGIN
 DECLARE @contraEncriptada NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Clave);
-	SELECT usua_ID, usua_Usuario, usua_Clave, usua_EsAdmin, usua.enca_ID,
+	SELECT usua_ID, usua_Usuario, usua_Clave,usua.enca_ID,
 	CONCAT(enca.enca_Nombres,enca.enca_Apellidos) AS enca_NombreCompleto, role_ID 
 	FROM Acce.tbUsuarios usua INNER JOIN Acti.tbEncargados enca
 	ON usua.enca_ID = enca.enca_id
@@ -1430,13 +1428,47 @@ DECLARE @contraEncriptada NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Clave);
 	AND usua_Clave = @usua_Clave 
 	AND usua_Estado = 1
 END
+go
+
+CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Login
+(
+	@usua_Usuario  NVARCHAR(100),
+	@usua_Clave    NVARCHAR(MAX)
+)
+AS
+BEGIN
+	DECLARE @Pass AS NVARCHAR(MAX);
+	SET @Pass = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @usua_Clave), 2);
+	IF EXISTS (SELECT * FROM Acce.tbUsuarios WHERE usua_Usuario = @usua_Usuario AND usua_Clave = @usua_Clave)
+		BEGIN
+			SELECT 2
+		END
+	ELSE
+	BEGIN
+	SELECT	usua_ID , 
+			usua_Usuario,
+			tb1.role_ID,
+			tb3.role_Descripcion,
+		    tb2.enca_id,
+			tb2.enca_Nombres + ' ' + tb2.enca_Apellidos AS enca_NombreCompleto
+					    			
+	  FROM   Acce . tbUsuarios  tb1
+INNER JOIN  Acti.tbEncargados tb2
+		ON  tb1.enca_ID = tb2.enca_id
+INNER JOIN   Acce.tbRoles tb3 
+		ON  tb1.role_Id =tb3.role_Id
+	 WHERE   usua_Usuario  = @usua_Usuario AND  usua_Clave  = @Pass
+	   AND   usua_Estado  = 1
+	   END
+END
+GO
+
 
 /*Usuarios Insert*/
 GO
 CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Insert
 @usua_Usuario NVARCHAR(100),
-@usua_Clave VARCHAR(MAX),
-@usua_EsAdmin INT,
+@usua_Clave   NVARCHAR(MAX),
 @enca_ID INT,
 @role_ID INT,
 @usua_UsuarioCreador INT
@@ -1447,12 +1479,11 @@ BEGIN
 			BEGIN
 				DECLARE @contraEncriptada NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Clave);
 				INSERT INTO Acce.tbUsuarios(usua_Usuario, usua_Clave, 
-				usua_EsAdmin, enca_ID, 
+				enca_ID, 
 				role_ID, usua_Estado, 
 				usua_UsuarioCreador, usua_FechaCreacion, 
 				usua_UsuarioModificador, usua_FechaModificacion)
-				VALUES(@usua_Usuario,@contraEncriptada,
-				@usua_EsAdmin,@enca_ID,
+				VALUES(@usua_Usuario,@contraEncriptada,@enca_ID,
 				@role_ID,1,@usua_UsuarioCreador,
 				GETDATE(),NULL,NULL)
 				SELECT 1
@@ -1486,7 +1517,7 @@ AS
 BEGIN
 	BEGIN TRY
 				UPDATE Acce.tbUsuarios	
-				SET	usua_EsAdmin = @usua_EsAdmin,
+				SET
 					enca_ID = @enca_ID,
 					role_ID = @role_ID,
 					usua_FechaModificacion = GETDATE(),
