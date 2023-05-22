@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlayaMagica.Entities.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,29 +7,39 @@ using System.Threading.Tasks;
 
 namespace PlayaMagica.DataAccess.Repositories.Acti
 {
-    public class ActividadesXFechaRepository : IRepository<tbActividadesXFecha>
+    public class ActividadesXFechaRepository : IRepository<tbActividadesXFecha, tbActividadesXFecha>
     {
-        public RequestStatus Delete(ActividadesXFecha item)
+        public RequestStatus Delete(tbActividadesXFecha item)
         {
             throw new NotImplementedException();
         }
 
-        public ActividadesXFecha Find(int? id)
+        public RequestStatus Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public RequestStatus Insert(ActividadesXFecha item)
+        public tbActividadesXFecha Find(int? id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ActividadesXFecha> List()
+        public tbActividadesXFecha Find(int id)
         {
             throw new NotImplementedException();
         }
 
-        public RequestStatus Update(ActividadesXFecha item)
+        public RequestStatus Insert(tbActividadesXFecha item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<tbActividadesXFecha> List()
+        {
+            throw new NotImplementedException();
+        }
+
+        public RequestStatus Update(tbActividadesXFecha item)
         {
             throw new NotImplementedException();
         }
