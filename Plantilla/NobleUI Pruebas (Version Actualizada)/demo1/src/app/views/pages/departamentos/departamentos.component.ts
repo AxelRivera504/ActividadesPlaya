@@ -1,10 +1,10 @@
 import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { departamentos } from 'src/app/Models/departamentos';
-import { ServicesService } from 'src/app/Service/services.service';
 import { DataTable } from "simple-datatables";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { departamentos } from '../Model/departamentos';
+import { ServicesService } from '../Service/services.service';
 
 
 @Component({

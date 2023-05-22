@@ -11,6 +11,36 @@ export const MENU: MenuItem[] = [
     link: '/dashboard'
   },
   {
+    label: 'Playas',
+    icon: 'sunset',
+    link: '/listplayitas'
+  },
+  {
+    label: 'Equipos',
+    icon: 'box',
+    link: '/equipos'
+  },
+  {
+    label: 'Mantenimientos',
+    icon: 'settings',
+    link: '/mantenimientos'
+  },
+  {
+    label: 'Clientes',
+    icon: 'users',
+    link: '/clientes'
+  },
+  {
+    label: 'Encargados',
+    icon: 'user-check',
+    link: '/encargados'
+  },
+  {
+    label: 'Actividades',
+    icon: 'sun',
+    link: '/actividades'
+  },
+  {
     label: 'Departamentos',
     icon: 'home',
     link: '/departamentos'
