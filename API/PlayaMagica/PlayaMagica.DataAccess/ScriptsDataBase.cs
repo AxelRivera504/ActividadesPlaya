@@ -127,6 +127,7 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbMantenimiento_Insert = "Acti.UDP_tbMantenimiento_Insert";
         public static string UDP_tbMantenimiento_Update = "Acti.UDP_tbMantenimiento_Update";
         public static string UDP_tbMantenimiento_Delete = "Acti.UDP_tbMantenimiento_Delete";
+        public static string UDP_tbMantenimiento_Details = "Acti.UDP_tbMantenimiento_Detalles";
         #endregion
 
         #region MantenimientoXEquipo 

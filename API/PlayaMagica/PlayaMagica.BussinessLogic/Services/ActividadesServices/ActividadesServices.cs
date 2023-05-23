@@ -206,5 +206,208 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
         }
         #endregion
+<<<<<<< Updated upstream
+=======
+
+        #region Mantenimientos
+        public IEnumerable<VW_tbMantenimiento> ListarMantenimientos()
+        {
+            try
+            {
+                var list = _mantenimientoRepository.ListarMantenimientos();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return Enumerable.Empty<VW_tbMantenimiento>();
+            }
+        }
+
+
+        public ServiceResult InsertarMantenimientos(tbMantenimiento item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Mantenimiento = _mantenimientoRepository.InsertarMantenimientos(item);
+                return resultado.Ok(Mantenimiento);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult UpdateMantenimientos(tbMantenimiento item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Mantenimiento = _mantenimientoRepository.UpdateMatenimientos(item);
+                return resultado.Ok(Mantenimiento);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult DeleteMantenimientos(tbMantenimiento item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Mantenimiento = _mantenimientoRepository.DeleteMantenimientos(item);
+                return resultado.Ok(Mantenimiento);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public IEnumerable<tbMantenimiento> DetailsMantenimientos(int id)
+        {
+            try
+            {
+                var list = _mantenimientoRepository.DetailsMantenimientos(id);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return Enumerable.Empty<tbMantenimiento>();
+            }
+        }
+        #endregion
+
+        #region Actividades
+        public IEnumerable<VW_tbActividades> ListarActividades()
+        {
+            try
+            {
+                var list = _actividadesRepository.ListarActividades();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return Enumerable.Empty<VW_tbActividades>();
+            }
+        }
+
+
+        public ServiceResult InsertarActividades(tbActividades item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Actividades = _actividadesRepository.InsertarActividades(item);
+                return resultado.Ok(Actividades);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult UpdateActividades(tbActividades item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Actividades = _actividadesRepository.UpdateActividades(item);
+                return resultado.Ok(Actividades);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult DeleteActividades(tbActividades item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Actividades = _actividadesRepository.DeleteActividades(item);
+                return resultado.Ok(Actividades);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+        #endregion
+
+        #region Equipos
+        public IEnumerable<VW_tbEquipos> ListarEquipos()
+        {
+            try
+            {
+                var list = _equipoRepository.ListarEquipos();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return Enumerable.Empty<VW_tbEquipos>();
+            }
+        }
+
+
+        public ServiceResult InsertarEquipos(tbEquipos item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Equipos = _equipoRepository.InsertarEquipos(item);
+                return resultado.Ok(Equipos);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult UpdateEquipos(tbEquipos item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Equipos = _equipoRepository.UpdateEquipos(item);
+                return resultado.Ok(Equipos);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult DeleteEquipos(tbEquipos item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Equipos = _equipoRepository.DeleteEquipos(item);
+                return resultado.Ok(Equipos);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+        #endregion
+>>>>>>> Stashed changes
     }
 }

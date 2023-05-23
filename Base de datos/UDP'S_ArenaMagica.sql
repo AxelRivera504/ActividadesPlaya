@@ -1617,6 +1617,21 @@ BEGIN
 	END CATCH
 END
 
+GO
+
+CREATE OR ALTER PROCEDURE Acti.UDP_tbMantenimiento_Detalles
+	@mant_Id		INT
+AS
+BEGIN
+	SELECT	mant_Id,
+			mant_Descricion,
+			mant_UsuarioCreador,
+			mant_FechaCreacion
+			mant_FechaModificacion,
+			mant_FechaModificacion
+	FROM  Acti.tbMantenimiento
+	WHERE	mant_Id = @mant_Id
+END
 
 --***************************************************///UDP Y VISTA Mantenimiento ****************************************************************************--
 

@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title text-center my-0">
+                <h3>Detalles mantenimiento</h3>  
+            <br>
+        </div>
+        </div>
+        <div class="card-body">
+            <h5>Información</h5>
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for=""><strong>Mantenimiento id:</strong></label>
+                    <br>
+                    <label for="xd">{{idMant}}</label>
+                </div>
+                <div class="col-sm-6">
+                    <label for=""><strong>Mantenimiento</strong></label>
+                    <br>
+                    <label for="xd">{{mantDescripcion}}</label>
+                </div>
+            </div>       
+            <br>
+            <br>               
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Acción</th>
+                        <th>Usuario</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Creación</td>
+                        <td>{{usuaCrea}}</td>
+                        <td>{{fechaCreacion}}</td>
+                    </tr>
+                    <tr>
+                        <td>Modificación</td>
+                        <td>{{usuaModifica}}</td>
+                        <td>{{fechaModificacion}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-header">
+
+        </div>
+    </div>
+</div>
