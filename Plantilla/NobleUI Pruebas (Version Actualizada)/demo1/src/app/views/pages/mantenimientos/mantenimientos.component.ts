@@ -6,6 +6,7 @@ import { DataTable } from 'simple-datatables';
 import { NgbModal,NgbModalRef  } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-mantenimientos',
@@ -21,6 +22,8 @@ export class MantenimientosComponent implements OnInit {
   modalRef: NgbModalRef | undefined;
   @ViewChild('myTable', { static: false }) table!: ElementRef;
   constructor(private service: ServicesService, private router: Router,private http: HttpClient,private modalService: NgbModal) { }
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject <any> = new Subject<any>();
 
   ngOnInit(): void {
     this.submitted = false;
@@ -29,9 +32,18 @@ export class MantenimientosComponent implements OnInit {
       this.Mantenimiento = data;
       // Inicializar DataTable después de asignar los datos
       this.initializeDataTable();
+      this.dtTrigger.next(null);
     });
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+      }
+    };
   }
-
+Editar(i:number){
+  console.log(i)
+}
   openBasicModal(content: TemplateRef<any>) {
     this.modalRef = this.modalService.open(content, {});
     this.modalRef.result.then((result) => {
@@ -128,11 +140,6 @@ export class MantenimientosComponent implements OnInit {
       }
     };
 
-    
-
-    setTimeout(() => {
-      const dataTable = new DataTable(this.table.nativeElement, dataTableOptions);
-    }, 0);
   }
 
   cancelar() {

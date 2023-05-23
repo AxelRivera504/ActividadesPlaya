@@ -13,7 +13,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table #myTable class="myTable">
+                    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
                         <thead>
                             <tr>
                                 <th>Id</th>

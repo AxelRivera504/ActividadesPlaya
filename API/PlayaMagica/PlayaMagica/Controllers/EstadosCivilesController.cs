@@ -31,6 +31,12 @@ namespace PlayaMagica.Controllers
             return Ok(list);
         }
 
+        [HttpGet("find{id}")]
+        public IActionResult FindEstadoCivil(int id) {
+            var list = _generalServices.FindEstadoCivil(id);
+            return Ok(list);
+        }
+
         [HttpPost("Insert")]
         public IActionResult Insert(EstadosCivilesViewModel item)
         {

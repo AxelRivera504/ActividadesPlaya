@@ -10,6 +10,7 @@ import { departamentos } from '../Model/departamentos';
 import { municipios } from '../Model/municipios';
 import { metodospago } from '../Model/metodospago';
 import { estadosciviles } from '../Model/estadosciviles';
+import { estadoscivilesEdit } from '../Model/EstadosCivilesEdit';
 import { direcciones } from '../Model/direcciones';
 @Injectable({
   providedIn: 'root'
@@ -47,14 +48,6 @@ export class ServicesService {
     return this.http.get<departamentos[]>(this.Url + "/Departamentos");
   }
 
-  createDepartamentos(departamento: departamentos){
-    return this.http.post<departamentos[]>(this.Url + "/Departamentos/Insert",departamento);
-  }
-
-  editDepartamentos(departamento: departamentos){
-    return this.http.post<departamentos[]>(this.Url + "/Departamentos/Update",departamento);
-  }
-
   getMunicipios(){
     return this.http.get<municipios[]>(this.Url + "/Municipios");
   }
@@ -69,5 +62,17 @@ export class ServicesService {
 
   getDirecciones(){
     return this.http.get<direcciones[]>(this.Url + "/Direcciones");
+  }
+
+  CreateEstadosCiviles(estadosciviles: estadosciviles){
+    return this.http.post<estadosciviles[]>(this.Url + "/EstadosCiviles/Insert", estadosciviles);
+  }
+
+  getEditEstadosCiviles(ID?: number){
+    return this.http.post<estadoscivilesEdit[]>(this.Url + "/EstadosCiviles/find", estadosciviles);
+  }
+
+  EditarEstadosCiviles(estadosciviles: estadosciviles){
+    return this.http.post<estadosciviles[]>(this.Url + "/EstadosCiviles/Insert", estadosciviles);
   }
 }

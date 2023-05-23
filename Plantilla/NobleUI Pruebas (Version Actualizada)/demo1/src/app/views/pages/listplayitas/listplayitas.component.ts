@@ -3,6 +3,7 @@ import { playas } from '../Model/Playas';
 import { ServicesService } from '../Service/services.service';
 import { Router } from '@angular/router';
 import { DataTable } from 'simple-datatables';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-listplayitas',
@@ -13,6 +14,8 @@ export class ListplayitasComponent implements OnInit, AfterViewInit {
   playas!: playas[];
 
   @ViewChild('myTable', { static: false }) table!: ElementRef;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject <any> = new Subject<any>();
 
   constructor(private service: ServicesService, private router: Router) { }
 
@@ -21,9 +24,14 @@ export class ListplayitasComponent implements OnInit, AfterViewInit {
       console.log(data);
       this.playas = data;
 
-      // Inicializar DataTable después de asignar los datos
-      this.initializeDataTable();
+      this.dtTrigger.next(null);
     });
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+      }
+    };
   }
 
   ngAfterViewInit(): void {
@@ -44,8 +52,5 @@ export class ListplayitasComponent implements OnInit, AfterViewInit {
       }
     };
 
-    setTimeout(() => {
-      const dataTable = new DataTable(this.table.nativeElement, dataTableOptions);
-    }, 0);
   }
 }

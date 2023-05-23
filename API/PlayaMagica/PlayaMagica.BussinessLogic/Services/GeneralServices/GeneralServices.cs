@@ -191,6 +191,21 @@ namespace PlayaMagica.BussinessLogic.Services.GeneralServices
                 return Enumerable.Empty<VW_tbEstadosCiviles>();
             }
         }
+
+        public IEnumerable<tbEstadosCiviles> FindEstadoCivil(int id)
+        {
+            try
+            {
+                var list = _estadosCivilesRepository.FindEstadoCivil(id);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                string mensaje = ex.Message;
+                return Enumerable.Empty<tbEstadosCiviles>();
+            }
+        }
+
         public ServiceResult InsertarEstadosCiviles(tbEstadosCiviles item)
         {
             var result = new ServiceResult();

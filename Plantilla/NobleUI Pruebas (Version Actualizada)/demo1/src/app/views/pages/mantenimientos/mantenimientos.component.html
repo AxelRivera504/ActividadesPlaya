@@ -13,7 +13,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table #myTable class="myTable">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -25,7 +25,7 @@
                         <tr *ngFor="let item of Mantenimiento">
                             <td>{{item.mant_Id}}</td>
                             <td>{{item.mant_Descricion}}</td>
-                            <td><button type="button" class="btn btn-warning btn-icon-text">
+                            <td><button type="button" (click)="Editar(1)" class="btn btn-warning btn-icon-text">
                                 <i class="feather icon-edit "></i>
                             </button>
                                 |
@@ -43,17 +43,20 @@
              </div>
         </div>
     </div>
+    
     <ng-template #basicModal let-modal>
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Nuevo registro</h5>
         </div>
         <form class="forms-sample" [ngClass]="{ 'ng-submitted': submitted, 'needs-validation': submitted }" (ngSubmit)="InsertarMantenimiento($event)">
             <div class="modal-body">
+              <form>
                 <label for="exampleInputEmail1" class="form-label">Mantenimiento</label>
                 <input type="text" class="form-control" id="exampleInputEmail1" required placeholder="Mantenimiento"
                   [(ngModel)]="mantenimientoValue" name="mantenimientoValue" #mantenimientoInput="ngModel"
                   [ngClass]="{ 'is-invalid': submitted && mantenimientoInput.invalid }">
                 <div class="invalid-feedback" *ngIf="mantenimientoInput?.errors?.required && submitted">Mantenimiento requerido</div>
+              </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" (click)="cancelar(); modal.close('by: close button')">Cerrar</button>

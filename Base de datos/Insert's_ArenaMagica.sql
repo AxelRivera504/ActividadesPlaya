@@ -26,45 +26,52 @@ SELECT * FROM @tableA WHERE pass = @p1
 SELECT * FROM @tableB 
 SELECT * FROM @tableB WHERE pass = @p2
 
-INSERT INTO acce.tbUsuarios(usua_Usuario, usua_Clave, enca_ID, role_ID,usua_UsuarioCreador)
-VALUES ('juan', @p2, 1,2, 1),
-	   ('awsd', @p2, 1,1, 1)
+INSERT INTO acce.tbUsuarios(usua_Usuario, usua_Clave, usua_EsAdmin, enca_ID, role_ID,usua_UsuarioCreador)
+VALUES ('juan', @p2, 1, 1,2, 1),
+	   ('awsd', @p2, 1, 1,1, 1)
        
 
 DECLARE @Pass AS NVARCHAR(MAX), @Clave AS NVARCHAR(250);
 SET @Clave = '123';
 SET @Pass = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @Clave),2)
 
-INSERT INTO acce.tbUsuarios(usua_Usuario, usua_Clave, enca_ID, role_ID,usua_UsuarioCreador)
-VALUES('admin', @Pass,1, 1,1);
+INSERT INTO acce.tbUsuarios
+VALUES('admin', @Pass,  1, 2, 1,1);
 GO
+
+
+
+
+
+
+
 
 --************************************************ INSERTS DE LA DB_ArenaMagica *****************************************************************--
 
 --***************************************************** INSERTS tbEstadosCiviles ***************************************************************--
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES(1,1,GETDATE(),NULL,NULL);
+VALUES(1,'Soltero(a)',GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES (1,1,GETDATE(),NULL,NULL);
+VALUES (1,'Casado(a)',GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado,esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES (1,1,GETDATE(),NULL,NULL);
+VALUES (1,'Viudo(a)',GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES (1,1,GETDATE(),NULL,NULL);
+VALUES (1,'Union Libre',GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES (1,1,GETDATE(),NULL,NULL);
+VALUES (1,'Divorciado(a)',GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES(1,1,GETDATE(),NULL,NULL);
+VALUES(1,'Amante',GETDATE(),NULL,NULL);
 GO
 
 --**************************************************** /INSERTS tbEstadosCiviles ***************************************************************--
@@ -1697,7 +1704,33 @@ VALUES (2,17,1);
 
 
 
+
+CREATE TABLE Acti.ActividadesXFecha
+(
+  acfe_Id              INT IDENTITY(1,1),
+  acti_Id              INT,
+  acfe_Fecha           DATE,
+  acfe_Cantidad        INT, 
+
+  acfe_Estado					BIT DEFAULT 1,
+  acfe_UsuarioCreador			INT,
+  acfe_FechaCreacion			DATETIME DEFAULT GETDATE(),
+  acfe_UsuarioModificador		INT,
+  acfe_FechaModificacion		DATETIME
+
+
+  CONSTRAINT FK_Acti_tbActi_acti_Id FOREIGN KEY (acti_Id) REFERENCES Acti.tbActividades(acti_Id),
+)
 GO
+
+
+
+INSERT INTO Acti.ActividadesXFecha(acti_Id,acfe_Fecha,acfe_Cantidad)
+VALUES(1,'2023-05-06',15)
+
+
+
+
 
 
 GO

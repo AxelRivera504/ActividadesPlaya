@@ -396,6 +396,7 @@ CREATE TABLE Acce.tbUsuarios(
 	usua_ID						INT IDENTITY(1,1), 
 	usua_Usuario				NVARCHAR(100), 
 	usua_Clave					VARCHAR(MAX),
+	usua_EsAdmin				INT,
 	enca_ID						INT,
 	role_ID                     INT,
 	

@@ -30,20 +30,24 @@ END
 --Insertar Departamentos
 GO
 CREATE OR ALTER PROCEDURE Gral.UDP_tbDepartamentos_InsertarDepartamentos
-	@dept_Id				CHAR(2),
 	@dept_Descripcion		NVARCHAR(150),
 	@dept_UsuarioCreador	INT
 AS
 BEGIN
 	BEGIN TRY
-        IF NOT EXISTS (SELECT * FROM Gral.tbDepartamentos WHERE dept_id = @dept_Id)
+        IF NOT EXISTS (SELECT * FROM Gral.tbDepartamentos WHERE dept_Descripcion = @dept_Descripcion)
             BEGIN
+                DECLARE @IdDepto AS CHAR(2);
+                SELECT @IdDepto = dept_Id FROM Gral.tbDepartamentos ORDER BY dept_Id ASC
+                DECLARE @NextNewIdDepto AS CHAR(2);
+                SET @NextNewIdDepto = CONVERT(CHAR(2), CONVERT(INT, @IdDepto) + 1);
+
                 INSERT INTO gral.tbDepartamentos (dept_id, dept_Descripcion, dept_Estado, dept_UsuarioCreador, dept_FechaCreacion, dept_UsuarioModificador, dept_FechaModificacion)
-                VALUES (@dept_Id,@dept_Descripcion,1,@dept_UsuarioCreador,GETDATE(),NULL,NULL);
+                VALUES (@NextNewIdDepto,@dept_Descripcion,1,@dept_UsuarioCreador,GETDATE(),NULL,NULL);
 
                SELECT 1
             END
-        ELSE IF EXISTS(SELECT * FROM Gral.tbDepartamentos WHERE dept_id = @dept_Id AND dept_Estado = 0 )
+        ELSE IF EXISTS(SELECT * FROM Gral.tbDepartamentos WHERE dept_Descripcion = @dept_Descripcion AND dept_Estado = 0 )
 		BEGIN
 			UPDATE Gral.tbDepartamentos 
 			SET dept_Estado = 1
@@ -199,6 +203,20 @@ CREATE OR ALTER PROCEDURE Gral.UDP_tbEstadosCiviles_VW
 AS
 BEGIN
 	SELECT * FROM Gral.VW_tbEstadosCiviles
+END
+GO
+
+
+
+--Find Estados Civiles
+CREATE OR ALTER PROCEDURE Gral.UDP_tbEstadosCiviles_Find
+	@esci_id		INT
+AS
+BEGIN
+	SELECT	esci_id
+			esci_Descripcion
+	FROM	Gral.tbEstadosCiviles
+	WHERE	esci_id = @esci_id
 END
 
 --Insertar Estados Civiles
@@ -360,11 +378,10 @@ BEGIN TRY
 END
 
 --**************************************************** /UDP Y VISTA METODOS DE PAGO ***************************************************************--
-
+ GO
  --****************************************************UDP Y VISTA PLAYA  *************************************************************************--
 
  /*Vista Playa*/
-  GO
  CREATE OR ALTER VIEW Acti.VW_tbPlayas
 AS
 SELECT play_Id, play_Playa, 
@@ -376,7 +393,7 @@ play_FechaModificacion
 FROM Acti.tbPlayas play INNER JOIN [Gral].[tbDirecciones] dire
 ON play.dire_Id = dire.dire_Id INNER JOIN Acce.tbUsuarios [UsuarioCreador]
 ON play.play_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
-ON play.play_UsuarioModificador = [UsuarioModificador].usua_ID
+ON play.play_UsuarioModificador = [UsuarioModificador].usua_ID INNER JOIN 
 WHERE play_Estado = 1
 
 /*Vista Playas UDP*/
@@ -839,13 +856,13 @@ GO
 	AS
 	SELECT acti_Id, acti_Nombre,  
 	acti_Cupo, 
-	acti_Precio, play_playa,playa.play_id, 
+	acti_Precio, play_playa,play_id, 
 	acti_Estado, acti_UsuarioCreador,[UsuarioCreador].usua_Usuario AS acti_UsuarioCreador_Nombre, 
 	acti_FechaCreacion, acti_UsuarioModificador,[UsuarioModificador].usua_Usuario AS acti_UsuarioModificador_Nombre, 
 	acti_FechaModificacion
 	FROM Acti.tbActividades	acti INNER JOIN Acce.tbUsuarios [UsuarioCreador]
 	ON acti.acti_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador] 
-	ON acti.acti_UsuarioModificador = [UsuarioModificador].usua_ID INNER JOIN Acti.tbPlayas playa
+	ON acti.acti_UsuarioModificador = [UsuarioModificador].usua_ID INNER JOIN Acti.Playas playa
 	ON	acti.play_id = playa.play_id
 	WHERE acti_Estado = 1
 
@@ -1392,7 +1409,7 @@ GO
 CREATE OR ALTER VIEW Acce.VW_tbUsuarios
 AS
 SELECT usua.usua_ID, usua.usua_Usuario, 
-usua.usua_Clave,
+usua.usua_Clave, usua.usua_EsAdmin, 
 usua.enca_ID,CONCAT(enca.enca_Nombres,enca.enca_Apellidos) AS enca_NombreCompleto, usua.role_ID,role.role_Descripcion, 
 usua.usua_Estado, usua.usua_UsuarioCreador, [UsuarioCreador].usua_Usuario AS usua_UsuarioCreador_Nombre,
 usua.usua_FechaCreacion, usua.usua_UsuarioModificador, [UsuarioModificador].usua_Usuario AS usua_UsuarioModificador_Nombre,
@@ -1517,7 +1534,7 @@ AS
 BEGIN
 	BEGIN TRY
 				UPDATE Acce.tbUsuarios	
-				SET
+				SET	usua_EsAdmin = @usua_EsAdmin,
 					enca_ID = @enca_ID,
 					role_ID = @role_ID,
 					usua_FechaModificacion = GETDATE(),
