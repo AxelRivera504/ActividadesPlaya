@@ -217,19 +217,6 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
         #endregion
 
         #region RolesPorPantalla
-        public IEnumerable<tbRolesXPantallas> ListadoPantallas(int id)
-        {
-            try
-            {
-                return _rolesPorPantallaRepository.PantallasXRoles(id);
-            }
-            catch (Exception e)
-            {
-                return Enumerable.Empty<tbRolesXPantallas>();
-                throw;
-            }
-        }
-
         public ServiceResult InsertarRolesXpantallas(tbRolesXPantallas item)
         {
             var result = new ServiceResult();
@@ -275,7 +262,17 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
                 return null;
             }
         }
-
+        public IEnumerable<tbRolesXPantallas> ListadoPantallasXroles(int id)
+        {
+            try
+            {
+                return _rolesPorPantallaRepository.ListPantallasXrol(id);
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<tbRolesXPantallas>();
+            }
+        }
 
 
 
@@ -294,11 +291,7 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
                 return Enumerable.Empty<tbPantallas>();
             }
         }
-
-
-
-
-
+      
 
         #endregion
     }

@@ -10,11 +10,12 @@ namespace PlayaMagica.Entities.Entities
     public partial class tbRolesXPantallas
     {
         public int roleXpant_ID { get; set; }
-        public int? role_ID { get; set; }
-        public int? pant_ID { get; set; }
+
 
         [NotMapped]
         public string pant_Descripcion { get; set; }
+        public int? role_ID { get; set; }
+        public int? pant_ID { get; set; }
         public bool? roleXpant_Estado { get; set; }
         public int? roleXpant_UsuarioCreador { get; set; }
         public DateTime? roleXpant_FechaCreacion { get; set; }

@@ -37,6 +37,7 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbEstadosCiviles_Select = "Gral.UDP_tbEstadosCiviles_VW";
         public static string UDP_tbEstadosCiviles_Insert = "gral.UDP_tbEstadosCiviles_Insertar";
         public static string UDP_tbEstadosCiviles_Update = "gral.UDP_tbEstadosCiviles_Update";
+        public static string UDP_tbEstadosCiviles_Find = "Gral.UDP_tbEstadosCiviles_Find";
         #endregion
 
         #endregion
@@ -67,6 +68,8 @@ namespace PlayaMagica.DataAccess
 
         #region Pantallas
         public static string UDP_tbPantallas_Select = "Acce.UDP_tbPantallas_Select";
+        public static string UDP_tbPantallaXRole = "Acce.UDP_tbRolesXPantallas_Select_ByRoleID";
+
         #endregion
 
         #endregion

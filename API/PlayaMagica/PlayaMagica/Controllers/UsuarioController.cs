@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace PlayaMagica.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
     public class UsuarioController : Controller
@@ -27,8 +26,8 @@ namespace PlayaMagica.Controllers
         
         
         
-        [HttpGet("ListarUsuarios")]
-        public IActionResult ListarUsuarios()
+        [HttpGet("Usuarios")]
+        public IActionResult List()
         {
             var listado = _accesoServices.ListadoUsuarios();
             return Ok(listado);
@@ -46,7 +45,7 @@ namespace PlayaMagica.Controllers
         public IActionResult Edit(UsuariosViewModel item)
         {
             var listado = _mapper.Map<tbUsuarios>(item);
-            var Result = _accesoServices.UpdateUsuarios(listado);
+            var Result = _accesoServices.UpdateUsuarios(listado);   
             return Ok(Result);
         }
 

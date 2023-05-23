@@ -24,6 +24,9 @@ namespace PlayaMagica.Extentions
             CreateMap<RolesPorPantallaViewModel, tbRolesXPantallas>().ReverseMap();
             CreateMap<tbPantallas,PantallasViewModel>().ReverseMap();
             CreateMap<tbUsuarios, UsuariosViewModel>().ReverseMap();
+            CreateMap<tbEquipos, EquiposViewModel>().ReverseMap();
+            CreateMap<tbMantenimiento, MantenimientosViewModel>().ReverseMap();
+            CreateMap<tbActividades, ActividadesViewModel>().ReverseMap();
         }
     }
 }

@@ -25,13 +25,6 @@ namespace PlayaMagica.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("PantallasXRol/{id}")]
-        public IActionResult Listar(int id)
-        {
-            var listado = _accesoService.ListadoPantallas(id);
-            return Ok(listado);
-        }
-
         [HttpPost("Insertar")]
         public IActionResult Create(RolesPorPantallaViewModel item)
         {
@@ -46,6 +39,14 @@ namespace PlayaMagica.Controllers
         {
             var listadoMapeado = _mapper.Map<tbRolesXPantallas>(item);
             var listado = _accesoService.DeleteRolesXPantalla(listadoMapeado);
+            return Ok(listado);
+        }
+
+
+        [HttpGet("PantallasxRoles{id}")]
+        public IActionResult listar(int id)
+        {
+            var listado = _accesoService.ListadoPantallasXroles(id);
             return Ok(listado);
         }
 
