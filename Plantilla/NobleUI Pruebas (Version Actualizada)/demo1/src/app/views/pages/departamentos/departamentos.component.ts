@@ -1,12 +1,13 @@
 import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataTable } from "simple-datatables";
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { departamentos } from '../Model/departamentos';
 import { ServicesService } from '../Service/services.service';
 import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
+import { data } from 'jquery';
+import { DataTableDirective } from 'angular-datatables';
 
 
 @Component({
@@ -15,6 +16,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./departamentos.component.scss']
 })
 export class DepartamentosComponent implements OnInit {
+  @ViewChild(DataTableDirective, {static: false})
+  dtElement: DataTableDirective;
 
   departamentoForm!: FormGroup;
   departamento!: departamentos[];
@@ -34,33 +37,46 @@ export class DepartamentosComponent implements OnInit {
 
 
   openBasicModal(content: TemplateRef<any>) {
+    this.submitted = false;
     this.modalService.open(content, {}).result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result
     }).catch((res) => {});
   }
   
-  openBasicModal1(content: TemplateRef<any>, departamento: departamentos) {
-    // this.departamentoEdit = departamento
-    this.departamentoEdit = departamento;
+  openBasicModal1(content: TemplateRef<any>, departamentoEdit: departamentos) {
+    this.departamentoEdit = { ...departamentoEdit };
     console.log(this.departamentoEdit)
     this.modalRef = this.modalService.open(content, {});
     this.modalRef.result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result;
     }).catch((res) => {});
   }
+  
   ngOnInit(): void {
     this.service.getDepartamentos().subscribe(data => {
       console.log(data);
       this.departamento = data;
       this.dtTrigger.next(null);
     });
+    
     this.dtOptions = {
       pagingType: 'full_numbers',
       language: {
         url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
       }
     };
+
   }
+
+  /*Agregue esta funcion que renderiza la tabla otra vez para que la paginacion no se bugee XD*/
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next(null);
+    });
+  } 
 
   Guardar(){
     if (!this.departamentoCreate.dept_Id && !this.departamentoCreate.dept_Descripcion) {
@@ -82,26 +98,129 @@ export class DepartamentosComponent implements OnInit {
     if (idUsuario !== undefined) {
       this.departamentoCreate.dept_UsuarioCreador = idUsuario;
     }
-    this.service.createDepartamentos(this.departamentoCreate).
-    subscribe(data=>{
-      console.log(this.departamentoCreate);
+    if(this.departamentoCreate.dept_Descripcion != null && this.departamentoCreate.dept_Descripcion != ""){
+      this.service.createDepartamentos(this.departamentoCreate).
+      subscribe((data: any) => {
+        console.log(data)
+        if(data.data.codeStatus == 1){
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            title: '¡Registro Ingresado con exito!',
+            icon: 'success'
+          })
+          this.modalService.dismissAll()
+          this.service.getDepartamentos().subscribe(data => {
+            console.log(data);
+            const latestDepartamento = data[data.length - 1]; // Obtener el último registro
+            if (latestDepartamento) {
+              this.departamento.push(latestDepartamento); // Agregar el último registro al arreglo
+            }
+            this.rerender()
+          });
+        }else if(data.data.codeStatus == 2){
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            title: 'Ya existe ese registro',
+            icon: 'warning'
+          })
+        }else{
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            title: 'Ha ocurido un error ',
+            icon: 'error'
+          })
+        }
+      })
+    }else{
       Swal.fire({
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
         timer: 1500,
         timerProgressBar: true,
-        title: '¡Registro Ingresado con exito!',
-        icon: 'success'
-      }).then(() => {
-        this.modalRef?.close(); // Cerrar el modal
-        this.departamentoCreate.dept_Descripcion = ''; // Restablecer el valor del campo
-        this.departamentoCreate.dept_Id = ''; // Restablecer el valor del campo
-        this.submitted = false; // Reiniciar el estado del formulario
-        window.location.reload()
+        title: '¡Rellene los campos!',
+        icon: 'warning'
       })
-    })
+    }
   }
 
+  Editar(){
+    this.submitted = true;
+   if(this.departamentoEdit.dept_Descripcion != "" && this.departamentoEdit.dept_Descripcion != null){
+    const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
+    if (idUsuario !== undefined) {
+      this.departamentoEdit.dept_UsuarioModificador = idUsuario;
+    }
+    this.service.updateDepartamentos(this.departamentoEdit)
+    .subscribe((data: any) =>{
+      if(data.data.codeStatus == 1){
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          title: 'Editado exitosamente',
+          icon: 'success'
+        })
+        /*Esta madre sirva para que no se bugee el datatable*/
+        this.modalService.dismissAll()
+        setTimeout(() => {
+          this.service.getDepartamentos().subscribe(data => {
+            this.departamento = data;
+            this.rerender();
+          });
+        }, 0.5);
+      }else if(data.data.codeStatus == 2){
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          title: 'Ya existe ese registro',
+          icon: 'warning'
+        })
+      }else{
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          title: 'Ha ocurrido un error con la respuesta de la API',
+          icon: 'error'
+        })
+      }
+    })
+   }else{
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      title: 'Rellene los campos',
+      icon: 'warning'
+    })
+   }
+  }
+
+  Detalles(departamento: departamentos){
+    localStorage.setItem('departamento', JSON.stringify(departamento));
+    this.router.navigate(["/departamentosDetalles"])
+  }
 
 }

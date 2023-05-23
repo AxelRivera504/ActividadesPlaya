@@ -7,7 +7,7 @@
               Nuevo
             </button>
           </div>
-        <div class="table-responsive">
+        <div class="table table-responsive">
           <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
             <thead>
               <tr>
@@ -22,7 +22,7 @@
                 <td>{{item.dept_Descripcion}}</td>
                 <td><button type="button" class="btn btn-warning" (click)="openBasicModal1(basicModal1, item)">    <i class="feather icon-edit"></i></button>
                     |
-                    <button type="button" class="btn btn-info">       <i class="feather icon-list"></i></button>
+                    <button type="button" class="btn btn-info" (click)="Detalles(item)">       <i class="feather icon-list"></i></button>
                 </td>
               </tr>
           </table>
@@ -65,12 +65,13 @@
           <label>Nombre</label>
         <input type="text" class="form-control" placeholder="Nombre del Departamento" required [(ngModel)]="departamentoEdit.dept_Descripcion" name="departamentoEdit.dept_Descripcion" #departamento="ngModel"
         [ngClass]="{ 'is-invalid': submitted && departamento.invalid }"/>
+                <div class="invalid-feedback" *ngIf="departamento?.errors?.required && submitted">Nombre es requerido</div>
         </div>
       </div>
     </form>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
-    <button type="button" class="btn btn-primary" (click)="Guardar()">Guardar</button>
+    <button type="button" class="btn btn-primary" (click)="Editar()">Guardar</button>
   </div>
 </ng-template>

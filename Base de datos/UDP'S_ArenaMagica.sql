@@ -73,7 +73,7 @@ CREATE OR ALTER PROCEDURE Gral.UDP_tbDepartamentos_EditarDepartamentos
 AS
 BEGIN
 BEGIN TRY
-		IF NOT EXISTS (SELECT * FROM Gral.tbDepartamentos WHERE dept_Descripcion = @dept_Descripcion and dept_Id = @dept_Id)
+		IF NOT EXISTS (SELECT * FROM Gral.tbDepartamentos WHERE dept_Descripcion = @dept_Descripcion and dept_Id != @dept_Id)
 			BEGIN
 						UPDATE	Gral.tbDepartamentos							
 				SET		dept_Descripcion			=@dept_Descripcion			,

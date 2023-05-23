@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DepartamentosComponent } from './departamentos.component';
 import { DataTablesModule } from 'angular-datatables';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DepartamentosDetallesComponent } from './departamentos-detalles/departamentos-detalles.component';
 
 const routes: Routes = [
   {

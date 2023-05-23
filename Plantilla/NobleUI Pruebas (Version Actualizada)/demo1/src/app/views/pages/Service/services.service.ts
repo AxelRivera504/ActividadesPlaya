@@ -51,6 +51,10 @@ export class ServicesService {
   createDepartamentos(departamento: departamentos){
     return this.http.post<departamentos[]>(this.Url + "/Departamentos/Insert", departamento);
   }
+  
+  updateDepartamentos(departamento: departamentos){
+    return this.http.post<departamentos[]>(this.Url + "/Departamentos/Update", departamento);
+  }
 
   getMunicipios(){
     return this.http.get<municipios[]>(this.Url + "/Municipios");

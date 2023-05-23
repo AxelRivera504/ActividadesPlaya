@@ -44,6 +44,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/departamentos/departamentos.module').then(m => m.DepartamentosModule)
       },
       {
+        path: 'departamentosDetalles',
+        loadChildren: () => import('./views/pages/departamentos/departamentos-detalles/departamentos-detalles.module').then(m => m.DepartamentosDetallesModule)
+      },
+      {
         path: 'municipios',
         loadChildren: () => import('./views/pages/municipios/municipios.module').then(m => m.MunicipiosModule)
       },
