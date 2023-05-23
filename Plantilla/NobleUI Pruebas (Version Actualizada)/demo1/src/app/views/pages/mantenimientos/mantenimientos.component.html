@@ -1,8 +1,7 @@
 
 <div class="container">
     <div class="card">
-        <div class="card-header">
-            <div class="card-title text-center my-0">
+        <div class="card-header text-center my-0">
                 <h3>Mantenimientos</h3>  
             <br>
             <button button type="button" class="btn btn-primary" (click)="openBasicModal(basicModal)">
@@ -10,9 +9,8 @@
                 Nuevo
             </button>
         </div>
-        </div>
         <div class="card-body">
-            <div class="table-responsive">
+            <div class="table table-responsive">
                 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
                     <thead>
                         <tr>
@@ -25,18 +23,50 @@
                         <tr *ngFor="let item of Mantenimiento">
                             <td>{{item.mant_Id}}</td>
                             <td>{{item.mant_Descricion}}</td>
-                            <td><button type="button" (click)="Editar(1)" class="btn btn-warning btn-icon-text">
+                            <td><button type="button" class="btn btn-warning btn-icon-text" (click)="openBasicModal3(basicModal2,item)">
                                 <i class="feather icon-edit "></i>
                             </button>
                                 |
-                                <button type="button" class="btn btn-info btn-icon-text">
+                                <button  nbButton type="button" class="btn btn-info btn-icon-text" (click)="Detalles(item)">
                                     <i class="feather icon-list "></i>
                                 </button>
                                 |
-                                <button type="button" class="btn btn-danger btn-icon-text">
+                                <button type="button" class="btn btn-danger btn-icon-text" (click)="openBasicModal1(basicModal1,item.mant_Id)">
                                     <i class="feather icon-trash "></i>
                                 </button>
                             </td>
+
+
+                            <ng-template #basicModal1 let-modal>
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Eliminar registro</h5>
+                                </div>                    
+                                    <div class="modal-body">
+                                        <h4>¿Desea eliminar este registro?</h4>                                          
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" (click)="cancelar(); modal.close('by: close button')">Cancelar</button>
+                                      <button type="button" (click)="Delete()" class="btn btn-primary">Eliminar</button>
+                                    </div>
+                              </ng-template>
+
+                              <ng-template #basicModal2 let-modal>
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Editar registro</h5>
+                                  <input type="text" disabled hidden [(ngModel)]="MantenimientoEdit.mant_Id" >
+                                </div>                    
+                                    <div class="modal-body">
+                                        <input type="text" class="form-control" id="exampleInputEmail1" required placeholder="Mantenimiento"
+                                         [(ngModel)]="MantenimientoEdit.mant_Descricion" name="MantenimientoEdit.mant_Descricion" #mantenimientoInputEdit="ngModel"
+                                         [ngClass]="{ 'is-invalid': submitted && mantenimientoInputEdit.invalid }">
+                                       <div class="invalid-feedback" *ngIf="mantenimientoInputEdit?.errors?.required && submitted">Mantenimiento requerido</div> 
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" (click)="cancelar(); modal.close('by: close button')">Cancelar</button>
+                                      <button type="button" (click)="Editar()" class="btn btn-primary">Actualizar</button>
+                                    </div>
+                              </ng-template>
+
                         </tr>
                     </tbody>
                 </table>

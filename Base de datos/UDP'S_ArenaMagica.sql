@@ -13,11 +13,11 @@ SELECT	dept_Id,
         dept_Descripcion,
 		dept_UsuarioCreador,[UsuarioCreador].usua_Usuario AS dept_UsuarioCreador_Nombre,
 		dept_FechaCreacion,
-		dept_UsuarioModificador,[UsuarioCreador].usua_Usuario AS dept_UsuarioModificador_Nombre,
+		dept_UsuarioModificador,[UsuarioModificador].usua_Usuario AS dept_UsuarioModificador_Nombre,
 		dept_FechaModificacion
 FROM Gral.tbDepartamentos dept INNER JOIN Acce.tbUsuarios [UsuarioCreador]
 ON dept.dept_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
-ON dept.dept_UsuarioModificador = [UsuarioModificador].usua_UsuarioModificador
+ON dept.dept_UsuarioModificador = [UsuarioModificador].usua_Id
 GO
 
 /*Vista Departamentos UDP*/
@@ -76,8 +76,9 @@ BEGIN TRY
 		IF NOT EXISTS (SELECT * FROM Gral.tbDepartamentos WHERE dept_Descripcion = @dept_Descripcion and dept_Id = @dept_Id)
 			BEGIN
 						UPDATE	Gral.tbDepartamentos							
-				SET		dept_Descripcion			=@dept_Descripcion			,
-						dept_UsuarioModificador		=@dept_UsuarioModificador		
+				SET		dept_Descripcion			=@dept_Descripcion,
+						dept_UsuarioModificador		=@dept_UsuarioModificador,
+						dept_FechaModificacion      = GETDATE()
 				WHERE	dept_Id = @dept_Id
 				SELECT 1
 			END

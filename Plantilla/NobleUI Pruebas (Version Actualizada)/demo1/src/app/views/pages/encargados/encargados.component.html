@@ -1,17 +1,15 @@
 <div class="container">
     <div class="card">
-        <div class="card-header">
-            <div class="card-title text-center my-0">
+        <div class="card-header text-center my-0">
                 <h3>Encargados</h3>  
             <br>
-            <button button type="button" class="btn btn-primary">
+            <button button type="button" class="btn btn-primary" (click)="crear()">
                 <i class="feather icon-plus"></i>
                 Nuevo
             </button>
         </div>
-        </div>
         <div class="card-body">
-            <div class="table-responsive">
+            <div class=" table table-responsive">
                 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
                     <thead>
                         <tr>

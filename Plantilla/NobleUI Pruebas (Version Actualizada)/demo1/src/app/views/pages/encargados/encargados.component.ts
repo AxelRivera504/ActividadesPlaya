@@ -37,6 +37,10 @@ export class EncargadosComponent implements OnInit {
     // No es necesario inicializar DataTable aquí
   }
 
+  crear(){
+    this.router.navigate(['crear']); 
+  }
+
   private initializeDataTable(): void {
     const dataTableOptions = {
       searchable: true, // Habilitar la barra de búsqueda

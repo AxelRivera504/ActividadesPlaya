@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header text-center my-0">
+            <h3>Crear Encargados</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="Nombre">Nombres Encargado:</label>
+                    <br>
+                    <input type="text" class="form-control" id="Nombre" required placeholder="Nombre encargado"
+                        [(ngModel)]="encargados.enca_Nombres" name="encargados.enca_Nombres" #encaNombre="ngModel"
+                        [ngClass]="{ 'is-invalid': submitted && encaNombre.invalid }">
+                    <div class="invalid-feedback" *ngIf="encaNombre?.errors?.required && submitted">Nombre requerido</div> 
+                </div>
+                <div class="col-sm-6">
+                    <label for="Apellidos">Apellidos Encargado:</label>
+                    <br>
+                    <input type="text" class="form-control" id="Apellidos" required placeholder="Apellidos encargado"
+                        [(ngModel)]="encargados.enca_Apellidos" name="encargados.enca_Apellidos" #encaApellido="ngModel"
+                        [ngClass]="{ 'is-invalid': submitted && encaApellido.invalid }">
+                    <div class="invalid-feedback" *ngIf="encaApellido?.errors?.required && submitted">Nombre requerido</div> 
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                     <label for="Nombre">DNI Encargado:</label>
+                    </div>
+                <div class="col-sm-6"> 
+                    <label for="Nombre">Email Encargado:</label>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="Nombre">Teléfono Encargado:</label>
+                </div>
+                <div class="col-sm-6">
+                    <label for="Nombre">Sexo del Encargado:</label>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="Nombre">Estado Civil Encargado:</label>
+                </div>
+                <div class="col-sm-6">
+                    <label for="Nombre">Fecha de nacimiento Encargado:</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6"></div>
+                <div class="col-sm-6"></div>
+            </div>
+            <button type="button" class="btn btn-primary mt-3" (click)="Regresar()"><i class="feather icon-arrow-left"></i>Regresar</button>
+        </div>       
+    </div>
+</div>

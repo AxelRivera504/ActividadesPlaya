@@ -28,12 +28,20 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/mantenimientos/mantenimientos.module').then(m => m.MantenimientosModule)
       },
       {
+        path: 'details',
+        loadChildren: () => import('./views/pages/mantenimientos/details/details.module').then(m => m.DetailsModule)
+      },
+      {
         path: 'clientes',
         loadChildren: () => import('./views/pages/clientes/clientes.module').then(m => m.ClientesModule)
       },
       {
         path: 'encargados',
         loadChildren: () => import('./views/pages/encargados/encargados.module').then(m => m.EncargadosModule)
+      },
+      {
+        path: 'crear',
+        loadChildren: () => import('./views/pages/encargados/create/create.module').then(m => m.CreateModule)
       },
       {
         path: 'actividades',
