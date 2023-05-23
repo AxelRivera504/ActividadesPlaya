@@ -66,6 +66,16 @@ export const MENU: MenuItem[] = [
     link: '/direcciones'
   },
   {
+    label: 'Roles',
+    icon: 'home',
+    link: '/roles'
+  },
+  {
+    label: 'Usuarios',
+    icon: 'home',
+    link: '/usuarios'
+  },
+  {
     label: 'Web Apps',
     isTitle: true
   },

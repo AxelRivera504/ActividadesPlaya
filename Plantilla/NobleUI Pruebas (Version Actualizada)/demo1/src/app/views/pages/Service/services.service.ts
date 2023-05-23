@@ -12,6 +12,10 @@ import { metodospago } from '../Model/metodospago';
 import { estadosciviles } from '../Model/estadosciviles';
 import { estadoscivilesEdit } from '../Model/EstadosCivilesEdit';
 import { direcciones } from '../Model/direcciones';
+import { roles } from '../Model/roles';
+import { usuarios } from '../Model/Usuarios';
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -75,4 +79,14 @@ export class ServicesService {
   EditarEstadosCiviles(estadosciviles: estadosciviles){
     return this.http.post<estadosciviles[]>(this.Url + "/EstadosCiviles/Insert", estadosciviles);
   }
+  getRoles(){
+    return this.http.get<roles[]>(this.Url + "/Roles/ListarRoles");
+  }
+  
+  getUsuarios(){
+    return this.http.get<usuarios[]>(this.Url + "/Usuario/ListarUsuarios");
+  }
+ 
+
+
 }
