@@ -4,6 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { MetodospagoComponent } from '../metodospago/metodospago.component';
 import { DireccionesComponent } from './direcciones.component';
 import { DataTablesModule } from 'angular-datatables';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 const routes: Routes = [
   {
@@ -18,7 +20,10 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    DataTablesModule
+    DataTablesModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgSelectModule
   ]
 })
 export class DireccionesModule { }

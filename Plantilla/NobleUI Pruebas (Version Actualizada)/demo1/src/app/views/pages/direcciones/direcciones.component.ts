@@ -1,9 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataTable } from 'simple-datatables';
 import { direcciones } from '../Model/direcciones';
 import { ServicesService } from '../Service/services.service';
 import { Subject } from 'rxjs';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectConfig } from '@ng-select/ng-select';
+import { departamentos } from '../Model/departamentos';
+import { municipios } from '../Model/municipios';
 
 @Component({
   selector: 'app-direcciones',
@@ -11,16 +15,56 @@ import { Subject } from 'rxjs';
   styleUrls: ['./direcciones.component.scss']
 })
 export class DireccionesComponent implements OnInit {
-  direcciones!:direcciones[];
-  constructor(private service: ServicesService, private router:Router) { }
   @ViewChild('myTable', { static: false }) table!: ElementRef;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject <any> = new Subject<any>();
+  direcciones!:direcciones[];
+  departamento!: departamentos[];
+  municipio!: municipios[];
+  municipiotemp!: municipios[];
+  
+
+  direccionesModel: direcciones = new direcciones();
+  departamentoModel: departamentos = new departamentos();
+  municipioModel: municipios = new municipios();
+  basicModalCloseResult: string = '';
+  submitted: boolean = false;
+  modalRef: NgbModalRef | undefined;
+
+  openBasicModal(content: TemplateRef<any>) {
+    this.submitted = false;
+    this.direccionesModel = new direcciones()
+    this.modalService.open(content, {}).result.then((result) => {
+      this.basicModalCloseResult = "Modal closed" + result
+    }).catch((res) => {});
+  }
+
+  constructor(private service: ServicesService,
+    private modalService: NgbModal, 
+    private router:Router,  
+    private config: NgSelectConfig) {
+          /*Cosas del select*/
+    this.config.notFoundText = 'Custom not found';
+    this.config.appendTo = 'body';
+    this.config.bindValue = 'value';
+    /*/Cosas del select*/
+     }
   ngOnInit(): void {
     this.service.getDirecciones().subscribe(data => {
       console.log(data);
       this.direcciones = data;
       this.dtTrigger.next(null);
+
+      this.service.getDepartamentos().subscribe(data => {
+        console.log(data);
+        this.departamento = data;
+      });
+
+      this.service.getMunicipios().subscribe(data => {
+        console.log(data);
+        this.municipio = data;
+      });
+
     });
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -29,23 +73,18 @@ export class DireccionesComponent implements OnInit {
       }
     };
   }
-  ngAfterViewInit(): void {
-    // No es necesario inicializar DataTable aquí
+
+  cargarddl(){
+    console.log("Entra")
+ 
   }
 
-  private initializeDataTable(): void {
-    const dataTableOptions = {
-      searchable: true, // Habilitar la barra de búsqueda
-      paging: true, // Habilitar la paginación
-      perPage: 10, // Número de filas por página
-      labels:{
-        placeholder: "Buscar...",
-        info: "Mostrando {start} de {end} de {rows} entradas",
-        noRows: "No encuentra resutados",
-        perPage: "{select} entradas por pagina",
-        noResults: "No hay coincidencias",
-      }
-    };
+  onDepartamentoChange() {
+    this.municipiotemp = this.municipio
+    setTimeout(() => {
+      const municipiosDepartamento = this.municipio.filter(item => item.dept_Id === this.departamentoModel.dept_Id);
+      console.log(municipiosDepartamento)
+      this.municipiotemp = municipiosDepartamento
+    }, 1);
   }
-
 }

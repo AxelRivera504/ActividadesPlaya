@@ -7,8 +7,9 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
 import { departamentos } from '../Model/departamentos';
 import { NgSelectConfig } from '@ng-select/ng-select';
-import { data } from 'jquery';
+import { data, isEmptyObject } from 'jquery';
 import Swal from 'sweetalert2';
+import { emptyStringGetter, isNullOrUndefined } from '@swimlane/ngx-datatable';
 
 @Component({
   selector: 'app-municipios',
@@ -45,16 +46,15 @@ export class MunicipiosComponent implements OnInit {
 
   openBasicModal(content: TemplateRef<any>) {
     this.submitted = false;
-    this.municipioCreate.muni_Descripcion = ""
-
+    this.municipioCreate = new municipios()
     this.modalService.open(content, {}).result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result
     }).catch((res) => {});
   }
   
   openBasicModal1(content: TemplateRef<any>, municipio: municipios) {
-    this.municipioEdit = { ...this.municipioEdit };
-    console.log(this.municipioEdit)
+    this.municipioEdit = {...municipio} ;
+    
     this.modalRef = this.modalService.open(content, {});
     this.modalRef.result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result;
@@ -117,7 +117,7 @@ export class MunicipiosComponent implements OnInit {
   Guardar(){
   var x = true
 
-  if(this.municipioCreate.dept_Id == undefined || this.municipioCreate.muni_Id){
+  if(this.municipioCreate.dept_Id == undefined || this.municipioCreate.muni_Id == ""){
    x = false
   }
 
@@ -127,9 +127,12 @@ export class MunicipiosComponent implements OnInit {
   }
 
     if(x == true){
+      const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
+      if (idUsuario !== undefined) {
+        this.municipioEdit.muni_UsuarioCreador = idUsuario;
+      }
       this.service.createMunicipios(this.municipioCreate)
       .subscribe((data: any) =>{
-        console.log(data)
         if(data.data.codeStatus == 1){
           Swal.fire({
             toast: true,
@@ -184,10 +187,81 @@ export class MunicipiosComponent implements OnInit {
   }
 
   Editar(){
+    var x = true
+
+  if(this.municipioEdit.dept_Id == undefined || this.municipioEdit.muni_Id == ""){
+   x = false
   }
 
-  Datalles(){
+  
+  if(this.municipioEdit.muni_Descripcion == undefined || this.municipioEdit.muni_Descripcion == ""){
+    x = false
+  }
 
+  if(x){
+    const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
+    if (idUsuario !== undefined) {
+      this.municipioEdit.muni_UsuarioModificador = idUsuario;
+    }
+    this.service.updateMunicipios(this.municipioEdit)
+    .subscribe((data: any) =>{
+      console.log(data)
+      if(data.data.codeStatus == 1){
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          title: '¡Registro editado con exito!',
+          icon: 'success'
+        })
+        this.modalService.dismissAll()
+        setTimeout(() => {
+          this.service.getMunicipios().subscribe(data => {
+            this.municipio = data;
+            this.rerender();
+          });
+        }, 0.5);
+      }else if(data.data.codeStatus ==2){
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          title: '¡Ese registro ya existe!',
+          icon: 'warning'
+        })
+      }else{
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          title: '¡Ha ocurrido un error!',
+          icon: 'error'
+        })
+      }
+    })
+  }else{
+    this.submitted = true
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        title: '¡Rellene los campos!',
+        icon: 'warning'
+      })
+  }
+  }
+
+  Detalles(municipio: municipios){
+    localStorage.setItem('municipio', JSON.stringify(municipio));
+    this.router.navigate(["/municipiosDetalles"])
   }
 
 }

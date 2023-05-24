@@ -273,6 +273,20 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
                 return resultado.Error(ex.Message);
             }
         }
+
+        public IEnumerable<tbMantenimiento> DetailsMantenimientos(int id)
+        {
+            try
+            {
+                var list = _mantenimientoRepository.DetailsMantenimientos(id);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return Enumerable.Empty<tbMantenimiento>();
+            }
+        }
         #endregion
 
         #region Actividades

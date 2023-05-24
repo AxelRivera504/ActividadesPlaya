@@ -64,12 +64,28 @@ export class ServicesService {
     return this.http.post<municipios[]>(this.Url + "/Municipios/Insert", municipio);
   }
 
+  updateMunicipios(municipio: municipios){
+    return this.http.post<municipios[]>(this.Url + "/Municipios/Update", municipio);
+  }
+
   getEstadosCiviles(){
     return this.http.get<estadosciviles[]>(this.Url + "/EstadosCiviles");
   }
 
   getMetodosPago(){
     return this.http.get<metodospago[]>(this.Url + "/MetodosPago");
+  }
+
+  createMetodosPago(metodopago: metodospago){
+    return this.http.post<metodospago[]>(this.Url + "/MetodosPago/Insert", metodopago);
+  }
+
+  updateMetodosPago(metodopago: metodospago){
+    return this.http.post<metodospago[]>(this.Url + "/MetodosPago/Update", metodopago);
+  }
+
+  deleteMetodosPago(metodopago: metodospago){
+    return this.http.post<metodospago[]>(this.Url + "/MetodosPago/Delete", metodopago);
   }
 
   getDirecciones(){

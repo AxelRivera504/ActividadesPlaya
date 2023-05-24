@@ -52,12 +52,20 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/municipios/municipios.module').then(m => m.MunicipiosModule)
       },
       {
+        path: 'municipiosDetalles',
+        loadChildren: () => import('./views/pages/municipios/municipios-detalles/municipios-detalles.module').then(m => m.MunicipiosDetallesModule)
+      },
+      {
         path: 'estadosciviles',
         loadChildren: () => import('./views/pages/estadosciviles/estadosciviles.module').then(m => m.EstadoscivilesModule)
       },
       {
         path: 'metodospago',
         loadChildren: () => import('./views/pages/metodospago/metodospago.module').then(m => m.MetodospagoModule)
+      },
+      {
+        path: 'metodospagoDetalles',
+        loadChildren: () => import('./views/pages/metodospago/metodospago-detalles/metodospago-detalles.module').then(m => m.MetodospagoDetallesModule)
       },
       {
         path: 'direcciones',

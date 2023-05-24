@@ -103,12 +103,17 @@ SELECT	muni_Id,
 		muni_Descripcion,
 		t2.dept_Id,
 		T2.dept_Descripcion,
-		muni_UsuarioCreador,
+		muni_UsuarioCreador,[UsuarioCreador].usua_Usuario AS muni_UsuarioCreador_Nombre,
 		muni_FechaCreacion,
-		muni_UsuarioModificador,
+		muni_UsuarioModificador,[UsuarioModificador].usua_Usuario AS muni_UsuarioModificador_Nombre,
 		muni_FechaModificacion
 FROM Gral.tbMunicipios T1 INNER JOIN Gral.tbDepartamentos T2
 ON T1.dept_Id = T2.dept_Id
+INNER JOIN Acce.tbUsuarios [UsuarioCreador]
+ON T1.muni_UsuarioCreador = [UsuarioCreador].usua_ID
+LEFT JOIN Acce.tbUsuarios [UsuarioModificador] 
+ON T1.muni_UsuarioModificador = [UsuarioModificador].usua_ID
+
 
 /*Vista Municipios UDP*/
 GO
@@ -157,27 +162,26 @@ CREATE OR ALTER PROCEDURE Gral.UDP_tbMunicipios_EditarMunicipios
 @muni_Id					CHAR(4),
 @dept_Id					CHAR(2),
 @muni_Descripcion			NVARCHAR(150),
-@muni_UsuarioModificador	INT,
-@Status						INT OUTPUT
+@muni_UsuarioModificador	INT
 AS
 BEGIN
 	BEGIN TRY
-		IF NOT EXISTS (SELECT muni_Id FROM Gral.tbMunicipios WHERE muni_Id = @muni_Id)
+		IF NOT EXISTS (SELECT * FROM Gral.tbMunicipios WHERE dept_id != @dept_Id AND muni_id != @muni_Id AND muni_Descripcion = @muni_Descripcion)
 			BEGIN
-				SET @Status = 1
+				UPDATE Gral.tbMunicipios
+				SET dept_id = @dept_Id,
+					muni_Descripcion = @muni_Descripcion,
+					muni_UsuarioModificador = @muni_UsuarioModificador,
+					muni_FechaModificacion = GETDATE()
+					WHERE muni_id = @muni_Id
+					SELECT 1	
 			END	
-		ELSE
-			BEGIN
-				UPDATE	Gral.tbMunicipios							
-				SET		muni_Descripcion			=@muni_Descripcion			,
-						dept_Id 					=@dept_Id,
-						muni_UsuarioModificador		=@muni_UsuarioModificador		
-				WHERE	muni_Id = @muni_Id
-				SET @Status = 2
-			END
+		ELSE BEGIN
+			SELECT 2
+		END
 	END TRY
 	BEGIN CATCH
-		SET @Status = 0
+		SELECT 0
 	END CATCH
 END
 
@@ -316,7 +320,13 @@ BEGIN
 				VALUES(@mepa_Descripcion,1,@mepa_UsuarioCreador,GETDATE(),NULL,NULL)
 				SELECT 1
 			END
-		ELSE
+		ELSE IF EXISTS (SELECT mepa_Descripcion FROM Gral.tbMetodosPago WHERE mepa_Descripcion = @mepa_Descripcion AND mepa_Estado = 0)
+			BEGIN
+				UPDATE Gral.tbMetodosPago
+				SET mepa_Estado = 1
+				WHERE mepa_Descripcion = @mepa_Descripcion
+				SELECT 1
+			END
 		BEGIN
 			SELECT 2
 		END
@@ -341,10 +351,10 @@ BEGIN
 				UPDATE Gral.tbMetodosPago
 				SET mepa_Descripcion = @mepa_Descripcion,
 					mepa_FechaModificacion = GETDATE(),
-					mepa_UsuarioCreador = @mepa_UsuarioModificador
+					mepa_UsuarioModificador = @mepa_UsuarioModificador
 					WHERE mepa_id = @mepa_id
 					SELECT 1
-			END
+			END	
 		ELSE BEGIN
 			SELECT 2
 		END
@@ -359,8 +369,7 @@ GO
 
 --Eliminar Metodos de Pago
 CREATE OR ALTER PROCEDURE Gral.UDP_tbMetodosPago_EliminarMetodosPago
-@mepa_id			INT,
-@status				INT OUTPUT
+@mepa_id			INT
 AS
 BEGIN
 BEGIN TRY		
@@ -368,11 +377,10 @@ BEGIN TRY
 		UPDATE	[Gral].[tbMetodosPago]						
 		SET		mepa_Estado = 0
 		WHERE	mepa_id = @mepa_id
-		SET @status = 1;
-			
+		SELECT 1		
 	END TRY
 	BEGIN CATCH
-		SET @status = 0;
+		SELECT 2
 	END CATCH
 END
 

@@ -22,9 +22,9 @@
                 <td>{{item.muni_Id}}</td>
                 <td>{{item.muni_Descripcion}}</td>
                 <td>{{item.dept_Descripcion}}</td>
-                <td><button type="button" class="btn btn-warning">    <i class="feather icon-edit"></i></button>
+                <td><button type="button" class="btn btn-warning" (click)="openBasicModal1(basicModal1,item)">    <i class="feather icon-edit"></i></button>
                     |
-                    <button type="button" class="btn btn-info">       <i class="feather icon-list"></i></button>
+                    <button type="button" class="btn btn-info" (click)="Detalles(item)">       <i class="feather icon-list"></i></button>
                 </td>
               </tr>
           </table>
@@ -43,16 +43,16 @@
         <div class="form-group col-6">
           <label>Departamento</label>
           <ng-select [(ngModel)]="municipioCreate.dept_Id" [appendTo]="'body'" placeholder="--Seleccione una opción--"
-          name="municipioSeleccionado" #municipios="ngModel" required [ngClass]="{ 'is-invalid': submitted && municipios.invalid }">
-            <ng-option *ngFor="let item of departamento" [value]="item.dept_Id">{{item.dept_Descripcion}}</ng-option>
-                 </ng-select>
-                 <div class="invalid-feedback" *ngIf="municipios?.errors?.required && submitted">El departamento es requerido</div>
+          name="municipioCreate.dept_Id" #municipio="ngModel" required [ngClass]="{ 'input-invalid': submitted && !municipioCreate.dept_Id }">
+          <ng-option *ngFor="let item of departamento" [value]="item.dept_Id">{{item.dept_Descripcion}}</ng-option>
+        </ng-select>
+        <div class="input-invalid-text" *ngIf="municipio?.errors?.required && submitted">El departamento es requerido</div>
         </div>
         <div class="form-group col-6">
           <label>Nombre</label>
         <input type="text" class="form-control" placeholder="Nombre del Municipio" required [(ngModel)]="municipioCreate.muni_Descripcion" name="municipioCreate.muni_Descripcion" #municipio="ngModel"
-        [ngClass]="{ 'is-invalid': submitted && municipio.invalid }"/>
-        <div class="invalid-feedback" *ngIf="municipio?.errors?.required && submitted">Nombre es requerido</div>
+        [ngClass]="{ 'is-invalid': submitted && !municipioCreate.muni_Descripcion }"/>
+        <div class="invalid-feedback" *ngIf="!municipioCreate.muni_Descripcion && submitted">Nombre es requerido</div>
         </div>
       </div>
     </form>
@@ -60,5 +60,36 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
     <button type="button" class="btn btn-primary" (click)="Guardar()">Guardar</button>
+  </div>
+</ng-template>
+
+<ng-template #basicModal1 let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Editar Municipio</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="row">
+        <div class="form-group col-6">
+          <label>Departamento</label>
+          <ng-select [(ngModel)]="municipioEdit.dept_Id" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+          name="municipioEdit.dept_Id" #municipio="ngModel" required [ngClass]="{ 'input-invalid': submitted && !municipioEdit.dept_Id }">
+          <ng-option *ngFor="let item of departamento" [value]="item.dept_Id">{{item.dept_Descripcion}}</ng-option>
+        </ng-select>
+        <div class="input-invalid-text" *ngIf="municipio?.errors?.required && submitted">El departamento es requerido</div>
+        </div>
+        <div class="form-group col-6">
+          <label>Nombre</label>
+        <input type="text" class="form-control" placeholder="Nombre del Municipio" required [(ngModel)]="municipioEdit.muni_Descripcion" name="municipioEdit.muni_Descripcion" #municipio="ngModel"
+        [ngClass]="{ 'is-invalid': submitted && !municipioEdit.muni_Descripcion }"/>
+        <div class="invalid-feedback" *ngIf="!municipioEdit.muni_Descripcion && submitted">Nombre es requerido</div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="Editar()">Guardar</button>
   </div>
 </ng-template>

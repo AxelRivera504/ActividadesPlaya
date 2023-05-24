@@ -51,5 +51,12 @@ namespace PlayaMagica.Controllers
             var respuesta = _actividadesServices.DeleteMantenimientos(Mantenimiento);
             return Ok(respuesta);
         }
+
+        [HttpGet("DetailsMantenimiento{id}")]
+        public IActionResult DetailsMantenimiento(int id)
+        {
+            var list = _actividadesServices.DetailsMantenimientos(id);
+            return Ok(list);
+        }
     }
 }

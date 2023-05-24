@@ -49,9 +49,9 @@ namespace PlayaMagica.DataAccess.Repositories.Gral
             using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
             RequestStatus result = new RequestStatus();
             var parametros = new DynamicParameters();
-            parametros.Add("@muni_Id", item.dept_id, DbType.String, ParameterDirection.Input);
-            parametros.Add("@dept_Id", item.muni_Descripcion, DbType.String, ParameterDirection.Input);
-            parametros.Add("@muni_Descripcion", item.muni_UsuarioCreador, DbType.String, ParameterDirection.Input);
+            parametros.Add("@muni_Id", item.muni_id, DbType.String, ParameterDirection.Input);
+            parametros.Add("@dept_Id", item.dept_id, DbType.String, ParameterDirection.Input);
+            parametros.Add("@muni_Descripcion", item.muni_Descripcion, DbType.String, ParameterDirection.Input);
             parametros.Add("@muni_UsuarioModificador", item.muni_UsuarioModificador, DbType.Int32, ParameterDirection.Input);
 
             var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbMunicipios_Update, parametros, commandType: CommandType.StoredProcedure);

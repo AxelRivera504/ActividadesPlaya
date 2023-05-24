@@ -2,7 +2,7 @@
     <div class="card-body">
         <div class="card-title text-center"><h3>Direcciones</h3></div>
         <div class="text-center">
-            <button type="button" class="btn btn-primary">
+            <button type="button" class="btn btn-primary" (click)="openBasicModal(basicModal)">
               <i class="feather icon-plus"></i>
               Nuevo
             </button>
@@ -37,3 +37,34 @@
         </div>
       </div>
 </div>
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Nuevo Direccion</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+      <div class="row">
+          <div class="form-group col-6">
+            <label>Departamento</label>
+            <ng-select [(ngModel)]="departamentoModel.dept_Id" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+            name="departamentoModel.dept_Id" #departamentos="ngModel" required [ngClass]="{ 'input-invalid': submitted && !departamentoModel.dept_Id}"
+            (ngModelChange)="onDepartamentoChange()" (click)="cargarddl"> 
+            <ng-option *ngFor="let item of departamento" [value]="item.dept_Id">{{item.dept_Descripcion}}</ng-option>
+            </ng-select>
+            
+          </div>
+          <div class="form-group col-6">
+            <label>Municipio</label>
+            <ng-select [(ngModel)]="municipioModel.muni_Id" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+            name="municipioModel.muni_Id" #municipios="ngModel" required [ngClass]="{ 'input-invalid': submitted && !municipioModel.muni_Id }">
+            <ng-option *ngFor="let item of municipio" [value]="item.muni_Id">{{item.muni_Descripcion}}</ng-option>
+          </ng-select>
+          </div>
+      </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+    <button type="button" class="btn btn-primary">Guardar</button>
+  </div>
+</ng-template>

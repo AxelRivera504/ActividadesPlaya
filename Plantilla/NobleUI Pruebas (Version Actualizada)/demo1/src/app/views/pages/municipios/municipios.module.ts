@@ -5,6 +5,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { DataTablesModule } from 'angular-datatables';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { MunicipiosDetallesComponent } from './municipios-detalles/municipios-detalles.component';
+
 const routes: Routes = [
   {
     path: '',
