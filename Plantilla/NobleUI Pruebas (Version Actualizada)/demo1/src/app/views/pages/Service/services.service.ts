@@ -60,6 +60,10 @@ export class ServicesService {
     return this.http.get<municipios[]>(this.Url + "/Municipios");
   }
 
+  createMunicipios(municipio: municipios){
+    return this.http.post<municipios[]>(this.Url + "/Municipios/Insert", municipio);
+  }
+
   getEstadosCiviles(){
     return this.http.get<estadosciviles[]>(this.Url + "/EstadosCiviles");
   }

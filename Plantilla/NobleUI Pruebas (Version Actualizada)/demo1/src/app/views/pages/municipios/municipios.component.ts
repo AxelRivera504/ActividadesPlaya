@@ -7,6 +7,8 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
 import { departamentos } from '../Model/departamentos';
 import { NgSelectConfig } from '@ng-select/ng-select';
+import { data } from 'jquery';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-municipios',
@@ -24,7 +26,7 @@ export class MunicipiosComponent implements OnInit {
 
   constructor(private service: ServicesService,
     private modalService: NgbModal, 
-    private router:Router,
+    private router:Router,  
     private config: NgSelectConfig) { 
     /*Cosas del select*/
     this.config.notFoundText = 'Custom not found';
@@ -43,6 +45,8 @@ export class MunicipiosComponent implements OnInit {
 
   openBasicModal(content: TemplateRef<any>) {
     this.submitted = false;
+    this.municipioCreate.muni_Descripcion = ""
+
     this.modalService.open(content, {}).result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result
     }).catch((res) => {});
@@ -77,6 +81,7 @@ export class MunicipiosComponent implements OnInit {
         url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
       }
     };
+
   }
 
     /*Agregue esta funcion que renderiza la tabla otra vez para que la paginacion no se bugee XD*/
@@ -110,11 +115,75 @@ export class MunicipiosComponent implements OnInit {
   }
 
   Guardar(){
+  var x = true
 
+  if(this.municipioCreate.dept_Id == undefined || this.municipioCreate.muni_Id){
+   x = false
+  }
+
+  
+  if(this.municipioCreate.muni_Descripcion == undefined || this.municipioCreate.muni_Descripcion == ""){
+    x = false
+  }
+
+    if(x == true){
+      this.service.createMunicipios(this.municipioCreate)
+      .subscribe((data: any) =>{
+        console.log(data)
+        if(data.data.codeStatus == 1){
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            title: '¡Registro Ingresado con exito!',
+            icon: 'success'
+          })
+          this.modalService.dismissAll()
+          setTimeout(() => {
+            this.service.getMunicipios().subscribe(data => {
+              this.municipio = data;
+              this.rerender();
+            });
+          }, 0.5);
+        }else if (data.data.codeStatus == 2){
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            title: '¡Ese registro ya existe!',
+            icon: 'warning'
+          })
+        }else{
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            title: '¡Ha ocurrido un error!',
+            icon: 'error'
+          })
+        }
+      })
+    }else{
+      this.submitted = true
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        title: '¡Rellene los campos!',
+        icon: 'warning'
+      })
+    }
   }
 
   Editar(){
-    
   }
 
   Datalles(){

@@ -8,12 +8,11 @@
             </button>
           </div>
         <div class="table-responsive">
-          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
             <thead>
               <tr>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Departamento ID</th>
                 <th>Departamento</th>
                 <th>Acciones</th>
               </tr>
@@ -22,7 +21,6 @@
               <tr *ngFor="let item of municipio">
                 <td>{{item.muni_Id}}</td>
                 <td>{{item.muni_Descripcion}}</td>
-                <td>{{item.dept_Id}}</td>
                 <td>{{item.dept_Descripcion}}</td>
                 <td><button type="button" class="btn btn-warning">    <i class="feather icon-edit"></i></button>
                     |
@@ -44,15 +42,17 @@
       <div class="row">
         <div class="form-group col-6">
           <label>Departamento</label>
-          <ng-select [(ngModel)]="municipioSeleccionado">
+          <ng-select [(ngModel)]="municipioCreate.dept_Id" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+          name="municipioSeleccionado" #municipios="ngModel" required [ngClass]="{ 'is-invalid': submitted && municipios.invalid }">
             <ng-option *ngFor="let item of departamento" [value]="item.dept_Id">{{item.dept_Descripcion}}</ng-option>
                  </ng-select>
+                 <div class="invalid-feedback" *ngIf="municipios?.errors?.required && submitted">El departamento es requerido</div>
         </div>
         <div class="form-group col-6">
           <label>Nombre</label>
-        <input type="text" class="form-control" placeholder="Nombre del Municipio" required [(ngModel)]="municipioCreate.muni_Descripcion" name="municipioCreate.muni_Descripcion" #municipios="ngModel"
-        [ngClass]="{ 'is-invalid': submitted && municipios.invalid }"/>
-        <div class="invalid-feedback" *ngIf="municipios?.errors?.required && submitted">Nombre es requerido</div>
+        <input type="text" class="form-control" placeholder="Nombre del Municipio" required [(ngModel)]="municipioCreate.muni_Descripcion" name="municipioCreate.muni_Descripcion" #municipio="ngModel"
+        [ngClass]="{ 'is-invalid': submitted && municipio.invalid }"/>
+        <div class="invalid-feedback" *ngIf="municipio?.errors?.required && submitted">Nombre es requerido</div>
         </div>
       </div>
     </form>

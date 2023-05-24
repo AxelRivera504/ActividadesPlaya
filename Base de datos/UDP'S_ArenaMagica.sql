@@ -123,8 +123,7 @@ GO
 CREATE OR ALTER PROCEDURE Gral_tbMunicipios_InsertarMunicipios
 @dept_Id				CHAR(2),
 @muni_Descripcion		NVARCHAR(150),
-@muni_UsuarioCreador	INT,
-@Status					INT OUTPUT
+@muni_UsuarioCreador	INT
 AS
 BEGIN
 BEGIN TRY
@@ -140,15 +139,15 @@ BEGIN TRY
 				
 				INSERT INTO Gral.tbMunicipios(dept_id, muni_id, muni_Descripcion, muni_Estado, muni_UsuarioCreador, muni_FechaCreacion, muni_UsuarioModificador, muni_FechaModificacion)
 				VALUES (@dept_Id,@muni_Id,@muni_Descripcion,1,@muni_UsuarioCreador,GETDATE(),NULL,NULL);
-				SET @Status = 1
+				SELECT 1
 			END
 		ELSE 
 		BEGIN
-			SET @Status = 2
+			SELECT 2
 		END
 	END TRY
 	BEGIN CATCH
-		SET @Status = 0
+		SELECT 0
 	END CATCH
 END
 GO

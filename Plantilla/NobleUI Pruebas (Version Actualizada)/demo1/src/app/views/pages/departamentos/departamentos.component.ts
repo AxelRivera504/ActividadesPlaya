@@ -132,6 +132,7 @@ export class DepartamentosComponent implements OnInit {
             icon: 'warning'
           })
         }else{
+          this.submitted = true
           Swal.fire({
             toast: true,
             position: 'top-end',
