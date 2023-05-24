@@ -36,8 +36,20 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/clientes/clientes.module').then(m => m.ClientesModule)
       },
       {
+        path: 'create-clientes',
+        loadChildren: () => import('./views/pages/clientes/create-clientes/create-clientes.module').then(m => m.CreateClientesModule)
+      },
+      {
+        path: 'detailscli',
+        loadChildren: () => import('./views/pages/clientes/detailscli/detailscli.module').then(m => m.DetailscliModule)
+      },
+      {
         path: 'encargados',
         loadChildren: () => import('./views/pages/encargados/encargados.module').then(m => m.EncargadosModule)
+      },
+      {
+        path: 'details-enc',
+        loadChildren: () => import('./views/pages/encargados/details-enc/details-enc.module').then(m => m.DetailsEncModule)
       },
       {
         path: 'crear',

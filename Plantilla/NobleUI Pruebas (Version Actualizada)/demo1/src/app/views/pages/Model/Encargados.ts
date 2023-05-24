@@ -8,4 +8,11 @@ export class Encargados{
     enca_Sexo!: String;
     esci_Descripcion!:String;
     enca_FechaNac!:Date;
+    enca_UsuarioCreador!: number;
+    enca_UsuarioModificador!:number;
+    esci_id!:number;
+    enca_UsuarioCreador_Nombre!:String;
+    enca_UsuarioModificador_Nombre!: String;
+    enca_FechaCreacion!: Date;
+    enca_FechaModificacion!:Date;
 }

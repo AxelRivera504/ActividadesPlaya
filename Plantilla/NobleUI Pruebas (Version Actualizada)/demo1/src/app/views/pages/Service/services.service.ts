@@ -39,6 +39,14 @@ export class ServicesService {
     return this.http.get<Cliente[]>(this.Url + "/Clientes/ListarClientes");
   }
 
+  InsertarClientes(cliente:Cliente){
+    return this.http.post<Cliente[]>(this.Url + "/Clientes/InsertarClientes",cliente)
+  }
+
+  DeleteClientes(cliente: Cliente){
+    return this.http.post<Cliente[]>(this.Url + "/Clientes/DeleteClientes",cliente)
+  }
+
   getEncargados(){
     return this.http.get<Encargados[]>(this.Url + "/Encargados/ListarEncargados");
   }
@@ -89,5 +97,13 @@ export class ServicesService {
 
   DetailsMantenimiento(id?:number){
     return this.http.get<Mantenimiento[]>(this.Url + "/Mantenimientos/DetailsMantenimiento"+id)
+  }
+
+  InsertarEncargados(encargados:Encargados){
+    return this.http.post<Encargados[]>(this.Url + "/Encargados/InsertarEncargados",encargados)
+  }
+
+  DeleteEncargados(encargados:Encargados){
+    return this.http.post<Encargados[]>(this.Url + "/Encargados/DeleteEncargados",encargados)
   }
 }

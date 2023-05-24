@@ -62,6 +62,7 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             RequestStatus result = new RequestStatus();
             var parametros = new DynamicParameters();
             parametros.Add("@clie_id", item.clie_id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@clie_UsuarioModificador", item.clie_UsuarioModificador, DbType.Int32, ParameterDirection.Input);
             var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbClientes_Delete, parametros, commandType: CommandType.StoredProcedure);
 
             result.CodeStatus = answer;

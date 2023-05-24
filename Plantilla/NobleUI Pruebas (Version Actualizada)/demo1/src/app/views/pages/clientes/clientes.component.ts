@@ -1,18 +1,31 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, TemplateRef } from '@angular/core';
 import { Cliente } from '../Model/Clientes';
 import { ServicesService } from '../Service/services.service';
 import { Router } from '@angular/router';
 import { DataTable } from 'simple-datatables';
 import { Subject } from 'rxjs';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
+import { DataTableDirective } from 'angular-datatables';
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.scss']
 })
 export class ClientesComponent implements OnInit {
+  basicModalCode: any;
+  basicModalCloseResult: string = '';
+  modalRef: NgbModalRef | undefined;
+
   Cliente!: Cliente[];
+
+  clientes: Cliente = new Cliente();
   @ViewChild('myTable', { static: false }) table!: ElementRef;
-  constructor(private service: ServicesService, private router: Router) { }
+
+  @ViewChild(DataTableDirective, {static: false})
+  dtElement: DataTableDirective;
+
+  constructor(private service: ServicesService, private router: Router,private modalService: NgbModal) { }
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject <any> = new Subject<any>();
 
@@ -35,6 +48,66 @@ export class ClientesComponent implements OnInit {
     // No es necesario inicializar DataTable aquí
   }
 
+  
+  openBasicModal1(content: TemplateRef<any>, id:number) {
+    this.modalRef = this.modalService.open(content, {});
+    this.modalRef.result.then((result) => {
+      this.basicModalCloseResult = "Modal closed" + result;
+    }).catch((res) => {});
+    localStorage.setItem("clie_Id",id.toString())
+  }
+
+  Delete(){
+    const clie_Id : number | undefined = isNaN(parseInt(localStorage.getItem("clie_Id") ?? '', 0)) ? undefined: parseInt(localStorage.getItem("clie_Id") ?? '', 0);
+    const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
+    if (idUsuario !== undefined) {
+      this.clientes.clie_UsuarioModificador = idUsuario;
+    }
+    if (clie_Id !== undefined) {
+      this.clientes.clie_id = clie_Id;
+    }
+    this.service.DeleteClientes(this.clientes).
+    subscribe((data:any)=>{
+      console.log(this.clientes);
+      console.log(data)
+      if(data.data.codeStatus == 1){
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          title: '¡Registro eliminado con exito!',
+          icon: 'success'
+        })
+        this.modalService.dismissAll();
+          this.service.getCliente().subscribe(data=>{
+            this.Cliente = data;
+            this.rerender();
+      })
+      }else{
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 30000,
+          timerProgressBar: true,
+          title: '¡ERROR!,¡oh no!, hubo un error al eliminar el registro',
+            icon: 'error'
+        })
+      }
+    })
+  } 
+
+  Detalles(clintes: Cliente){
+    localStorage.setItem('clientes', JSON.stringify(clintes));
+    this.router.navigate(['detailscli']); 
+  }
+
+  crear(){
+      this.router.navigate(['create-clientes']); 
+  }
+
   private initializeDataTable(): void {
     const dataTableOptions = {
       searchable: true, // Habilitar la barra de búsqueda
@@ -50,5 +123,16 @@ export class ClientesComponent implements OnInit {
     };
 
   }
+
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next(null);
+    });
+  }
+
 
 }

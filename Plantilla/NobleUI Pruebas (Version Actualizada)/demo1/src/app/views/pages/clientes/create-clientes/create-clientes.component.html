@@ -1,0 +1,101 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header text-center my-0">
+            <h3>Crear Clientes</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="Nombre">Nombres Cliente:</label>
+                    <br>
+                    <input type="text" class="form-control" id="Nombre" required placeholder="Nombres cliente"
+                        [(ngModel)]="clientes.clie_Nombres" name="clientes.clie_Nombres" #clieNombre="ngModel"
+                        [ngClass]="{ 'is-invalid': submitted && clieNombre.invalid }">
+                    <div class="invalid-feedback" *ngIf="clieNombre?.errors?.required && submitted">Nombre requerido</div> 
+                </div>
+                <div class="col-sm-6">
+                    <label for="Apellidos">Apellidos Cliente:</label>
+                    <br>
+                    <input type="text" class="form-control" id="Apellidos" required placeholder="Apellidos cliente"
+                        [(ngModel)]="clientes.clie_Apellidos" name="clientes.clie_Apellidos" #clieApellido="ngModel"
+                        [ngClass]="{ 'is-invalid': submitted && clieApellido.invalid }">
+                    <div class="invalid-feedback" *ngIf="clieApellido?.errors?.required && submitted">Apellidos requerido</div> 
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                     <label for="DNI">DNI Cliente:</label>
+                     <br>
+                     <input type="text" class="form-control" id="DNI" required placeholder="DNI cliente" [hiddenInput]="true" mask="0000-0000-00000"
+                        [(ngModel)]="clientes.clie_DNI" name="clientes.clie_DNI" #clieDNI="ngModel"
+                        [ngClass]="{ 'is-invalid': submitte1 && clieDNI.invalid }">
+                    <div class="invalid-feedback" *ngIf="clieDNI?.errors?.required && submitte1">DNI requerido</div> 
+                    </div>
+                <div class="col-sm-6"> 
+                    <label for="email">Email Cliente:</label>
+                    <br>
+                    <input type="email" class="form-control" id="email" required placeholder="email cliente"
+                    [(ngModel)]="clientes.clie_Email" name="clientes.clie_Email" #clieEmail="ngModel"
+                    [ngClass]="{ 'is-invalid': submitted && clieEmail.invalid }">
+                <div class="invalid-feedback" *ngIf="clieEmail?.errors?.required && submitted">Email requerido</div> 
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="Nombre">Fecha de nacimiento cliente:</label>
+                    <br>
+                    <div class="input-group">
+                      <input class="form-control" placeholder="yyyy-mm-dd" 
+                        name="dp" [(ngModel)]="selectedDate" ngbDatepicker #d="ngbDatepicker" 
+                        #fechanac="ngModel" required [ngClass]="{ 'is-invalid': submitted && fechanac.invalid }"
+                        pattern="\d{4}-\d{2}-\d{2}" maxlength="10">
+                      <button class="input-group-text" type="button" (click)="d.toggle()">
+                        <i class="feather icon-calendar icon-md text-muted"></i>
+                      </button>
+                      <div class="invalid-feedback" *ngIf="fechanac?.errors?.required && submitted">Debe escoger una fecha de nacimiento</div>
+                      <div class="invalid-feedback" *ngIf="fechanac?.errors?.pattern && submitted">Fecha inválida. El formato debe ser 'yyyy-mm-dd'</div>
+                    </div>
+                  </div>
+                <div class="col-sm-6">
+                    <label for="Nombre">Sexo del cliente:</label>
+                    <br>
+                    <div class="container">
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" value="M" [ngClass]="{ 'is-invalid': submitted && clieSex.invalid }"
+                                [(ngModel)]="clientes.clie_Sexo" required name="radioInline" id="radioInline" #clieSex="ngModel">
+                            <label class="form-check-label" for="radioInline">
+                                Masculino
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" value="F" [ngClass]="{ 'is-invalid': submitted && clieSex.invalid }"
+                                [(ngModel)]="clientes.clie_Sexo" required name="radioInline" #clieSex="ngModel" id="radioInline1">
+                            <label class="form-check-label" for="radioInline1">
+                                Femenino
+                            </label>
+                        </div> 
+                        <div class="invalid-feedback" *ngIf="submitted && form.get('clie_Sexo')?.invalid && form.get('clie_Sexo')?.touched">
+                            Sexo requerido
+                          </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary mt-3 me-3" (click)="Regresar()">
+                            <i class="feather icon-arrow-left"></i>Regresar
+                        </button>
+                        <button type="button" class="btn btn-primary mt-3" (click)="Guardar()">
+                            <i class="feather icon-save"></i>Guardar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>       
+    </div>
+</div>

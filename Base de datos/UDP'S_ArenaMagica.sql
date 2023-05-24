@@ -672,7 +672,7 @@ GO
 						END
 				ELSE 
 					BEGIN
-						SELECT 1
+						SELECT 2
 					END
 	END TRY	
 	BEGIN CATCH
@@ -725,12 +725,15 @@ GO
  /*Encargados Delete*/
  GO
  CREATE OR ALTER PROCEDURE Acti.UDP_tbEncargados_Delete
- @enca_id INT
+ @enca_id					INT,
+ @enca_UsuarioModificador	INT
  AS
  BEGIN
 	BEGIN TRY
 		UPDATE Acti.tbEncargados
-		SET enca_Estado = 0
+		SET enca_Estado = 0,
+			enca_UsuarioModificador = @enca_UsuarioModificador,
+			enca_FechaModificacion = GETDATE()
 		WHERE enca_id = @enca_id
 		SELECT 1
 	END TRY
@@ -1218,12 +1221,15 @@ END
 /*Clientes Delete*/
 GO
 CREATE OR ALTER PROCEDURE Acti.UDP_tbClientes_Delete
-@clie_id INT 
+@clie_id					INT,
+@clie_UsuarioModificador	INT
 AS
 BEGIN
 	BEGIN TRY
 			UPDATE Acti.tbClientes
-			SET clie_Estado = 1
+			SET clie_Estado = 0,
+				clie_UsuarioModificador = @clie_UsuarioModificador,
+				clie_FechaModificacion = GETDATE()
 			WHERE clie_id = @clie_id
 			SELECT 1
 	END TRY

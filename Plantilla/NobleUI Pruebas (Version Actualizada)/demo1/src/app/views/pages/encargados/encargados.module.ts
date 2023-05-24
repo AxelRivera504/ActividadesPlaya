@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EncargadosComponent } from './encargados.component';
 import { DataTablesModule } from 'angular-datatables';
 import { CreateComponent } from './create/create.component';
+import { DetailsEncComponent } from './details-enc/details-enc.component';
 const routes: Routes = [
   {
     path: '',
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: 'crear',
     component: CreateComponent,
+  },
+  {
+    path: 'details-enc',
+    component: DetailsEncComponent,
   }
 ]
 @NgModule({
