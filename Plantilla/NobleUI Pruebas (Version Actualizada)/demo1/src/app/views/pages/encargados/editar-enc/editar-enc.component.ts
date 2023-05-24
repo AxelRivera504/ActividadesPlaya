@@ -1,24 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Encargados } from '../../Model/Encargados';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { ServicesService } from '../../Service/services.service';
-import { NgSelectConfig } from '@ng-select/ng-select';
-import { estadosciviles } from '../../Model/estadosciviles';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ServicesService } from '../../Service/services.service';
 import Swal from 'sweetalert2';
-import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
-
+import { estadosciviles } from '../../Model/estadosciviles';
 @Component({
-  selector: 'app-create',
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss']
+  selector: 'app-editar-enc',
+  templateUrl: './editar-enc.component.html',
+  styleUrls: ['./editar-enc.component.scss']
 })
-export class CreateComponent implements OnInit {
+export class EditarEncComponent implements OnInit {
   estadocivil!: estadosciviles[];
   
   EstadoCivilSeleccionado: String;
-  encargados: Encargados = new Encargados();
+
+  encargados!: Encargados;
   submitted: boolean = false;
   submitte1: boolean = false;
   selectedDate: NgbDateStruct;
@@ -27,11 +25,7 @@ export class CreateComponent implements OnInit {
   fechaValida: boolean = false;
   fechaFormatoValido: boolean = true;
 
-  constructor(private router: Router, private service: ServicesService, private config: NgSelectConfig) { 
-    this.config.notFoundText = 'Custom not found';
-    this.config.appendTo = 'body';
-    this.config.bindValue = 'value';
-
+  constructor(private router: Router, private service: ServicesService) { 
     this.form = new FormGroup({
       enca_Sexo: new FormControl(null),
     });
@@ -41,6 +35,23 @@ export class CreateComponent implements OnInit {
     this.service.getEstadosCiviles().subscribe(data => {
       this.estadocivil = data;
     });
+
+    const encarga = localStorage.getItem('encargadosEd');
+    if (encarga) {
+      this.encargados = JSON.parse(encarga);
+      console.log(this.encargados);
+  
+      // Obtener la fecha de nacimiento del cliente
+      const fechaNacimiento = new Date(this.encargados.enca_FechaNac);
+      this.EstadoCivilSeleccionado = this.encargados.esci_Descripcion.toString();
+      // Crear el objeto NgbDateStruct con la fecha de nacimiento
+      this.selectedDate = {
+        year: fechaNacimiento.getFullYear(),
+        month: fechaNacimiento.getMonth() + 1,
+        day: fechaNacimiento.getDate()
+      };
+      this.fechaValida = true;
+    }
   }
 
   Regresar(){
@@ -79,11 +90,11 @@ export class CreateComponent implements OnInit {
 
     const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
     if (idUsuario !== undefined) {
-      this.encargados.enca_UsuarioCreador = idUsuario;
+      this.encargados.enca_UsuarioModificador = idUsuario;
     }
     this.encargados.esci_id = parseInt(this.EstadoCivilSeleccionado.toString())
     this.encargados.enca_FechaNac = this.convertToDate(this.selectedDate);
-    this.service.InsertarEncargados(this.encargados).
+    this.service.ActualizarEncargados(this.encargados).
     subscribe((data:any)=>{
       console.log(this.encargados);
       if(data.data.codeStatus == 1){
@@ -93,7 +104,7 @@ export class CreateComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500,
           timerProgressBar: true,
-          title: '¡Registro Ingresado con exito!',
+          title: '¡Registro Actualizado con exito!',
           icon: 'success'
         })
         this.Regresar()
@@ -125,4 +136,7 @@ export class CreateComponent implements OnInit {
       this.fechaFormatoValido = true; 
     }
   }
+
+
+
 }

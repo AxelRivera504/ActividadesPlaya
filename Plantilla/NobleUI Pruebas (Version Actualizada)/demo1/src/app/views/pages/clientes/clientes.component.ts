@@ -48,6 +48,10 @@ export class ClientesComponent implements OnInit {
     // No es necesario inicializar DataTable aquí
   }
 
+  Editar(clientes:Cliente){
+    localStorage.setItem("clientesData",JSON.stringify(clientes))
+    this.router.navigate(['editar-clientes']); 
+  }
   
   openBasicModal1(content: TemplateRef<any>, id:number) {
     this.modalRef = this.modalService.open(content, {});

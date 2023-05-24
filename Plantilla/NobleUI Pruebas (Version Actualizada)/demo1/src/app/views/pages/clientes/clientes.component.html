@@ -16,9 +16,7 @@
                             <th>Nombres</th>
                             <th>Apellidos</th>
                             <th>DNI</th>
-                            <th>Email</th>
                             <th>Sexo</th>
-                            <th>Fecha de nacimiento</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -28,10 +26,8 @@
                             <td>{{item.clie_Nombres}}</td>
                             <td>{{item.clie_Apellidos}}</td>
                             <td>{{item.clie_DNI}}</td>
-                            <td>{{item.clie_Email}}</td>
                             <td>{{item.clie_Sexo}}</td>
-                            <td>{{item.clie_FechaNac}}</td>
-                            <td><button type="button" class="btn btn-warning btn-icon-text">
+                            <td><button type="button" class="btn btn-warning btn-icon-text" (click)="Editar(item)">
                                 <i class="feather icon-edit "></i>
                             </button>
                                 |

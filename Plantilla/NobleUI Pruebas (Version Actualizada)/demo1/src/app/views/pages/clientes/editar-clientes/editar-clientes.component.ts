@@ -1,59 +1,60 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Cliente } from '../../Model/Clientes';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { ServicesService } from '../../Service/services.service';
-import { NgSelectConfig } from '@ng-select/ng-select';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ServicesService } from '../../Service/services.service';
 @Component({
-  selector: 'app-create-clientes',
-  templateUrl: './create-clientes.component.html',
-  styleUrls: ['./create-clientes.component.scss']
+  selector: 'app-editar-clientes',
+  templateUrl: './editar-clientes.component.html',
+  styleUrls: ['./editar-clientes.component.scss']
 })
-export class CreateClientesComponent implements OnInit {
-
-  clientes: Cliente = new Cliente();
-  submitted: boolean = false;
-  submitte1: boolean = false;
+export class EditarClientesComponent implements OnInit {
+  clientes!:Cliente;
   selectedDate: NgbDateStruct;
   form: FormGroup;
-
+  submitted: boolean = false;
+  submitte1: boolean = false;
   fechaValida: boolean = false;
   fechaFormatoValido: boolean = true;
-
-  constructor(private router: Router, private service: ServicesService, private config: NgSelectConfig) { 
-    this.config.notFoundText = 'Custom not found';
-    this.config.appendTo = 'body';
-    this.config.bindValue = 'value';
-
-    this.form = new FormGroup({
+  constructor(private router: Router,private service: ServicesService) {
+this.form = new FormGroup({
       clie_Sexo: new FormControl(null),
     });
-  }
-
-  Regresar(){
-    this.router.navigate(['clientes']);
-  }
-
-  convertToDate(date: NgbDateStruct): Date {
-    if (date) {
-      return new Date(date.year, date.month - 1, date.day);
-    }
-    return new Date(); // Devuelve la fecha actual como valor predeterminado
-  }
+   }
 
   ngOnInit(): void {
+    const client = localStorage.getItem('clientesData');
+    if (client) {
+      this.clientes = JSON.parse(client);
+      console.log(this.clientes);
+  
+      // Obtener la fecha de nacimiento del cliente
+      const fechaNacimiento = new Date(this.clientes.clie_FechaNac);
+  
+      // Crear el objeto NgbDateStruct con la fecha de nacimiento
+      this.selectedDate = {
+        year: fechaNacimiento.getFullYear(),
+        month: fechaNacimiento.getMonth() + 1,
+        day: fechaNacimiento.getDate()
+      };
+      this.fechaValida = true;
+    }
+     
   }
 
-  Guardar(){
-    const clie_SexoControl = this.form.get('clie_Sexo');
   
-    if (!this.clientes.clie_Nombres || !this.clientes.clie_Apellidos ||
+
+  Actualizar(){
+    const clie_SexoControl = this.form.get('clie_Sexo');
+
+      if (!this.clientes.clie_Nombres || !this.clientes.clie_Apellidos ||
         !this.clientes.clie_DNI || !this.clientes.clie_Email ||
         !clie_SexoControl || !clie_SexoControl.valid || !this.fechaValida || !this.fechaFormatoValido ) {
       this.submitted = true;  
       this.submitte1 = true;  
+      console.log(this.fechaValida)
       Swal.fire({
         toast: true,
         position: 'top-end',
@@ -66,13 +67,15 @@ export class CreateClientesComponent implements OnInit {
       return;
     }
 
+
     const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
     if (idUsuario !== undefined) {
-      this.clientes.clie_UsuarioCreador = idUsuario;
+      this.clientes.clie_UsuarioModificador = idUsuario;
     }
+
     this.clientes.clie_FechaNac = this.convertToDate(this.selectedDate);
 
-    this.service.InsertarClientes(this.clientes).
+    this.service.ActualizarClientes(this.clientes).
     subscribe((data:any)=>{
       console.log(this.clientes);
       if(data.data.codeStatus == 1){
@@ -82,7 +85,7 @@ export class CreateClientesComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500,
           timerProgressBar: true,
-          title: '¡Registro Ingresado con exito!',
+          title: '¡Registro Actualizado con exito!',
           icon: 'success'
         })
         this.Regresar()
@@ -101,9 +104,20 @@ export class CreateClientesComponent implements OnInit {
       }
      
     })
+
+
   }
 
+  convertToDate(date: NgbDateStruct): Date {
+    if (date) {
+      return new Date(date.year, date.month - 1, date.day);
+    }
+    return new Date(); // Devuelve la fecha actual como valor predeterminado
+  }
 
+  Regresar(){
+    this.router.navigate(['clientes']);
+  }
 
   onDateSelect(date: NgbDateStruct) {
     // Verificar si se ha seleccionado una fecha válida

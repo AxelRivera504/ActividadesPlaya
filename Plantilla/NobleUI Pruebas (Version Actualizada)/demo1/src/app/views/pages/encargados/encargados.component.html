@@ -17,11 +17,9 @@
                             <th>Nombres</th>
                             <th>Apellidos</th>
                             <th>DNI</th>
-                            <th>Email</th>
                             <th>Telefono</th>
                             <th>Sexo</th>
                             <th>Estado Civil</th>
-                            <th>Fecha de nacimiento</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -31,12 +29,10 @@
                             <td>{{item.enca_Nombres}}</td>
                             <td>{{item.enca_Apellidos}}</td>
                             <td>{{item.enca_DNI}}</td>
-                            <td>{{item.enca_Email}}</td>
                             <td>{{item.enca_Telefono}}</td>
                             <td>{{item.enca_Sexo}}</td>
                             <td>{{item.esci_Descripcion}}</td>
-                            <td>{{item.enca_FechaNac}}</td>
-                            <td><button type="button" class="btn btn-warning btn-icon-text">
+                            <td><button type="button" class="btn btn-warning btn-icon-text" (click)="Editar(item)">
                                 <i class="feather icon-edit "></i>
                             </button>
                                 |

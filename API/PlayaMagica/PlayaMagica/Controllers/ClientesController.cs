@@ -37,14 +37,14 @@ namespace PlayaMagica.Controllers
             return Ok(respuesta);
         }
 
-        [HttpPost("UpdateEncargados")]
+        [HttpPost("UpdateClientes")]
         public IActionResult UpdateClientes(ClientesViewModel item)
         {
             var clientes = _mapper.Map<tbClientes>(item);
             var respuesta = _actividadesServices.UpdateClientes(clientes);
             return Ok(respuesta);
         }
-
+    
         [HttpPost("DeleteClientes")]
         public IActionResult DeleteClientes(ClientesViewModel item)
         {

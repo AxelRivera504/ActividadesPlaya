@@ -5,6 +5,7 @@ import { ClientesComponent } from './clientes.component';
 import { DataTablesModule } from 'angular-datatables';
 import { CreateClientesComponent } from './create-clientes/create-clientes.component';
 import { DetailscliComponent } from './detailscli/detailscli.component';
+import { EditarClientesComponent } from './editar-clientes/editar-clientes.component';
 const routes: Routes = [
   {
     path: '',
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: 'detailsclie',
     component: DetailscliComponent
+  },
+  {
+    path: 'editar-clienets',
+    component: EditarClientesComponent
   }
 ]
 @NgModule({

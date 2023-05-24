@@ -47,6 +47,10 @@ export class ServicesService {
     return this.http.post<Cliente[]>(this.Url + "/Clientes/DeleteClientes",cliente)
   }
 
+  ActualizarClientes(cliente:Cliente){
+    return this.http.post<Cliente[]>(this.Url + "/Clientes/UpdateClientes",cliente)
+  }
+
   getEncargados(){
     return this.http.get<Encargados[]>(this.Url + "/Encargados/ListarEncargados");
   }
@@ -105,5 +109,9 @@ export class ServicesService {
 
   DeleteEncargados(encargados:Encargados){
     return this.http.post<Encargados[]>(this.Url + "/Encargados/DeleteEncargados",encargados)
+  }
+
+  ActualizarEncargados(encargados:Encargados){
+    return this.http.post<Encargados[]>(this.Url + "/Encargados/UpdateEncargados",encargados)
   }
 }

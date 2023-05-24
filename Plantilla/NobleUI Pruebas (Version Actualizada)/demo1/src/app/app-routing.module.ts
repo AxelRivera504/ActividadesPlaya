@@ -44,6 +44,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/clientes/detailscli/detailscli.module').then(m => m.DetailscliModule)
       },
       {
+        path: 'editar-clientes',
+        loadChildren: () => import('./views/pages/clientes/editar-clientes/editar-clientes.module').then(m => m.EditarClientesModule)
+      },
+      {
         path: 'encargados',
         loadChildren: () => import('./views/pages/encargados/encargados.module').then(m => m.EncargadosModule)
       },
@@ -54,6 +58,10 @@ const routes: Routes = [
       {
         path: 'crear',
         loadChildren: () => import('./views/pages/encargados/create/create.module').then(m => m.CreateModule)
+      },
+      {
+        path: 'editar-enc',
+        loadChildren: () => import('./views/pages/encargados/editar-enc/editar-enc.module').then(m => m.EditarEncModule)
       },
       {
         path: 'actividades',

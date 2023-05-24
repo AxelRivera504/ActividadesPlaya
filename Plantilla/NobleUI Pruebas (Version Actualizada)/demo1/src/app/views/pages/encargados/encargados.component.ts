@@ -48,6 +48,11 @@ export class EncargadosComponent implements OnInit {
     // No es necesario inicializar DataTable aquí
   }
 
+  Editar(encargados1:Encargados){
+    localStorage.setItem('encargadosEd', JSON.stringify(encargados1));
+    this.router.navigate(['editar-enc']); 
+  }
+
   openBasicModal1(content: TemplateRef<any>, id:number) {
     this.modalRef = this.modalService.open(content, {});
     this.modalRef.result.then((result) => {

@@ -1,9 +1,9 @@
 <div class="container">
     <div class="card">
         <div class="card-header text-center my-0">
-            <h3>Crear Clientes</h3>
+            <h3>Editar Clientes</h3>
         </div>
-        <div class="card-body">
+        <div class="card-body">  
             <div class="row">
                 <div class="col-sm-6">
                     <label for="Nombre">Nombres Cliente:</label>
@@ -12,15 +12,15 @@
                         [(ngModel)]="clientes.clie_Nombres" name="clientes.clie_Nombres" #clieNombre="ngModel"
                         [ngClass]="{ 'is-invalid': submitted && clieNombre.invalid }">
                     <div class="invalid-feedback" *ngIf="clieNombre?.errors?.required && submitted">Nombre requerido</div> 
-                </div>
+                </div>   
                 <div class="col-sm-6">
-                    <label for="Apellidos">Apellidos Cliente:</label>
+                    <label for="Nombre">Apellidos Cliente:</label>
                     <br>
                     <input type="text" class="form-control" id="Apellidos" required placeholder="Apellidos cliente"
-                        [(ngModel)]="clientes.clie_Apellidos" name="clientes.clie_Apellidos" #clieApellido="ngModel"
-                        [ngClass]="{ 'is-invalid': submitted && clieApellido.invalid }">
-                    <div class="invalid-feedback" *ngIf="clieApellido?.errors?.required && submitted">Apellidos requerido</div> 
-                </div>
+                    [(ngModel)]="clientes.clie_Apellidos" name="clientes.clie_Apellidos" #clieApellido="ngModel"
+                    [ngClass]="{ 'is-invalid': submitted && clieApellido.invalid }">
+                <div class="invalid-feedback" *ngIf="clieApellido?.errors?.required && submitted">Apellidos requerido</div> 
+                </div>              
             </div>
             <br>
             <div class="row">
@@ -40,7 +40,7 @@
                     [ngClass]="{ 'is-invalid': submitted && clieEmail.invalid }">
                 <div class="invalid-feedback" *ngIf="clieEmail?.errors?.required && submitted">Email requerido</div> 
                 </div>
-            </div>
+            </div>      
             <br>
             <div class="row">
                 <div class="col-sm-6">
@@ -83,7 +83,7 @@
                           </div>
                     </div>
                 </div>
-            </div>
+            </div> 
             <br>
             <div class="row">
                 <div class="col-sm-3"></div>
@@ -92,12 +92,12 @@
                         <button type="button" class="btn btn-primary mt-3 me-3" (click)="Regresar()">
                             <i class="feather icon-arrow-left"></i>Regresar
                         </button>
-                        <button type="button" class="btn btn-primary mt-3" (click)="Guardar()">
-                            <i class="feather icon-save"></i>Guardar
+                        <button type="button" class="btn btn-primary mt-3" (click)="Actualizar()">
+                            <i class="feather icon-save"></i>Actualizar
                         </button>
                     </div>
                 </div>
-            </div>
+            </div>  
+        </div>          
         </div>       
     </div>
-</div>
