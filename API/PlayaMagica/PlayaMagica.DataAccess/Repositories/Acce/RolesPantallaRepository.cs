@@ -51,14 +51,6 @@ namespace PlayaMagica.DataAccess.Repositories.Acce
             throw new NotImplementedException();
         }
 
-        public IEnumerable<tbRolesXPantallas> ListPantallasXrol(int id)
-        {
-            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
-            var parametros = new DynamicParameters();
-            parametros.Add("@role_ID", id, DbType.Int32, ParameterDirection.Input);
-            return db.Query<tbRolesXPantallas>(ScriptsDataBase.UDP_tbPantallaXRole, parametros, commandType: CommandType.StoredProcedure);
-        }
-
         public RequestStatus Update(tbRolesXPantallas item)
         {
             throw new NotImplementedException();

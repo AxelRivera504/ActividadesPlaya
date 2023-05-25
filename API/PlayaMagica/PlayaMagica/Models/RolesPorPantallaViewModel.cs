@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,9 +8,6 @@ namespace PlayaMagica.Models
     public class RolesPorPantallaViewModel
     {
 
-
-        [NotMapped]
-        public string pant_Descripcion { get; set; }
         public int roleXpant_ID { get; set; }
         public int? role_ID { get; set; }
         public int? pant_ID { get; set; }

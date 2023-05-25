@@ -68,8 +68,6 @@ namespace PlayaMagica.DataAccess
 
         #region Pantallas
         public static string UDP_tbPantallas_Select = "Acce.UDP_tbPantallas_Select";
-        public static string UDP_tbPantallaXRole = "Acce.UDP_tbRolesXPantallas_Select_ByRoleID";
-
         #endregion
 
         #endregion
@@ -130,6 +128,7 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbMantenimiento_Insert = "Acti.UDP_tbMantenimiento_Insert";
         public static string UDP_tbMantenimiento_Update = "Acti.UDP_tbMantenimiento_Update";
         public static string UDP_tbMantenimiento_Delete = "Acti.UDP_tbMantenimiento_Delete";
+        public static string UDP_tbMantenimiento_Details = "Acti.UDP_tbMantenimiento_Detalles";
         #endregion
 
         #region MantenimientoXEquipo 

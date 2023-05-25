@@ -1,41 +1,47 @@
 <div class="card">
-    <div class="card-body">
-        <div class="card-title text-center"><h3>Usuarios</h3></div>
-        <div class="text-center">
-            <button type="button" class="btn btn-primary">
-              <i class="feather icon-plus"></i>
-              Nuevo
-            </button>
-          </div>
-        <div class="table-responsive">
-          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Usuarios</th>
-                <th>Encargado</th>
-                <th>Rol</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of usuarios">
-                <td>{{item.usua_ID}}</td>
-                <td>{{item.usua_Usuario}}</td>                
-                <td>{{item.enca_NombreCompleto}}</td>
-                <td>{{item.role_Descripcion}}</td>
-                <td><button type="button" class="btn btn-warning">    <i class="feather icon-edit"></i></button>
-                    |
-                    <button type="button" class="btn btn-info"> 
-                              <i class="feather icon-list"></i></button>
-                              |
-                              <button type="button" class="btn btn-danger"> 
-                                        <i class="feather icon-trash"></i></button>
-                </td>
-              </tr>
-          </table>
-        </div>
-      </div>
+  <div class="card-body">
+    <div class="card-title text-center"><h3>Usuarios</h3></div>
+    <div class="text-center">
+      <button type="button" class="btn btn-primary" (click)="openBasicModal(basicModal)">
+        <i class="feather icon-plus"></i>
+        Nuevo
+      </button>
+    </div>
+    <div class="table-responsive">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Usuarios</th>
+            <th>Encargado</th>
+            <th>Rol</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of usuarios">
+            <td>{{item.usua_ID}}</td>
+            <td>{{item.usua_Usuario}}</td>
+            <td>{{item.enca_NombreCompleto}}</td>
+            <td>{{item.role_Descripcion}}</td>
+            <td>
+              <button type="button" class="btn btn-warning" (click)="openBasicModal1(basicModal1,item)">
+                <i class="feather icon-edit"></i>
+              </button>
+              |
+              <button type="button" class="btn btn-info">
+                <i class="feather icon-list"></i>
+              </button>
+              |
+              <button type="button" class="btn btn-danger">
+                <i class="feather icon-trash" (click)="openBasicModal2(basicModal2,item.usua_ID)" ></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
 <ng-template #basicModal let-modal>
@@ -46,16 +52,38 @@
   <div class="modal-body">
     <form>
       <div class="row">
-        <div class="form-group col-12">
+        <div class="form-group col-6">
           <label>Nombre Usuario</label>
-        <input type="text" class="form-control" placeholder="Nombre del Usuario" >
+          <input type="text" class="form-control" placeholder="Nombre del Usuario" required [(ngModel)]="UsuariosCreate.usua_Usuario"
+            name="UsuariosCreate.usua_Usuario" #Usuarios="ngModel" />
+          <div class="input-invalid-text"  *ngIf="!UsuariosCreate.usua_Usuario && submitted" style="color: red;">Usuarios es requerido</div>
+        </div>
+
+        <div class="form-group col-6">
+          <label>Contraseña</label>
+          <input type="text" class="form-control" placeholder="Contraseña" required [(ngModel)]="UsuariosCreate.usua_Clave"
+            name="UsuariosCreate.usua_Clave" #Usuarios="ngModel" />
+          <div class="input-invalid-text"  *ngIf="!UsuariosCreate.usua_Clave && submitted" style="color: red;">La Contraseña es requerida</div>
         </div>
       </div>
-     
+
       <div class="row">
-        <div class="form-group col-12">
-          <label>Contraseña</label>
-        <input type="text" class="form-control" placeholder="Contraseña" >
+        <div class="form-group col-6">
+          <label>Encargados</label>
+          <ng-select [(ngModel)]="UsuariosCreate.enca_ID" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+            name="UsuariosCreate.enca_ID" #Usuarios="ngModel" required [ngClass]="{ 'input-invalid': submitted && !UsuariosCreate.enca_ID }">
+            <ng-option *ngFor="let item of encargados" [value]="item.enca_id">{{item.enca_Nombres + ' - ' + item.enca_Apellidos}}</ng-option>
+          </ng-select>
+          <div class="input-invalid-text" *ngIf="Usuarios?.errors?.required && submitted" style="color: red;">El Encargado es requerido</div>
+        </div>
+
+        <div class="form-group col-6">
+          <label>Rol</label>
+          <ng-select [(ngModel)]="UsuariosCreate.role_ID" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+            name="UsuariosCreate.role_ID" #Usuarios="ngModel" required [ngClass]="{ 'input-invalid': submitted && !UsuariosCreate.role_ID }">
+            <ng-option *ngFor="let item of roles" [value]="item.role_ID">{{item.role_Descripcion}}</ng-option>
+          </ng-select>
+          <div class="input-invalid-text" *ngIf="Usuarios?.errors?.required && submitted" style="color: red;">El Rol es requerido</div>
         </div>
       </div>
 
@@ -64,5 +92,75 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
     <button type="button" class="btn btn-primary" (click)="Guardar()">Guardar</button>
+  </div>
+</ng-template>
+
+
+<ng-template #basicModal1 let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Editar Usuario</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Usuario</label>
+            <input type="text" class="form-control" placeholder="Nombre del Usuario" required [(ngModel)]="UsuariosEdit.usua_Usuario" name="usuariosEdit.usua_Usuario" #Usuarios="ngModel"
+              [ngClass]="{ 'is-invalid': submitted && !UsuariosEdit.usua_Usuario }"/>
+            <div class="invalid-feedback" *ngIf="!UsuariosEdit.usua_Usuario && submitted">El usuario es requerido</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Encargado</label>
+            <ng-select [(ngModel)]="UsuariosEdit.enca_ID" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+              name="UsuariosEdit.enca_ID" #Usuarios="ngModel" required [ngClass]="{ 'is-invalid': submitted && !UsuariosEdit.enca_ID }">
+              <ng-option *ngFor="let item of encargados" [value]="item.enca_id">{{item.enca_Nombres + ' - ' + item.enca_Apellidos}}</ng-option>
+            </ng-select>
+            <div class="input-invalid-text" *ngIf="submitted && !UsuariosEdit.enca_ID">El encargado es requerido</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Rol</label>
+            <ng-select [(ngModel)]="UsuariosEdit.role_ID" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+              name="UsuariosEdit.role_ID" #Usuarios="ngModel" required [ngClass]="{ 'is-invalid': submitted && !UsuariosEdit.role_ID }">
+              <ng-option *ngFor="let item of roles" [value]="item.role_ID">{{item.role_Descripcion}}</ng-option>
+            </ng-select>
+            <div class="input-invalid-text" *ngIf="submitted && !UsuariosEdit.role_ID">El rol es requerido</div>
+          </div>
+        </div>
+        <!-- Aquí puedes agregar más columnas para otros campos si es necesario -->
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="Editar()">Guardar</button>
+  </div>
+</ng-template>
+
+
+<ng-template #basicModal2 let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Eliminar Usuario</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    
+              <h4> ¿Desea eliminar este Usuario?</h4>>
+
+              
+    
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="Eliminar()">Eliminar</button>
   </div>
 </ng-template>

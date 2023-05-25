@@ -37,8 +37,8 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             RequestStatus result = new RequestStatus();
             var parametros = new DynamicParameters();
             parametros.Add("@mant_Id", item.mant_Id, DbType.Int32, ParameterDirection.Input);
-            parametros.Add("@mant_Descricion", item.mant_Descricion, DbType.String, ParameterDirection.Input);
-            parametros.Add("@mant_UsuarioCreador", item.mant_UsuarioCreador, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@mant_Descripcion", item.mant_Descricion, DbType.String, ParameterDirection.Input);
+            parametros.Add("@mant_UsuarioModificador", item.mant_UsuarioModificador, DbType.Int32, ParameterDirection.Input);
             var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbMantenimiento_Update, parametros, commandType: CommandType.StoredProcedure);
 
             result.CodeStatus = answer;
@@ -55,6 +55,14 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
 
             result.CodeStatus = answer;
             return result;
+        }
+
+        public IEnumerable<tbMantenimiento> DetailsMantenimientos(int id)
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@mant_Id", id, DbType.Int32, ParameterDirection.Input);
+            return db.Query<tbMantenimiento>(ScriptsDataBase.UDP_tbMantenimiento_Details, parametros, commandType: CommandType.StoredProcedure);
         }
 
         public RequestStatus Delete(int id)

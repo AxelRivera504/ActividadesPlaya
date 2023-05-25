@@ -90,6 +90,13 @@ export class ServicesService {
   createUsuarios(usuarios: usuarios){
     return this.http.post<usuarios[]>(this.Url + "/Usuario/Insertar", usuarios);
   }
-
+  
+  updateUsuarios(usuarios: usuarios){
+    return this.http.post<usuarios[]>(this.Url + "/Usuario/Insertar", usuarios);
+  }
+    
+  deleteUsuarios(id: string) {
+    return this.http.delete<usuarios[]>(`${this.Url}/Usuario/Usuario/Delete/${id}`);
+  }
 
 }
