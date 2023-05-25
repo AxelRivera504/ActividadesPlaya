@@ -4,4 +4,5 @@ export class Actividades{
     acti_Cupo!: number;
     acti_Precio!: number;
     play_Id!: number;
+    selected: boolean; // Agrega la propiedad 'selected'    
 }

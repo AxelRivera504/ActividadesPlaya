@@ -1,0 +1,36 @@
+.is-invalid {
+    background-repeat: no-repeat !important;
+    border: 1px solid #ff3366;
+    border-radius: 4px;
+  }
+
+.input-invalid-text{
+    margin-top: 0.25rem;
+    width: 100%;
+    font-size: 0.875em;
+    color: #ff3366;
+}
+
+.card.selected {
+  box-shadow: 0 0 8px rgba(101, 113, 255, 1); /* Agrega una sombra para indicar la selección */
+}
+
+.card.selected .card-body {
+  cursor: default; /* Evita el cursor de selección de texto dentro de la tarjeta */
+}
+
+.card-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+.card-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Define el número máximo de líneas a mostrar */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
