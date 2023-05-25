@@ -68,6 +68,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/actividades/actividades.module').then(m => m.ActividadesModule)
       },
       {
+        path: 'reservaciones',
+        loadChildren: () => import('./views/pages/reservaciones/reservaciones.module').then(m => m.ReservacionesModule)
+      },
+      {
         path: 'departamentos',
         loadChildren: () => import('./views/pages/departamentos/departamentos.module').then(m => m.DepartamentosModule)
       },

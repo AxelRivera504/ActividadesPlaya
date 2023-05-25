@@ -41,6 +41,11 @@ export const MENU: MenuItem[] = [
     link: '/actividades'
   },
   {
+    label: 'Reservaciones',
+    icon: 'sun',
+    link: '/reservaciones'
+  },
+  {
     label: 'Departamentos',
     icon: 'home',
     link: '/departamentos'
