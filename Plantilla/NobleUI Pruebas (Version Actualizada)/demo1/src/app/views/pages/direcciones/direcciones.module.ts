@@ -6,6 +6,7 @@ import { DireccionesComponent } from './direcciones.component';
 import { DataTablesModule } from 'angular-datatables';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { DireccionesDetallesComponent } from './direcciones-detalles/direcciones-detalles.component';
 
 const routes: Routes = [
   {

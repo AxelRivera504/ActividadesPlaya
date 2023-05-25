@@ -72,6 +72,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/direcciones/direcciones.module').then(m => m.DireccionesModule)
       },
       {
+        path: 'direccionesDetalles',
+        loadChildren: () => import('./views/pages/direcciones/direcciones-detalles/direcciones-detalles.module').then(m => m.DireccionesDetallesModule)
+      },
+      {
         path: 'apps',
         loadChildren: () => import('./views/pages/apps/apps.module').then(m => m.AppsModule)
       },

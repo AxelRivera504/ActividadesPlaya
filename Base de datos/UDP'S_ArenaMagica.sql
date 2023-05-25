@@ -30,35 +30,29 @@ END
 --Insertar Departamentos
 GO
 CREATE OR ALTER PROCEDURE Gral.UDP_tbDepartamentos_InsertarDepartamentos
+	@dept_Id				CHAR(2),
 	@dept_Descripcion		NVARCHAR(150),
 	@dept_UsuarioCreador	INT
 AS
 BEGIN
 	BEGIN TRY
-        IF NOT EXISTS (SELECT * FROM Gral.tbDepartamentos WHERE dept_Descripcion = @dept_Descripcion)
-            BEGIN
-                DECLARE @IdDepto AS CHAR(2);
-                SELECT @IdDepto = dept_Id FROM Gral.tbDepartamentos ORDER BY dept_Id ASC
-                DECLARE @NextNewIdDepto AS CHAR(2);
-                SET @NextNewIdDepto = CONVERT(CHAR(2), CONVERT(INT, @IdDepto) + 1);
-
-                INSERT INTO gral.tbDepartamentos (dept_id, dept_Descripcion, dept_Estado, dept_UsuarioCreador, dept_FechaCreacion, dept_UsuarioModificador, dept_FechaModificacion)
-                VALUES (@NextNewIdDepto,@dept_Descripcion,1,@dept_UsuarioCreador,GETDATE(),NULL,NULL);
-
-               SELECT 1
-            END
-        ELSE IF EXISTS(SELECT * FROM Gral.tbDepartamentos WHERE dept_Descripcion = @dept_Descripcion AND dept_Estado = 0 )
-		BEGIN
-			UPDATE Gral.tbDepartamentos 
-			SET dept_Estado = 1
-			WHERE dept_Descripcion = @dept_Descripcion
-			SELECT 1
-		END
-		ELSE
-		BEGIN
+		IF NOT EXISTS(SELECT dept_Id,dept_Descripcion FROM Gral.tbDepartamentos WHERE dept_id != @dept_Id AND  dept_Descripcion != @dept_Descripcion)
+			BEGIN
+				INSERT INTO Gral.tbDepartamentos([dept_Id],[dept_Descripcion], [dept_Estado], [dept_UsuarioCreador], [dept_FechaCreacion], [dept_UsuarioModificador], [dept_FechaModificacion])
+				VALUES(@dept_Id,@dept_Descripcion,1,@dept_UsuarioCreador,GETDATE(),NULL,NULL)
+				SELECT 1
+			END
+		IF EXISTS(SELECT dept_Id,dept_Descripcion FROM Gral.tbDepartamentos WHERE dept_id = @dept_Id AND  dept_Descripcion = @dept_Descripcion AND dept_Estado = 0)
+			BEGIN
+				UPDATE Gral.tbDepartamentos
+				SET dept_Estado = 1
+				WHERE dept_id = @dept_Id
+				SELECT 1
+			END
+		ELSE BEGIN
 			SELECT 2
 		END
-    END TRY
+	END TRY
     BEGIN CATCH
       SELECT 0
     END CATCH
@@ -569,7 +563,7 @@ CREATE OR ALTER PROCEDURE Gral.UDP_tbDirecciones_Update
 AS
 BEGIN
 	BEGIN TRY
-		IF NOT EXISTS(SELECT * FROM tbDirecciones WHERE dire_DireccionExacta = @dire_DireccionExacta AND dire_Id != @dire_Id)
+		IF NOT EXISTS(SELECT * FROM tbDirecciones WHERE dire_DireccionExacta = @dire_DireccionExacta AND dire_Id != @dire_Id AND muni_Id != @muni_Id)
 			BEGIN
 				UPDATE Gral.tbDirecciones 
 				SET dire_DireccionExacta = @dire_DireccionExacta,
@@ -593,8 +587,7 @@ END
 --Eliminar Direcciones
 GO
 CREATE OR ALTER PROCEDURE Gral.UDP_tbDirecciones_EliminarDirecciones
-@dire_Id			INT,
-@status				INT OUTPUT
+@dire_Id			INT
 AS
 BEGIN
 BEGIN TRY		
@@ -602,10 +595,10 @@ BEGIN TRY
 		UPDATE	Gral.tbDirecciones							
 		SET		dire_Estado = 0
 		WHERE	dire_Id = @dire_Id
-		SET @status = 1		
+		SELECT 1
 	END TRY
 	BEGIN CATCH
-		SET @status = 0
+		SELECT 0
 	END CATCH
 END
 GO

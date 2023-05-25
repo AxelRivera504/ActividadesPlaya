@@ -19,7 +19,6 @@ export class DepartamentosComponent implements OnInit {
   @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
 
-  departamentoForm!: FormGroup;
   departamento!: departamentos[];
   departamentoCreate: departamentos = new departamentos();
   departamentoEdit: departamentos = new departamentos();

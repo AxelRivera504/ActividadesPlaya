@@ -92,6 +92,20 @@ export class ServicesService {
     return this.http.get<direcciones[]>(this.Url + "/Direcciones");
   }
 
+  createDirecciones(direcciones: direcciones){
+    return this.http.post<direcciones[]>(this.Url + "/Direcciones/Insert", direcciones);
+  }
+
+  updateDirecciones(direcciones: direcciones){
+    return this.http.post<direcciones[]>(this.Url + "/Direcciones/Update", direcciones);
+  }
+
+  
+  deleteDirecciones(direcciones: direcciones){
+    return this.http.post<direcciones[]>(this.Url + "/Direcciones/Delete", direcciones);
+  }
+
+
   CreateEstadosCiviles(estadosciviles: estadosciviles){
     return this.http.post<estadosciviles[]>(this.Url + "/EstadosCiviles/Insert", estadosciviles);
   }
