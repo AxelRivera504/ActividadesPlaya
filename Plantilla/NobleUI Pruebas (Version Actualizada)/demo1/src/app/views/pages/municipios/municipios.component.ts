@@ -1,8 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataTable } from 'simple-datatables';
-import { municipios } from 'src/app/Models/municipios';
-import { ServicesService } from 'src/app/Service/services.service';
+import { municipios } from '../Model/municipios';
+import { ServicesService } from '../Service/services.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-municipios',
@@ -13,14 +14,21 @@ export class MunicipiosComponent implements OnInit {
   municipio!: municipios[];
   constructor(private service: ServicesService, private router:Router) { }
   @ViewChild('myTable', { static: false }) table!: ElementRef;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject <any> = new Subject<any>();
   ngOnInit(): void {
     this.service.getMunicipios().subscribe(data => {
       console.log(data);
       this.municipio = data;
 
-      // Inicializar DataTable después de asignar los datos
-      this.initializeDataTable();
+      this.dtTrigger.next(null);
     });
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+      }
+    };
   }
 
   ngAfterViewInit(): void {
@@ -41,9 +49,6 @@ export class MunicipiosComponent implements OnInit {
       }
     };
 
-    setTimeout(() => {
-      const dataTable = new DataTable(this.table.nativeElement, dataTableOptions);
-    }, 0);
   }
 
 }

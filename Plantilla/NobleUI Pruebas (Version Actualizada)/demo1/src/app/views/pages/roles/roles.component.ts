@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataTable } from 'simple-datatables';
-import { direcciones } from 'src/app/Models/direcciones';
-import { roles } from 'src/app/Models/roles';
-import { ServicesService } from 'src/app/Service/services.service';
+import { roles } from '../Model/roles';
+import { ServicesService } from '../Service/services.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-roles',
@@ -14,14 +14,21 @@ export class RolesComponent implements OnInit {
    roles!:roles[];
   constructor(private service: ServicesService, private router:Router) { }
   @ViewChild('myTable', { static: false }) table!: ElementRef;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject <any> = new Subject<any>();
   ngOnInit(): void {
     this.service.getRoles().subscribe(data => {
       console.log(data);
       this.roles = data;
 
-      // Inicializar DataTable después de asignar los datos
-      this.initializeDataTable();
+      this.dtTrigger.next(null);
     });
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+      }
+    };
   }
   ngAfterViewInit(): void {
     // No es necesario inicializar DataTable aquí

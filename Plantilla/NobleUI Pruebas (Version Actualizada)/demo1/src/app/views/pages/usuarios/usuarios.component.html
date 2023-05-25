@@ -8,7 +8,7 @@
             </button>
           </div>
         <div class="table-responsive">
-          <table #myTable class="myTable">
+          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
             <thead>
               <tr>
                 <th>ID</th>
@@ -37,3 +37,32 @@
         </div>
       </div>
 </div>
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Nuevo Usuarios</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="row">
+        <div class="form-group col-12">
+          <label>Nombre Usuario</label>
+        <input type="text" class="form-control" placeholder="Nombre del Usuario" >
+        </div>
+      </div>
+     
+      <div class="row">
+        <div class="form-group col-12">
+          <label>Contraseña</label>
+        <input type="text" class="form-control" placeholder="Contraseña" >
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="Guardar()">Guardar</button>
+  </div>
+</ng-template>

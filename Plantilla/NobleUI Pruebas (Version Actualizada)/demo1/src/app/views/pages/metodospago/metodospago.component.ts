@@ -1,8 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataTable } from 'simple-datatables';
-import { metodospago } from 'src/app/Models/metodospago';
-import { ServicesService } from 'src/app/Service/services.service';
+import { metodospago } from '../Model/metodospago';
+import { ServicesService } from '../Service/services.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-metodospago',
@@ -13,14 +14,24 @@ export class MetodospagoComponent implements OnInit {
   metodospago!: metodospago[];
   constructor(private service: ServicesService, private router:Router) { }
   @ViewChild('myTable', { static: false }) table!: ElementRef;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject <any> = new Subject<any>();
+
+
+
   ngOnInit(): void {
     this.service.getMetodosPago().subscribe(data => {
       console.log(data);
       this.metodospago = data;
 
-      // Inicializar DataTable después de asignar los datos
-      this.initializeDataTable();
+      this.dtTrigger.next(null);
     });
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
+      }
+    };
   }
   ngAfterViewInit(): void {
     // No es necesario inicializar DataTable aquí
@@ -40,8 +51,5 @@ export class MetodospagoComponent implements OnInit {
       }
     };
 
-    setTimeout(() => {
-      const dataTable = new DataTable(this.table.nativeElement, dataTableOptions);
-    }, 0);
   }
 }
