@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 import { data } from 'jquery';
 import { DataTableDirective } from 'angular-datatables';
+import { log } from 'console';
 
 
 @Component({
@@ -18,7 +19,6 @@ import { DataTableDirective } from 'angular-datatables';
 export class DepartamentosComponent implements OnInit {
   @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
-
   departamento!: departamentos[];
   departamentoCreate: departamentos = new departamentos();
   departamentoEdit: departamentos = new departamentos();
@@ -31,12 +31,13 @@ export class DepartamentosComponent implements OnInit {
   @ViewChild('myTable', { static: false }) table!: ElementRef;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject <any> = new Subject<any>();
-
+  id: string
   basicModalCloseResult: string = '';
 
 
   openBasicModal(content: TemplateRef<any>) {
     this.submitted = false;
+    this.departamentoCreate = new departamentos
     this.modalService.open(content, {}).result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result
     }).catch((res) => {});
@@ -64,9 +65,18 @@ export class DepartamentosComponent implements OnInit {
         url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
       }
     };
-
   }
 
+  onIdChange(){
+    if(this.departamentoCreate.dept_Id){
+      if(this.departamentoCreate.dept_Id.length > 2){
+        const id = this.departamentoCreate.dept_Id.substring(0,2)
+       setTimeout(() => {
+        this.departamentoCreate.dept_Id = id
+       },)
+      }
+    }
+  }
   /*Agregue esta funcion que renderiza la tabla otra vez para que la paginacion no se bugee XD*/
   rerender(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -106,7 +116,7 @@ export class DepartamentosComponent implements OnInit {
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 1500,
+            timer: 2000,
             timerProgressBar: true,
             title: '¡Registro Ingresado con exito!',
             icon: 'success'

@@ -4,6 +4,7 @@ import { ServicesService } from '../Service/services.service';
 import { Router } from '@angular/router';
 import { DataTable } from 'simple-datatables';
 import { Subject } from 'rxjs';
+
 @Component({
   selector: 'app-actividades',
   templateUrl: './actividades.component.html',
@@ -31,25 +32,8 @@ export class ActividadesComponent implements OnInit {
       }
     };
   }
-
-  ngAfterViewInit(): void {
-    // No es necesario inicializar DataTable aquí
+  
+  Nuevo(){
+    this.router.navigate(["/actividadesCrear"])
   }
-
-  private initializeDataTable(): void {
-    const dataTableOptions = {
-      searchable: true, // Habilitar la barra de búsqueda
-      paging: true, // Habilitar la paginación
-      perPage: 10,
-      labels:{
-        placeholder: "Buscar...",
-        info: "Mostrando {start} de {end} de {rows} entradas",
-        noRows: "No encuentra resutados",
-        perPage: "{select} entradas por pagina",
-        noResults: "No hay coincidencias",
-      }
-    };
-
-  }
-
 }

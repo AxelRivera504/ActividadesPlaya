@@ -21,6 +21,8 @@ export class MunicipiosComponent implements OnInit {
   dtElement: DataTableDirective
   municipio!: municipios[];
   departamento!: departamentos[];
+
+  departamentoModel: departamentos = new departamentos()
   municipioCreate: municipios = new municipios();
   municipioEdit: municipios = new municipios();
   municipioSeleccionado: string;
@@ -38,6 +40,7 @@ export class MunicipiosComponent implements OnInit {
 
     basicModalCloseResult: string = '';
     submitted: boolean = false;
+    nice: boolean = true;
     modalRef: NgbModalRef | undefined;
     
   @ViewChild('myTable', { static: false }) table!: ElementRef;
@@ -46,6 +49,7 @@ export class MunicipiosComponent implements OnInit {
 
   openBasicModal(content: TemplateRef<any>) {
     this.submitted = false;
+    this.nice = true;
     this.municipioCreate = new municipios()
     this.modalService.open(content, {}).result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result
@@ -94,42 +98,46 @@ export class MunicipiosComponent implements OnInit {
       });
     } 
 
-  ngAfterViewInit(): void {
-    // No es necesario inicializar DataTable aquí
-  }
-
-  private initializeDataTable(): void {
-    const dataTableOptions = {
-      searchable: true, // Habilitar la barra de búsqueda
-      paging: true, // Habilitar la paginación
-      perPage: 10, // Número de filas por página
-      labels:{
-        placeholder: "Buscar...",
-        info: "Mostrando {start} de {end} de {rows} entradas",
-        noRows: "No encuentra resutados",
-        perPage: "{select} entradas por pagina",
-        noResults: "No hay coincidencias",
+    onDepartamentoChange() {
+      this.municipioCreate.muni_Id = this.municipioCreate.dept_Id
       }
-    };
 
-  }
+      onIdChange() {
+        if(this.municipioCreate.muni_Id.length <=2 ){
+          const nombre = this.municipioCreate.muni_Descripcion
+          this.municipioCreate = new municipios()
+          this.municipioCreate.muni_Descripcion = nombre
+        }
+        }
 
   Guardar(){
   var x = true
 
-  if(this.municipioCreate.dept_Id == undefined || this.municipioCreate.muni_Id == ""){
+  if(this.municipioCreate.dept_Id == undefined || this.municipioCreate.dept_Id == ""){
    x = false
   }
 
-  
+  if(this.municipioCreate.muni_Id == undefined || this.municipioCreate.muni_Id == ""){
+    x = false
+   }
+ 
   if(this.municipioCreate.muni_Descripcion == undefined || this.municipioCreate.muni_Descripcion == ""){
     x = false
   }
 
+  if(this.municipioCreate.muni_Id){
+    if(this.municipioCreate.muni_Id.length != 4){
+      this.nice = false
+    }else{
+      this.nice = true
+    }
+  }
+
     if(x == true){
-      const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
+      if(this.nice != false){
+        const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
       if (idUsuario !== undefined) {
-        this.municipioEdit.muni_UsuarioCreador = idUsuario;
+        this.municipioCreate.muni_UsuarioCreador = idUsuario;
       }
       this.service.createMunicipios(this.municipioCreate)
       .subscribe((data: any) =>{
@@ -172,7 +180,20 @@ export class MunicipiosComponent implements OnInit {
           })
         }
       })
+      }else{
+        this.submitted = true
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          title: '¡Ingrese un id valido!',
+          icon: 'warning'
+        })
+      }
     }else{
+      this.submitted = true
       this.submitted = true
       Swal.fire({
         toast: true,

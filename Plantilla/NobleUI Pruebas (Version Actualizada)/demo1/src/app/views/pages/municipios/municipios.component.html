@@ -38,24 +38,33 @@
     <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
   </div>
   <div class="modal-body">
-    <form>
       <div class="row">
+
         <div class="form-group col-6">
           <label>Departamento</label>
           <ng-select [(ngModel)]="municipioCreate.dept_Id" [appendTo]="'body'" placeholder="--Seleccione una opción--"
-          name="municipioCreate.dept_Id" #municipio="ngModel" required [ngClass]="{ 'input-invalid': submitted && !municipioCreate.dept_Id }">
+          name="municipioCreate.dept_Id" #municipio="ngModel" required [ngClass]="{ 'input-invalid': submitted && !municipioCreate.dept_Id }"
+          (ngModelChange)="onDepartamentoChange()">
           <ng-option *ngFor="let item of departamento" [value]="item.dept_Id">{{item.dept_Descripcion}}</ng-option>
         </ng-select>
         <div class="input-invalid-text" *ngIf="municipio?.errors?.required && submitted">El departamento es requerido</div>
         </div>
+
         <div class="form-group col-6">
+          <label>ID</label>
+          <input type="text" class="form-control" placeholder="ID de municipio" required #municipios
+          [(ngModel)]="municipioCreate.muni_Id" [ngClass]="{ 'is-invalid': submitted && !municipioCreate.muni_Id || !nice}"
+          (ngModelChange)="onIdChange()"/>
+        <div class="invalid-feedback" *ngIf="municipio?.errors?.required && submitted || !nice">Ingrese un id valido</div>
+        </div>
+
+        <div class="form-group col-6 mt-3">
           <label>Nombre</label>
         <input type="text" class="form-control" placeholder="Nombre del Municipio" required [(ngModel)]="municipioCreate.muni_Descripcion" name="municipioCreate.muni_Descripcion" #municipio="ngModel"
         [ngClass]="{ 'is-invalid': submitted && !municipioCreate.muni_Descripcion }"/>
         <div class="invalid-feedback" *ngIf="!municipioCreate.muni_Descripcion && submitted">Nombre es requerido</div>
         </div>
       </div>
-    </form>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>

@@ -40,6 +40,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/actividades/actividades.module').then(m => m.ActividadesModule)
       },
       {
+        path: 'actividadesCrear',
+        loadChildren: () => import('./views/pages/actividades/actividades-crear/actividades-crear.module').then(m => m.ActividadesCrearModule)
+      },
+      {
         path: 'departamentos',
         loadChildren: () => import('./views/pages/departamentos/departamentos.module').then(m => m.DepartamentosModule)
       },
@@ -58,6 +62,10 @@ const routes: Routes = [
       {
         path: 'estadosciviles',
         loadChildren: () => import('./views/pages/estadosciviles/estadosciviles.module').then(m => m.EstadoscivilesModule)
+      },
+      {
+        path: 'estadoscivilesDetalles',
+        loadChildren: () => import('./views/pages/estadosciviles/estadosciviles-detalles/estadosciviles-detalles.module').then(m => m.EstadoscivilesDetallesModule)
       },
       {
         path: 'metodospago',

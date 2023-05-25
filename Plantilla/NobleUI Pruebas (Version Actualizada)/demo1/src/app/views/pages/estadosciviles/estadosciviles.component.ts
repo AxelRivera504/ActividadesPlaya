@@ -7,6 +7,7 @@ import { NgbModal,NgbModalRef  } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { estadoscivilesEdit } from '../Model/EstadosCivilesEdit';
 import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-estadosciviles',
@@ -14,17 +15,48 @@ import { Subject } from 'rxjs';
   styleUrls: ['./estadosciviles.component.scss']
 })
 export class EstadoscivilesComponent implements OnInit {
+  @ViewChild(DataTableDirective, {static: false})
+  dtElement: DataTableDirective
   estadocivil!: estadosciviles[];
-
   basicModalCode: any;
   basicModalCloseResult: string = '';
-  EstadosCiviles: string = '';
   submitted: boolean = false;
   modalRef: NgbModalRef | undefined;
+  estadoscivilesModel: estadosciviles = new estadosciviles();
 
-  estadosciviles: estadosciviles = new estadosciviles();
+  openBasicModal(content: TemplateRef<any>) {
+    this.estadoscivilesModel = new estadosciviles()
+    this.modalRef = this.modalService.open(content, {});
+    this.modalRef.result.then((result) => {
+      this.basicModalCloseResult = "Modal closed" + result;
+    }).catch((res) => {});
+  }
 
-  estadoscivilesEdit : estadoscivilesEdit = new estadoscivilesEdit();
+  openBasicModal1(content: TemplateRef<any>,estadocivil: estadosciviles) {
+    this.estadoscivilesModel = {...estadocivil}
+    this.modalRef = this.modalService.open(content, {});
+    this.modalRef.result.then((result) => {
+      this.basicModalCloseResult = "Modal closed" + result;
+    }).catch((res) => {});
+  }
+
+  openBasicModal2(content: TemplateRef<any>,estadocivil: estadosciviles) {
+    this.estadoscivilesModel = {...estadocivil}
+    this.modalRef = this.modalService.open(content, {});
+    this.modalRef.result.then((result) => {
+      this.basicModalCloseResult = "Modal closed" + result;
+    }).catch((res) => {});
+  }
+
+       /*Agregue esta funcion que renderiza la tabla otra vez para que la paginacion no se bugee XD*/
+       rerender(): void {
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          // Destroy the table first
+          dtInstance.destroy();
+          // Call the dtTrigger to rerender again
+          this.dtTrigger.next(null);
+        });
+      } 
 
   constructor(private service: ServicesService, private router:Router,private modalService: NgbModal) { }
   @ViewChild('myTable', { static: true }) table!: ElementRef;
@@ -37,7 +69,6 @@ export class EstadoscivilesComponent implements OnInit {
       this.estadocivil = data;
       this.submitted = false;
       // Inicializar DataTable después de asignar los datos
-      this.initializeDataTable();
       this.dtTrigger.next(null);
     });
     this.dtOptions = {
@@ -49,101 +80,172 @@ export class EstadoscivilesComponent implements OnInit {
   }
 
   Guardar(){
-    if (!this.estadosciviles.esci_Descripcion) {
-      this.submitted = true;
-      Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 6000,
-        timerProgressBar: true,
-      }).fire({
-        title: '¡ERROR!, El campo de estado civil no puede estar vacio',
-        icon: 'error'
-      });
-      return;
-    }
-
-
     const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
     if (idUsuario !== undefined) {
-      this.estadosciviles.esci_UsuarioCreador = idUsuario;
+      this.estadoscivilesModel.esci_UsuarioCreador = idUsuario;
     }
-    this.service.CreateEstadosCiviles(this.estadosciviles).
-    subscribe(data=>{
-      console.log(this.estadosciviles);
-      Swal.fire({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-        title: '¡Registro Ingresado con exito!',
-        icon: 'success'
-      }).then(() => {
-        this.modalRef?.close(); // Cerrar el modal
-        this.estadosciviles.esci_Descripcion = ''; // Restablecer el valor del campo
-        this.submitted = false; // Reiniciar el estado del formulario
-        window.location.reload()
+
+    if(this.estadoscivilesModel.esci_Descripcion != null ){
+      this.service.CreateEstadosCiviles(this.estadoscivilesModel)
+      .subscribe((data:any)=>{
+        if(data.data.codeStatus == 1){
+         this.inserted()
+        }else if(data.data.codeStatus == 2){
+          this.warning()
+        }else{
+          this.error()
+        }
       })
-    })
-  }
-
-
-  openBasicModal(content: TemplateRef<any>) {
-    this.modalRef = this.modalService.open(content, {});
-    this.modalRef.result.then((result) => {
-      this.basicModalCloseResult = "Modal closed" + result;
-    }).catch((res) => {});
-  }
-
-  openBasicModal1(content: TemplateRef<any>) {
-    this.modalRef = this.modalService.open(content, {});
-    this.modalRef.result.then((result) => {
-      this.basicModalCloseResult = "Modal closed" + result;
-    }).catch((res) => {});
-  }
-
-
-  ngAfterViewInit(): void {
-    // No es necesario inicializar DataTable aquí
-  }
-
-  private initializeDataTable(): void {
-    const dataTableOptions = {
-      searchable: true, // Habilitar la barra de búsqueda
-      paging: true, // Habilitar la paginación
-      perPage: 10, // Número de filas por página
-      labels:{
-        placeholder: "Buscar...",
-        info: "Mostrando {start} de {end} de {rows} entradas",
-        noRows: "No encuentra resutados",
-        perPage: "{select} entradas por pagina",
-        noResults: "No hay coincidencias",
-      }
-    };
-
+    }else{
+      this.required()
+    }
   }
 
   Editar(){
-    if (!this.estadosciviles.esci_Descripcion) {
-      this.submitted = true;
-      Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 6000,
-        timerProgressBar: true,
-      }).fire({
-        title: '¡ERROR!, El campo de estado civil no puede estar vacio',
-        icon: 'error'
-      });
-      return;
+    const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
+    if (idUsuario !== undefined) {
+      this.estadoscivilesModel.esci_UsuarioModificador = idUsuario;
+    }
+
+    if(this.estadoscivilesModel.esci_Descripcion != null ){
+      this.service.EditarEstadosCiviles(this.estadoscivilesModel)
+      .subscribe((data: any)=>{
+        console.log(data)
+        if(data.data.codeStatus == 1){
+          this.edited()
+        }else if(data.data.codeStatus == 2){
+          this.warning()
+        }else{
+          this.error()
+        }
+      })
+    }else{
+    this.required()
     }
   }
 
-  cancelar() {
-    this.estadosciviles.esci_Descripcion = ''; 
-    this.submitted = false;// Restablecer el valor del campo
+  Eliminar(){
+    this.service.DeleteEstadosCiviles(this.estadoscivilesModel)
+    .subscribe((data:any)=>{
+      console.log(data)
+      if(data.data.codeStatus == 1){
+        this.deleted()
+      }else if(data.data.codeStatus == 2){
+        this.deletedwarning()
+      }else{
+        this.error()
+      }
+    })
+  }
+
+  Detalles(estadocivil: estadosciviles){
+    localStorage.setItem('estadocivil', JSON.stringify(estadocivil));
+    this.router.navigate(["/estadoscivilesDetalles"])
+  }
+
+  error(){
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      title: '¡Ha ocurrido un error!',
+      icon: 'error'
+    })
+  }
+
+  warning(){
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      title: '¡Ese registro ya existe!',
+      icon: 'warning'
+    })
+  }
+
+  inserted(){
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      title: '¡Registro Ingresado con exito!',
+      icon: 'success'
+    })
+    this.modalService.dismissAll()
+    setTimeout(() => {
+      this.service.getEstadosCiviles().subscribe(data => {
+        this.estadocivil = data;
+        this.rerender();
+      });
+    }, 0.5);
+  }
+
+  edited(){
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      title: '¡Registro editado con exito!',
+      icon: 'success'
+    })
+    this.modalService.dismissAll()
+    setTimeout(() => {
+      this.service.getEstadosCiviles().subscribe(data => {
+        this.estadocivil = data;
+        this.rerender();
+      });
+    }, 0.5);
+  }
+  
+  required(){
+    this.submitted = true
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      title: '¡Rellene los campos!',
+      icon: 'warning'
+    })
+  }
+
+  deleted(){
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      title: '¡Registro eliminado con exito!',
+      icon: 'success'
+    })
+    this.modalService.dismissAll()
+    setTimeout(() => {
+      this.service.getEstadosCiviles().subscribe(data => {
+        this.estadocivil = data;
+        this.rerender();
+      });
+    }, 0.5);
+  }
+
+  deletedwarning(){
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      title: '¡El registro esta siendo utilizado en otra tabla!',
+      icon: 'warning'
+    })
   }
 }

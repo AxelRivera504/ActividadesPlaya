@@ -36,7 +36,7 @@ CREATE OR ALTER PROCEDURE Gral.UDP_tbDepartamentos_InsertarDepartamentos
 AS
 BEGIN
 	BEGIN TRY
-		IF NOT EXISTS(SELECT dept_Id,dept_Descripcion FROM Gral.tbDepartamentos WHERE dept_id != @dept_Id AND  dept_Descripcion != @dept_Descripcion)
+		IF NOT EXISTS(SELECT dept_Id,dept_Descripcion FROM Gral.tbDepartamentos WHERE dept_id = @dept_Id OR dept_Descripcion = @dept_Descripcion)
 			BEGIN
 				INSERT INTO Gral.tbDepartamentos([dept_Id],[dept_Descripcion], [dept_Estado], [dept_UsuarioCreador], [dept_FechaCreacion], [dept_UsuarioModificador], [dept_FechaModificacion])
 				VALUES(@dept_Id,@dept_Descripcion,1,@dept_UsuarioCreador,GETDATE(),NULL,NULL)
@@ -67,10 +67,10 @@ CREATE OR ALTER PROCEDURE Gral.UDP_tbDepartamentos_EditarDepartamentos
 AS
 BEGIN
 BEGIN TRY
-		IF NOT EXISTS (SELECT * FROM Gral.tbDepartamentos WHERE dept_Descripcion = @dept_Descripcion and dept_Id != @dept_Id)
+		IF NOT EXISTS (SELECT dept_Descripcion FROM Gral.tbDepartamentos WHERE dept_Descripcion = @dept_Descripcion AND dept_Id != @dept_Id)
 			BEGIN
 						UPDATE	Gral.tbDepartamentos							
-				SET		dept_Descripcion			=@dept_Descripcion			,
+				SET		dept_Descripcion			=@dept_Descripcion,
 						dept_UsuarioModificador		=@dept_UsuarioModificador		
 				WHERE	dept_Id = @dept_Id
 				SELECT 1
@@ -120,28 +120,27 @@ END
 --Insertar Municipios
 GO
 CREATE OR ALTER PROCEDURE Gral_tbMunicipios_InsertarMunicipios
+@muni_id				CHAR(4),
 @dept_Id				CHAR(2),
 @muni_Descripcion		NVARCHAR(150),
 @muni_UsuarioCreador	INT
 AS
 BEGIN
-BEGIN TRY
-		IF NOT EXISTS (SELECT * FROM Gral.tbMunicipios WHERE muni_Descripcion = @muni_Descripcion AND dept_id = @dept_Id)
+	BEGIN TRY
+		IF NOT EXISTS(SELECT muni_id,muni_Descripcion FROM Gral.tbMunicipios WHERE dept_id != @dept_Id AND muni_id = @muni_id OR muni_Descripcion = @muni_Descripcion)
 			BEGIN
-				DECLARE @IdMuni AS CHAR(2)
-				SELECT @IdMuni = SUBSTRING(muni_Id, 3, 2) FROM Gral.tbMunicipios WHERE dept_Id = @dept_Id ORDER BY muni_Id ASC 
-	
-				DECLARE @muni_Id AS CHAR(4)
-				DECLARE @num AS INT
-				SET @num = CONVERT(INT, @IdMuni) + 1
-				SELECT @muni_Id = @dept_Id + RIGHT('00' + CONVERT(VARCHAR(2), @num), 2)
-				
-				INSERT INTO Gral.tbMunicipios(dept_id, muni_id, muni_Descripcion, muni_Estado, muni_UsuarioCreador, muni_FechaCreacion, muni_UsuarioModificador, muni_FechaModificacion)
-				VALUES (@dept_Id,@muni_Id,@muni_Descripcion,1,@muni_UsuarioCreador,GETDATE(),NULL,NULL);
+				INSERT INTO Gral.tbMunicipios([muni_id], [muni_Descripcion], [dept_id], [muni_Estado], [muni_UsuarioCreador], [muni_FechaCreacion], [muni_UsuarioModificador], [muni_FechaModificacion])
+				VALUES(@muni_id,@muni_Descripcion,@dept_Id,1,@muni_UsuarioCreador,GETDATE(),NULL,NULL)
 				SELECT 1
 			END
-		ELSE 
-		BEGIN
+		ELSE IF EXISTS (SELECT muni_id,muni_Descripcion FROM Gral.tbMunicipios WHERE dept_id != @dept_Id AND muni_id = @muni_id OR muni_Descripcion = @muni_Descripcion AND muni_Estado = 0)
+			BEGIN
+				UPDATE Gral.tbMunicipios
+				SET muni_Estado = 1
+				WHERE muni_id = @muni_id
+				SELECT 1
+			END
+		ELSE BEGIN
 			SELECT 2
 		END
 	END TRY
@@ -252,12 +251,14 @@ END
 --Editar Estados Civiles
 GO
 CREATE OR ALTER PROCEDURE gral.UDP_tbEstadosCiviles_Update
-@esci_Id						CHAR(1),
+@esci_Id						INT,
 @esci_Descripcion				NVARCHAR(150),	
 @esci_UsuarioModificador		INT
 AS
 BEGIN
-	IF NOT EXISTS (SELECT esci_Descripcion FROM Gral.tbEstadosCiviles WHERE esci_Descripcion = @esci_Descripcion AND esci_id = @esci_Id)
+
+BEGIN TRY
+		IF NOT EXISTS (SELECT esci_Descripcion FROM Gral.tbEstadosCiviles WHERE esci_Descripcion = @esci_Descripcion AND esci_id != @esci_Id)
 		BEGIN
 			UPDATE Gral.tbEstadosCiviles
 			SET esci_Descripcion = @esci_Descripcion,
@@ -266,10 +267,14 @@ BEGIN
 			WHERE esci_id = @esci_Id
 			SELECT 1
 		END
-	ELSE
-	BEGIN
-		SELECT 0
+	ELSE BEGIN
+		SELECT 2
 	END
+END TRY
+
+BEGIN CATCH
+	SELECT 0
+END CATCH
 END
 
 --**************************************************** /UDP Y VISTA ESTADOS CIVILES ***************************************************************--
@@ -366,8 +371,7 @@ CREATE OR ALTER PROCEDURE Gral.UDP_tbMetodosPago_EliminarMetodosPago
 @mepa_id			INT
 AS
 BEGIN
-BEGIN TRY		
-	
+BEGIN TRY			
 		UPDATE	[Gral].[tbMetodosPago]						
 		SET		mepa_Estado = 0
 		WHERE	mepa_id = @mepa_id
@@ -1111,7 +1115,7 @@ GO
 CREATE OR ALTER VIEW Acti.VW_tbClientes
 AS
 SELECT	clie_id, clie_Nombres, 
-clie_Apellidos,CONCAT(clie_Nombres,clie_Apellidos) AS clie_NombreCompleto, clie_DNI, 
+clie_Apellidos,CONCAT(clie_Nombres,' ',clie_Apellidos) AS clie_NombreCompleto, clie_DNI, 
 clie_Email, clie_Sexo, 
 clie_FechaNac, clie_Estado, 
 clie_UsuarioCreador,[UsuarioCreador].usua_Usuario AS clie_UsuarioCreador_Nombre, clie_FechaCreacion, 

@@ -4,6 +4,7 @@ import { EstadoscivilesComponent } from './estadosciviles.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
+import { EstadoscivilesDetallesComponent } from './estadosciviles-detalles/estadosciviles-detalles.component';
 
 const routes: Routes = [
   {

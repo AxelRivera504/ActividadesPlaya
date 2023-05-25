@@ -11,7 +11,8 @@ import { AppComponent } from './app.component';
 import { ErrorPageComponent } from './views/pages/error-page/error-page.component';
 
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
-import { DataTablesModule } from 'angular-datatables';
+import { DataTablesModule } from 'angular-datatables'
+import { DropzoneModule } from 'ngx-dropzone-wrapper';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { DataTablesModule } from 'angular-datatables';
     LayoutModule,
     HttpClientModule,
     FormsModule,
-    DataTablesModule
+    DataTablesModule,
+    DropzoneModule
 
   ],
   providers: [
