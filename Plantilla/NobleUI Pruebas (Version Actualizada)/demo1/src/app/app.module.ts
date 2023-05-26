@@ -12,7 +12,9 @@ import { ErrorPageComponent } from './views/pages/error-page/error-page.componen
 
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { DataTablesModule } from 'angular-datatables'
-import { DropzoneModule } from 'ngx-dropzone-wrapper';
+import { DropzoneConfig, DropzoneModule } from 'ngx-dropzone-wrapper';
+import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
+import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,6 @@ import { DropzoneModule } from 'ngx-dropzone-wrapper';
     FormsModule,
     DataTablesModule,
     DropzoneModule
-
   ],
   providers: [
     AuthGuard,
@@ -42,6 +43,10 @@ import { DropzoneModule } from 'ngx-dropzone-wrapper';
           scss: () => import('highlight.js/lib/languages/scss'),
         }
       }
+    },
+    {
+      provide: DROPZONE_CONFIG,
+      useValue: DropzoneConfig
     }
   ],
   bootstrap: [AppComponent]
