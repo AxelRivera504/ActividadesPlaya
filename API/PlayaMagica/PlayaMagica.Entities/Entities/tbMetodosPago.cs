@@ -8,6 +8,11 @@ namespace PlayaMagica.Entities.Entities
 {
     public partial class tbMetodosPago
     {
+        public tbMetodosPago()
+        {
+            tbFactura = new HashSet<tbFactura>();
+        }
+
         public int mepa_id { get; set; }
         public string mepa_Descripcion { get; set; }
         public bool? mepa_Estado { get; set; }
@@ -15,5 +20,9 @@ namespace PlayaMagica.Entities.Entities
         public DateTime? mepa_FechaCreacion { get; set; }
         public int? mepa_UsuarioModificador { get; set; }
         public DateTime? mepa_FechaModificacion { get; set; }
+
+        public virtual tbUsuarios mepa_UsuarioCreadorNavigation { get; set; }
+        public virtual tbUsuarios mepa_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbFactura> tbFactura { get; set; }
     }
 }

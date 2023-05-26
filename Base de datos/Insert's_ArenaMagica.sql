@@ -3,47 +3,60 @@ USE DB_ArenaMagica
 GO
 
 
-DECLARE @tableA TABLE(
-	pass VARBINARY(MAX)
-)
+/***************************Insertar tbRoles ****************************/
+INSERT INTO Acce.tbRoles(role_Descripcion,role_UsuarioCreador)
+VALUES('Administrador',1);   
+GO
 
-DECLARE @tableB TABLE(
-	pass VARCHAR(MAX)
-)
+INSERT INTO Acce.tbRoles(role_Descripcion,role_UsuarioCreador)
+VALUES ('Digitador',1);
+GO
 
-DECLARE @x VARCHAR(MAX) = 'awsd'
-DECLARE @p1 VARBINARY(MAX) = HASHBYTES('SHA2_512', @x)
-DECLARE @p2 VARCHAR(MAX) = HASHBYTES('SHA2_512', @x)
+INSERT INTO Acce.tbRoles(role_Descripcion,role_UsuarioCreador)
+VALUES ('Invitado',1);
+GO
+/***************************Insertar tbRoles ****************************/
 
-INSERT INTO @tableA
-VALUES(@p1)
 
-INSERT INTO @tableB
-VALUES(@p2)
+/***************************Insertar tbUsuarios ****************************/
 
-SELECT * FROM @tableA 
-SELECT * FROM @tableA WHERE pass = @p1
-SELECT * FROM @tableB 
-SELECT * FROM @tableB WHERE pass = @p2
-
-INSERT INTO acce.tbUsuarios(usua_Usuario, usua_Clave, usua_EsAdmin, enca_ID, role_ID,usua_UsuarioCreador)
-VALUES ('juan', @p2, 1, 1,2, 1),
-	   ('awsd', @p2, 1, 1,1, 1)
-       
-
+--Administrador usuario
 DECLARE @Pass AS NVARCHAR(MAX), @Clave AS NVARCHAR(250);
 SET @Clave = '123';
 SET @Pass = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @Clave),2)
 
-INSERT INTO acce.tbUsuarios
-VALUES('admin', @Pass,  1, 2, 1,1);
+INSERT INTO acce.tbUsuarios(usua_Usuario, usua_Clave, enca_ID, role_ID, usua_Estado, usua_UsuarioCreador, usua_FechaCreacion, usua_UsuarioModificador, usua_FechaModificacion)
+VALUES('admin', @Pass, 1, 1, 1,1,GETDATE(),NULL,NULL)
 GO
 
+--Digitador usuario
+DECLARE @Pass1 AS NVARCHAR(MAX), @Clave1 AS NVARCHAR(250);
+SET @Clave1 = 'qwerty';
+SET @Pass1 = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @Clave1),2)
 
+INSERT INTO acce.tbUsuarios(usua_Usuario, usua_Clave, enca_ID, role_ID, usua_Estado, usua_UsuarioCreador, usua_FechaCreacion, usua_UsuarioModificador, usua_FechaModificacion)
+VALUES('Juan', @Pass1, 1, 2, 1,1,GETDATE(),NULL,NULL)
+GO
 
+--Invitado usuario
+DECLARE @Pass2 AS NVARCHAR(MAX), @Clave2 AS NVARCHAR(250);
+SET @Clave2 = 'awsd';
+SET @Pass2 = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @Clave2),2)
 
+INSERT INTO acce.tbUsuarios(usua_Usuario, usua_Clave, enca_ID, role_ID, usua_Estado, usua_UsuarioCreador, usua_FechaCreacion, usua_UsuarioModificador, usua_FechaModificacion)
+VALUES('Christopher', @Pass2, 1, 1, 1,1,GETDATE(),NULL,NULL)
+GO
 
+--Esdra usuario
+DECLARE @Pass3 AS NVARCHAR(MAX), @Clave3 AS NVARCHAR(250);
+SET @Clave3 = 'ECERNA';
+SET @Pass3 = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @Clave3),2)
 
+INSERT INTO acce.tbUsuarios(usua_Usuario, usua_Clave, enca_ID, role_ID, usua_Estado, usua_UsuarioCreador, usua_FechaCreacion, usua_UsuarioModificador, usua_FechaModificacion)
+VALUES('Esdrinha7', @Pass3, 1, 1, 1,1,GETDATE(),NULL,NULL)
+GO
+
+/***************************Insertar tbUsuarios ****************************/
 
 
 --************************************************ INSERTS DE LA DB_ArenaMagica *****************************************************************--
@@ -51,27 +64,27 @@ GO
 --***************************************************** INSERTS tbEstadosCiviles ***************************************************************--
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES(1,'Soltero(a)',GETDATE(),NULL,NULL);
+VALUES('Soltero(a)',1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES (1,'Casado(a)',GETDATE(),NULL,NULL);
+VALUES ('Casado(a)',1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado,esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES (1,'Viudo(a)',GETDATE(),NULL,NULL);
+VALUES ('Viudo(a)',1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES (1,'Union Libre',GETDATE(),NULL,NULL);
+VALUES ('Union Libre',1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES (1,'Divorciado(a)',GETDATE(),NULL,NULL);
+VALUES ('Divorciado(a)',1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES(1,'Amante',GETDATE(),NULL,NULL);
+VALUES('Amante',1,GETDATE(),NULL,NULL);
 GO
 
 --**************************************************** /INSERTS tbEstadosCiviles ***************************************************************--
@@ -1591,14 +1604,6 @@ VALUES (9, 280.00, 42.00, 322.00, 1, GETDATE());
 
 INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
 VALUES (10, 150.00, 22.50, 172.50, 1, GETDATE());
-
-/***************************Insertar tbRoles ****************************/
-INSERT INTO Acce.tbRoles(role_Descripcion,role_UsuarioCreador)
-vALUES ('Digitador',1);
-       
-INSERT INTO Acce.tbRoles(role_Descripcion,role_UsuarioCreador)
-vALUES('Administrador',1);   
-GO
 	
 	-------Insertar Pantallas-----
 INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
@@ -1701,37 +1706,13 @@ INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreado
 VALUES (2,16,1);
 INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
 VALUES (2,17,1);
-
-
-
-
-CREATE TABLE Acti.ActividadesXFecha
-(
-  acfe_Id              INT IDENTITY(1,1),
-  acti_Id              INT,
-  acfe_Fecha           DATE,
-  acfe_Cantidad        INT, 
-
-  acfe_Estado					BIT DEFAULT 1,
-  acfe_UsuarioCreador			INT,
-  acfe_FechaCreacion			DATETIME DEFAULT GETDATE(),
-  acfe_UsuarioModificador		INT,
-  acfe_FechaModificacion		DATETIME
-
-
-  CONSTRAINT FK_Acti_tbActi_acti_Id FOREIGN KEY (acti_Id) REFERENCES Acti.tbActividades(acti_Id),
-)
 GO
 
 
 
-INSERT INTO Acti.ActividadesXFecha(acti_Id,acfe_Fecha,acfe_Cantidad)
+-------Insertar [tbActividadesXFecha]-----
+INSERT INTO [Acti].[tbActividadesXFecha](acti_Id,acfe_Fecha,acfe_Cantidad)
 VALUES(1,'2023-05-06',15)
-
-
-
-
-
 
 GO
 ALTER TABLE gral.tbEstadosCiviles
@@ -1803,13 +1784,6 @@ ADD
 	CONSTRAINT FK_acti_tbMantenimiento_mant_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY (mant_UsuarioModificador) REFERENCES acce.tbUsuarios (usua_ID)
 GO
 
-------------------------------------------------------
-ALTER TABLE [Acti].[tbEncargados]
-ADD	
-	CONSTRAINT FK_Acti_tbEncargados_enca_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY (enca_UsuarioCreador) REFERENCES acce.tbUsuarios (usua_ID),
-	CONSTRAINT FK_Acti_tbEncargados_enca_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY (enca_UsuarioModificador) REFERENCES acce.tbUsuarios (usua_ID)
-GO
-
 
 ALTER TABLE [Acti].[tbEncargadosXActividades]
 ADD	
@@ -1877,4 +1851,11 @@ ALTER TABLE Acti.tbClienteXReservacion
 ADD	
 	CONSTRAINT FK_acti_tbClienteXReservacion_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY ([clre_UsuarioCreador]) REFERENCES acce.tbUsuarios (usua_ID),
 	CONSTRAINT FK_acti_tbClienteXReservacion_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY ([clre_UsuarioModificador]) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+
+ALTER TABLE Acti.tbActividadesXFecha
+ADD
+	CONSTRAINT FK_acti_tbActividadesXFecha_acfe_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY (acfe_UsuarioCreador) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_acti_tbActividadesXFecha_acfe_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY (acfe_UsuarioModificador) REFERENCES acce.tbUsuarios (usua_ID)
 GO

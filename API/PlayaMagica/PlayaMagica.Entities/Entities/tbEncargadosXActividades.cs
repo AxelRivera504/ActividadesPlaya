@@ -18,6 +18,8 @@ namespace PlayaMagica.Entities.Entities
         public DateTime? enac_FechaModificacion { get; set; }
 
         public virtual tbActividades acti { get; set; }
+        public virtual tbUsuarios enac_UsuarioCreadorNavigation { get; set; }
+        public virtual tbUsuarios enac_UsuarioModificadorNavigation { get; set; }
         public virtual tbEncargados enca { get; set; }
     }
 }

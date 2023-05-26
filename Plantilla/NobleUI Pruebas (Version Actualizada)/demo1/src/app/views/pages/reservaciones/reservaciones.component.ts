@@ -97,7 +97,7 @@ export class ReservacionesComponent implements OnInit {
 
   isForm1Submitted: Boolean;
   isForm2Submitted: Boolean;
-
+  validar2: boolean = false;
 
   clientesForm: Cliente = new Cliente();
   submitted: boolean = false;
@@ -130,10 +130,12 @@ export class ReservacionesComponent implements OnInit {
     // Si la actividad ya está seleccionada, deselecciónala
     activity.selected = false;
     this.selectedActivity = null;
+    this.validar2 = false;
   } else {
     // Si la actividad no está seleccionada, selecciona esta y deselecciona las demás
     this.actividades.forEach(item => item.selected = false);
     activity.selected = true;
+    this.validar2 = true;
     this.selectedActivity = activity;
     console.log(this.selectedActivity)
     console.log(activity.selected)
@@ -282,6 +284,35 @@ export class ReservacionesComponent implements OnInit {
     this.isForm1Submitted = false;
     this.isForm2Submitted = false;
 
+  }
+
+  Next2(){
+    console.log(this.selectedPeople)
+    if( this.validar2 == false){
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        title: '¡ERROR!, Debe escoger una actividad a realizar',
+        icon: 'error'
+      })
+    }else{
+      this.wizardForm.goToNextStep(); 
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        title: 'GENIAL!, Reservación realizada con exito ',
+        icon: 'success'
+      })
+      for(var i = 0 ; i<= this.selectedPeople.lenght ; i++){
+        //this.service.Insertar
+      }
+    }
   }
 
   

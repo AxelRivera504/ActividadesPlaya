@@ -21,6 +21,8 @@ namespace PlayaMagica.Entities.Entities
         public int? dept_UsuarioModificador { get; set; }
         public DateTime? dept_FechaModificacion { get; set; }
 
+        public virtual tbUsuarios dept_UsuarioCreadorNavigation { get; set; }
+        public virtual tbUsuarios dept_UsuarioModificadorNavigation { get; set; }
         public virtual ICollection<tbMunicipios> tbMunicipios { get; set; }
     }
 }

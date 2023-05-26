@@ -6,6 +6,8 @@ import MetisMenu from 'metismenujs';
 import { MENU } from './menu';
 import { MenuItem } from './menu.model';
 import { Router, NavigationEnd } from '@angular/router';
+import { ServicesService } from '../../pages/Service/services.service';
+import { RolesXPantalla } from '../../pages/Model/RolesXPantalla';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,7 +21,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   menuItems: MenuItem[] = [];
   @ViewChild('sidebarMenu') sidebarMenu: ElementRef;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private renderer: Renderer2, router: Router) { 
+  constructor(@Inject(DOCUMENT) private document: Document, private renderer: Renderer2, router: Router,private servicesService: ServicesService) { 
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
 
@@ -39,7 +41,35 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     });
   }
 
+  filtrarMenuPorPantallas(menu: MenuItem[], pantallasPermitidas: RolesXPantalla[]): MenuItem[] {
+    return menu.filter((item) => {
+      if (item.isTitle) {
+        return true;
+      }
+  
+      if (!item.link) {
+        const subItems = this.filtrarMenuPorPantallas(item.subItems || [], pantallasPermitidas);
+        item.subItems = subItems;
+        return subItems.length > 0;
+      }
+  
+      const pantallaPermitida = pantallasPermitidas.find((pantalla) => pantalla.pant_ID === item.id);
+      return !!pantallaPermitida;
+    });
+  }
+
   ngOnInit(): void {
+
+    const roleId = localStorage.getItem('role_ID');
+    if (roleId) {
+      const roleIdNumber = parseInt(roleId, 10);
+      this.servicesService.obtenerPantallasPorRol(roleIdNumber).subscribe((pantallas) => {
+        this.menuItems = this.filtrarMenuPorPantallas(MENU, pantallas);
+      });
+    } else {
+      this.menuItems = MENU;
+    }
+    
     this.menuItems = MENU;
 
     /**

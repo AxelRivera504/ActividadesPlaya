@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
 
     this.http.post(apiUrl, requestBody).subscribe(
       (response: any) => {
+        console.log(response)
         if (response.data && response.data.usua_Usuario) {
           localStorage.setItem('IdUsuario', response.data.usua_ID);
           localStorage.setItem('Usuario', response.data.usua_Usuario);
@@ -68,7 +69,7 @@ export class LoginComponent implements OnInit {
             title: '¡Inicio de sesión exitoso!\nBienvenido(a) ' + response.data.enca_NombreCompleto,
             icon: 'success'
           });
-        } else {
+        } else {         
           Swal.fire({
             toast: true,
             position: 'top-end',

@@ -12,7 +12,9 @@ namespace PlayaMagica.Entities.Entities
         public string acti_Nombre { get; set; }
         public int? acti_Cupo { get; set; }
         public decimal? acti_Precio { get; set; }
-        public int? play_Id { get; set; }
+        public string acti_ImgUrl { get; set; }
+        public string play_playa { get; set; }
+        public int play_id { get; set; }
         public bool? acti_Estado { get; set; }
         public int? acti_UsuarioCreador { get; set; }
         public string acti_UsuarioCreador_Nombre { get; set; }

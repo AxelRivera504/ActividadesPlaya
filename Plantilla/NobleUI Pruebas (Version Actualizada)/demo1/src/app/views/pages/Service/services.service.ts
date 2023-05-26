@@ -14,6 +14,7 @@ import { estadosciviles } from '../Model/estadosciviles';
 import { estadoscivilesEdit } from '../Model/EstadosCivilesEdit';
 import { direcciones } from '../Model/direcciones';
 import { MantenimientoEdit } from '../Model/MantenimientoEdit';
+import { RolesXPantalla } from '../Model/RolesXPantalla';
 
 @Injectable({
   providedIn: 'root'
@@ -113,5 +114,9 @@ export class ServicesService {
 
   ActualizarEncargados(encargados:Encargados){
     return this.http.post<Encargados[]>(this.Url + "/Encargados/UpdateEncargados",encargados)
+  }
+
+  obtenerPantallasPorRol(roleId: number) {
+    return this.http.get<RolesXPantalla[]>(this.Url + "/RolesPorPantalla/PantallasXroles"+roleId);
   }
 }

@@ -183,7 +183,7 @@
             <div class="card-footer">
               <div class="d-flex justify-content-center mt-2">
                 <button class="btn btn-secondary me-2" type="button" awPreviousStep>  <i class="feather icon-arrow-left"></i> Regresar</button>
-                <button class="btn btn-primary" type="button" (click)="finishFunction()"> Siguiente <i class="feather icon-arrow-right"></i></button>
+                <button class="btn btn-primary" type="button" (click)="Next2()"> Siguiente <i class="feather icon-arrow-right"></i></button>
               </div>
             </div>
             </div>
@@ -192,12 +192,11 @@
           <aw-wizard-step stepTitle="finish">
             <div class="text-center">
               <i data-feather="check-circle" appFeatherIcon class="text-success mt-4 mb-2 icon-xxl"></i>
-              <h3 class="text-muted mb-3">Thank you !</h3>
-              <p class="w-75 mx-auto mb-4 text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ut nulla nunc. Maecenas arcu sem, hendrerit a tempor quis, sagittis accumsan tellus. In hac habitasse platea dictumst</p>
+              <h3 class="text-muted mb-3">¡Muchas gracias!</h3>
+              <p class="w-75 mx-auto mb-4 text-muted">Muchas gracias por hacer tu Reservación</p>
             </div>
             <div class="d-flex justify-content-center mt-2">
-              <button class="btn btn-secondary me-2" type="button" awPreviousStep>Back</button>
-              <button class="btn btn-success" type="button" (click)="finishFunction()">Finish</button>
+              <button class="btn btn-success" type="button" (click)="finishFunction()"><i class="feather icon-check-circle"></i> Salir</button>
             </div>
           </aw-wizard-step>
 

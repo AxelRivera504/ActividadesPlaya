@@ -394,7 +394,7 @@ play_FechaModificacion
 FROM Acti.tbPlayas play INNER JOIN [Gral].[tbDirecciones] dire
 ON play.dire_Id = dire.dire_Id INNER JOIN Acce.tbUsuarios [UsuarioCreador]
 ON play.play_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
-ON play.play_UsuarioModificador = [UsuarioModificador].usua_ID INNER JOIN 
+ON play.play_UsuarioModificador = [UsuarioModificador].usua_ID
 WHERE play_Estado = 1
 
 /*Vista Playas UDP*/
@@ -751,7 +751,7 @@ GO
   CREATE OR ALTER VIEW Acti.VW_tbEquipos
   AS
   SELECT equi_Id, equi_Descripcion, 
-  equi_UsoActual, equi_UsoLimite, 
+  equi_UsoActual, equi_UsoLimite, equi_ImgUrL,
   equi_Estado, equi_UsuarioCreador,[UsuarioCreador].usua_Usuario AS equi_UsuarioCreador_Nombre, 
   equi_FechaCreacion, equi_UsuarioModificador,[UsuarioModificador].usua_Usuario AS equi_UsuarioModificador_Nombre, 
   equi_FechaModificacion
@@ -858,15 +858,23 @@ GO
 	GO
 	CREATE OR ALTER VIEW Acti.VW_tbActividades
 	AS
-	SELECT acti_Id, acti_Nombre,  
+	SELECT acti_Id, 
+	acti_Nombre,  
 	acti_Cupo, 
-	acti_Precio, play_playa,play_id, 
-	acti_Estado, acti_UsuarioCreador,[UsuarioCreador].usua_Usuario AS acti_UsuarioCreador_Nombre, 
-	acti_FechaCreacion, acti_UsuarioModificador,[UsuarioModificador].usua_Usuario AS acti_UsuarioModificador_Nombre, 
+	acti_Precio,
+	acti_ImgUrl,
+	play_playa,
+	playa.play_id, 
+	acti_Estado, 
+	acti_UsuarioCreador,
+	[UsuarioCreador].usua_Usuario AS acti_UsuarioCreador_Nombre, 
+	acti_FechaCreacion, 
+	acti_UsuarioModificador,
+	[UsuarioModificador].usua_Usuario AS acti_UsuarioModificador_Nombre, 
 	acti_FechaModificacion
 	FROM Acti.tbActividades	acti INNER JOIN Acce.tbUsuarios [UsuarioCreador]
 	ON acti.acti_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador] 
-	ON acti.acti_UsuarioModificador = [UsuarioModificador].usua_ID INNER JOIN Acti.Playas playa
+	ON acti.acti_UsuarioModificador = [UsuarioModificador].usua_ID INNER JOIN Acti.tbPlayas playa
 	ON	acti.play_id = playa.play_id
 	WHERE acti_Estado = 1
 
@@ -1416,7 +1424,7 @@ GO
 CREATE OR ALTER VIEW Acce.VW_tbUsuarios
 AS
 SELECT usua.usua_ID, usua.usua_Usuario, 
-usua.usua_Clave, usua.usua_EsAdmin, 
+usua.usua_Clave,
 usua.enca_ID,CONCAT(enca.enca_Nombres,enca.enca_Apellidos) AS enca_NombreCompleto, usua.role_ID,role.role_Descripcion, 
 usua.usua_Estado, usua.usua_UsuarioCreador, [UsuarioCreador].usua_Usuario AS usua_UsuarioCreador_Nombre,
 usua.usua_FechaCreacion, usua.usua_UsuarioModificador, [UsuarioModificador].usua_Usuario AS usua_UsuarioModificador_Nombre,
@@ -1541,8 +1549,7 @@ AS
 BEGIN
 	BEGIN TRY
 				UPDATE Acce.tbUsuarios	
-				SET	usua_EsAdmin = @usua_EsAdmin,
-					enca_ID = @enca_ID,
+				SET	enca_ID = @enca_ID,
 					role_ID = @role_ID,
 					usua_FechaModificacion = GETDATE(),
 					usua_UsuarioModificador = @usua_UsuarioModificador
@@ -1809,3 +1816,24 @@ BEGIN
 END
 GO
 --***************************************************///UDP Y VISTA Factura****************************************************************************--
+
+--*************************************************** UDP Y VISTA tbReservacionesXClientes****************************************************************************--
+
+CREATE OR ALTER PROCEDURE Acti.UDP_tbReservaciones_InsertarReservaciones
+	@acti_Id				INT,
+	@rese_Cantidad			INT,
+	@rese_UsuarioCreador	INT
+AS
+BEGIN
+	BEGIN TRY
+		INSERT INTO Acti.tbReservaciones(rese_Cantidad, acti_Id, rese_Estado, rese_UsuarioCreador, rese_FechaCreacion, rese_UsuarioModificador, rese_FechaModificacion)
+		VALUES (@rese_Cantidad,@acti_Id,1,@rese_UsuarioCreador,GETDATE(),NULL, NULL ) 
+		SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+
+
+--*************************************************** /UDP Y VISTA tbReservacionesXClientes****************************************************************************--
