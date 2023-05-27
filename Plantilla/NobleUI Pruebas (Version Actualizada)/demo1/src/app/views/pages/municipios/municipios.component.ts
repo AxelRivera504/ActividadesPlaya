@@ -194,7 +194,6 @@ export class MunicipiosComponent implements OnInit {
       }
     }else{
       this.submitted = true
-      this.submitted = true
       Swal.fire({
         toast: true,
         position: 'top-end',

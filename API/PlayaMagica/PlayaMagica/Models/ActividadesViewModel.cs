@@ -12,6 +12,7 @@ namespace PlayaMagica.Models
         public int? acti_Cupo { get; set; }
         public decimal? acti_Precio { get; set; }
         public int? play_Id { get; set; }
+        public string acti_ImgUrl { get; set; }
         public bool? acti_Estado { get; set; }
         public int? acti_UsuarioCreador { get; set; }
         public DateTime? acti_FechaCreacion { get; set; }

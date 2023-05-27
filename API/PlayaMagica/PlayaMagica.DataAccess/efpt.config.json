@@ -162,7 +162,7 @@
          "ObjectType": 3
       }
    ],
-   "UiHint": "DESKTOP-B2FSPCF\\SQLEXPRESS.DB_ArenaMagica",
+   "UiHint": "VB600.ActividadesPlayeras",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDbContextSplitting": false,

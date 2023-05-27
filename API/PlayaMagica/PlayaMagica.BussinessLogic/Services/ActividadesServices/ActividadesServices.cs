@@ -16,7 +16,8 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
         private readonly ActividadesRepository _actividadesRepository;
         private readonly EquipoRepository _equipoRepository;
         private readonly MantenimientoRepository _mantenimientoRepository;
-        public ActividadesServices(MantenimientoRepository mantenimientoRepository, EquipoRepository equipoRepository, ActividadesRepository actividadesRepository, EncargadosRepository encargadosRepository, ClientesRepository clientesRepository, PlayasRepository playasRepository)
+        private readonly EquipoXActividadesRepository _equipoxactividadesRepository;
+        public ActividadesServices(MantenimientoRepository mantenimientoRepository, EquipoRepository equipoRepository, ActividadesRepository actividadesRepository, EncargadosRepository encargadosRepository, ClientesRepository clientesRepository, PlayasRepository playasRepository, EquipoXActividadesRepository equipoxactividadesrepository)
         {
             _clientesRepository = clientesRepository;
             _encargadosRepository = encargadosRepository;
@@ -24,6 +25,7 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             _actividadesRepository = actividadesRepository;
             _equipoRepository = equipoRepository;
             _mantenimientoRepository = mantenimientoRepository;
+            _equipoxactividadesRepository = equipoxactividadesrepository;
         }
 
 
@@ -404,6 +406,38 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             try
             {
                 var Equipos = _equipoRepository.DeleteEquipos(item);
+                return resultado.Ok(Equipos);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+        #endregion
+
+        #region EquipoXActividades
+        public ServiceResult InsertarEquiposXActividades(tbEquipoXActividades item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Equipos = _equipoxactividadesRepository.Insert(item);
+                return resultado.Ok(Equipos);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult EliminarEquiposXActividades(tbEquipoXActividades item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Equipos = _equipoxactividadesRepository.Delete(item);
                 return resultado.Ok(Equipos);
             }
             catch (Exception ex)

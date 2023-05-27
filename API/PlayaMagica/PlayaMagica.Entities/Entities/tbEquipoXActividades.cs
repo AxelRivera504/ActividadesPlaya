@@ -17,5 +17,8 @@ namespace PlayaMagica.Entities.Entities
         public DateTime? eqac_FechaModificacion { get; set; }
 
         public virtual tbActividades acti { get; set; }
+        public virtual tbUsuarios eqac_UsuarioCreadorNavigation { get; set; }
+        public virtual tbUsuarios eqac_UsuarioModificadorNavigation { get; set; }
+        public virtual tbEquipos equi { get; set; }
     }
 }

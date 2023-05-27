@@ -42,6 +42,14 @@ namespace PlayaMagica.Controllers
             return Ok(listado);
         }
 
+        [HttpGet("PantallasXroles{id}")]
+        public IActionResult listarPantallas(int id)
+        {
+
+            var listado = _accesoService.ListadoPantallas(id);
+            return Ok(listado);
+        }
+
     }
 }
 

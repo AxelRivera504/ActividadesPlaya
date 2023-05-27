@@ -17,6 +17,8 @@ namespace PlayaMagica.Entities.Entities
         public int? clre_UsuarioModificador { get; set; }
         public DateTime? clre_FechaModificacion { get; set; }
 
+        public virtual tbUsuarios clre_UsuarioCreadorNavigation { get; set; }
+        public virtual tbUsuarios clre_UsuarioModificadorNavigation { get; set; }
         public virtual tbReservaciones rese { get; set; }
     }
 }

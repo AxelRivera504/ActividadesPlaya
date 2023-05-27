@@ -10,6 +10,7 @@ namespace PlayaMagica.Entities.Entities
     {
         public int fuct_Id { get; set; }
         public int? rese_Id { get; set; }
+        public int? mepa_id { get; set; }
         public decimal? fuct_Subtotal { get; set; }
         public decimal? fuct_Isv { get; set; }
         public decimal? fuct_Total { get; set; }
@@ -19,6 +20,9 @@ namespace PlayaMagica.Entities.Entities
         public int? fuct_UsuarioModificador { get; set; }
         public DateTime? fuct_FechaModificacion { get; set; }
 
+        public virtual tbUsuarios fuct_UsuarioCreadorNavigation { get; set; }
+        public virtual tbUsuarios fuct_UsuarioModificadorNavigation { get; set; }
+        public virtual tbMetodosPago mepa { get; set; }
         public virtual tbReservaciones rese { get; set; }
     }
 }

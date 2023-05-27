@@ -12,6 +12,7 @@ import { metodospago } from '../Model/metodospago';
 import { estadosciviles } from '../Model/estadosciviles';
 import { estadoscivilesEdit } from '../Model/EstadosCivilesEdit';
 import { direcciones } from '../Model/direcciones';
+import { EquipoXActividades } from '../Model/EquipoXActividades';
 @Injectable({
   providedIn: 'root'
 })
@@ -42,6 +43,14 @@ export class ServicesService {
 
   getActividades(){
     return this.http.get<Actividades[]>(this.Url + "/Actividades/ListarActividades");
+  }
+
+  createActividades(actividad: Actividades){
+    return this.http.post<Actividades[]>(this.Url + "/Actividades/InsertarActividades",actividad);
+  }
+
+  createEquipoXActividades(equipoxactividades: EquipoXActividades){
+    return this.http.post<EquipoXActividades[]>(this.Url + "/tbEquipoXActividades/Insert",equipoxactividades);
   }
 
   getDepartamentos(){
@@ -100,11 +109,9 @@ export class ServicesService {
     return this.http.post<direcciones[]>(this.Url + "/Direcciones/Update", direcciones);
   }
 
-  
   deleteDirecciones(direcciones: direcciones){
     return this.http.post<direcciones[]>(this.Url + "/Direcciones/Delete", direcciones);
   }
-
 
   CreateEstadosCiviles(estadosciviles: estadosciviles){
     return this.http.post<estadosciviles[]>(this.Url + "/EstadosCiviles/Insert", estadosciviles);

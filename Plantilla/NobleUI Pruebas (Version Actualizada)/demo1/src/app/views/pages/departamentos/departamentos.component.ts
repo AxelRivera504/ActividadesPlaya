@@ -24,6 +24,8 @@ export class DepartamentosComponent implements OnInit {
   departamentoEdit: departamentos = new departamentos();
   submitted: boolean = false;
   modalRef: NgbModalRef | undefined;
+  nice: boolean = true
+
   constructor(private service: ServicesService,
     private modalService: NgbModal, 
     private router:Router,) { }
@@ -69,14 +71,18 @@ export class DepartamentosComponent implements OnInit {
 
   onIdChange(){
     if(this.departamentoCreate.dept_Id){
-      if(this.departamentoCreate.dept_Id.length > 2){
-        const id = this.departamentoCreate.dept_Id.substring(0,2)
-       setTimeout(() => {
-        this.departamentoCreate.dept_Id = id
-       },)
+    if(this.submitted){
+      if(this.departamentoCreate.dept_Descripcion != undefined || this.departamentoCreate.dept_Descripcion != ""){
+        if(this.departamentoCreate.dept_Id.length != 2){
+          this.nice = false
+         }else{
+          this.nice = true
+         }
       }
     }
   }
+}
+
   /*Agregue esta funcion que renderiza la tabla otra vez para que la paginacion no se bugee XD*/
   rerender(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -87,73 +93,88 @@ export class DepartamentosComponent implements OnInit {
     });
   } 
 
+
   Guardar(){
-    if (!this.departamentoCreate.dept_Id && !this.departamentoCreate.dept_Descripcion) {
-      this.submitted = true;
-      Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 6000,
-        timerProgressBar: true,
-      }).fire({
-        title: 'Rellene los campos',
-        icon: 'warning'
-      });
-      return;
+    var x = true;
+
+    if(this.departamentoCreate.dept_Descripcion == undefined || this.departamentoCreate.dept_Descripcion == ""){
+       x = false
     }
-    
+
+    if(this.departamentoCreate.dept_Id){
+      if(this.departamentoCreate.dept_Id.length != 2){
+        this.nice = false
+      }else{
+        this.nice = true
+      }
+    }
+
     const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
     if (idUsuario !== undefined) {
       this.departamentoCreate.dept_UsuarioCreador = idUsuario;
     }
-    if(this.departamentoCreate.dept_Descripcion != null && this.departamentoCreate.dept_Descripcion != ""){
-      this.service.createDepartamentos(this.departamentoCreate).
-      subscribe((data: any) => {
-        console.log(data)
-        if(data.data.codeStatus == 1){
-          Swal.fire({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 2000,
-            timerProgressBar: true,
-            title: '¡Registro Ingresado con exito!',
-            icon: 'success'
-          })
-          this.modalService.dismissAll()
-          this.service.getDepartamentos().subscribe(data => {
-            console.log(data);
-            const latestDepartamento = data[data.length - 1]; // Obtener el último registro
-            if (latestDepartamento) {
-              this.departamento.push(latestDepartamento); // Agregar el último registro al arreglo
-            }
-            this.rerender()
-          });
-        }else if(data.data.codeStatus == 2){
-          Swal.fire({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            title: 'Ya existe ese registro',
-            icon: 'warning'
-          })
-        }else{
-          this.submitted = true
-          Swal.fire({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            title: 'Ha ocurido un error ',
-            icon: 'error'
-          })
-        }
-      })
+
+    if(x == true){
+      if(this.nice != false){
+        this.service.createDepartamentos(this.departamentoCreate).
+        subscribe((data: any) => {
+          console.log(data)
+          if(data.data.codeStatus == 1){
+            Swal.fire({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              title: '¡Registro Ingresado con exito!',
+              icon: 'success'
+            })
+            this.modalService.dismissAll()
+            this.service.getDepartamentos().subscribe(data => {
+              console.log(data);
+              const latestDepartamento = data[data.length - 1]; // Obtener el último registro
+              if (latestDepartamento) {
+                this.departamento.push(latestDepartamento); // Agregar el último registro al arreglo
+              }
+              this.rerender()
+            });
+          }else if(data.data.codeStatus == 2){
+            Swal.fire({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+              title: 'Ya existe ese registro',
+              icon: 'warning'
+            })
+          }else{
+            this.submitted = true
+            Swal.fire({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+              title: 'Ha ocurido un error ',
+              icon: 'error'
+            })
+          }
+        })
+      }else{
+        this.submitted = true
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          title: '¡Ingrese un ID valido!',
+          icon: 'warning'
+        })
+      }
     }else{
+      this.submitted = true
       Swal.fire({
         toast: true,
         position: 'top-end',
