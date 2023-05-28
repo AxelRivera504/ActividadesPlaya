@@ -25,6 +25,7 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             var parametros = new DynamicParameters();
             parametros.Add("@equi_Descripcion", item.equi_Descripcion, DbType.String, ParameterDirection.Input);
             parametros.Add("@equi_UsoLimite", item.equi_UsoLimite, DbType.String, ParameterDirection.Input);
+            parametros.Add("@equi_ImgUrl", item.equi_ImgUrL, DbType.String, ParameterDirection.Input);
             parametros.Add("@equi_UsuarioCreador", item.equi_UsuarioCreador, DbType.String, ParameterDirection.Input);
             var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbEquipos_Insert, parametros, commandType: CommandType.StoredProcedure);
 
@@ -40,6 +41,7 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             parametros.Add("@equi_id", item.equi_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@equi_Descripcion", item.equi_Descripcion, DbType.String, ParameterDirection.Input);
             parametros.Add("@equi_UsoLimite", item.equi_UsoLimite, DbType.String, ParameterDirection.Input);
+            parametros.Add("@equi_ImgUrl", item.equi_ImgUrL, DbType.String, ParameterDirection.Input);
             parametros.Add("@equi_UsuarioModificador", item.equi_UsuarioModificador, DbType.String, ParameterDirection.Input);
             var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbEquipos_Update, parametros, commandType: CommandType.StoredProcedure);
 

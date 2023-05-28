@@ -25,6 +25,15 @@ export class ServicesService {
     return this.http.get<Equipos[]>(this.Url + "/Equipos/ListarEquipos");
   }
 
+  createEquipos(equipos: Equipos){
+    return this.http.post<Equipos[]>(this.Url + "/Equipos/InsertarEquipos",equipos);
+  }
+
+  updateEquipos(equipos: Equipos){
+    return this.http.post<Equipos[]>(this.Url + "/Equipos/UpdateEquipos",equipos);
+  }
+
+
   getPlayas(){
     return this.http.get<playas[]>(this.Url + "/Playas/ListarPlayas");
   }
@@ -64,7 +73,6 @@ export class ServicesService {
   createEquipoXActividades(equipoxactividades: EquipoXActividades){
     return this.http.post<EquipoXActividades[]>(this.Url + "/tbEquipoXActividades/Insert",equipoxactividades);
   }
-
 
   deleteEquipoXActividades(equipoxactividades: EquipoXActividades){
     return this.http.post<EquipoXActividades[]>(this.Url + "/tbEquipoXActividades/Delete",equipoxactividades);

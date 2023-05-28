@@ -41,14 +41,14 @@ export class ActividadesCrearComponent implements OnInit {
     errorReset: null,
     cancelReset: null
   };
-
+  @ViewChild(DropzoneDirective, { static: false }) directiveRef?: DropzoneDirective;
     // - Transfer Between Lists - //
   
     sharedOptions: Options = {
       group: 'shared-group',
     };
 
-  @ViewChild(DropzoneDirective, { static: false }) directiveRef?: DropzoneDirective;
+  
   
   constructor(private service: ServicesService,
     private imgbbService: ImgbbService,
@@ -93,6 +93,7 @@ export class ActividadesCrearComponent implements OnInit {
 
   resetDropzoneUploads(): void {
     if (this.directiveRef) {
+      this.actividadesModel.acti_ImgUrl = ""
       this.directiveRef.reset();
     }
   }
