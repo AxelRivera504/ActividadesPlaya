@@ -49,8 +49,25 @@ export class ServicesService {
     return this.http.post<Actividades[]>(this.Url + "/Actividades/InsertarActividades",actividad);
   }
 
+  updateActividades(actividad: Actividades){
+    return this.http.post<Actividades[]>(this.Url + "/Actividades/UpdateActividades",actividad);
+  }
+
+  deleteActividades(actividad: Actividades){
+    return this.http.post<Actividades[]>(this.Url + "/Actividades/DeleteActividades",actividad);
+  }
+
+  getEquipoxActividades(id: number){
+    return this.http.get<number>(this.Url + "/Equipos/EquipoXActividad?id=" + id)
+  }
+
   createEquipoXActividades(equipoxactividades: EquipoXActividades){
     return this.http.post<EquipoXActividades[]>(this.Url + "/tbEquipoXActividades/Insert",equipoxactividades);
+  }
+
+
+  deleteEquipoXActividades(equipoxactividades: EquipoXActividades){
+    return this.http.post<EquipoXActividades[]>(this.Url + "/tbEquipoXActividades/Delete",equipoxactividades);
   }
 
   getDepartamentos(){

@@ -4,14 +4,14 @@
             <div class="card-title text-center my-0">
                 <h3>Equipos</h3>  
             <br>
-            <button button type="button" class="btn btn-primary">
+            <button button type="button" class="btn btn-primary" (click)="Crear()">
                 <i class="feather icon-plus"></i>
                 Nuevo
             </button>
         </div>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
+            <div class="table table-responsive">
                 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
                     <thead>
                         <tr>
@@ -28,11 +28,11 @@
                             <td>{{item.equi_Descripcion}}</td>
                             <td>{{item.equi_UsoActual}}</td>
                             <td>{{item.equi_UsoLimite}}</td>
-                            <td><button type="button" class="btn btn-warning btn-icon-text">
+                            <td><button type="button" class="btn btn-warning btn-icon-text" (click)="Editar(item)">
                                 <i class="feather icon-edit "></i>
                             </button>
                                 |
-                                <button type="button" class="btn btn-info btn-icon-text">
+                                <button type="button" class="btn btn-info btn-icon-text" (click)="Detalles(item)">
                                     <i class="feather icon-list "></i>
                                 </button>
                                 |

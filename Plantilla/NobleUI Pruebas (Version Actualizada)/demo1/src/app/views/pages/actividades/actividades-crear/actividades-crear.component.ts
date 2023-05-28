@@ -34,6 +34,7 @@ export class ActividadesCrearComponent implements OnInit {
   submitted: boolean = false
 
   public configdropzone: DropzoneConfigInterface = {
+    dictDefaultMessage: "Arrastra y suelta los archivos aquí o haz clic para seleccionarlos.",
     clickable: true,
     maxFiles: 1,
     autoReset: null,
@@ -170,6 +171,16 @@ export class ActividadesCrearComponent implements OnInit {
               console.log(data)
             })
          });
+         Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          title: '¡Registro Ingresado con exito!',
+          icon: 'success'
+        })
+         this.router.navigate(["/actividades"])
         }
       })
     }else{

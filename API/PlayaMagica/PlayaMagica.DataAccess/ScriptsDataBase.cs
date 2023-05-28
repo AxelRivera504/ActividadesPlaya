@@ -100,6 +100,7 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbEquipos_Insert = "Acti.UDP_tbEquipos_Insert";
         public static string UDP_tbEquipos_Update = "Acti.UDP_tbEquipos_Update";
         public static string UDP_tbEquipos_Delete = "Acti.UDP_tbEquipos_Delete";
+        public static string UDP_EquipoXActividad = "UDP_EquipoXActividad";
         #endregion
 
         #region Actividades

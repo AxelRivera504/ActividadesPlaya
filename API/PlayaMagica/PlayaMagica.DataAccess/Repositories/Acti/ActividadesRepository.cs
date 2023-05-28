@@ -43,6 +43,7 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             parametros.Add("@acti_Id", item.acti_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@acti_Nombre", item.acti_Nombre, DbType.String, ParameterDirection.Input);
             parametros.Add("@acti_Cupo", item.acti_Cupo, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@acti_ImgUrl", item.acti_ImgUrl, DbType.String, ParameterDirection.Input);
             parametros.Add("@acti_Precio", item.acti_Precio, DbType.Decimal, ParameterDirection.Input);
             parametros.Add("@play_Id", item.play_Id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@acti_UsuarioModificador", item.acti_UsuarioModificador, DbType.String, ParameterDirection.Input);

@@ -1,5 +1,4 @@
-
-    <div class="container">
+ <div class="container">
         <div class="card">
             <div class="card-header">
                 <div class="card-title text-center my-0">
@@ -12,7 +11,7 @@
             </div>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
+                <div class="table table-responsive">
                     <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
                         <thead>
                             <tr>
@@ -31,15 +30,15 @@
                                 <td>{{item.acti_Cupo}}</td>
                                 <td>{{item.acti_Precio}}</td>
                                 <td>{{item.play_Id}}</td>
-                                <td><button type="button" class="btn btn-warning btn-icon-text">
+                                <td><button type="button"  (click)="Editar(item)" class="btn btn-warning btn-icon-text">
                                     <i class="feather icon-edit "></i>
                                 </button>
                                     |
-                                    <button type="button" class="btn btn-info btn-icon-text">
+                                    <button type="button" class="btn btn-info btn-icon-text" (click)="Detalles(item)">
                                         <i class="feather icon-list "></i>
                                     </button>
                                     |
-                                    <button type="button" class="btn btn-danger btn-icon-text">
+                                    <button type="button" class="btn btn-danger btn-icon-text" (click)="openBasicModal2(basicModal2,item)">
                                         <i class="feather icon-trash "></i>
                                     </button>
                                 </td>
@@ -50,3 +49,20 @@
             </div>
         </div>
     </div>
+
+    
+  <ng-template #basicModal2 let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Eliminar Actividad</h5>
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+          <h4>¿Desea eliminar este registro?</h4>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+      <button type="button" class="btn btn-primary" (click)="Eliminar()">Eliminar</button>
+    </div>
+  </ng-template>

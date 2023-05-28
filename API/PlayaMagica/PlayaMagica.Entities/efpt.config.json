@@ -126,6 +126,10 @@
          "ObjectType": 3
       },
       {
+         "Name": "[Acti].[VW_tbEquipoXActividades]",
+         "ObjectType": 3
+      },
+      {
          "Name": "[Acti].[VW_tbFactura]",
          "ObjectType": 3
       },

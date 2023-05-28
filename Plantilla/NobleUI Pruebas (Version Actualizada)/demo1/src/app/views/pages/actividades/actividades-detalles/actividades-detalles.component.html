@@ -1,0 +1,43 @@
+<div class="card">
+    <div class="card-header text-center">
+        <h3>Detalles Actividad</h3>
+    </div>
+    <div class="card-body">
+    <div class="row">
+        <div class="form-group col-6">
+            <h4>ID</h4>
+            <label class="mt-3">{{actividades.acti_Id}}</label>
+        </div>
+        <div class="form-group col-6">
+            <h4>Actividad</h4>
+            <label class="mt-3">{{actividades.acti_Nombre}}</label>
+        </div>
+    </div>
+    <div class="card mt-3">
+        <div class="card-header"><h2>Auditoria</h2></div>
+        
+        <table class="table table-striped">
+                <thead>
+                <tr>
+                              <th>Accion</th>
+                              <th>Usuario</th>
+                              <th>Fecha</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                                  <td><label>Creacion</label></td>
+                                  <td>{{actividades.acti_UsuarioCreador_Nombre}}</td>
+                                  <td>{{actividades.acti_FechaCreacion}}</td>
+                              </tr>
+                              <tr>
+                                  <td>Modificacion</td>
+                                  <td>{{actividades.acti_UsuarioModificador_Nombre}}</td>
+                                  <td>{{actividades.acti_FechaModificacion}}</td>
+                              </tr>
+                </tbody>
+               </table>
+      </div>
+      <button type="button" class="btn btn-primary mt-3" (click)="Regresar()"><i class="feather icon-arrow-left"></i>Regresar</button>
+        </div>
+    </div>

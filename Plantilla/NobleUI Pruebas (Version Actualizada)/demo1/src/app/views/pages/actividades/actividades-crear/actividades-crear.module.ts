@@ -17,6 +17,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   maxFilesize: 50,
   acceptedFiles: 'image/*'
 };
+
 const routes: Routes = [
   {
     path: '',

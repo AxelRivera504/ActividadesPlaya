@@ -24,6 +24,18 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/equipos/equipos.module').then(m => m.EquiposModule)
       },
       {
+        path: 'equiposCrear',
+        loadChildren: () => import('./views/pages/equipos/equipos-crear/equipos-crear.module').then(m => m.EquiposCrearModule)
+      },
+      {
+        path: 'equiposEditar',
+        loadChildren: () => import('./views/pages/equipos/equipos-editar/equipos-editar.module').then(m => m.EquiposEditarModule)
+      },
+      {
+        path: 'equiposDetalles',
+        loadChildren: () => import('./views/pages/equipos/equipos-detalles/equipos-detalles.module').then(m => m.EquiposDetallesModule)
+      },
+      {
         path: 'mantenimientos',
         loadChildren: () => import('./views/pages/mantenimientos/mantenimientos.module').then(m => m.MantenimientosModule)
       },
@@ -42,6 +54,14 @@ const routes: Routes = [
       {
         path: 'actividadesCrear',
         loadChildren: () => import('./views/pages/actividades/actividades-crear/actividades-crear.module').then(m => m.ActividadesCrearModule)
+      },
+      {
+        path: 'actividadesEditar',
+        loadChildren: () => import('./views/pages/actividades/actividades-editar/actividades-editar.module').then(m => m.ActividadesEditarModule)
+      },
+      {
+        path: 'actividadesDetalles',
+        loadChildren: () => import('./views/pages/actividades/actividades-detalles/actividades-detalles.module').then(m => m.ActividadesDetallesModule)
       },
       {
         path: 'departamentos',

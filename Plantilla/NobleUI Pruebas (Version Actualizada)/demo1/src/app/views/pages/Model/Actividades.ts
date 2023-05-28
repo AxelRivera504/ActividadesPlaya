@@ -7,7 +7,9 @@ export class Actividades{
     acti_ImgUrl!: string;
     acti_Estado!: number;
     acti_UsuarioCreador!: number;
+    acti_UsuarioCreador_Nombre!: string;
     acti_FechaCreacion!: Date;
     acti_UsuarioModificador!: number;
+    acti_UsuarioModificador_Nombre!: string;
     acti_FechaModificacion!: Date;
 }

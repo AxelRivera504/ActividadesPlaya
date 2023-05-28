@@ -453,8 +453,7 @@ CREATE OR ALTER PROCEDURE Acti.UDP_tbPlayas_EditarPlayas
 	@play_Playa					NVARCHAR(150),
 	@dire_id					INT,
 	@play_ImgUrl				NVARCHAR(MAX),
-	@play_UsuarioModificador	INT,
-	@Status						INT OUTPUT
+	@play_UsuarioModificador	INT
 AS
 BEGIN 
 	BEGIN TRY
@@ -771,7 +770,7 @@ GO
     SELECT * FROM Acti.VW_tbEquipos
   END
 
-  /*Vista Equipos Insert */
+  /*Insertar equipos*/
   GO
   CREATE OR ALTER PROCEDURE Acti.UDP_tbEquipos_Insert
   @equi_Descripcion NVARCHAR(250),
@@ -867,7 +866,7 @@ GO
 	acti_Precio,
 	acti_ImgUrl,
 	play_playa,
-	playa.play_id, 
+	acti.play_Id, 
 	acti_Estado, 
 	acti_UsuarioCreador,
 	[UsuarioCreador].usua_Usuario AS acti_UsuarioCreador_Nombre, 
@@ -878,7 +877,7 @@ GO
 	FROM Acti.tbActividades	acti INNER JOIN Acce.tbUsuarios [UsuarioCreador]
 	ON acti.acti_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador] 
 	ON acti.acti_UsuarioModificador = [UsuarioModificador].usua_ID INNER JOIN Acti.tbPlayas playa
-	ON	acti.play_id = playa.play_id
+	ON	acti.play_Id = playa.play_Id
 	WHERE acti_Estado = 1
 
 	--/*Vista Actividades UDP*/
@@ -937,6 +936,7 @@ GO
 	@acti_Nombre				VARCHAR(250),
 	@acti_Cupo					INT,
 	@acti_Precio				DECIMAL(18,2),
+	@acti_ImgUrl				NVARCHAR(MAX),
 	@play_Id					INT,
 	@acti_UsuarioModificador	INT
 	AS
@@ -948,6 +948,7 @@ GO
 					SET	acti_Nombre = @acti_Nombre,
 					acti_Cupo = @acti_Cupo,
 					acti_Precio = @acti_Precio,
+					acti_ImgUrl = @acti_ImgUrl,
 					play_Id = @play_Id,
 					acti_UsuarioModificador = @acti_UsuarioModificador,
 					acti_FechaModificacion = GETDATE()
@@ -1843,6 +1844,28 @@ END
 --*************************************************** /UDP Y VISTA tbReservacionesXClientes****************************************************************************--
 
 --*************************************************** UDP Y VISTA tbEquipoXActividades ****************************************************************************--
+/*Vista EquipoXActividades*/
+GO
+CREATE OR ALTER VIEW Acti.VW_tbEquipoXActividades
+AS
+SELECT [eqac_Id], eqac.[acti_Id],acti.acti_Nombre, 
+eqac.[equi_Id],equi.equi_Descripcion, [eqac_UsuarioCreador], 
+[eqac_FechaCreacion], [eqac_UsuarioModificador], 
+[eqac_FechaModificacion]
+FROM Acti.tbEquipoXActividades eqac INNER JOIN Acti.tbActividades acti
+ON eqac.acti_Id = acti.acti_Id INNER JOIN Acti.tbEquipos equi
+ON eqac.equi_Id = equi.equi_Id
+
+/*Vista EquipoXActividades UDP*/
+GO
+CREATE OR ALTER PROCEDURE Acti.UDP_tbEquipoXActividades_VW
+AS
+BEGIN
+	SELECT * FROM Acti.VW_tbEquipoXActividades
+END
+
+
+
 /*Insertar EquipoXActividades*/
 GO
 CREATE OR ALTER PROCEDURE Acti.UDP_tbEquipoXActividades_Insert
@@ -1878,4 +1901,19 @@ BEGIN
 		SELECT 0
 	END CATCH
 END
+
+/*EquipoXActividad*/
+GO
+CREATE OR ALTER PROCEDURE UDP_EquipoXActividad 
+@acti_Id INT
+AS
+BEGIN
+    SELECT equi.equi_Id, equi.equi_Descripcion, equi.equi_ImgUrL, equi.equi_UsoActual, 
+           equi.equi_UsoLimite, equi.equi_Estado, equi.equi_UsuarioCreador, 
+           equi.equi_FechaCreacion, equi.equi_UsuarioModificador, equi.equi_FechaModificacion
+    FROM Acti.tbEquipos equi
+    INNER JOIN Acti.tbEquipoXActividades eqac ON equi.equi_Id = eqac.equi_Id
+    WHERE eqac.acti_Id = @acti_Id
+END
+
 --*************************************************** ///UDP Y VISTA tbEquipoXActividades ****************************************************************************--

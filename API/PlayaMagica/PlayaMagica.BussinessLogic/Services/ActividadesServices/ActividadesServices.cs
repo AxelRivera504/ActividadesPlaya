@@ -368,6 +368,20 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
         }
 
+        public IEnumerable<VW_tbEquipos> EquipoXActividad(int id)
+        {
+            try
+            {
+                var list = _equipoRepository.EquipoXActividad(id);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return Enumerable.Empty<VW_tbEquipos>();
+            }
+        }
+
 
         public ServiceResult InsertarEquipos(tbEquipos item)
         {
