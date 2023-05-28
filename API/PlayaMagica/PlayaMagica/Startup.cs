@@ -44,9 +44,8 @@ namespace PlayaMagica
 
             services.DataAccess(Configuration.GetConnectionString("ActividadesConexion"));
             services.BussinessLogic();
-            services.AddAutoMapper(x => x.AddProfile<MappingProfileExntensions>(), AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(x => x.AddProfile<MappingProfileExtensions>(), AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers();
-
             services.AddMvc();
             services.AddControllersWithViews();
             services.AddControllers();

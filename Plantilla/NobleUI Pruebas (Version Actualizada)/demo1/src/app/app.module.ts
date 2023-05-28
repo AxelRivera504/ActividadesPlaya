@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-
+import { FormsModule } from '@angular/forms'; 
 import { LayoutModule } from './views/layout/layout.module';
 import { AuthGuard } from './core/guard/auth.guard';
 
@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { ErrorPageComponent } from './views/pages/error-page/error-page.component';
 
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -22,11 +23,15 @@ import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
+    HttpClientModule,
+    FormsModule,
+    DataTablesModule
+
   ],
   providers: [
     AuthGuard,
     {
-      provide: HIGHLIGHT_OPTIONS, // https://www.npmjs.com/package/ngx-highlightjs
+      provide: HIGHLIGHT_OPTIONS,
       useValue: {
         coreLibraryLoader: () => import('highlight.js/lib/core'),
         languages: {

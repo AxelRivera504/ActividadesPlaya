@@ -4,7 +4,6 @@ import { BaseComponent } from './views/layout/base/base.component';
 import { AuthGuard } from './core/guard/auth.guard';
 import { ErrorPageComponent } from './views/pages/error-page/error-page.component';
 
-
 const routes: Routes = [
   { path:'auth', loadChildren: () => import('./views/pages/auth/auth.module').then(m => m.AuthModule) },
   {
@@ -13,12 +12,10 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: 'dashboard',
+        path: 'dashboard',  
         loadChildren: () => import('./views/pages/dashboard/dashboard.module').then(m => m.DashboardModule)
       },
       {
-<<<<<<< Updated upstream
-=======
         path: 'listplayitas',
         loadChildren: () => import('./views/pages/listplayitas/listplayitas.module').then(m => m.ListplayitasModule)
       },
@@ -31,10 +28,6 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/mantenimientos/mantenimientos.module').then(m => m.MantenimientosModule)
       },
       {
-        path: 'details',
-        loadChildren: () => import('./views/pages/mantenimientos/details/details.module').then(m => m.DetailsModule)
-      },
-      {
         path: 'clientes',
         loadChildren: () => import('./views/pages/clientes/clientes.module').then(m => m.ClientesModule)
       },
@@ -42,6 +35,10 @@ const routes: Routes = [
         path: 'encargados',
         loadChildren: () => import('./views/pages/encargados/encargados.module').then(m => m.EncargadosModule)
       },
+      {
+        path: 'Create',
+        loadChildren: () => import('./views/pages/roles/Create/create.module').then(m => m.CreateModule)
+      },      
       {
         path: 'actividades',
         loadChildren: () => import('./views/pages/actividades/actividades.module').then(m => m.ActividadesModule)
@@ -67,7 +64,20 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/direcciones/direcciones.module').then(m => m.DireccionesModule)
       },
       {
->>>>>>> Stashed changes
+        path: 'usuarios',
+        loadChildren: () => import('./views/pages/usuarios/usuarios.module').then(m => m.UsuariosModule)
+      },
+     
+      {
+        path: 'Detalles',        
+        loadChildren: () => import('./views/pages/usuarios/detalles/usarios-detalle.module').then(m => m.UsuariosDetallesModule)
+      },
+ 
+      {
+        path: 'roles',
+        loadChildren: () => import('./views/pages/roles/roles.modules').then(m => m.RolesModule)
+      },
+      {
         path: 'apps',
         loadChildren: () => import('./views/pages/apps/apps.module').then(m => m.AppsModule)
       },

@@ -1,0 +1,39 @@
+<div class="card">
+    <div class="card-body">
+        <div class="card-title text-center"><h3>Direcciones</h3></div>
+        <div class="text-center">
+            <button type="button" class="btn btn-primary">
+              <i class="feather icon-plus"></i>
+              Nuevo
+            </button>
+          </div>
+        <div class="table-responsive">
+          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Direccion Exacta</th>
+                <th>Municipio ID</th>
+                <th>Municipio</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of direcciones">
+                <td>{{item.dire_Id}}</td>
+                <td>{{item.dire_DireccionExacta}}</td>
+                <td>{{item.muni_Id}}</td>
+                <td>{{item.muni_Descripcion}}</td>
+                <td><button type="button" class="btn btn-warning">    <i class="feather icon-edit"></i></button>
+                    |
+                    <button type="button" class="btn btn-info"> 
+                              <i class="feather icon-list"></i></button>
+                              |
+                              <button type="button" class="btn btn-danger"> 
+                                        <i class="feather icon-trash"></i></button>
+                </td>
+              </tr>
+          </table>
+        </div>
+      </div>
+</div>

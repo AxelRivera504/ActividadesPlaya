@@ -11,6 +11,74 @@ export const MENU: MenuItem[] = [
     link: '/dashboard'
   },
   {
+    id:1,
+    label: 'Playas',
+    icon: 'sunset',
+    link: '/listplayitas'
+  },
+  {
+    id:2,
+    label: 'Equipos',
+    icon: 'box',
+    link: '/equipos'
+  },
+  {
+    label: 'Mantenimientos',
+    icon: 'settings',
+    link: '/mantenimientos'
+  },
+  {
+    label: 'Clientes',
+    icon: 'users',
+    link: '/clientes'
+  },
+  {
+    label: 'Encargados',
+    icon: 'user-check',
+    link: '/encargados'
+  },
+  {
+    label: 'Actividades',
+    icon: 'sun',
+    link: '/actividades'
+  },
+  {
+    label: 'Departamentos',
+    icon: 'home',
+    link: '/departamentos'
+  },
+  {
+    label: 'Municipios',
+    icon: 'home',
+    link: '/municipios'
+  },
+  {
+    label: 'Estados Civiles',
+    icon: 'home',
+    link: '/estadosciviles'
+  },
+  {
+    label: 'Metodos de Pago',
+    icon: 'home',
+    link: '/metodospago'
+  },
+  {
+    label: 'Direcciones',
+    icon: 'home',
+    link: '/direcciones'
+  },
+  {
+    label: 'Roles',
+    icon: 'home',
+    link: '/roles'
+  },
+
+  {
+    label: 'Usuarios',
+    icon: 'home',
+    link: '/usuarios'
+  },
+  {
     label: 'Web Apps',
     isTitle: true
   },

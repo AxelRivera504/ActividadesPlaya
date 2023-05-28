@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PlayaMagica.BussinessLogic.Services.GeneralServices;
+using PlayaMagica.Entities.Entities;
+using PlayaMagica.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +29,22 @@ namespace PlayaMagica.Controllers
         {
             var list = _generalServices.ListarDepartamentos();
             return Ok(list);
+        }
+
+        [HttpPost("Insert")]
+        public IActionResult Insert(DepartamentosViewModel item)
+        {
+            var listadoMapeado = _mapper.Map<tbDepartamentos>(item);
+            var listado = _generalServices.InsertarDepartamentos(listadoMapeado);
+            return Ok(listado);
+        }
+
+        [HttpPost("Update")]
+        public IActionResult Update(DepartamentosViewModel item)
+        {
+            var listadoMapeado = _mapper.Map<tbDepartamentos>(item);
+            var listado = _generalServices.EditarDepartamentos(listadoMapeado);
+            return Ok(listado);
         }
     }
 }

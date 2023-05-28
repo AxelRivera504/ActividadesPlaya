@@ -12,7 +12,11 @@ import { metodospago } from '../Model/metodospago';
 import { estadosciviles } from '../Model/estadosciviles';
 import { estadoscivilesEdit } from '../Model/EstadosCivilesEdit';
 import { direcciones } from '../Model/direcciones';
-import { MantenimientoEdit } from '../Model/MantenimientosEdit';
+import { roles } from '../Model/roles';
+import { usuarios } from '../Model/Usuarios';
+import { pantallas } from '../Model/pantallas';
+import { RolesXpantallas } from '../Model/RolesXPantallas';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -39,6 +43,10 @@ export class ServicesService {
 
   getEncargados(){
     return this.http.get<Encargados[]>(this.Url + "/Encargados/ListarEncargados");
+  }
+
+  getEncargadosddl(){
+    return this.http.get<Encargados[]>(this.Url + "/Encargados/ListarEncargadosddl");
   }
 
   getActividades(){
@@ -76,16 +84,42 @@ export class ServicesService {
   EditarEstadosCiviles(estadosciviles: estadosciviles){
     return this.http.post<estadosciviles[]>(this.Url + "/EstadosCiviles/Insert", estadosciviles);
   }
-
-  DeleteMantenimientos(Mantenimiento: Mantenimiento){
-    return this.http.post<Mantenimiento[]>(this.Url + "/Mantenimientos/DeleteMantenimientos",Mantenimiento)
+  getRoles(){
+    return this.http.get<roles[]>(this.Url + "/Roles/ListarRoles");
+  }
+   
+  createRoles(Roles : roles){
+    return this.http.post<roles[]>(this.Url + "/Roles/Insertar", Roles);
   }
 
-  EditarMantenimientos(MantenimientoEditar:MantenimientoEdit){
-    return this.http.post<MantenimientoEdit[]>(this.Url + "/Mantenimientos/UpdateMantenimientos",MantenimientoEditar)
+  createRolesXpantallas(rolesXpantallas : RolesXpantallas){
+    return this.http.post<RolesXpantallas[]>(this.Url + "/RolesPorPantalla/Insertar", rolesXpantallas);
   }
 
-  DetailsMantenimiento(id?:number){
-    return this.http.get<Mantenimiento[]>(this.Url + "/Mantenimientos/DetailsMantenimiento"+id)
+
+
+  obtenerPantallasPorRol(role_ID: string) {
+    return this.http.get<pantallas[]>(this.Url + "/RolesPorPantalla/PantallasXroles" + role_ID);
   }
+
+  obtenerPantallas() {
+    return this.http.get<pantallas[]>(this.Url + "/Pantallas/Pantallas");
+  }
+
+  getUsuarios(){
+    return this.http.get<usuarios[]>(this.Url + "/Usuario/Usuarios");
+  }
+ 
+  createUsuarios(usuarios: usuarios){
+    return this.http.post<usuarios[]>(this.Url + "/Usuario/Insertar", usuarios);
+  }
+  
+  updateUsuarios(usuarios: usuarios){
+    return this.http.post<usuarios[]>(this.Url + "/Usuario/Insertar", usuarios);
+  }
+     
+  deleteUsuarios(id: string) {
+    return this.http.delete<usuarios[]>(`${this.Url}/Usuario/Usuario/Delete/${id}`);
+  }
+
 }

@@ -1,0 +1,79 @@
+<div class="card">
+    <div class="card-body">
+        <div class="card-title text-center"><h3>Estados Civiles</h3></div>
+        <div class="text-center">
+            <button type="button" class="btn btn-primary" (click)="openBasicModal(basicModal)">
+              <i class="feather icon-plus"></i>
+              Nuevo
+            </button>
+          </div>
+        <div class="table-responsive">
+          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+     
+              <tr *ngFor="let item of estadocivil">
+                <td>{{item.esci_id}}</td>
+                <td>{{item.esci_Descripcion}}</td>
+                <td>
+                  <button type="button" class="btn btn-warning" (click)="openBasicModal1(basicModal1)"> 
+                       <i class="feather icon-edit"></i>
+                   </button>
+                    |
+                    <button type="button" class="btn btn-info"> 
+                        <i class="feather icon-list"></i>
+                    </button>
+                   |
+                  <button type="button" class="btn btn-danger"> 
+                     <i class="feather icon-trash"></i>
+                  </button>
+                </td>
+
+                <ng-template #basicModal1 let-modal>
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2">Editar registro</h5>
+                    <input type="text" disabled hidden value="{{item.esci_id}}" >
+                  </div>
+                      <div class="modal-body">
+                          <label for="exampleInput" class="form-label">Estado Civil</label>
+                          <input type="text" class="form-control" id="exampleInput" required placeholder="Estado Civil" value="{{item.esci_Descripcion}}" 
+                          >
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" (click)="cancelar(); modal.close('by: close button')">Cerrar</button>
+                        <button type="button" class="btn btn-primary" (click)="Guardar()">Actualizar</button>
+                      </div>
+                </ng-template>
+
+              </tr>
+          </table>
+        </div>
+      </div>
+
+      <ng-template #basicModal let-modal>
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Nuevo registro</h5>
+        </div>
+            <div class="modal-body">
+                <label for="exampleInput" class="form-label">Estado Civil</label>
+                <input type="text" class="form-control" id="exampleInput" required placeholder="Estado Civil" [(ngModel)]="estadosciviles.esci_Descripcion" 
+                name="estadosciviles.esci_Descripcion" #estadoCivil="ngModel"
+                [ngClass]="{ 'is-invalid': submitted && estadoCivil.invalid }"
+                >
+                <div class="invalid-feedback" *ngIf="estadoCivil?.errors?.required && submitted">Estado civil requerido</div>
+              </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cancelar(); modal.close('by: close button')">Cerrar</button>
+              <button type="button" class="btn btn-primary" (click)="Guardar()">Guardar</button>
+            </div>
+      </ng-template>
+
+     
+
+</div>

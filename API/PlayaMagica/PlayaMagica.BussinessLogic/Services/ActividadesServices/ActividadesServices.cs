@@ -13,11 +13,17 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
         private readonly ClientesRepository _clientesRepository;
         private readonly EncargadosRepository _encargadosRepository;
         private readonly PlayasRepository _playasRepository;
-        public ActividadesServices(EncargadosRepository encargadosRepository, ClientesRepository clientesRepository, PlayasRepository playasRepository)
+        private readonly ActividadesRepository _actividadesRepository;
+        private readonly EquipoRepository _equipoRepository;
+        private readonly MantenimientoRepository _mantenimientoRepository;
+        public ActividadesServices(MantenimientoRepository mantenimientoRepository, EquipoRepository equipoRepository, ActividadesRepository actividadesRepository, EncargadosRepository encargadosRepository, ClientesRepository clientesRepository, PlayasRepository playasRepository)
         {
             _clientesRepository = clientesRepository;
             _encargadosRepository = encargadosRepository;
             _playasRepository = playasRepository;
+            _actividadesRepository = actividadesRepository;
+            _equipoRepository = equipoRepository;
+            _mantenimientoRepository = mantenimientoRepository;
         }
 
 
@@ -31,10 +37,25 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
             catch (Exception ex)
             {
-
+                string message = ex.Message;
                 return Enumerable.Empty<VW_tbEncargados>();
             }
         }
+
+        public IEnumerable<tbEncargados> ListarEncargadosddl()
+        {
+            try
+            {
+                var list = _encargadosRepository.ListarEncargadosddl();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return Enumerable.Empty<tbEncargados>();
+            }
+        }
+
 
 
         public ServiceResult InsetarEncargados(tbEncargados item)
@@ -93,7 +114,7 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
             catch (Exception ex)
             {
-
+                string message = ex.Message;
                 return Enumerable.Empty<VW_tbClientes>();
             }
         }
@@ -155,7 +176,7 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
             catch (Exception ex)
             {
-
+                string message = ex.Message;
                 return Enumerable.Empty<VW_tbPlayas>();
             }
         }
@@ -206,8 +227,6 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
         }
         #endregion
-<<<<<<< Updated upstream
-=======
 
         #region Mantenimientos
         public IEnumerable<VW_tbMantenimiento> ListarMantenimientos()
@@ -408,6 +427,5 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
         }
         #endregion
->>>>>>> Stashed changes
     }
 }
