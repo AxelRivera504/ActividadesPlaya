@@ -61,7 +61,7 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             parametros.Add("@enca_Sexo", item.enca_Sexo, DbType.String, ParameterDirection.Input);
             parametros.Add("@esci_id", item.esci_id, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@enca_FechaNac", item.enca_FechaNac, DbType.Date, ParameterDirection.Input);
-            parametros.Add("@enca_UsuarioCreador", item.enca_UsuarioCreador, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@enca_UsuarioModificador", item.enca_UsuarioModificador, DbType.Int32, ParameterDirection.Input);
             var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbEncargados_Update, parametros, commandType: CommandType.StoredProcedure);
 
             result.CodeStatus = answer;

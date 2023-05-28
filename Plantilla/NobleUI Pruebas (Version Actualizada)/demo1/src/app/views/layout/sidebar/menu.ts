@@ -2,7 +2,7 @@ import { MenuItem } from './menu.model';
 
 export const MENU: MenuItem[] = [
   {
-    label: 'Main',
+    label: 'Inicio',
     isTitle: true
   },
   {
@@ -11,23 +11,63 @@ export const MENU: MenuItem[] = [
     link: '/dashboard'
   },
   {
-    id:1,
+    label: 'Generales',
+    isTitle: true
+  },
+  {
+    id:7,
+    label: 'Departamentos',
+    icon: 'map',
+    link: '/icons'
+  },
+  {
+    id:8,
+    label: 'Municipios',
+    icon: 'map',
+    link: '/municipios'
+  },
+  {
+    id:12,
+    label: 'Estados Civiles',
+    icon: 'heart',
+    link: '/estadosciviles'
+  },
+  {
+    id:10,
+    label: 'Metodos de Pago',
+    icon: 'credit-card',
+    link: '/metodospago'
+  },
+  {
+    id:11,
+    label: 'Direcciones',
+    icon: 'map-pin',
+    link: '/direcciones'
+  },
+  {
+    label: 'Actividades',
+    isTitle: true
+  },
+  {
+    id:6,
     label: 'Playas',
     icon: 'sunset',
     link: '/listplayitas'
   },
   {
-    id:2,
+    id:15,
     label: 'Equipos',
     icon: 'box',
     link: '/equipos'
   },
   {
+    id:4,
     label: 'Mantenimientos',
     icon: 'settings',
     link: '/mantenimientos'
   },
   {
+    id:1,
     label: 'Clientes',
     icon: 'users',
     link: '/clientes'
@@ -38,367 +78,31 @@ export const MENU: MenuItem[] = [
     link: '/encargados'
   },
   {
+    id:18,
     label: 'Actividades',
     icon: 'sun',
     link: '/actividades'
   },
   {
-    label: 'Departamentos',
-    icon: 'home',
-    link: '/departamentos'
+    id:3,
+    label: 'Reservaciones',
+    icon: 'star',
+    link: '/reservaciones'
   },
   {
-    label: 'Municipios',
-    icon: 'home',
-    link: '/municipios'
+    label: 'Acceso',
+    isTitle: true
   },
   {
-    label: 'Estados Civiles',
-    icon: 'home',
-    link: '/estadosciviles'
-  },
-  {
-    label: 'Metodos de Pago',
-    icon: 'home',
-    link: '/metodospago'
-  },
-  {
-    label: 'Direcciones',
-    icon: 'home',
-    link: '/direcciones'
-  },
-  {
+    id:17,
     label: 'Roles',
-    icon: 'home',
+    icon: 'users',
     link: '/roles'
   },
-
   {
+    id:16,
     label: 'Usuarios',
-    icon: 'home',
+    icon: 'user-plus',
     link: '/usuarios'
-  },
-  {
-    label: 'Web Apps',
-    isTitle: true
-  },
-  {
-    label: 'Email',
-    icon: 'mail',
-    subItems: [
-      {
-        label: 'Inbox',
-        link: '/apps/email/inbox',
-      },
-      {
-        label: 'Read',
-        link: '/apps/email/read'
-      },
-      {
-        label: 'Compose',
-        link: '/apps/email/compose'
-      },
-    ]
-  },
-  {
-    label: 'Chat',
-    icon: 'message-square',
-    link: '/apps/chat',
-  },
-  {
-    label: 'Calendar',
-    icon: 'calendar',
-    link: '/apps/calendar',
-    badge: {
-      variant: 'primary',
-      text: 'Event',
-    }
-  },
-  {
-    label: 'Components',
-    isTitle: true
-  },
-  {
-    label: 'UI Kit',
-    icon: 'feather',
-    subItems: [
-      {
-        label: 'Accordion',
-        link: '/ui-components/accordion',
-      },
-      {
-        label: 'Alerts',
-        link: '/ui-components/alerts',
-      },
-      {
-        label: 'Badges',
-        link: '/ui-components/badges',
-      },
-      {
-        label: 'Breadcrumbs',
-        link: '/ui-components/breadcrumbs',
-      },
-      {
-        label: 'Buttons',
-        link: '/ui-components/buttons',
-      },
-      {
-        label: 'Button group',
-        link: '/ui-components/button-group',
-      },
-      {
-        label: 'Cards',
-        link: '/ui-components/cards',
-      },
-      {
-        label: 'Carousel',
-        link: '/ui-components/carousel',
-      },
-      {
-        label: 'Collapse',
-        link: '/ui-components/collapse',
-      },
-      {
-        label: 'Datepicker',
-        link: '/ui-components/datepicker',
-      },
-      {
-        label: 'Dropdowns',
-        link: '/ui-components/dropdowns',
-      },
-      {
-        label: 'List group',
-        link: '/ui-components/list-group',
-      },
-      {
-        label: 'Media object',
-        link: '/ui-components/media-object',
-      },
-      {
-        label: 'Modal',
-        link: '/ui-components/modal',
-      },
-      {
-        label: 'Navs',
-        link: '/ui-components/navs',
-      },
-      {
-        label: 'Navbar',
-        link: '/ui-components/navbar',
-      },
-      {
-        label: 'Pagination',
-        link: '/ui-components/pagination',
-      },
-      {
-        label: 'Popovers',
-        link: '/ui-components/popovers',
-      },
-      {
-        label: 'Progress',
-        link: '/ui-components/progress',
-      },
-      {
-        label: 'Rating',
-        link: '/ui-components/rating',
-      },
-      {
-        label: 'Scrollbar',
-        link: '/ui-components/scrollbar',
-      },
-      {
-        label: 'Spinners',
-        link: '/ui-components/spinners',
-      },
-      {
-        label: 'Timepicker',
-        link: '/ui-components/timepicker',
-      },
-      {
-        label: 'Tooltips',
-        link: '/ui-components/tooltips',
-      },
-      {
-        label: 'Typeadhed',
-        link: '/ui-components/typeahead',
-      },
-    ]
-  },
-  {
-    label: 'Advanced UI',
-    icon: 'anchor',
-    subItems: [
-      {
-        label: 'Cropper',
-        link: '/advanced-ui/cropper',
-      },
-      {
-        label: 'Owl carousel',
-        link: '/advanced-ui/owl-carousel',
-      },
-      {
-        label: 'SortableJs',
-        link: '/advanced-ui/sortablejs',
-      },
-      {
-        label: 'Sweet alert',
-        link: '/advanced-ui/sweet-alert',
-      },
-    ]
-  },
-  {
-    label: 'Forms',
-    icon: 'file-text',
-    subItems: [
-      {
-        label: 'Basic elements',
-        link: '/form-elements/basic-elements'
-      },
-      {
-        label: 'Advanced elements',
-        subItems: [
-          {
-            label: 'Form validation',
-            link: '/advanced-form-elements/form-validation'
-          },
-          {
-            label: 'Input mask',
-            link: '/advanced-form-elements/input-mask'
-          },
-          {
-            label: 'Ng-select',
-            link: '/advanced-form-elements/ng-select'
-          },
-          {
-            label: 'Ngx-chips',
-            link: '/advanced-form-elements/ngx-chips'
-          },
-          {
-            label: 'Ngx-color-picker',
-            link: '/advanced-form-elements/ngx-color-picker'
-          },
-          {
-            label: 'Ngx-dropzone',
-            link: '/advanced-form-elements/ngx-dropzone-wrapper'
-          },
-        ]
-      },
-      {
-        label: 'Editors',
-        link: '/form-elements/editors'
-      },
-      {
-        label: 'Wizard',
-        link: '/form-elements/wizard'
-      },
-    ]
-  },
-  {
-    label: 'Charts & graphs',
-    icon: 'pie-chart',
-    subItems: [
-      {
-        label: 'ApexCharts',
-        link: '/charts-graphs/apexcharts',
-      },
-      {
-        label: 'ChartJs',
-        link: '/charts-graphs/chartjs',
-      },
-    ]
-  },
-  {
-    label: 'Tables',
-    icon: 'layout',
-    subItems: [
-      {
-        label: 'Basic tables',
-        link: '/tables/basic-table',
-      },
-      {
-        label: 'Data table',
-        link: '/tables/data-table',
-      },
-      {
-        label: 'Ngx-datatable',
-        link: '/tables/ngx-datatable'
-      }
-    ]
-  },
-  {
-    label: 'Icons',
-    icon: 'smile',
-    subItems: [
-      {
-        label: 'Feather icons',
-        link: '/icons/feather-icons',
-      },
-      {
-        label: 'Mdi icons',
-        link: '/icons/mdi-icons',
-      }
-    ]
-  },
-  {
-    label: 'Pages',
-    isTitle: true
-  },
-  {
-    label: 'Special pages',
-    icon: 'book',
-    subItems: [
-      {
-        label: 'Blank page',
-        link: '/general/blank-page',
-      },
-      {
-        label: 'Faq',
-        link: '/general/faq',
-      },
-      {
-        label: 'Invoice',
-        link: '/general/invoice',
-      },
-      {
-        label: 'Profile',
-        link: '/general/profile',
-      },
-      {
-        label: 'Pricing',
-        link: '/general/pricing',
-      },
-      {
-        label: 'Timeline',
-        link: '/general/timeline',
-      }
-    ]
-  },
-  {
-    label: 'Authentication',
-    icon: 'unlock',
-    subItems: [
-      {
-        label: 'Login',
-        link: '/auth/login',
-      },
-      {
-        label: 'Register',
-        link: '/auth/register',
-      },
-    ]
-  },
-  {
-    label: 'Error',
-    icon: 'cloud-off',
-    subItems: [
-      {
-        label: '404',
-        link: '/error/404',
-      },
-      {
-        label: '500',
-        link: '/error/500',
-      },
-    ]
   },
 ];

@@ -40,8 +40,24 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/mantenimientos/mantenimientos.module').then(m => m.MantenimientosModule)
       },
       {
+        path: 'details',
+        loadChildren: () => import('./views/pages/mantenimientos/details/details.module').then(m => m.DetailsModule)
+      },
+      {
         path: 'clientes',
         loadChildren: () => import('./views/pages/clientes/clientes.module').then(m => m.ClientesModule)
+      },
+      {
+        path: 'create-clientes',
+        loadChildren: () => import('./views/pages/clientes/create-clientes/create-clientes.module').then(m => m.CreateClientesModule)
+      },
+      {
+        path: 'detailscli',
+        loadChildren: () => import('./views/pages/clientes/detailscli/detailscli.module').then(m => m.DetailscliModule)
+      },
+      {
+        path: 'editar-clientes',
+        loadChildren: () => import('./views/pages/clientes/editar-clientes/editar-clientes.module').then(m => m.EditarClientesModule)
       },
       {
         path: 'encargados',

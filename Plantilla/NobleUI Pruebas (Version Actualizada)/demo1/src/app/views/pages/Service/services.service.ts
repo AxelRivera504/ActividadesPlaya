@@ -18,6 +18,13 @@ import { pantallas } from '../Model/pantallas';
 import { RolesXpantallas } from '../Model/RolesXPantallas';
 
 import { EquipoXActividades } from '../Model/EquipoXActividades';
+import { MantenimientoEdit } from '../Model/MantenimientoEdit';
+import { RolesXPantalla } from '../Model/RolesXPantalla';
+import { Reservaciones } from '../Model/Reservaciones';
+import { ClienteXReservacion } from '../Model/ClienteXReservacion';
+import { ActividadesXFecha } from '../Model/ActividadesXFecha';
+import { Factura } from '../Model/Factura';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -51,12 +58,20 @@ export class ServicesService {
     return this.http.get<Cliente[]>(this.Url + "/Clientes/ListarClientes");
   }
 
-  getEncargados(){
-    return this.http.get<Encargados[]>(this.Url + "/Encargados/ListarEncargados");
+  InsertarClientes(cliente:Cliente){
+    return this.http.post<Cliente[]>(this.Url + "/Clientes/InsertarClientes",cliente)
   }
 
-  getEncargadosddl(){
-    return this.http.get<Encargados[]>(this.Url + "/Encargados/ListarEncargadosddl");
+  DeleteClientes(cliente: Cliente){
+    return this.http.post<Cliente[]>(this.Url + "/Clientes/DeleteClientes",cliente)
+  }
+
+  ActualizarClientes(cliente:Cliente){
+    return this.http.post<Cliente[]>(this.Url + "/Clientes/UpdateClientes",cliente)
+  }
+
+  getEncargados(){
+    return this.http.get<Encargados[]>(this.Url + "/Encargados/ListarEncargados");
   }
 
   getActividades(){
@@ -198,9 +213,5 @@ export class ServicesService {
 
   DeleteEstadosCiviles(estadosciviles: estadosciviles){
     return this.http.post<estadosciviles[]>(this.Url + "/EstadosCiviles/Delete", estadosciviles);
-  }
-
-  EditarEstadosCiviles(estadosciviles: estadosciviles){
-    return this.http.post<estadosciviles[]>(this.Url + "/EstadosCiviles/Update", estadosciviles);
   }
 }

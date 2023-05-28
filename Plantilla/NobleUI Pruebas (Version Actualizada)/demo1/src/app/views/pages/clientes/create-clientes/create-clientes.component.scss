@@ -1,0 +1,16 @@
+.is-invalid {
+    background-repeat: no-repeat !important;
+    border: 1px solid #ff3366;
+  }
+
+  ng-select .is-invalid {
+    border-radius: 4px;
+  }
+
+
+.input-invalid-text{
+    margin-top: 0.25rem;
+    width: 100%;
+    font-size: 0.875em;
+    color: #ff3366;
+}

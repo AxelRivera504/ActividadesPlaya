@@ -1,0 +1,79 @@
+
+<div class="container">
+    <div class="card">
+        <div class="card-header text-center my-0">
+                <h3>Detalles encargados</h3>  
+        </div>
+        <div class="card-body">
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4>ID</h4>
+                    <br>
+                    <label for="xd">{{clientes.clie_id}}</label>
+                </div>
+                <div class="col-sm-6">
+                    <h4>Nombres</h4>
+                    <br>
+                    <label for="xd">{{clientes.clie_Nombres}}</label>
+                </div>
+            </div>       
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4>Apellidos</h4>
+                    <br>
+                    <label for="xd">{{clientes.clie_Apellidos}}</label>
+                </div>
+                <div class="col-sm-6">
+                    <h4>DNI</h4>
+                    <br>
+                    <label for="xd">{{clientes.clie_DNI}}</label>
+                </div>
+            </div>     
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4>Email</h4>
+                    <br>
+                    <label for="xd">{{clientes.clie_Email}}</label>
+                </div>
+                <div class="col-sm-6">
+                    <h4>Teléfono</h4>
+                    <br>
+                    <label for="xd">{{clientes.clie_Sexo}}</label>
+                </div>
+            </div>  
+            <br>    
+            <div card>
+                <div class="card-header">
+                        <h2>Auditoría</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Acción</th>
+                                <th>Usuario</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Creación</td>
+                                <td>{{clientes.clie_UsuarioCreador_Nombre}}</td>
+                                <td>{{clientes.clie_FechaCreacion}}</td>
+                            </tr>
+                            <tr>
+                                <td>Modificación</td>
+                                <td>{{clientes.clie_UsuarioModificador_Nombre}}</td>
+                                <td>{{clientes.clie_FechaModificacion}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>  
+            <button type="button" class="btn btn-primary mt-3" (click)="Regresar()"><i class="feather icon-arrow-left"></i>Regresar</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,285 @@
+
+    <div class="card">
+      <div class="card-header text-center my-0">
+        <h3>Reservación</h3>  
+      </div>
+      <div class="card-body">
+
+        <aw-wizard #wizardForm> 
+          
+          <aw-wizard-step stepTitle="Registro de clientes">
+            <form (ngSubmit)="form1Submit()" [formGroup]="validationForm1">
+              
+              <div class="row">
+                <div class="col sm-10">
+                  <ng-select
+                    [items]="Clientes"
+                    [multiple]="true"
+                    [maxSelectedItems]="5"    
+                    [closeOnSelect]="false"
+                    [searchable]="false"
+                    bindLabel="clie_NombreCompleto"
+                    placeholder="Selecciona un cliente"
+                    [(ngModel)]="selectedPeople"
+                    [ngClass]="{'is-invalid': isForm1Submitted && form1.firstName.errors}"
+                    formControlName="firstName"
+                  >
+                  </ng-select>
+                  <div *ngIf="isForm1Submitted && form1.firstName.errors?.required" class="invalid-feedback">
+                    Debe seleccionar un cliente
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <button button type="button" class="btn btn-primary" (click)="CrearCliente()">
+                    <i class="feather icon-plus"></i>
+                    Nuevo cliente
+                  </button>
+                </div>
+              </div>
+              <br>
+              <br>                     
+              <div class="d-flex justify-content-center mt-2">
+                <button button class="btn btn-primary" type="submit" id="btnContinueForm1" style="display:'';">
+                  Siguiente<i class="feather icon-arrow-right"></i>                
+                </button>
+              </div>              
+            </form>
+            <div id="Cliente5" style="display: none;">
+                <div class="example">
+                  <ul ngbNav #fillJustifyNav="ngbNav" class="nav-tabs nav-fill">
+                    <li [ngbNavItem]="1">
+                      <ng-template ngbNavContent>
+                        <div class="card">
+                          <div class="card-header text-center my-0">
+                              <h3>Crear Clientes</h3>
+                          </div>
+                          <div class="card-body">
+                              <div class="row">
+                                  <div class="col-sm-6">
+                                      <label for="Nombre">Nombres Cliente:</label>
+                                      <br>
+                                      <input type="text" class="form-control" id="Nombre" required placeholder="Nombres cliente"
+                                          [(ngModel)]="clientesForm.clie_Nombres" name="clientesForm.clie_Nombres" #clieNombre="ngModel"
+                                          [ngClass]="{ 'is-invalid': submitted && clieNombre.invalid }">
+                                      <div class="invalid-feedback" *ngIf="clieNombre?.errors?.required && submitted">Nombre requerido</div> 
+                                  </div>
+                                  <div class="col-sm-6">
+                                      <label for="Apellidos">Apellidos Cliente:</label>
+                                      <br>
+                                      <input type="text" class="form-control" id="Apellidos" required placeholder="Apellidos cliente"
+                                          [(ngModel)]="clientesForm.clie_Apellidos" name="clientesForm.clie_Apellidos" #clieApellido="ngModel"
+                                          [ngClass]="{ 'is-invalid': submitted && clieApellido.invalid }">
+                                      <div class="invalid-feedback" *ngIf="clieApellido?.errors?.required && submitted">Apellidos requerido</div> 
+                                  </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                  <div class="col-sm-6">
+                                       <label for="DNI">DNI Cliente:</label>
+                                       <br>
+                                       <input type="text" class="form-control" id="DNI" required placeholder="DNI cliente" [hiddenInput]="true" mask="0000-0000-00000"
+                                          [(ngModel)]="clientesForm.clie_DNI" name="clientesForm.clie_DNI" #clieDNI="ngModel"
+                                          [ngClass]="{ 'is-invalid': submitte1 && clieDNI.invalid }">
+                                      <div class="invalid-feedback" *ngIf="clieDNI?.errors?.required && submitte1">DNI requerido</div> 
+                                      </div>
+                                  <div class="col-sm-6"> 
+                                      <label for="email">Email Cliente:</label>
+                                      <br>
+                                      <input type="email" class="form-control" id="email" required placeholder="email cliente"
+                                      [(ngModel)]="clientesForm.clie_Email" name="clientesForm.clie_Email" #clieEmail="ngModel"
+                                      [ngClass]="{ 'is-invalid': submitted && clieEmail.invalid }">
+                                  <div class="invalid-feedback" *ngIf="clieEmail?.errors?.required && submitted">Email requerido</div> 
+                                  </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                  <div class="col-sm-6">
+                                      <label for="Nombre">Fecha de nacimiento cliente:</label>
+                                      <br>
+                                      <div class="input-group">
+                                        <input class="form-control" placeholder="yyyy-mm-dd" 
+                                          name="dp" [(ngModel)]="selectedDate" ngbDatepicker #d="ngbDatepicker" 
+                                          #fechanac="ngModel" required [ngClass]="{ 'is-invalid': (submitted && fechanac.invalid) || (submitted && !fechaFormatoValido) }"
+                                          (ngModelChange)="onDateSelect($event)">
+                                        <button class="input-group-text" type="button" (click)="d.toggle()">
+                                          <i class="feather icon-calendar icon-md text-muted"></i>
+                                        </button>
+                                        <div class="invalid-feedback" *ngIf="fechanac?.errors?.required && submitted">Debe escoger una fecha de nacimiento</div>
+                                        <div class="invalid-feedback" *ngIf="(submitted && fechaFormatoValido)">El formato debe ser 'yyyy-mm-dd'</div>
+                                      </div>
+                                    </div>
+                                  <div class="col-sm-6">
+                                      <label for="Nombre">Sexo del cliente:</label>
+                                      <br>
+                                      <div class="container">                       
+                                          <div class="form-control" style="display: flex; justify-content: center; height: 30;">
+                                          <div class="form-check form-check-inline">
+                                              <input type="radio" class="form-check-input" value="M" [ngClass]="{ 'is-invalid': submitted && clieSex.invalid }"
+                                                  [(ngModel)]="clientesForm.clie_Sexo" required name="radioInline" id="radioInline" #clieSex="ngModel">
+                                              <label class="form-check-label" for="radioInline">
+                                                  Masculino
+                                              </label>
+                                          </div>
+                                          <div class="form-check form-check-inline">
+                                              <input type="radio" class="form-check-input" value="F" [ngClass]="{ 'is-invalid': submitted && clieSex.invalid }"
+                                                  [(ngModel)]="clientesForm.clie_Sexo" required name="radioInline" #clieSex="ngModel" id="radioInline1">
+                                              <label class="form-check-label" for="radioInline1">
+                                                  Femenino
+                                              </label>
+                                          </div> 
+                                      </div>
+                                          <div class="invalid-feedback" *ngIf="submitted && form.get('clie_Sexo')?.invalid && form.get('clie_Sexo')?.touched">
+                                              Sexo requerido
+                                            </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <br>       
+                          </div> 
+                          <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-6">
+                              <div class="d-flex justify-content-center">
+                                <button type="button" class="btn btn-primary mt-3 me-3" (click)="Cancelar()">
+                                    <i class="feather icon-x"></i>Cancelar
+                                </button>
+                                <button type="button" class="btn btn-primary mt-3" (click)="Guardar()">
+                                    <i class="feather icon-save"></i>Guardar
+                                </button>
+                            </div>
+                                <br>
+                            </div>
+                        </div>      
+                      </div>
+                      </ng-template>
+                    </li>
+                  </ul>               
+                  <div [ngbNavOutlet]="fillJustifyNav" class="border border-top-0 p-3"></div>
+                </div>
+              </div>   
+          </aw-wizard-step>
+
+          <aw-wizard-step stepTitle="Actividades">
+            <br>
+            <div class="card">
+              <div class="card-header text-center my-0">
+                <h3>Escoja la actividad que desea realizar</h3>              
+              </div>
+              <div class="row">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control" [(ngModel)]="searchTerm" (keydown.enter)="search()" placeholder="Buscar">
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div *ngFor="let item of getFilteredActividades() | slice:(defaultPaginationCurrentPage-1)*itemsPerPage:defaultPaginationCurrentPage*itemsPerPage" class="col-sm-4 mb-3">
+                    <div class="card" [class.selected]="item.selected" (click)="selectActivity(item)">
+                      <img [src]="item.acti_ImgUrl" class="card-img-top custom-img" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">Actividad: {{item.acti_Nombre}}</h5>
+                        <p class="card-text mb-3">Cupo de la actividad: {{item.acti_Cupo}}</p>
+                        <p class="card-text mb-3">Precio: {{item.acti_Precio}} LPS</p>
+                        <input type="radio" [checked]="item.selected" [name]="'actividad'" style="position: center;">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ngb-pagination
+              [(page)]="defaultPaginationCurrentPage"
+              [pageSize]="itemsPerPage"
+              [collectionSize]="actividades.length"
+              aria-label="Default pagination"
+              class="d-flex justify-content-center mt-3"
+            ></ngb-pagination>
+            <div class="card-footer">
+              <div class="d-flex justify-content-center mt-2">
+                <button class="btn btn-secondary me-2" type="button" awPreviousStep>  <i class="feather icon-arrow-left"></i> Regresar</button>
+                <button class="btn btn-primary" type="button" (click)="Next2(basicModal)"> Siguiente <i class="feather icon-arrow-right"></i></button>
+              </div>
+            </div>
+            </div>
+          </aw-wizard-step>
+
+          <aw-wizard-step stepTitle="Factura">
+            <div class="card">
+              <div class="card-header text-center my-0">
+                <h3>Escoja un metodo de pago</h3>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <label for="Nombre"><strong>Subtotal:</strong></label>
+                    <br>
+                    <input type="text" class="form-control" id="Nombre" [(ngModel)]="factu.fuct_Subtotal" disabled>
+                  </div>
+                  <div class="col-sm-4">
+                    <label for="Nombre"><strong>ISV:</strong></label>
+                    <br>
+                    <input type="text" class="form-control" id="Nombre" [(ngModel)]="factu.fuct_Isv" disabled>
+                  </div>
+                  <div class="col-sm-4">
+                    <label for="Nombre"><strong>Total:</strong></label>
+                    <br>
+                    <input type="text" class="form-control" id="Nombre" [(ngModel)]="factu.fuct_Total" disabled>
+                  </div>
+                </div>
+                <br>
+                <div class="col-sm-12">
+                  <label for="Nombre">Metodo de pago:</label>
+                  <br>
+                  <ng-select [(ngModel)]="metodoSeleccionado" [appendTo]="'body'" placeholder="--Seleccione un metodo de pago--"
+                  name="metodoSeleccionado" #mepa="ngModel" required [ngClass]="{ 'is-invalid': submittedMeto && mepa.invalid }">
+                    <ng-option *ngFor="let item of metodos" [value]="item.mepa_id">{{item.mepa_Descripcion}}</ng-option>
+                  </ng-select>
+                  <div class="invalid-feedback" *ngIf="mepa?.errors?.required && submittedMeto">Debe escoger un metodo de pago</div> 
+              </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-center mt-2">
+              <button class="btn btn-success" type="button" (click)="ConfirmarFactura()"><i class="feather icon-check-circle"></i> Confirmar Reservación</button>
+            </div>
+          </aw-wizard-step>
+
+          <aw-wizard-step stepTitle="finish">
+            <div class="text-center">
+              <i data-feather="check-circle" appFeatherIcon class="text-success mt-4 mb-2 icon-xxl"></i>
+              <h3 class="text-muted mb-3">¡Muchas gracias!</h3>
+              <p class="w-75 mx-auto mb-4 text-muted">Muchas gracias por hacer tu Reservación</p>
+            </div>
+            <div class="d-flex justify-content-center mt-2">
+              <button class="btn btn-success" type="button" (click)="finishFunction()"><i class="feather icon-check-circle"></i> Salir</button>
+            </div>
+          </aw-wizard-step>
+
+        </aw-wizard>
+
+        <ng-template #basicModal let-modal>
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Escoja la fecha</h5>
+          </div>
+              <div class="modal-body">
+                  <div class="col-sm-12">
+                    <label for="Nombre">Escoja la fecha en la que quiere realizar la actividad:</label>
+                    <br>
+                    <div class="input-group">
+                      <input class="form-control" placeholder="yyyy-mm-dd" 
+                        name="dp" [(ngModel)]="selectedDate1" ngbDatepicker #d="ngbDatepicker" 
+                        #fechaRes="ngModel" required [ngClass]="{ 'is-invalid': (submittedDate && fechaRes.invalid) || (submittedDate && !fechaFormatoValido1) }"
+                        (ngModelChange)="onDateSelect1($event)"  [minDate]="minDate">
+                      <button class="input-group-text" type="button" (click)="d.toggle()">
+                        <i class="feather icon-calendar icon-md text-muted"></i>
+                      </button>
+                      <div class="invalid-feedback" *ngIf="fechaRes?.errors?.required && submittedDate">Debe escoger una fecha para realizar la Reservación</div>
+                      <div class="invalid-feedback" *ngIf="(submittedDate && fechaFormatoValido1)">El formato debe ser 'yyyy-mm-dd'</div>
+                    </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" (click)="CancelarFecha();modal.close('by: close button')">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="Siguiente()">Siguiente<i class="feather icon-arrow-right"></i></button>
+              </div>
+        </ng-template>
+      </div>
+    </div>

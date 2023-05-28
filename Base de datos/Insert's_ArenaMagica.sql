@@ -3,33 +3,19 @@ USE DB_ArenaMagica
 GO
 
 
-DECLARE @tableA TABLE(
-	pass VARBINARY(MAX)
-)
+/***************************Insertar tbRoles ****************************/
+INSERT INTO Acce.tbRoles(role_Descripcion,role_UsuarioCreador)
+VALUES('Administrador',1);   
+GO
 
-DECLARE @tableB TABLE(
-	pass VARCHAR(MAX)
-)
+INSERT INTO Acce.tbRoles(role_Descripcion,role_UsuarioCreador)
+VALUES ('Digitador',1);
+GO
 
-DECLARE @x VARCHAR(MAX) = 'awsd'
-DECLARE @p1 VARBINARY(MAX) = HASHBYTES('SHA2_512', @x)
-DECLARE @p2 VARCHAR(MAX) = HASHBYTES('SHA2_512', @x)
-
-INSERT INTO @tableA
-VALUES(@p1)
-
-INSERT INTO @tableB
-VALUES(@p2)
-
-SELECT * FROM @tableA 
-SELECT * FROM @tableA WHERE pass = @p1
-SELECT * FROM @tableB 
-SELECT * FROM @tableB WHERE pass = @p2
-
-INSERT INTO acce.tbUsuarios(usua_Usuario, usua_Clave, usua_EsAdmin, enca_ID, role_ID,usua_UsuarioCreador)
-VALUES ('juan', @p2, 1, 1,2, 1),
-	   ('awsd', @p2, 1, 1,1, 1)
-       
+INSERT INTO Acce.tbRoles(role_Descripcion,role_UsuarioCreador)
+VALUES ('Invitado',1);
+GO
+/***************************Insertar tbRoles ****************************/
 
 DECLARE @Pass AS NVARCHAR(MAX), @Clave AS NVARCHAR(250);
 SET @Clave = '123';
@@ -41,9 +27,45 @@ GO
 
 
 
+/***************************Insertar tbUsuarios ****************************/
 
+--Administrador usuario
+DECLARE @Pass AS NVARCHAR(MAX), @Clave AS NVARCHAR(250);
+SET @Clave = '123';
+SET @Pass = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @Clave),2)
 
+INSERT INTO acce.tbUsuarios(usua_Usuario, usua_Clave, enca_ID, role_ID, usua_Estado, usua_UsuarioCreador, usua_FechaCreacion, usua_UsuarioModificador, usua_FechaModificacion)
+VALUES('admin', @Pass, 1, 1, 1,1,GETDATE(),NULL,NULL)
+GO
 
+--Digitador usuario
+DECLARE @Pass1 AS NVARCHAR(MAX), @Clave1 AS NVARCHAR(250);
+SET @Clave1 = 'qwerty';
+SET @Pass1 = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @Clave1),2)
+
+INSERT INTO acce.tbUsuarios(usua_Usuario, usua_Clave, enca_ID, role_ID, usua_Estado, usua_UsuarioCreador, usua_FechaCreacion, usua_UsuarioModificador, usua_FechaModificacion)
+VALUES('Juan', @Pass1, 1, 2, 1,1,GETDATE(),NULL,NULL)
+GO
+
+--Invitado usuario
+DECLARE @Pass2 AS NVARCHAR(MAX), @Clave2 AS NVARCHAR(250);
+SET @Clave2 = 'awsd';
+SET @Pass2 = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @Clave2),2)
+
+INSERT INTO acce.tbUsuarios(usua_Usuario, usua_Clave, enca_ID, role_ID, usua_Estado, usua_UsuarioCreador, usua_FechaCreacion, usua_UsuarioModificador, usua_FechaModificacion)
+VALUES('Christopher', @Pass2, 1, 1, 1,1,GETDATE(),NULL,NULL)
+GO
+
+--Esdra usuario
+DECLARE @Pass3 AS NVARCHAR(MAX), @Clave3 AS NVARCHAR(250);
+SET @Clave3 = 'ECERNA';
+SET @Pass3 = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @Clave3),2)
+
+INSERT INTO acce.tbUsuarios(usua_Usuario, usua_Clave, enca_ID, role_ID, usua_Estado, usua_UsuarioCreador, usua_FechaCreacion, usua_UsuarioModificador, usua_FechaModificacion)
+VALUES('Esdrinha7', @Pass3, 1, 1, 1,1,GETDATE(),NULL,NULL)
+GO
+
+/***************************Insertar tbUsuarios ****************************/
 
 
 --************************************************ INSERTS DE LA DB_ArenaMagica *****************************************************************--
@@ -51,27 +73,27 @@ GO
 --***************************************************** INSERTS tbEstadosCiviles ***************************************************************--
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES(1,'Soltero(a)',GETDATE(),NULL,NULL);
+VALUES('Soltero(a)',1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES (1,'Casado(a)',GETDATE(),NULL,NULL);
+VALUES ('Casado(a)',1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado,esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES (1,'Viudo(a)',GETDATE(),NULL,NULL);
+VALUES ('Viudo(a)',1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES (1,'Union Libre',GETDATE(),NULL,NULL);
+VALUES ('Union Libre',1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES (1,'Divorciado(a)',GETDATE(),NULL,NULL);
+VALUES ('Divorciado(a)',1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbEstadosCiviles(esci_Descripcion, esci_Estado, esci_FechaCreacion, esci_UsuarioModificador, esci_FechaModificacion)
-VALUES(1,'Amante',GETDATE(),NULL,NULL);
+VALUES('Amante',1,GETDATE(),NULL,NULL);
 GO
 
 --**************************************************** /INSERTS tbEstadosCiviles ***************************************************************--
@@ -79,11 +101,11 @@ GO
 --***************************************************** INSERTS tbDepartamentos ****************************************************************--
 
 INSERT INTO [Gral].[tbDepartamentos] (dept_id, dept_Descripcion, dept_Estado, dept_UsuarioCreador, dept_FechaCreacion, dept_UsuarioModificador, dept_FechaModificacion)  
-VALUES ('01', 'Atlántida',1,1,GETDATE(),NULL,NULL);
+VALUES ('01', 'Atlï¿½ntida',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO [Gral].[tbDepartamentos] (dept_id, dept_Descripcion, dept_Estado, dept_UsuarioCreador, dept_FechaCreacion, dept_UsuarioModificador, dept_FechaModificacion)  
-VALUES ('02', 'Colón',1,1,GETDATE(),NULL,NULL);
+VALUES ('02', 'Colï¿½n',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO [Gral].[tbDepartamentos] (dept_id, dept_Descripcion, dept_Estado, dept_UsuarioCreador, dept_FechaCreacion, dept_UsuarioModificador, dept_FechaModificacion) 
@@ -91,11 +113,11 @@ VALUES ('03', 'Comayagua',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO [Gral].[tbDepartamentos] (dept_id, dept_Descripcion, dept_Estado, dept_UsuarioCreador, dept_FechaCreacion, dept_UsuarioModificador, dept_FechaModificacion)  
-VALUES ('04', 'Copán',1,1,GETDATE(),NULL,NULL);
+VALUES ('04', 'Copï¿½n',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO [Gral].[tbDepartamentos] (dept_id, dept_Descripcion, dept_Estado, dept_UsuarioCreador, dept_FechaCreacion, dept_UsuarioModificador, dept_FechaModificacion)   
-VALUES ('05', 'Cortés',1,1,GETDATE(),NULL,NULL);
+VALUES ('05', 'Cortï¿½s',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO [Gral].[tbDepartamentos] (dept_id, dept_Descripcion, dept_Estado, dept_UsuarioCreador, dept_FechaCreacion, dept_UsuarioModificador, dept_FechaModificacion) 
@@ -103,11 +125,11 @@ VALUES ('06', 'Choluteca',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO [Gral].[tbDepartamentos] (dept_id, dept_Descripcion, dept_Estado, dept_UsuarioCreador, dept_FechaCreacion, dept_UsuarioModificador, dept_FechaModificacion)   
-VALUES ('07', 'El Paraíso',1,1,GETDATE(),NULL,NULL);
+VALUES ('07', 'El Paraï¿½so',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO [Gral].[tbDepartamentos] (dept_id, dept_Descripcion, dept_Estado, dept_UsuarioCreador, dept_FechaCreacion, dept_UsuarioModificador, dept_FechaModificacion)  
-VALUES ('08', 'Francisco Morazán',1,1,GETDATE(),NULL,NULL);
+VALUES ('08', 'Francisco Morazï¿½n',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO [Gral].[tbDepartamentos] (dept_id, dept_Descripcion, dept_Estado, dept_UsuarioCreador, dept_FechaCreacion, dept_UsuarioModificador, dept_FechaModificacion)  
@@ -115,11 +137,11 @@ VALUES ('09', 'Gracias a Dios',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO [Gral].[tbDepartamentos] (dept_id, dept_Descripcion, dept_Estado, dept_UsuarioCreador, dept_FechaCreacion, dept_UsuarioModificador, dept_FechaModificacion)  
-VALUES ('10', 'Intibucá',1,1,GETDATE(),NULL,NULL);
+VALUES ('10', 'Intibucï¿½',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO [Gral].[tbDepartamentos] (dept_id, dept_Descripcion, dept_Estado, dept_UsuarioCreador, dept_FechaCreacion, dept_UsuarioModificador, dept_FechaModificacion) 
-VALUES ('11', 'Islas de la Bahía',1,1,GETDATE(),NULL,NULL);
+VALUES ('11', 'Islas de la Bahï¿½a',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO [Gral].[tbDepartamentos] (dept_id, dept_Descripcion, dept_Estado, dept_UsuarioCreador, dept_FechaCreacion, dept_UsuarioModificador, dept_FechaModificacion)  
@@ -139,7 +161,7 @@ VALUES ('15', 'Olancho',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO [Gral].[tbDepartamentos] (dept_id, dept_Descripcion, dept_Estado, dept_UsuarioCreador, dept_FechaCreacion, dept_UsuarioModificador, dept_FechaModificacion) 
-VALUES ('16', 'Santa Bárbara',1,1,GETDATE(),NULL,NULL);
+VALUES ('16', 'Santa Bï¿½rbara',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO [Gral].[tbDepartamentos] (dept_id, dept_Descripcion, dept_Estado, dept_UsuarioCreador, dept_FechaCreacion, dept_UsuarioModificador, dept_FechaModificacion)  
@@ -188,16 +210,16 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('0203','Iriona','02',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0204','Limón','02',1,GETDATE(),NULL,NULL);
+VALUES('0204','Limï¿½n','02',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0205','Sabá','02',1,GETDATE(),NULL,NULL);
+VALUES('0205','Sabï¿½','02',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0206','Santa Fe','02',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0207','Santa Rosa de Aguán','02',1,GETDATE(),NULL,NULL);
+VALUES('0207','Santa Rosa de Aguï¿½n','02',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0208','Sonaguera','02',1,GETDATE(),NULL,NULL);
@@ -218,7 +240,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('0303','El Rosario','03',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0304','Esquías','03',1,GETDATE(),NULL,NULL);
+VALUES('0304','Esquï¿½as','03',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0305','Humuya','03',1,GETDATE(),NULL,NULL);
@@ -227,16 +249,16 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('0306','La Libertad','03',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0307','Lamaní','03',1,GETDATE(),NULL,NULL);
+VALUES('0307','Lamanï¿½','03',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0308','La Trinidad','03',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0309','Lejamaní','03',1,GETDATE(),NULL,NULL);
+VALUES('0309','Lejamanï¿½','03',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0310','Meámbar','03',1,GETDATE(),NULL,NULL);
+VALUES('0310','Meï¿½mbar','03',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0311','Minas de Oro','03',1,GETDATE(),NULL,NULL);
@@ -245,19 +267,19 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('0312','Ojos de Agua','03',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0313','San Jerónimo','03',1,GETDATE(),NULL,NULL);
+VALUES('0313','San Jerï¿½nimo','03',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0314','San José de Comayagua','03',1,GETDATE(),NULL,NULL);
+VALUES('0314','San Josï¿½ de Comayagua','03',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0315','San José del Potrero','03',1,GETDATE(),NULL,NULL);
+VALUES('0315','San Josï¿½ del Potrero','03',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0316','San Luis','03',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0317','San Sebastián','03',1,GETDATE(),NULL,NULL);
+VALUES('0317','San Sebastiï¿½n','03',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0318','Siguatepeque','03',1,GETDATE(),NULL,NULL);
@@ -269,22 +291,22 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('0320','Las Lajas','03',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0321','Taulabé','03',1,GETDATE(),NULL,NULL);
+VALUES('0321','Taulabï¿½','03',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0401','Santa Rosa de Copán','04',1,GETDATE(),NULL,NULL);
+VALUES('0401','Santa Rosa de Copï¿½n','04',1,GETDATE(),NULL,NULL);
  GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0402','Cabañas','04',1,GETDATE(),NULL,NULL);
+VALUES('0402','Cabaï¿½as','04',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0403','Concepción','04',1,GETDATE(),NULL,NULL);
+VALUES('0403','Concepciï¿½n','04',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0404','Copán Ruinas','04',1,GETDATE(),NULL,NULL);
+VALUES('0404','Copï¿½n Ruinas','04',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0405','Corquín','04',1,GETDATE(),NULL,NULL);
+VALUES('0405','Corquï¿½n','04',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0406','Cucuyagua','04',1,GETDATE(),NULL,NULL);
@@ -296,7 +318,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('0408','Dulce Nombre','04',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0409','El Paraíso','04',1,GETDATE(),NULL,NULL);
+VALUES('0409','El Paraï¿½so','04',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0410','Florida','04',1,GETDATE(),NULL,NULL);
@@ -305,28 +327,28 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('0411','La Jigua','04',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0412','La Unión','04',1,GETDATE(),NULL,NULL);
+VALUES('0412','La Uniï¿½n','04',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0413','Nueva Arcadia','04',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0414','San Agustín','04',1,GETDATE(),NULL,NULL);
+VALUES('0414','San Agustï¿½n','04',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0415','San ANTONIO','04',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0416','San Jerónimo','04',1,GETDATE(),NULL,NULL);
+VALUES('0416','San Jerï¿½nimo','04',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0417','San José','04',1,GETDATE(),NULL,NULL);
+VALUES('0417','San Josï¿½','04',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0418','San Juan de Opoa','04',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0419','San Nicolás','04',1,GETDATE(),NULL,NULL);
+VALUES('0419','San Nicolï¿½s','04',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0420','San Pedro','04',1,GETDATE(),NULL,NULL);
@@ -335,7 +357,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('0421','Santa Rita','04',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0422','Trinidad de Copán','04',1,GETDATE(),NULL,NULL);
+VALUES('0422','Trinidad de Copï¿½n','04',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0423','Veracruz','04',1,GETDATE(),NULL,NULL);
@@ -356,10 +378,10 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('0505','Potrerillos','05',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0506','Puerto Cortés','05',1,GETDATE(),NULL,NULL);
+VALUES('0506','Puerto Cortï¿½s','05',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0507','San Antonio de Cortés','05',1,GETDATE(),NULL,NULL);
+VALUES('0507','San Antonio de Cortï¿½s','05',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0508','San Francisco de Yojoa','05',1,GETDATE(),NULL,NULL);
@@ -383,7 +405,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('0602','Apacilagua','06',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0603','Concepción de María','06',1,GETDATE(),NULL,NULL);
+VALUES('0603','Concepciï¿½n de Marï¿½a','06',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0604','Duyure','06',1,GETDATE(),NULL,NULL);
@@ -401,7 +423,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('0608','Morolica','06',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0609','Namasigüe','06',1,GETDATE(),NULL,NULL);
+VALUES('0609','Namasigï¿½e','06',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0610','Orocuina','06',1,GETDATE(),NULL,NULL);
@@ -416,28 +438,28 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('0613','San Isidro','06',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0614','San José','06',1,GETDATE(),NULL,NULL);
+VALUES('0614','San Josï¿½','06',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0615','San Marcos de Colón','06',1,GETDATE(),NULL,NULL);
+VALUES('0615','San Marcos de Colï¿½n','06',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0616','Santa Ana de Yusguare,','06',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0701','Yuscarán','07',1,GETDATE(),NULL,NULL);
+VALUES('0701','Yuscarï¿½n','07',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0702','Alauca','07',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0703','Danlí','07',1,GETDATE(),NULL,NULL);
+VALUES('0703','Danlï¿½','07',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0704','El Paraíso','07',1,GETDATE(),NULL,NULL);
+VALUES('0704','El Paraï¿½so','07',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0705','"Güinope','07',1,GETDATE(),NULL,NULL);
+VALUES('0705','"Gï¿½inope','07',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0706','Jacaleapa','07',1,GETDATE(),NULL,NULL);
@@ -446,10 +468,10 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('0707','Liure','07',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0708','Morocelí','07',1,GETDATE(),NULL,NULL);
+VALUES('0708','Morocelï¿½','07',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0709','Oropolí','07',1,GETDATE(),NULL,NULL);
+VALUES('0709','Oropolï¿½','07',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0710','Potrerillos','07',1,GETDATE(),NULL,NULL);
@@ -461,7 +483,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('0712','San Lucas','07',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0713','San Matías','07',1,GETDATE(),NULL,NULL);
+VALUES('0713','San Matï¿½as','07',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0714','Soledad','07',1,GETDATE(),NULL,NULL);
@@ -485,13 +507,13 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('0801','Distrito Central (Tegucigalpa y Comayaguela)','08',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0802','Alubarén','08',1,GETDATE(),NULL,NULL);
+VALUES('0802','Alubarï¿½n','08',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0803','Cedros','08',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0804','Curarén','08',1,GETDATE(),NULL,NULL);
+VALUES('0804','Curarï¿½n','08',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0805','El Porvenir','08',1,GETDATE(),NULL,NULL);
@@ -548,7 +570,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('0822','Santa Ana','08',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0823','Santa Lucía','08',1,GETDATE(),NULL,NULL);
+VALUES('0823','Santa Lucï¿½a','08',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0824','Talanga','08',1,GETDATE(),NULL,NULL);
@@ -557,7 +579,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('0825','Tatumbla','08',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0826','Valle de Ángeles','08',1,GETDATE(),NULL,NULL);
+VALUES('0826','Valle de ï¿½ngeles','08',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0827','Villa de San Francisco','08',1,GETDATE(),NULL,NULL);
@@ -578,7 +600,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('0904','Juan Francisco Bulnes','09',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('0905','Ramón Villeda Morales','09',1,GETDATE(),NULL,NULL);
+VALUES('0905','Ramï¿½n Villeda Morales','09',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('0906','Wampusirpe','09',1,GETDATE(),NULL,NULL);
@@ -593,16 +615,16 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1003','Colomoncagua','10',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1004','Concepción','10',1,GETDATE(),NULL,NULL);
+VALUES('1004','Concepciï¿½n','10',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1005','Dolores','10',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1006','Intibucá','10',1,GETDATE(),NULL,NULL);
+VALUES('1006','Intibucï¿½','10',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1007','Jesús de Otoro','10',1,GETDATE(),NULL,NULL);
+VALUES('1007','Jesï¿½s de Otoro','10',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1008','Magdalena','10',1,GETDATE(),NULL,NULL);
@@ -626,7 +648,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1014','San Miguel Guancapla','10',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1015','Santa Lucía','10',1,GETDATE(),NULL,NULL);
+VALUES('1015','Santa Lucï¿½a','10',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1016','Yamaranguila','10',1,GETDATE(),NULL,NULL);
@@ -635,13 +657,13 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1017','San Francisco de Opalaca','10',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1101','Roatán','11',1,GETDATE(),NULL,NULL);
+VALUES('1101','Roatï¿½n','11',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1102','Guanaja','11',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1103','José Santos Guardiola','11',1,GETDATE(),NULL,NULL);
+VALUES('1103','Josï¿½ Santos Guardiola','11',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1104','Utila','11',1,GETDATE(),NULL,NULL);
@@ -653,7 +675,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1202','Aguanqueterique','12',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1203','Cabañas','12',1,GETDATE(),NULL,NULL);
+VALUES('1203','Cabaï¿½as','12',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1204','Cane','12',1,GETDATE(),NULL,NULL);
@@ -680,7 +702,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1211','San Antonio del Norte','12',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1212','San José','12',1,GETDATE(),NULL,NULL);
+VALUES('1212','San Josï¿½','12',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1213','San Juan','12',1,GETDATE(),NULL,NULL);
@@ -695,7 +717,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1216','Santa Elena','12',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1217','Santa María','12',1,GETDATE(),NULL,NULL);
+VALUES('1217','Santa Marï¿½a','12',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1218','Santiago de Puringla','12',1,GETDATE(),NULL,NULL);
@@ -707,7 +729,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1301','Gracias','13',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1302','Belén','13',1,GETDATE(),NULL,NULL);
+VALUES('1302','Belï¿½n','13',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1303','Candelaria','13',1,GETDATE(),NULL,NULL);
@@ -734,7 +756,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1310','LaS Flores','13',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1311','La Unión','13',1,GETDATE(),NULL,NULL);
+VALUES('1311','La Uniï¿½n','13',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1312','La Virtud','13',1,GETDATE(),NULL,NULL);
@@ -749,7 +771,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1315','Piraera','13',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1316','San Andrés','13',1,GETDATE(),NULL,NULL);
+VALUES('1316','San Andrï¿½s','13',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1317','San Francisco','13',1,GETDATE(),NULL,NULL);
@@ -764,7 +786,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1320','San Rafael','13',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1321','San Sebastián','13',1,GETDATE(),NULL,NULL);
+VALUES('1321','San Sebastiï¿½n','13',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1322','Santa Cruz','13',1,GETDATE(),NULL,NULL);
@@ -776,7 +798,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1324','Tambla','13',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1325','Tomalá','13',1,GETDATE(),NULL,NULL);
+VALUES('1325','Tomalï¿½','13',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1326','Valladolid','13',1,GETDATE(),NULL,NULL);
@@ -785,25 +807,25 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1327','Virginia','13',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1328','San Marcos de Caiquín','13',1,GETDATE(),NULL,NULL);
+VALUES('1328','San Marcos de Caiquï¿½n','13',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1401','Nueva Ocotepeque','14',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1402','Belén Gualcho','14',1,GETDATE(),NULL,NULL);
+VALUES('1402','Belï¿½n Gualcho','14',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1403','Concepción','14',1,GETDATE(),NULL,NULL);
+VALUES('1403','Concepciï¿½n','14',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1404','Dolores Merendón','14',1,GETDATE(),NULL,NULL);
+VALUES('1404','Dolores Merendï¿½n','14',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1405','Fraternidad','14',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1406','La Encarnación','14',1,GETDATE(),NULL,NULL);
+VALUES('1406','La Encarnaciï¿½n','14',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1407','La Labor','14',1,GETDATE(),NULL,NULL);
@@ -848,7 +870,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1504','Concordia','15',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1505','Dulce Nombre de Culmí','15',1,GETDATE(),NULL,NULL);
+VALUES('1505','Dulce Nombre de Culmï¿½','15',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1506','El Rosario','15',1,GETDATE(),NULL,NULL);
@@ -872,7 +894,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1512','Jano','15',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1513','La UNIÓN','15',1,GETDATE(),NULL,NULL);
+VALUES('1513','La UNIï¿½N','15',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1514','Mangulile','15',1,GETDATE(),NULL,NULL);
@@ -881,7 +903,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1515','Manto','15',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1516','Salamá','15',1,GETDATE(),NULL,NULL);
+VALUES('1516','Salamï¿½','15',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1517','San Esteban','15',1,GETDATE(),NULL,NULL);
@@ -893,19 +915,19 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1519','San Francisco de la Paz','15',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1520','Santa María del Real','15',1,GETDATE(),NULL,NULL);
+VALUES('1520','Santa Marï¿½a del Real','15',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1521','Silca','15',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1522','Yocón','15',1,GETDATE(),NULL,NULL);
+VALUES('1522','Yocï¿½n','15',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1523','Patuca','15',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1601','Santa Bárbara','16',1,GETDATE(),NULL,NULL);
+VALUES('1601','Santa Bï¿½rbara','16',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1602','Arada','16',1,GETDATE(),NULL,NULL);
@@ -920,19 +942,19 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1605','Ceguaca','16',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1606','San José de las Colinas','16',1,GETDATE(),NULL,NULL);
+VALUES('1606','San Josï¿½ de las Colinas','16',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1607','Concepción del Norte','16',1,GETDATE(),NULL,NULL);
+VALUES('1607','Concepciï¿½n del Norte','16',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1608','Concepción del Sur','16',1,GETDATE(),NULL,NULL);
+VALUES('1608','Concepciï¿½n del Sur','16',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1609','Chinda','16',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1610','El Níspero','16',1,GETDATE(),NULL,NULL);
+VALUES('1610','El Nï¿½spero','16',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1611','Gualala','16',1,GETDATE(),NULL,NULL);
@@ -953,10 +975,10 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1616','Petoa','16',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1617','Protección','16',1,GETDATE(),NULL,NULL);
+VALUES('1617','Protecciï¿½n','16',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1618','Quimistán','16',1,GETDATE(),NULL,NULL);
+VALUES('1618','Quimistï¿½n','16',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1619','San Francisco de Ojuera','16',1,GETDATE(),NULL,NULL);
@@ -968,7 +990,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1621','San Marcos','16',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1622','San Nicolás','16',1,GETDATE(),NULL,NULL);
+VALUES('1622','San Nicolï¿½s','16',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1623','San Pedro Zacapa','16',1,GETDATE(),NULL,NULL);
@@ -1004,7 +1026,7 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1705','Caridad','17',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1706','Goascorán','17',1,GETDATE(),NULL,NULL);
+VALUES('1706','Goascorï¿½n','17',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1707','Langue','17',1,GETDATE(),NULL,NULL);
@@ -1028,10 +1050,10 @@ INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, mun
 VALUES('1804','El Progreso','18',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1805','Jocón','18',1,GETDATE(),NULL,NULL);
+VALUES('1805','Jocï¿½n','18',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
-VALUES('1806','Morazán','18',1,GETDATE(),NULL,NULL);
+VALUES('1806','Morazï¿½n','18',1,GETDATE(),NULL,NULL);
 GO
 INSERT INTO Gral.tbMunicipios(muni_id,muni_Descripcion,dept_id, muni_Estado, muni_FechaCreacion,muni_UsuarioModificador, muni_FechaModificacion) 
 VALUES('1807','Olanchito','18',1,GETDATE(),NULL,NULL);
@@ -1054,7 +1076,7 @@ GO
 --**************************************************** INSERTS tbMetodosPago ******************************************************************--
 
 INSERT INTO Gral.tbMetodosPago (mepa_Descripcion, mepa_Estado, mepa_UsuarioCreador, mepa_FechaCreacion, mepa_UsuarioModificador, mepa_FechaModificacion) 
-VALUES ('Tarjeta de crédito', 1,1,GETDATE(),NULL,NULL);
+VALUES ('Tarjeta de crï¿½dito', 1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Gral.tbMetodosPago (mepa_Descripcion, mepa_Estado, mepa_UsuarioCreador, mepa_FechaCreacion, mepa_UsuarioModificador, mepa_FechaModificacion) 
@@ -1222,7 +1244,7 @@ VALUES('Brisas del Caribe Beach',1,'https://media.solwayscuba.com/photos/Hotel/2
 GO
 
 INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
-VALUES('Playa de Santo Tomás',1,'https://e0.pxfuel.com/wallpapers/57/159/desktop-wallpaper-nature-of-belize-high-quality-nature-honduras-landscape.jpg',1,1,GETDATE(),NULL,NULL);
+VALUES('Playa de Santo Tomï¿½s',1,'https://e0.pxfuel.com/wallpapers/57/159/desktop-wallpaper-nature-of-belize-high-quality-nature-honduras-landscape.jpg',1,1,GETDATE(),NULL,NULL);
 GO
 
 INSERT INTO Acti.tbPlayas(play_Playa, dire_Id,play_ImgUrl, play_Estado, play_UsuarioCreador, play_FechaCreacion, play_UsuarioModificador, play_FechaModificacion)
@@ -1267,25 +1289,25 @@ GO
 
 
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
-VALUES ('Juan', 'Pérez', '1234567890123', 'juan.perez@example.com', '12345678', 'M', 2, '1990-01-01');
+VALUES ('Juan', 'Pï¿½rez', '1234567890123', 'juan.perez@example.com', '12345678', 'M', 2, '1990-01-01');
 GO
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
-VALUES ('María', 'González', '9876543210987', 'maria.gonzalez@example.com', '87654321', 'F', 1, '1985-05-10');
+VALUES ('Marï¿½a', 'Gonzï¿½lez', '9876543210987', 'maria.gonzalez@example.com', '87654321', 'F', 1, '1985-05-10');
 GO
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
-VALUES ('Pedro', 'López', '4567890123456', 'pedro.lopez@example.com', '54321098', 'M', 5, '1998-07-15');
+VALUES ('Pedro', 'Lï¿½pez', '4567890123456', 'pedro.lopez@example.com', '54321098', 'M', 5, '1998-07-15');
 GO
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
-VALUES ('Ana', 'Martínez', '7890123456789', 'ana.martinez@example.com', '98765432', 'F', 4, '1982-03-20');
+VALUES ('Ana', 'Martï¿½nez', '7890123456789', 'ana.martinez@example.com', '98765432', 'F', 4, '1982-03-20');
 GO
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
-VALUES ('Carlos', 'Rodríguez', '3210987654321', 'carlos.rodriguez@example.com', '67890123', 'M', 3, '1995-11-25');
+VALUES ('Carlos', 'Rodrï¿½guez', '3210987654321', 'carlos.rodriguez@example.com', '67890123', 'M', 3, '1995-11-25');
 GO
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
-VALUES ('Luisa', 'Hernández', '6543210987654', 'luisa.hernandez@example.com', '01234567', 'F', 2, '1993-09-12');
+VALUES ('Luisa', 'Hernï¿½ndez', '6543210987654', 'luisa.hernandez@example.com', '01234567', 'F', 2, '1993-09-12');
 GO
 INSERT INTO Acti.tbEncargados (enca_Nombres, enca_Apellidos, enca_DNI, enca_Email, enca_Telefono, enca_Sexo, esci_id, enca_FechaNac)
-VALUES ('Javier', 'Gómez', '2109876543210', 'javier.gomez@example.com', '76543210', 'M', 1, '1997-02-18');
+VALUES ('Javier', 'Gï¿½mez', '2109876543210', 'javier.gomez@example.com', '76543210', 'M', 1, '1997-02-18');
 GO
 
 /**************************************INSERT tbClientes****************************************************************/
@@ -1293,7 +1315,7 @@ INSERT INTO Acti.tbClientes (clie_Nombres, clie_Apellidos, clie_DNI, clie_Email,
 VALUES ('Juan', 'Martinez', '1234896890123', 'juan.martinez@example.com', 'M', '1990-01-01');
 GO
 INSERT INTO Acti.tbClientes (clie_Nombres, clie_Apellidos, clie_DNI, clie_Email, clie_Sexo, clie_FechaNac)
-VALUES ('María', 'Sanchez', '9876123210987', 'maria.sanchez@example.com', 'F', '1985-05-10');
+VALUES ('Marï¿½a', 'Sanchez', '9876123210987', 'maria.sanchez@example.com', 'F', '1985-05-10');
 GO
 INSERT INTO Acti.tbClientes (clie_Nombres, clie_Apellidos, clie_DNI, clie_Email, clie_Sexo, clie_FechaNac)
 VALUES ('Pedro', 'Paulin', '4567889623456', 'pedro.paulin@example.com', 'M', '1998-07-15');
@@ -1324,10 +1346,10 @@ INSERT INTO Acti.tbActividades (acti_Nombre, acti_Cupo, acti_Precio, play_Id)
 VALUES ('remo', 10, 2500.00, 2);
 GO
 INSERT INTO Acti.tbActividades (acti_Nombre, acti_Cupo, acti_Precio, play_Id)
-VALUES ('clase esnórquel', 20, 8000.00, 3);
+VALUES ('clase esnï¿½rquel', 20, 8000.00, 3);
 
 INSERT INTO Acti.tbActividades (acti_Nombre, acti_Cupo, acti_Precio, play_Id)
-VALUES ('crucero de observación de delfines', 12, 15000.00, 1);
+VALUES ('crucero de observaciï¿½n de delfines', 12, 15000.00, 1);
 GO
 INSERT INTO Acti.tbActividades (acti_Nombre, acti_Cupo, acti_Precio, play_Id)
 VALUES ('bautizo de buceo', 8, 2000.00, 4);
@@ -1336,7 +1358,7 @@ INSERT INTO Acti.tbActividades (acti_Nombre, acti_Cupo, acti_Precio, play_Id)
 VALUES ('Voleyball', 10, 1200.50, 5);
 GO
 INSERT INTO Acti.tbActividades (acti_Nombre, acti_Cupo, acti_Precio, play_Id)
-VALUES ('Excursión en Barco', 30, 40000.00, 2);
+VALUES ('Excursiï¿½n en Barco', 30, 40000.00, 2);
 GO
 INSERT INTO Acti.tbActividades (acti_Nombre, acti_Cupo, acti_Precio, play_Id)
 VALUES ('Futbol de playa', 6, 8000.00, 3);
@@ -1433,16 +1455,16 @@ INSERT INTO Acti.tbEquipos (equi_Descripcion, equi_UsoActual, equi_UsoLimite, eq
 VALUES ('Pelota VolleyBall', 8, 30, 1);
 
 INSERT INTO Acti.tbEquipos (equi_Descripcion, equi_UsoActual, equi_UsoLimite, equi_Estado)
-VALUES ('Pelota de Fútbol Playa', 6, 18, 1);
+VALUES ('Pelota de Fï¿½tbol Playa', 6, 18, 1);
 
 INSERT INTO Acti.tbEquipos (equi_Descripcion, equi_UsoActual, equi_UsoLimite, equi_Estado)
-VALUES ('Gafas de protección', 1, 5, 1);
+VALUES ('Gafas de protecciï¿½n', 1, 5, 1);
 
 INSERT INTO Acti.tbEquipos (equi_Descripcion, equi_UsoActual, equi_UsoLimite, equi_Estado)
 VALUES ('Casco', 4, 10, 1);
 
 INSERT INTO Acti.tbEquipos (equi_Descripcion, equi_UsoActual, equi_UsoLimite, equi_Estado)
-VALUES ('Red de Vóley Playa', 2, 8, 1);
+VALUES ('Red de Vï¿½ley Playa', 2, 8, 1);
 
 INSERT INTO Acti.tbEquipos (equi_Descripcion, equi_UsoActual, equi_UsoLimite, equi_Estado)
 VALUES ('Colchoneta Inflable', 3, 12, 1);
@@ -1591,14 +1613,6 @@ VALUES (9, 280.00, 42.00, 322.00, 1, GETDATE());
 
 INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
 VALUES (10, 150.00, 22.50, 172.50, 1, GETDATE());
-
-/***************************Insertar tbRoles ****************************/
-INSERT INTO Acce.tbRoles(role_Descripcion,role_UsuarioCreador)
-vALUES ('Digitador',1);
-       
-INSERT INTO Acce.tbRoles(role_Descripcion,role_UsuarioCreador)
-vALUES('Administrador',1);   
-GO
 	
 	-------Insertar Pantallas-----
 INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
@@ -1701,6 +1715,7 @@ INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreado
 VALUES (2,16,1);
 INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)
 VALUES (2,17,1);
+GO
 
 
 
@@ -1732,6 +1747,10 @@ VALUES(1,'2023-05-06',15)
 
 
 
+
+-------Insertar [tbActividadesXFecha]-----
+INSERT INTO [Acti].[tbActividadesXFecha](acti_Id,acfe_Fecha,acfe_Cantidad)
+VALUES(1,'2023-05-06',15)
 
 GO
 ALTER TABLE gral.tbEstadosCiviles
@@ -1803,13 +1822,6 @@ ADD
 	CONSTRAINT FK_acti_tbMantenimiento_mant_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY (mant_UsuarioModificador) REFERENCES acce.tbUsuarios (usua_ID)
 GO
 
-------------------------------------------------------
-ALTER TABLE [Acti].[tbEncargados]
-ADD	
-	CONSTRAINT FK_Acti_tbEncargados_enca_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY (enca_UsuarioCreador) REFERENCES acce.tbUsuarios (usua_ID),
-	CONSTRAINT FK_Acti_tbEncargados_enca_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY (enca_UsuarioModificador) REFERENCES acce.tbUsuarios (usua_ID)
-GO
-
 
 ALTER TABLE [Acti].[tbEncargadosXActividades]
 ADD	
@@ -1877,4 +1889,11 @@ ALTER TABLE Acti.tbClienteXReservacion
 ADD	
 	CONSTRAINT FK_acti_tbClienteXReservacion_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY ([clre_UsuarioCreador]) REFERENCES acce.tbUsuarios (usua_ID),
 	CONSTRAINT FK_acti_tbClienteXReservacion_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY ([clre_UsuarioModificador]) REFERENCES acce.tbUsuarios (usua_ID)
+GO
+
+
+ALTER TABLE Acti.tbActividadesXFecha
+ADD
+	CONSTRAINT FK_acti_tbActividadesXFecha_acfe_UsuarioCreador_acce_tbUsuarios_usua_ID FOREIGN KEY (acfe_UsuarioCreador) REFERENCES acce.tbUsuarios (usua_ID),
+	CONSTRAINT FK_acti_tbActividadesXFecha_acfe_UsuarioModificador_acce_tbUsuarios_usua_ID FOREIGN KEY (acfe_UsuarioModificador) REFERENCES acce.tbUsuarios (usua_ID)
 GO

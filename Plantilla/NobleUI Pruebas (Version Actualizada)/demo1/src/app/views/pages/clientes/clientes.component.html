@@ -1,14 +1,11 @@
 <div class="container">
     <div class="card">
-        <div class="card-header">
-            <div class="card-title text-center my-0">
+        <div class="card-header text-center my-0">
                 <h3>Clientes</h3>  
-            <br>
-            <button button type="button" class="btn btn-primary">
+            <button button type="button" class="btn btn-primary" (click)="crear()">
                 <i class="feather icon-plus"></i>
                 Nuevo
             </button>
-        </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -19,9 +16,7 @@
                             <th>Nombres</th>
                             <th>Apellidos</th>
                             <th>DNI</th>
-                            <th>Email</th>
                             <th>Sexo</th>
-                            <th>Fecha de nacimiento</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -31,18 +26,16 @@
                             <td>{{item.clie_Nombres}}</td>
                             <td>{{item.clie_Apellidos}}</td>
                             <td>{{item.clie_DNI}}</td>
-                            <td>{{item.clie_Email}}</td>
                             <td>{{item.clie_Sexo}}</td>
-                            <td>{{item.clie_FechaNac}}</td>
-                            <td><button type="button" class="btn btn-warning btn-icon-text">
+                            <td><button type="button" class="btn btn-warning btn-icon-text" (click)="Editar(item)">
                                 <i class="feather icon-edit "></i>
                             </button>
                                 |
-                                <button type="button" class="btn btn-info btn-icon-text">
+                                <button type="button" class="btn btn-info btn-icon-text" (click)="Detalles(item)">
                                     <i class="feather icon-list "></i>
                                 </button>
                                 |
-                                <button type="button" class="btn btn-danger btn-icon-text">
+                                <button type="button" class="btn btn-danger btn-icon-text" (click)="openBasicModal1(basicModal1,item.clie_id)">
                                     <i class="feather icon-trash "></i>
                                 </button>
                             </td>
@@ -52,4 +45,17 @@
             </div>
         </div>
     </div>
+
+    <ng-template #basicModal1 let-modal>
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Eliminar registro</h5>
+        </div>                    
+            <div class="modal-body">
+                <h4>¿Desea eliminar este registro?</h4>                                          
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cancelar</button>
+              <button type="button" (click)="Delete()" class="btn btn-primary">Eliminar</button>
+            </div>
+      </ng-template>
 </div>

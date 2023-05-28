@@ -2,12 +2,12 @@
     <div class="card-body">
         <div class="card-title text-center"><h3>Metodos de Pago</h3></div>
         <div class="text-center">
-          <button type="button" class="btn btn-primary" (click)="openBasicModal(basicModal)">
-            <i class="feather icon-plus"></i>
-            Nuevo
-          </button>
+            <button type="button" class="btn btn-primary">
+              <i class="feather icon-plus"></i>
+              Nuevo
+            </button>
           </div>
-        <div class="table table-responsive">
+        <div class="table-responsive">
           <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
             <thead>
               <tr>
@@ -20,12 +20,12 @@
               <tr *ngFor="let item of metodospago">
                 <td>{{item.mepa_id}}</td>
                 <td>{{item.mepa_Descripcion}}</td>
-                <td><button type="button" class="btn btn-warning" (click)="openBasicModal1(basicModal1,item)">    <i class="feather icon-edit"></i></button>
+                <td><button type="button" class="btn btn-warning">    <i class="feather icon-edit"></i></button>
                     |
-                    <button type="button" class="btn btn-info" (click)="Detalles(item)"> 
+                    <button type="button" class="btn btn-info"> 
                               <i class="feather icon-list"></i></button>
                               |
-                              <button type="button" class="btn btn-danger" (click)="openBasicModal3(basicModal3,item)"> 
+                              <button type="button" class="btn btn-danger"> 
                                         <i class="feather icon-trash"></i></button>
                 </td>
               </tr>
@@ -33,59 +33,3 @@
         </div>
       </div>
 </div>
-
-<ng-template #basicModal let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Nuevo Metodo de pago</h5>
-    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
-  </div>
-  <div class="modal-body">
-      <div class="row">
-        <div class="form-group col-12">
-          <label>Nombre</label>
-        <input type="text" class="form-control" placeholder="Nombre del Metodo de Pago" required [(ngModel)]="metodospagoCreate.mepa_Descripcion" name="metodospagoCreate.mepa_id" #metodospago="ngModel"
-        [ngClass]="{ 'is-invalid': submitted && !metodospagoCreate.mepa_Descripcion }"/>
-        <div class="invalid-feedback" *ngIf="!metodospagoCreate.mepa_Descripcion && submitted">Nombre es requerido</div>
-        </div>
-      </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
-    <button type="button" class="btn btn-primary" (click)="Guardar()">Guardar</button>
-  </div>
-</ng-template>
-
-<ng-template #basicModal1 let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Editar Metodo de pago</h5>
-    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
-  </div>
-  <div class="modal-body">
-      <div class="row">
-        <div class="form-group col-12">
-          <label>Nombre</label>
-        <input type="text" class="form-control" placeholder="Nombre del Metodo de Pago" required [(ngModel)]="metodospagoEdit.mepa_Descripcion" name="metodospagoEdit.mepa_Descripcion" #metodospago="ngModel"
-        [ngClass]="{ 'is-invalid': submitted && !metodospagoEdit.mepa_Descripcion }"/>
-        <div class="invalid-feedback" *ngIf="!metodospagoEdit.mepa_Descripcion && submitted">Nombre es requerido</div>
-        </div>
-      </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
-    <button type="button" class="btn btn-primary" (click)="Editar()">Guardar</button>
-  </div>
-</ng-template>
-
-<ng-template #basicModal3 let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Editar Metodo de pago</h5>
-    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
-  </div>
-  <div class="modal-body">
-    <h4>¿Desea eliminar este registro?</h4>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
-    <button type="button" class="btn btn-primary" (click)="Eliminar()">Guardar</button>
-  </div>
-</ng-template>

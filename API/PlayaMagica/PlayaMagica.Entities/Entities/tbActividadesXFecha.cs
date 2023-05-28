@@ -18,6 +18,8 @@ namespace PlayaMagica.Entities.Entities
         public int? acfe_UsuarioModificador { get; set; }
         public DateTime? acfe_FechaModificacion { get; set; }
 
+        public virtual tbUsuarios acfe_UsuarioCreadorNavigation { get; set; }
+        public virtual tbUsuarios acfe_UsuarioModificadorNavigation { get; set; }
         public virtual tbActividades acti { get; set; }
     }
 }
