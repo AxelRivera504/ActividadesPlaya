@@ -72,6 +72,7 @@ export const MENU: MenuItem[] = [
     icon: 'home',
     link: '/roles'
   },
+
   {
     label: 'Usuarios',
     icon: 'home',

@@ -39,6 +39,7 @@ namespace PlayaMagica.DataAccess.Repositories.Acce
             RequestStatus result = new RequestStatus();
             using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
             var parametros = new DynamicParameters();
+            parametros.Add("@role_ID", item.role_ID, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@roleXpant_UsuarioCreador", item.roleXpant_UsuarioCreador, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@pant_ID", item.pant_ID, DbType.Int32, ParameterDirection.Input);
             var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_tbRolesPorPantalla_Insert, parametros, commandType: CommandType.StoredProcedure);
@@ -50,6 +51,15 @@ namespace PlayaMagica.DataAccess.Repositories.Acce
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<tbRolesXPantallas> ListPantallasXroles(int id)
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@role_ID", id, DbType.Int32, ParameterDirection.Input);
+            return db.Query<tbRolesXPantallas>(ScriptsDataBase.UDP_tbRolesPorPantalla_Select_ByRoleID, parametros, commandType: CommandType.StoredProcedure);
+        }
+
 
         public RequestStatus Update(tbRolesXPantallas item)
         {

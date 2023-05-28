@@ -14,7 +14,8 @@ import { estadoscivilesEdit } from '../Model/EstadosCivilesEdit';
 import { direcciones } from '../Model/direcciones';
 import { roles } from '../Model/roles';
 import { usuarios } from '../Model/Usuarios';
-
+import { pantallas } from '../Model/pantallas';
+import { RolesXpantallas } from '../Model/RolesXPantallas';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,10 @@ export class ServicesService {
 
   getEncargados(){
     return this.http.get<Encargados[]>(this.Url + "/Encargados/ListarEncargados");
+  }
+
+  getEncargadosddl(){
+    return this.http.get<Encargados[]>(this.Url + "/Encargados/ListarEncargadosddl");
   }
 
   getActividades(){
@@ -82,7 +87,25 @@ export class ServicesService {
   getRoles(){
     return this.http.get<roles[]>(this.Url + "/Roles/ListarRoles");
   }
-  
+   
+  createRoles(Roles : roles){
+    return this.http.post<roles[]>(this.Url + "/Roles/Insertar", Roles);
+  }
+
+  createRolesXpantallas(rolesXpantallas : RolesXpantallas){
+    return this.http.post<RolesXpantallas[]>(this.Url + "/RolesPorPantalla/Insertar", rolesXpantallas);
+  }
+
+
+
+  obtenerPantallasPorRol(role_ID: string) {
+    return this.http.get<pantallas[]>(this.Url + "/RolesPorPantalla/PantallasXroles" + role_ID);
+  }
+
+  obtenerPantallas() {
+    return this.http.get<pantallas[]>(this.Url + "/Pantallas/Pantallas");
+  }
+
   getUsuarios(){
     return this.http.get<usuarios[]>(this.Url + "/Usuario/Usuarios");
   }
@@ -94,7 +117,7 @@ export class ServicesService {
   updateUsuarios(usuarios: usuarios){
     return this.http.post<usuarios[]>(this.Url + "/Usuario/Insertar", usuarios);
   }
-    
+     
   deleteUsuarios(id: string) {
     return this.http.delete<usuarios[]>(`${this.Url}/Usuario/Usuario/Delete/${id}`);
   }

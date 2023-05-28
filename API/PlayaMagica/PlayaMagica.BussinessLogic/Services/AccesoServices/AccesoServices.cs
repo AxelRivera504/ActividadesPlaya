@@ -147,27 +147,16 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             var result = new ServiceResult();
             try
             {
-                var insert = _rolesRepository.Insert(item);
-                if (insert.CodeStatus == 1)
-                {
-                    return result.Ok(insert.MessageStatus);
-                }
-                else if (insert.CodeStatus == 2)
-                {
-                    return result.Conflict(insert.MessageStatus);
-                }
-                else
-                {
-                    return result.BadRequest(insert.MessageStatus);
-                }
+                var roles = _rolesRepository.Insert(item);              
+                return result.Ok(roles);                           
             }
             catch (Exception e)
             {
-                return null;
+                return result.Error(e.Message);
             }
         }
-
-        public ServiceResult UpdateRoles(tbRoles item)
+           
+public ServiceResult UpdateRoles(tbRoles item)
         {
             var result = new ServiceResult();
             try
@@ -223,22 +212,11 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             try
             {
                 var insert = _rolesPorPantallaRepository.Insert(item);
-                if (insert.CodeStatus == 1)
-                {
-                    return result.Ok(insert.MessageStatus);
-                }
-                else if (insert.CodeStatus == 2)
-                {
-                    return result.Conflict(insert.MessageStatus);
-                }
-                else
-                {
-                    return result.BadRequest(insert.MessageStatus);
-                }
+                    return result.Ok(insert.MessageStatus);               
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return null;
+                return result.Error(ex.Message);
             }
         }
 
@@ -262,7 +240,17 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
                 return null;
             }
         }
-
+        public IEnumerable<tbRolesXPantallas> ListadoPantallas(int id)
+        {
+            try
+            {
+                return _rolesPorPantallaRepository.ListPantallasXroles(id);
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<tbRolesXPantallas>();
+            }
+        }
 
 
 

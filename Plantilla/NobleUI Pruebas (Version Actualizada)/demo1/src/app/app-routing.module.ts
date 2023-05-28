@@ -36,6 +36,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/encargados/encargados.module').then(m => m.EncargadosModule)
       },
       {
+        path: 'Create',
+        loadChildren: () => import('./views/pages/roles/Create/create.module').then(m => m.CreateModule)
+      },      
+      {
         path: 'actividades',
         loadChildren: () => import('./views/pages/actividades/actividades.module').then(m => m.ActividadesModule)
       },
@@ -63,6 +67,12 @@ const routes: Routes = [
         path: 'usuarios',
         loadChildren: () => import('./views/pages/usuarios/usuarios.module').then(m => m.UsuariosModule)
       },
+     
+      {
+        path: 'Detalles',        
+        loadChildren: () => import('./views/pages/usuarios/detalles/usarios-detalle.module').then(m => m.UsuariosDetallesModule)
+      },
+ 
       {
         path: 'roles',
         loadChildren: () => import('./views/pages/roles/roles.modules').then(m => m.RolesModule)

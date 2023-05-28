@@ -46,3 +46,15 @@ C:\Users\Juan\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\
 C:\Users\Juan\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.dll
 C:\Users\Juan\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\ref\PlayaMagica.Entities.dll
 C:\Users\Juan\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.pdb
+C:\Users\Juan\Documents\GitHub\Nueva carpeta\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\PlayaMagica.Entities.deps.json
+C:\Users\Juan\Documents\GitHub\Nueva carpeta\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\PlayaMagica.Entities.dll
+C:\Users\Juan\Documents\GitHub\Nueva carpeta\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\ref\PlayaMagica.Entities.dll
+C:\Users\Juan\Documents\GitHub\Nueva carpeta\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\PlayaMagica.Entities.pdb
+C:\Users\Juan\Documents\GitHub\Nueva carpeta\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.csproj.AssemblyReference.cache
+C:\Users\Juan\Documents\GitHub\Nueva carpeta\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Juan\Documents\GitHub\Nueva carpeta\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.AssemblyInfoInputs.cache
+C:\Users\Juan\Documents\GitHub\Nueva carpeta\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.AssemblyInfo.cs
+C:\Users\Juan\Documents\GitHub\Nueva carpeta\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.csproj.CoreCompileInputs.cache
+C:\Users\Juan\Documents\GitHub\Nueva carpeta\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.dll
+C:\Users\Juan\Documents\GitHub\Nueva carpeta\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\ref\PlayaMagica.Entities.dll
+C:\Users\Juan\Documents\GitHub\Nueva carpeta\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.pdb

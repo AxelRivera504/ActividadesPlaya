@@ -29,7 +29,7 @@
                 <i class="feather icon-edit"></i>
               </button>
               |
-              <button type="button" class="btn btn-info">
+              <button type="button" class="btn btn-info" (click)="Detalles(item)">
                 <i class="feather icon-list"></i>
               </button>
               |
@@ -72,7 +72,7 @@
           <label>Encargados</label>
           <ng-select [(ngModel)]="UsuariosCreate.enca_ID" [appendTo]="'body'" placeholder="--Seleccione una opción--"
             name="UsuariosCreate.enca_ID" #Usuarios="ngModel" required [ngClass]="{ 'input-invalid': submitted && !UsuariosCreate.enca_ID }">
-            <ng-option *ngFor="let item of encargados" [value]="item.enca_id">{{item.enca_Nombres + ' - ' + item.enca_Apellidos}}</ng-option>
+            <ng-option *ngFor="let item of encargados" [value]="item.enca_id">{{item.enca_NombreCompleto}}</ng-option>
           </ng-select>
           <div class="input-invalid-text" *ngIf="Usuarios?.errors?.required && submitted" style="color: red;">El Encargado es requerido</div>
         </div>
@@ -104,6 +104,7 @@
   <div class="modal-body">
     <form>
       <div class="row">
+        
         <div class="col-md-6">
           <div class="form-group">
             <label>Usuario</label>
@@ -112,12 +113,13 @@
             <div class="invalid-feedback" *ngIf="!UsuariosEdit.usua_Usuario && submitted">El usuario es requerido</div>
           </div>
         </div>
+        
         <div class="col-md-6">
           <div class="form-group">
             <label>Encargado</label>
             <ng-select [(ngModel)]="UsuariosEdit.enca_ID" [appendTo]="'body'" placeholder="--Seleccione una opción--"
               name="UsuariosEdit.enca_ID" #Usuarios="ngModel" required [ngClass]="{ 'is-invalid': submitted && !UsuariosEdit.enca_ID }">
-              <ng-option *ngFor="let item of encargados" [value]="item.enca_id">{{item.enca_Nombres + ' - ' + item.enca_Apellidos}}</ng-option>
+              <ng-option *ngFor="let item of encargados" [value]="item.enca_id">{{item.enca_NombreCompleto}}</ng-option>
             </ng-select>
             <div class="input-invalid-text" *ngIf="submitted && !UsuariosEdit.enca_ID">El encargado es requerido</div>
           </div>

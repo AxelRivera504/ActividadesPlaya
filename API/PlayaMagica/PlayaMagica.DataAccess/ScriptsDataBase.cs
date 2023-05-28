@@ -57,6 +57,8 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbRoles_Insert = "Acce.UDP_tbRoles_Insert";
         public static string UDP_tbRoles_Update = "Acce.UDP_tbRoles_Update";
         public static string UDP_tbRoles_Delete = "Acce.UDP_tbRoles_Delete";
+     
+        
         #endregion
 
         #region RolesPorPantalla
@@ -64,6 +66,9 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbRolesPorPantalla_Select_ByRoleID = "Acce.UDP_tbRolesXPantallas_Select_ByRoleID";
         public static string UDP_tbRolesPorPantalla_Insert = "Acce.UDP_RolesXPantallas_Insert";
         public static string UDP_tbRolesPorPantalla_Delete = "Acce.UDP_tbRolesXPantalla_Delete";
+
+
+
         #endregion
 
         #region Pantallas
@@ -93,6 +98,7 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbEncargados_Insert = "Acti.UDP_tbEncargados_Insert";
         public static string UDP_tbEncargados_Update = "Acti.UDP_tbEncargados_Update";
         public static string UDP_tbEncargados_Delete = "Acti.UDP_tbEncargados_Delete";
+        public static string UDP_tbEncargados_ddl = "Acce.UDP_tbUsuarios_DDLencargadosTieneusuario";
         #endregion
 
         #region Equipos

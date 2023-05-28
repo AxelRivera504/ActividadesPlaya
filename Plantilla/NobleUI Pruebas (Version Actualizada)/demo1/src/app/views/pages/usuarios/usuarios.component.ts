@@ -82,7 +82,7 @@ export class UsuariosComponent implements OnInit {
       }
     };
     
-    this.service.getEncargados().subscribe(data => {
+    this.service.getEncargadosddl().subscribe(data => {
       console.log(data);
       this.encargados = data;
     });
@@ -155,6 +155,10 @@ export class UsuariosComponent implements OnInit {
                 this.usuarios = data;
               });
             }, 0.5);
+            this.service.getEncargadosddl().subscribe(data => {
+              console.log(data);
+              this.encargados = data;
+            });
           }else if (data.data.codeStatus == 2){
             Swal.fire({
               toast: true,
@@ -269,11 +273,25 @@ export class UsuariosComponent implements OnInit {
     console.log(this.UsuarioId)
     this.service.deleteUsuarios(this.UsuarioId)
    }
-
-
  
+ 
+   Detalles(usuarios: usuarios){
+    localStorage.setItem('usuario', JSON.stringify(usuarios));
+    this.router.navigate(["/detalles"])
   }
 
+ 
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ }
 
 
 
