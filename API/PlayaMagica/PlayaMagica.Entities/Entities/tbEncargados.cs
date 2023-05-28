@@ -12,6 +12,7 @@ namespace PlayaMagica.Entities.Entities
         public tbEncargados()
         {
             tbEncargadosXActividades = new HashSet<tbEncargadosXActividades>();
+            tbUsuarios = new HashSet<tbUsuarios>();
         }
 
         public int enca_id { get; set; }
@@ -33,7 +34,10 @@ namespace PlayaMagica.Entities.Entities
         public int? enca_UsuarioModificador { get; set; }
         public DateTime? enca_FechaModificacion { get; set; }
 
+        public virtual tbUsuarios enca_UsuarioCreadorNavigation { get; set; }
+        public virtual tbUsuarios enca_UsuarioModificadorNavigation { get; set; }
         public virtual tbEstadosCiviles esci { get; set; }
         public virtual ICollection<tbEncargadosXActividades> tbEncargadosXActividades { get; set; }
+        public virtual ICollection<tbUsuarios> tbUsuarios { get; set; }
     }
 }

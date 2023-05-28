@@ -159,7 +159,7 @@ CREATE TABLE Acti.tbActividades
    acti_Cupo					INT,
    acti_Precio					DECIMAL(8,2),
    play_Id						INT,
-   
+   acti_ImgUrl					NVARCHAR(MAX),
    acti_Estado					BIT DEFAULT 1,
    acti_UsuarioCreador			INT DEFAULT 1,
    acti_FechaCreacion			DATETIME DEFAULT GETDATE(),
@@ -168,7 +168,7 @@ CREATE TABLE Acti.tbActividades
 
    CONSTRAINT PK_Acti_tbActividades_acti_Id PRIMARY KEY (acti_id),
    CONSTRAINT FK_Actil_tbActividades_play_id_Acti_tbPlayas_play_Id FOREIGN KEY(play_id)
-    REFERENCES Acti.tbPlayas(play_id)
+   REFERENCES Acti.tbPlayas(play_id)
 )
 GO
 
@@ -217,10 +217,10 @@ CREATE TABLE Acti.tbEquipos
 (
   equi_Id                       INT IDENTITY(1,1),
   equi_Descripcion              NVARCHAR(250),
+  equi_ImgUrL					NVARCHAR(MAX),
   equi_UsoActual				INT,
   equi_UsoLimite                INT,
   equi_Estado                   BIT DEFAULT 1,
-
    
   equi_UsuarioCreador			INT DEFAULT 1,
   equi_FechaCreacion			DATETIME DEFAULT GETDATE(),
@@ -246,7 +246,9 @@ CREATE TABLE Acti.tbEquipoXActividades
    
    CONSTRAINT PK_Acti_EquipoXActividades_aceq_Id PRIMARY KEY (eqac_Id),
    CONSTRAINT FK_Acti_EquipoXActividades_acti_Id_Acti_tbActividades_acti_Id FOREIGN KEY(acti_Id)
-   REFERENCES Acti.tbActividades(acti_Id)
+   REFERENCES Acti.tbActividades(acti_Id),
+   CONSTRAINT FK_Acti_tbEquipoXActividades_equi_Id_Acti_tbEquipos_equi_Id FOREIGN KEY(equi_Id)
+   REFERENCES Acti.tbEquipos (equi_Id)
 
 )
 GO
@@ -302,18 +304,19 @@ CREATE TABLE Acti.tbMantenimientoXEquipo
   
   
   CONSTRAINT PK_Acti_tbMantenimientoXEquipo_maeq_Id PRIMARY KEY (maeq_Id), 
-  CONSTRAINT FK_Acti_tbMantenimientoXEquipo_equi_Id  FOREIGN KEY (equi_Id ) REFERENCES Acti.tbEquipos (equi_Id),
-  CONSTRAINT FK_Acti_tbMantenimientoXEquipo_mant_Id  FOREIGN KEY (mant_Id ) REFERENCES Acti.tbMantenimiento (mant_Id),
+  CONSTRAINT FK_Acti_tbMantenimientoXEquipo_equi_Id  FOREIGN KEY (equi_Id) REFERENCES Acti.tbEquipos (equi_Id),
+  CONSTRAINT FK_Acti_tbMantenimientoXEquipo_mant_Id  FOREIGN KEY (mant_Id) REFERENCES Acti.tbMantenimiento (mant_Id),
 )
 GO
 
 CREATE TABLE Acti.tbFactura 
 (
-  fuct_Id    INT IDENTITY(1,1),
-  rese_Id    INT,
-  fuct_Subtotal  Decimal(8,2),
-  fuct_Isv   Decimal (8,2),
-  fuct_Total  Decimal(8,2),
+  fuct_Id		INT IDENTITY(1,1),
+  rese_Id		INT,
+  mepa_id		INT,
+  fuct_Subtotal Decimal(8,2),
+  fuct_Isv		Decimal (8,2),
+  fuct_Total	Decimal(8,2),
 
   fuct_Estado					BIT DEFAULT 1,
   fuct_UsuarioCreador			INT,
@@ -322,26 +325,25 @@ CREATE TABLE Acti.tbFactura
   fuct_FechaModificacion		DATETIME
    
   CONSTRAINT PK_Acti_tbFactura_fuct_Id PRIMARY KEY (fuct_Id), 
-  CONSTRAINT FK_Acti_tbFactura_rese_Id FOREIGN KEY (rese_Id ) REFERENCES Acti.tbReservaciones (rese_Id),
-
+  CONSTRAINT FK_Acti_tbFactura_rese_Id FOREIGN KEY (rese_Id) REFERENCES Acti.tbReservaciones (rese_Id),
+  CONSTRAINT FK_Acti_tbFactura_mepa_id FOREIGN KEY (mepa_id) REFERENCES Gral.tbMetodosPago	 (mepa_Id)
 )
 GO
 
 CREATE TABLE Acti.tbActividadesXFecha
 (
-  acfe_Id              INT IDENTITY(1,1),
-  acti_Id              INT,
-  acfe_Fecha           DATE,
-  acfe_Cantidad        INT, 
-
+  acfe_Id						INT IDENTITY(1,1),
+  acti_Id						INT,
+  acfe_Fecha					DATE,
+  acfe_Cantidad					INT, 
   acfe_Estado					BIT DEFAULT 1,
   acfe_UsuarioCreador			INT,
   acfe_FechaCreacion			DATETIME DEFAULT GETDATE(),
   acfe_UsuarioModificador		INT,
   acfe_FechaModificacion		DATETIME
 
-  CONSTRAINT PL_Acti_tbActi_acfe_Id PRIMARY KEY (acfe_Id),
-  CONSTRAINT FK_Acti_tbActi_acti_Id FOREIGN KEY (acti_Id) REFERENCES Acti.tbActividades(acti_Id),
+  CONSTRAINT PL_Acti_tbActividadesXFecha_acfe_Id PRIMARY KEY (acfe_Id),
+  CONSTRAINT FK_Acti_tbActividadesXFecha_acti_Id FOREIGN KEY (acti_Id) REFERENCES Acti.tbActividades(acti_Id)	
 )
 GO
 
@@ -396,7 +398,6 @@ CREATE TABLE Acce.tbUsuarios(
 	usua_ID						INT IDENTITY(1,1), 
 	usua_Usuario				NVARCHAR(100), 
 	usua_Clave					VARCHAR(MAX),
-	usua_EsAdmin				INT,
 	enca_ID						INT,
 	role_ID                     INT,
 	

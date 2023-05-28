@@ -17,6 +17,7 @@ import { usuarios } from '../Model/Usuarios';
 import { pantallas } from '../Model/pantallas';
 import { RolesXpantallas } from '../Model/RolesXPantallas';
 
+import { EquipoXActividades } from '../Model/EquipoXActividades';
 @Injectable({
   providedIn: 'root'
 })
@@ -28,6 +29,15 @@ export class ServicesService {
   getEquipos(){
     return this.http.get<Equipos[]>(this.Url + "/Equipos/ListarEquipos");
   }
+
+  createEquipos(equipos: Equipos){
+    return this.http.post<Equipos[]>(this.Url + "/Equipos/InsertarEquipos",equipos);
+  }
+
+  updateEquipos(equipos: Equipos){
+    return this.http.post<Equipos[]>(this.Url + "/Equipos/UpdateEquipos",equipos);
+  }
+
 
   getPlayas(){
     return this.http.get<playas[]>(this.Url + "/Playas/ListarPlayas");
@@ -53,12 +63,52 @@ export class ServicesService {
     return this.http.get<Actividades[]>(this.Url + "/Actividades/ListarActividades");
   }
 
+  createActividades(actividad: Actividades){
+    return this.http.post<Actividades[]>(this.Url + "/Actividades/InsertarActividades",actividad);
+  }
+
+  updateActividades(actividad: Actividades){
+    return this.http.post<Actividades[]>(this.Url + "/Actividades/UpdateActividades",actividad);
+  }
+
+  deleteActividades(actividad: Actividades){
+    return this.http.post<Actividades[]>(this.Url + "/Actividades/DeleteActividades",actividad);
+  }
+
+  getEquipoxActividades(id: number){
+    return this.http.get<number>(this.Url + "/Equipos/EquipoXActividad?id=" + id)
+  }
+
+  createEquipoXActividades(equipoxactividades: EquipoXActividades){
+    return this.http.post<EquipoXActividades[]>(this.Url + "/tbEquipoXActividades/Insert",equipoxactividades);
+  }
+
+  deleteEquipoXActividades(equipoxactividades: EquipoXActividades){
+    return this.http.post<EquipoXActividades[]>(this.Url + "/tbEquipoXActividades/Delete",equipoxactividades);
+  }
+
   getDepartamentos(){
     return this.http.get<departamentos[]>(this.Url + "/Departamentos");
   }
 
+  createDepartamentos(departamento: departamentos){
+    return this.http.post<departamentos[]>(this.Url + "/Departamentos/Insert", departamento);
+  }
+  
+  updateDepartamentos(departamento: departamentos){
+    return this.http.post<departamentos[]>(this.Url + "/Departamentos/Update", departamento);
+  }
+
   getMunicipios(){
     return this.http.get<municipios[]>(this.Url + "/Municipios");
+  }
+
+  createMunicipios(municipio: municipios){
+    return this.http.post<municipios[]>(this.Url + "/Municipios/Insert", municipio);
+  }
+
+  updateMunicipios(municipio: municipios){
+    return this.http.post<municipios[]>(this.Url + "/Municipios/Update", municipio);
   }
 
   getEstadosCiviles(){
@@ -69,8 +119,32 @@ export class ServicesService {
     return this.http.get<metodospago[]>(this.Url + "/MetodosPago");
   }
 
+  createMetodosPago(metodopago: metodospago){
+    return this.http.post<metodospago[]>(this.Url + "/MetodosPago/Insert", metodopago);
+  }
+
+  updateMetodosPago(metodopago: metodospago){
+    return this.http.post<metodospago[]>(this.Url + "/MetodosPago/Update", metodopago);
+  }
+
+  deleteMetodosPago(metodopago: metodospago){
+    return this.http.post<metodospago[]>(this.Url + "/MetodosPago/Delete", metodopago);
+  }
+
   getDirecciones(){
     return this.http.get<direcciones[]>(this.Url + "/Direcciones");
+  }
+
+  createDirecciones(direcciones: direcciones){
+    return this.http.post<direcciones[]>(this.Url + "/Direcciones/Insert", direcciones);
+  }
+
+  updateDirecciones(direcciones: direcciones){
+    return this.http.post<direcciones[]>(this.Url + "/Direcciones/Update", direcciones);
+  }
+
+  deleteDirecciones(direcciones: direcciones){
+    return this.http.post<direcciones[]>(this.Url + "/Direcciones/Delete", direcciones);
   }
 
   CreateEstadosCiviles(estadosciviles: estadosciviles){
@@ -122,4 +196,11 @@ export class ServicesService {
     return this.http.delete<usuarios[]>(`${this.Url}/Usuario/Usuario/Delete/${id}`);
   }
 
+  DeleteEstadosCiviles(estadosciviles: estadosciviles){
+    return this.http.post<estadosciviles[]>(this.Url + "/EstadosCiviles/Delete", estadosciviles);
+  }
+
+  EditarEstadosCiviles(estadosciviles: estadosciviles){
+    return this.http.post<estadosciviles[]>(this.Url + "/EstadosCiviles/Update", estadosciviles);
+  }
 }

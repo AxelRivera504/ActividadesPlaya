@@ -11,7 +11,6 @@ namespace PlayaMagica.Entities.Entities
         public int usua_ID { get; set; }
         public string usua_Usuario { get; set; }
         public string usua_Clave { get; set; }
-        public int? usua_EsAdmin { get; set; }
         public int? enca_ID { get; set; }
         public string enca_NombreCompleto { get; set; }
         public int? role_ID { get; set; }

@@ -32,6 +32,7 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             }
             catch (Exception e)
             {
+                string message = e.Message;
                 return Enumerable.Empty<VW_tbUsuarios>();
                 throw;
             }
@@ -72,6 +73,7 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             }
             catch (Exception e)
             {
+                string message = e.Message;
                 return null;
             }
         }
@@ -93,6 +95,7 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             }
             catch (Exception e)
             {
+                string message = e.Message;
                 return null;
             }
         }
@@ -118,6 +121,7 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             }
             catch (Exception e)
             {
+                string message = e.Message;
                 return null;
             }
 
@@ -137,7 +141,7 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             }
             catch (Exception ex)
             {
-
+                string message = ex.Message;
                 return Enumerable.Empty<VW_tbRoles>();
             }
         }
@@ -173,6 +177,7 @@ public ServiceResult UpdateRoles(tbRoles item)
             }
             catch (Exception e)
             {
+                string message = e.Message;
                 return null;
             }
         }
@@ -198,6 +203,7 @@ public ServiceResult UpdateRoles(tbRoles item)
             }
             catch (Exception e)
             {
+                string message = e.Message;
                 return null;
             }
 
@@ -248,10 +254,10 @@ public ServiceResult UpdateRoles(tbRoles item)
             }
             catch (Exception e)
             {
+                string messager = e.Message;
                 return Enumerable.Empty<tbRolesXPantallas>();
             }
         }
-
 
 
         #endregion

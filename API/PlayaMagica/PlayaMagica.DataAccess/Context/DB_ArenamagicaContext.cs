@@ -59,7 +59,7 @@ namespace PlayaMagica.DataAccess.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Modern_Spanish_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
             modelBuilder.Entity<VW_tbActividades>(entity =>
             {
@@ -78,6 +78,8 @@ namespace PlayaMagica.DataAccess.Context
                 entity.Property(e => e.acti_UsuarioCreador_Nombre).HasMaxLength(100);
 
                 entity.Property(e => e.acti_UsuarioModificador_Nombre).HasMaxLength(100);
+
+                entity.Property(e => e.play_playa).HasMaxLength(250);
             });
 
             modelBuilder.Entity<VW_tbClientes>(entity =>
@@ -431,6 +433,16 @@ namespace PlayaMagica.DataAccess.Context
 
                 entity.Property(e => e.acti_UsuarioCreador).HasDefaultValueSql("((1))");
 
+                entity.HasOne(d => d.acti_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbActividadesacti_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.acti_UsuarioCreador)
+                    .HasConstraintName("FK_acti_tbActividades_UsuarioCreador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.acti_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbActividadesacti_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.acti_UsuarioModificador)
+                    .HasConstraintName("FK_acti_tbActividades_UsuarioModificador_acce_tbUsuarios_usua_ID");
+
                 entity.HasOne(d => d.play)
                     .WithMany(p => p.tbActividades)
                     .HasForeignKey(d => d.play_Id)
@@ -440,7 +452,7 @@ namespace PlayaMagica.DataAccess.Context
             modelBuilder.Entity<tbActividadesXFecha>(entity =>
             {
                 entity.HasKey(e => e.acfe_Id)
-                    .HasName("PL_Acti_tbActi_acfe_Id");
+                    .HasName("PL_Acti_tbActividadesXFecha_acfe_Id");
 
                 entity.ToTable("tbActividadesXFecha", "Acti");
 
@@ -454,10 +466,20 @@ namespace PlayaMagica.DataAccess.Context
 
                 entity.Property(e => e.acfe_FechaModificacion).HasColumnType("datetime");
 
+                entity.HasOne(d => d.acfe_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbActividadesXFechaacfe_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.acfe_UsuarioCreador)
+                    .HasConstraintName("FK_acti_tbActividadesXFecha_acfe_UsuarioCreador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.acfe_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbActividadesXFechaacfe_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.acfe_UsuarioModificador)
+                    .HasConstraintName("FK_acti_tbActividadesXFecha_acfe_UsuarioModificador_acce_tbUsuarios_usua_ID");
+
                 entity.HasOne(d => d.acti)
                     .WithMany(p => p.tbActividadesXFecha)
                     .HasForeignKey(d => d.acti_Id)
-                    .HasConstraintName("FK_Acti_tbActi_acti_Id");
+                    .HasConstraintName("FK_Acti_tbActividadesXFecha_acti_Id");
             });
 
             modelBuilder.Entity<tbClienteXReservacion>(entity =>
@@ -476,6 +498,16 @@ namespace PlayaMagica.DataAccess.Context
                 entity.Property(e => e.clre_FechaModificacion).HasColumnType("datetime");
 
                 entity.Property(e => e.clre_UsuarioCreador).HasDefaultValueSql("((1))");
+
+                entity.HasOne(d => d.clre_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbClienteXReservacionclre_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.clre_UsuarioCreador)
+                    .HasConstraintName("FK_acti_tbClienteXReservacion_UsuarioCreador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.clre_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbClienteXReservacionclre_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.clre_UsuarioModificador)
+                    .HasConstraintName("FK_acti_tbClienteXReservacion_UsuarioModificador_acce_tbUsuarios_usua_ID");
 
                 entity.HasOne(d => d.rese)
                     .WithMany(p => p.tbClienteXReservacion)
@@ -521,6 +553,16 @@ namespace PlayaMagica.DataAccess.Context
                     .IsFixedLength(true);
 
                 entity.Property(e => e.clie_UsuarioCreador).HasDefaultValueSql("((1))");
+
+                entity.HasOne(d => d.clie_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbClientesclie_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.clie_UsuarioCreador)
+                    .HasConstraintName("FK_acti_tbClientes_UsuarioCreador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.clie_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbClientesclie_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.clie_UsuarioModificador)
+                    .HasConstraintName("FK_acti_tbClientes_UsuarioModificador_acce_tbUsuarios_usua_ID");
             });
 
             modelBuilder.Entity<tbDepartamentos>(entity =>
@@ -546,6 +588,16 @@ namespace PlayaMagica.DataAccess.Context
                 entity.Property(e => e.dept_FechaModificacion).HasColumnType("datetime");
 
                 entity.Property(e => e.dept_UsuarioCreador).HasDefaultValueSql("((1))");
+
+                entity.HasOne(d => d.dept_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbDepartamentosdept_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.dept_UsuarioCreador)
+                    .HasConstraintName("FK_gral_tbDepartamentos_dept_UsuarioCreador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.dept_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbDepartamentosdept_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.dept_UsuarioModificador)
+                    .HasConstraintName("FK_gral_tbDepartamentos_dept_UsuarioModificador_acce_tbUsuarios_usua_ID");
             });
 
             modelBuilder.Entity<tbDirecciones>(entity =>
@@ -569,6 +621,16 @@ namespace PlayaMagica.DataAccess.Context
                     .HasMaxLength(4)
                     .IsUnicode(false)
                     .IsFixedLength(true);
+
+                entity.HasOne(d => d.dire_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbDireccionesdire_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.dire_UsuarioCreador)
+                    .HasConstraintName("FK_acti_tbtbDirecciones_UsuarioCreador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.dire_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbDireccionesdire_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.dire_UsuarioModificador)
+                    .HasConstraintName("FK_acti_tbtbDirecciones_UsuarioModificador_acce_tbUsuarios_usua_ID");
 
                 entity.HasOne(d => d.muni)
                     .WithMany(p => p.tbDirecciones)
@@ -620,6 +682,16 @@ namespace PlayaMagica.DataAccess.Context
 
                 entity.Property(e => e.enca_UsuarioCreador).HasDefaultValueSql("((1))");
 
+                entity.HasOne(d => d.enca_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbEncargadosenca_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.enca_UsuarioCreador)
+                    .HasConstraintName("FK_cons_tbEncargados_enca_UsuarioCreador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.enca_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbEncargadosenca_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.enca_UsuarioModificador)
+                    .HasConstraintName("FK_cons_tbEncargados_enca_UsuarioModificador_acce_tbUsuarios_usua_ID");
+
                 entity.HasOne(d => d.esci)
                     .WithMany(p => p.tbEncargados)
                     .HasForeignKey(d => d.esci_id)
@@ -646,6 +718,16 @@ namespace PlayaMagica.DataAccess.Context
                     .HasForeignKey(d => d.acti_Id)
                     .HasConstraintName("FK_Acti_tbActividades_acti_Id");
 
+                entity.HasOne(d => d.enac_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbEncargadosXActividadesenac_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.enac_UsuarioCreador)
+                    .HasConstraintName("FK_cons_tbEncargadosXActividades_enac_UsuarioCreador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.enac_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbEncargadosXActividadesenac_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.enac_UsuarioModificador)
+                    .HasConstraintName("FK_cons_tbEncargadosXActividades_enac_UsuarioModificador_acce_tbUsuarios_usua_ID");
+
                 entity.HasOne(d => d.enca)
                     .WithMany(p => p.tbEncargadosXActividades)
                     .HasForeignKey(d => d.enca_Id)
@@ -671,6 +753,21 @@ namespace PlayaMagica.DataAccess.Context
                     .WithMany(p => p.tbEquipoXActividades)
                     .HasForeignKey(d => d.acti_Id)
                     .HasConstraintName("FK_Acti_EquipoXActividades_acti_Id_Acti_tbActividades_acti_Id");
+
+                entity.HasOne(d => d.eqac_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbEquipoXActividadeseqac_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.eqac_UsuarioCreador)
+                    .HasConstraintName("FK_acti_tbEquipoXActividades_eqac_UsuarioCreador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.eqac_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbEquipoXActividadeseqac_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.eqac_UsuarioModificador)
+                    .HasConstraintName("FK_acti_tbEquipoXActividades_eqac_UsuarioModificador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.equi)
+                    .WithMany(p => p.tbEquipoXActividades)
+                    .HasForeignKey(d => d.equi_Id)
+                    .HasConstraintName("FK_Acti_tbEquipoXActividades_equi_Id_Acti_tbEquipos_equi_Id");
             });
 
             modelBuilder.Entity<tbEquipos>(entity =>
@@ -691,6 +788,16 @@ namespace PlayaMagica.DataAccess.Context
                 entity.Property(e => e.equi_FechaModificacion).HasColumnType("datetime");
 
                 entity.Property(e => e.equi_UsuarioCreador).HasDefaultValueSql("((1))");
+
+                entity.HasOne(d => d.equi_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbEquiposequi_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.equi_UsuarioCreador)
+                    .HasConstraintName("FK_Acti_tbEquipos_acti_UsuarioCreador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.equi_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbEquiposequi_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.equi_UsuarioModificador)
+                    .HasConstraintName("FK_Acti_tbEquipos_acti_UsuarioModificador_acce_tbUsuarios_usua_ID");
             });
 
             modelBuilder.Entity<tbEstadosCiviles>(entity =>
@@ -713,6 +820,16 @@ namespace PlayaMagica.DataAccess.Context
                 entity.Property(e => e.esci_FechaModificacion).HasColumnType("datetime");
 
                 entity.Property(e => e.esci_UsuarioCreador).HasDefaultValueSql("((1))");
+
+                entity.HasOne(d => d.esci_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbEstadosCivilesesci_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.esci_UsuarioCreador)
+                    .HasConstraintName("FK_gral_tbEstadosCiviles_esci_UsuarioCreador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.esci_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbEstadosCivilesesci_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.esci_UsuarioModificador)
+                    .HasConstraintName("FK_gral_tbEstadosCiviles_esci_UsuarioModificador_acce_tbUsuarios_usua_ID");
             });
 
             modelBuilder.Entity<tbFactura>(entity =>
@@ -736,6 +853,21 @@ namespace PlayaMagica.DataAccess.Context
 
                 entity.Property(e => e.fuct_Total).HasColumnType("decimal(8, 2)");
 
+                entity.HasOne(d => d.fuct_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbFacturafuct_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.fuct_UsuarioCreador)
+                    .HasConstraintName("FK_Acti_tbFactura_fact_UsuarioCreador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.fuct_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbFacturafuct_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.fuct_UsuarioModificador)
+                    .HasConstraintName("FK_Acti_tbFactura_fact_UsuarioModificador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.mepa)
+                    .WithMany(p => p.tbFactura)
+                    .HasForeignKey(d => d.mepa_id)
+                    .HasConstraintName("FK_Acti_tbFactura_mepa_id");
+
                 entity.HasOne(d => d.rese)
                     .WithMany(p => p.tbFactura)
                     .HasForeignKey(d => d.rese_Id)
@@ -756,6 +888,16 @@ namespace PlayaMagica.DataAccess.Context
                     .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.mant_FechaModificacion).HasColumnType("datetime");
+
+                entity.HasOne(d => d.mant_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbMantenimientomant_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.mant_UsuarioCreador)
+                    .HasConstraintName("FK_acti_tbMantenimiento_mant_UsuarioCreador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.mant_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbMantenimientomant_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.mant_UsuarioModificador)
+                    .HasConstraintName("FK_acti_tbMantenimiento_mant_UsuarioModificador_acce_tbUsuarios_usua_ID");
             });
 
             modelBuilder.Entity<tbMantenimientoXEquipo>(entity =>
@@ -777,6 +919,16 @@ namespace PlayaMagica.DataAccess.Context
                     .WithMany(p => p.tbMantenimientoXEquipo)
                     .HasForeignKey(d => d.equi_Id)
                     .HasConstraintName("FK_Acti_tbMantenimientoXEquipo_equi_Id");
+
+                entity.HasOne(d => d.maeq_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbMantenimientoXEquipomaeq_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.maeq_UsuarioCreador)
+                    .HasConstraintName("FK_acti_tbMantenimientoXEquipo_fabr_UsuarioCreador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.maeq_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbMantenimientoXEquipomaeq_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.maeq_UsuarioModificador)
+                    .HasConstraintName("FK_acti_tbMantenimientoXEquipo_fabr_UsuarioModificador_acce_tbUsuarios_usua_ID");
 
                 entity.HasOne(d => d.mant)
                     .WithMany(p => p.tbMantenimientoXEquipo)
@@ -802,6 +954,16 @@ namespace PlayaMagica.DataAccess.Context
                 entity.Property(e => e.mepa_FechaModificacion).HasColumnType("datetime");
 
                 entity.Property(e => e.mepa_UsuarioCreador).HasDefaultValueSql("((1))");
+
+                entity.HasOne(d => d.mepa_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbMetodosPagomepa_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.mepa_UsuarioCreador)
+                    .HasConstraintName("FK_gral_tbMetodosPago_pago_UsuarioCreador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.mepa_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbMetodosPagomepa_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.mepa_UsuarioModificador)
+                    .HasConstraintName("FK_gral_tbMetodosPago_pago_UsuarioModificador_acce_tbUsuarios_usua_ID");
             });
 
             modelBuilder.Entity<tbMunicipios>(entity =>
@@ -837,6 +999,16 @@ namespace PlayaMagica.DataAccess.Context
                     .WithMany(p => p.tbMunicipios)
                     .HasForeignKey(d => d.dept_id)
                     .HasConstraintName("FK_gral_tbMunicipios_tbDepartamentos_dept_Id");
+
+                entity.HasOne(d => d.muni_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbMunicipiosmuni_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.muni_UsuarioCreador)
+                    .HasConstraintName("FK_gral_tbMunicipios_muni_UsuarioCreador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.muni_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbMunicipiosmuni_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.muni_UsuarioModificador)
+                    .HasConstraintName("FK_gral_tbMunicipios_muni_UsuarioModificador_acce_tbUsuarios_usua_ID");
             });
 
             modelBuilder.Entity<tbPantallas>(entity =>
@@ -859,6 +1031,16 @@ namespace PlayaMagica.DataAccess.Context
                 entity.Property(e => e.pant_FechaModificacion).HasColumnType("datetime");
 
                 entity.Property(e => e.pant_UsuarioCreador).HasDefaultValueSql("((1))");
+
+                entity.HasOne(d => d.pant_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbPantallaspant_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.pant_UsuarioCreador)
+                    .HasConstraintName("FK_acce_tbPantallas_pant_UsuarioCreador_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.pant_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbPantallaspant_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.pant_UsuarioModificador)
+                    .HasConstraintName("FK_acce_tbPantallas_pant_UsuarioModificador_tbUsuarios_usua_ID");
             });
 
             modelBuilder.Entity<tbPlayas>(entity =>
@@ -884,6 +1066,16 @@ namespace PlayaMagica.DataAccess.Context
                     .WithMany(p => p.tbPlayas)
                     .HasForeignKey(d => d.dire_Id)
                     .HasConstraintName("FK_gral_tbPlayas_play_id_gral_tbDirecciones_dire_Id");
+
+                entity.HasOne(d => d.play_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbPlayasplay_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.play_UsuarioCreador)
+                    .HasConstraintName("FK_cons_tbPlayas_play_UsuarioCreador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.play_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbPlayasplay_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.play_UsuarioModificador)
+                    .HasConstraintName("FK_cons_tbPlayas_play_UsuarioModificador_acce_tbUsuarios_usua_ID");
             });
 
             modelBuilder.Entity<tbReservaciones>(entity =>
@@ -909,6 +1101,16 @@ namespace PlayaMagica.DataAccess.Context
                     .WithMany(p => p.tbReservaciones)
                     .HasForeignKey(d => d.acti_Id)
                     .HasConstraintName("FK_Acti_tbReservaciones_rese_id_Acti_tbActividades_acti_Id");
+
+                entity.HasOne(d => d.rese_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbReservacionesrese_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.rese_UsuarioCreador)
+                    .HasConstraintName("FK_acti_tbReservaciones_mate_UsuarioCreador_acce_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.rese_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbReservacionesrese_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.rese_UsuarioModificador)
+                    .HasConstraintName("FK_acti_tbReservaciones_mate_UsuarioModificador_acce_tbUsuarios_usua_ID");
             });
 
             modelBuilder.Entity<tbRoles>(entity =>
@@ -931,6 +1133,16 @@ namespace PlayaMagica.DataAccess.Context
                 entity.Property(e => e.role_FechaModificacion).HasColumnType("datetime");
 
                 entity.Property(e => e.role_UsuarioCreador).HasDefaultValueSql("((1))");
+
+                entity.HasOne(d => d.role_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbRolesrole_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.role_UsuarioCreador)
+                    .HasConstraintName("FK_acce_tbRoles_role_UsuarioCreador_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.role_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbRolesrole_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.role_UsuarioModificador)
+                    .HasConstraintName("FK_acce_tbRoles_role_UsuarioModificador_tbUsuarios_usua_ID");
             });
 
             modelBuilder.Entity<tbRolesXPantallas>(entity =>
@@ -954,6 +1166,16 @@ namespace PlayaMagica.DataAccess.Context
                     .WithMany(p => p.tbRolesXPantallas)
                     .HasForeignKey(d => d.pant_ID)
                     .HasConstraintName("FK_Acce_tbRolesXPantallas_tbPantallas_pant_ID");
+
+                entity.HasOne(d => d.roleXpant_UsuarioCreadorNavigation)
+                    .WithMany(p => p.tbRolesXPantallasroleXpant_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.roleXpant_UsuarioCreador)
+                    .HasConstraintName("FK_acce_tbRolesXPantallas_roleXpant_UsuarioCreador_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.roleXpant_UsuarioModificadorNavigation)
+                    .WithMany(p => p.tbRolesXPantallasroleXpant_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.roleXpant_UsuarioModificador)
+                    .HasConstraintName("FK_acce_tbRolesXPantallas_roleXpant_UsuarioModificador_tbUsuarios_usua_ID");
 
                 entity.HasOne(d => d.role)
                     .WithMany(p => p.tbRolesXPantallas)
@@ -982,6 +1204,21 @@ namespace PlayaMagica.DataAccess.Context
                 entity.Property(e => e.usua_FechaModificacion).HasColumnType("datetime");
 
                 entity.Property(e => e.usua_Usuario).HasMaxLength(100);
+
+                entity.HasOne(d => d.enca)
+                    .WithMany(p => p.tbUsuarios)
+                    .HasForeignKey(d => d.enca_ID)
+                    .HasConstraintName("FK_acce_tbUsuarios_cons_tbEmpleados_empl_ID");
+
+                entity.HasOne(d => d.usua_UsuarioCreadorNavigation)
+                    .WithMany(p => p.Inverseusua_UsuarioCreadorNavigation)
+                    .HasForeignKey(d => d.usua_UsuarioCreador)
+                    .HasConstraintName("FK_acce_tbUsuarios_usua_UsuarioCreador_tbUsuarios_usua_ID");
+
+                entity.HasOne(d => d.usua_UsuarioModificadorNavigation)
+                    .WithMany(p => p.Inverseusua_UsuarioModificadorNavigation)
+                    .HasForeignKey(d => d.usua_UsuarioModificador)
+                    .HasConstraintName("FK_acce_tbUsuarios_usua_UsuarioModificador_tbUsuarios_usua_ID");
             });
 
             OnModelCreatingPartial(modelBuilder);

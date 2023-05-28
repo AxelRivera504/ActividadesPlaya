@@ -24,6 +24,18 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/equipos/equipos.module').then(m => m.EquiposModule)
       },
       {
+        path: 'equiposCrear',
+        loadChildren: () => import('./views/pages/equipos/equipos-crear/equipos-crear.module').then(m => m.EquiposCrearModule)
+      },
+      {
+        path: 'equiposEditar',
+        loadChildren: () => import('./views/pages/equipos/equipos-editar/equipos-editar.module').then(m => m.EquiposEditarModule)
+      },
+      {
+        path: 'equiposDetalles',
+        loadChildren: () => import('./views/pages/equipos/equipos-detalles/equipos-detalles.module').then(m => m.EquiposDetallesModule)
+      },
+      {
         path: 'mantenimientos',
         loadChildren: () => import('./views/pages/mantenimientos/mantenimientos.module').then(m => m.MantenimientosModule)
       },
@@ -44,20 +56,48 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/actividades/actividades.module').then(m => m.ActividadesModule)
       },
       {
+        path: 'actividadesCrear',
+        loadChildren: () => import('./views/pages/actividades/actividades-crear/actividades-crear.module').then(m => m.ActividadesCrearModule)
+      },
+      {
+        path: 'actividadesEditar',
+        loadChildren: () => import('./views/pages/actividades/actividades-editar/actividades-editar.module').then(m => m.ActividadesEditarModule)
+      },
+      {
+        path: 'actividadesDetalles',
+        loadChildren: () => import('./views/pages/actividades/actividades-detalles/actividades-detalles.module').then(m => m.ActividadesDetallesModule)
+      },
+      {
         path: 'departamentos',
         loadChildren: () => import('./views/pages/departamentos/departamentos.module').then(m => m.DepartamentosModule)
+      },
+      {
+        path: 'departamentosDetalles',
+        loadChildren: () => import('./views/pages/departamentos/departamentos-detalles/departamentos-detalles.module').then(m => m.DepartamentosDetallesModule)
       },
       {
         path: 'municipios',
         loadChildren: () => import('./views/pages/municipios/municipios.module').then(m => m.MunicipiosModule)
       },
       {
+        path: 'municipiosDetalles',
+        loadChildren: () => import('./views/pages/municipios/municipios-detalles/municipios-detalles.module').then(m => m.MunicipiosDetallesModule)
+      },
+      {
         path: 'estadosciviles',
         loadChildren: () => import('./views/pages/estadosciviles/estadosciviles.module').then(m => m.EstadoscivilesModule)
       },
       {
+        path: 'estadoscivilesDetalles',
+        loadChildren: () => import('./views/pages/estadosciviles/estadosciviles-detalles/estadosciviles-detalles.module').then(m => m.EstadoscivilesDetallesModule)
+      },
+      {
         path: 'metodospago',
         loadChildren: () => import('./views/pages/metodospago/metodospago.module').then(m => m.MetodospagoModule)
+      },
+      {
+        path: 'metodospagoDetalles',
+        loadChildren: () => import('./views/pages/metodospago/metodospago-detalles/metodospago-detalles.module').then(m => m.MetodospagoDetallesModule)
       },
       {
         path: 'direcciones',
@@ -72,10 +112,14 @@ const routes: Routes = [
         path: 'Detalles',        
         loadChildren: () => import('./views/pages/usuarios/detalles/usarios-detalle.module').then(m => m.UsuariosDetallesModule)
       },
- 
+
       {
         path: 'roles',
         loadChildren: () => import('./views/pages/roles/roles.modules').then(m => m.RolesModule)
+      },
+      {
+        path: 'direccionesDetalles',
+        loadChildren: () => import('./views/pages/direcciones/direcciones-detalles/direcciones-detalles.module').then(m => m.DireccionesDetallesModule)
       },
       {
         path: 'apps',

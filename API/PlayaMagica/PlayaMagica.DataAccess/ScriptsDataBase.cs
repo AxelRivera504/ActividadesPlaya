@@ -106,6 +106,7 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbEquipos_Insert = "Acti.UDP_tbEquipos_Insert";
         public static string UDP_tbEquipos_Update = "Acti.UDP_tbEquipos_Update";
         public static string UDP_tbEquipos_Delete = "Acti.UDP_tbEquipos_Delete";
+        public static string UDP_EquipoXActividad = "UDP_EquipoXActividad";
         #endregion
 
         #region Actividades
@@ -148,6 +149,11 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbFactura_Select = "Acti.UDP_tbFactura_VW";
         public static string UDP_tbFactura_Insert = "Acti.UDP_tbFactura_Insert";
         public static string UDP_tbFactura_Update = "Acti.UDP_tbFactura_Delete";
+        #endregion
+
+        #region EquiposXActividades
+        public static string UDP_EquiposXActividades_Insert = "Acti.UDP_tbEquipoXActividades_Insert";
+        public static string UDP_EquiposXActividades_Delelete = "Acti.UDP_tbEquipoXActividades_Delete";
         #endregion
 
         #endregion

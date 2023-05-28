@@ -23,5 +23,7 @@ namespace PlayaMagica.Entities.Entities
 
         public virtual tbPantallas pant { get; set; }
         public virtual tbRoles role { get; set; }
+        public virtual tbUsuarios roleXpant_UsuarioCreadorNavigation { get; set; }
+        public virtual tbUsuarios roleXpant_UsuarioModificadorNavigation { get; set; }
     }
 }

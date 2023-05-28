@@ -20,5 +20,8 @@ namespace PlayaMagica.Entities.Entities
         public DateTime? clie_FechaCreacion { get; set; }
         public int? clie_UsuarioModificador { get; set; }
         public DateTime? clie_FechaModificacion { get; set; }
+
+        public virtual tbUsuarios clie_UsuarioCreadorNavigation { get; set; }
+        public virtual tbUsuarios clie_UsuarioModificadorNavigation { get; set; }
     }
 }

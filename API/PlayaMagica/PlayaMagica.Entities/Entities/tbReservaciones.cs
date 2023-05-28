@@ -25,6 +25,8 @@ namespace PlayaMagica.Entities.Entities
         public DateTime? rese_FechaModificacion { get; set; }
 
         public virtual tbActividades acti { get; set; }
+        public virtual tbUsuarios rese_UsuarioCreadorNavigation { get; set; }
+        public virtual tbUsuarios rese_UsuarioModificadorNavigation { get; set; }
         public virtual ICollection<tbClienteXReservacion> tbClienteXReservacion { get; set; }
         public virtual ICollection<tbFactura> tbFactura { get; set; }
     }
