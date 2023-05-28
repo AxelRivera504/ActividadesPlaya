@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Juan\\Desktop\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {}
+    "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Juan\\Desktop\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {
+    "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Juan\\Desktop\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
+        "projectUniqueName": "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
         "projectName": "PlayaMagica.Entities",
-        "projectPath": "C:\\Users\\Juan\\Desktop\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
+        "projectPath": "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
         "packagesPath": "C:\\Users\\Juan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Juan\\Desktop\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\obj\\",
+        "outputPath": "C:\\Users\\Juan\\Documents\\GitHub\\Nueva carpeta\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.Entities\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

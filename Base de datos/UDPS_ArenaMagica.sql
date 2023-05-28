@@ -30,35 +30,29 @@ END
 --Insertar Departamentos
 GO
 CREATE OR ALTER PROCEDURE Gral.UDP_tbDepartamentos_InsertarDepartamentos
+	@dept_Id				CHAR(2),
 	@dept_Descripcion		NVARCHAR(150),
 	@dept_UsuarioCreador	INT
 AS
 BEGIN
 	BEGIN TRY
-        IF NOT EXISTS (SELECT * FROM Gral.tbDepartamentos WHERE dept_Descripcion = @dept_Descripcion)
-            BEGIN
-                DECLARE @IdDepto AS CHAR(2);
-                SELECT @IdDepto = dept_Id FROM Gral.tbDepartamentos ORDER BY dept_Id ASC
-                DECLARE @NextNewIdDepto AS CHAR(2);
-                SET @NextNewIdDepto = CONVERT(CHAR(2), CONVERT(INT, @IdDepto) + 1);
-
-                INSERT INTO gral.tbDepartamentos (dept_id, dept_Descripcion, dept_Estado, dept_UsuarioCreador, dept_FechaCreacion, dept_UsuarioModificador, dept_FechaModificacion)
-                VALUES (@NextNewIdDepto,@dept_Descripcion,1,@dept_UsuarioCreador,GETDATE(),NULL,NULL);
-
-               SELECT 1
-            END
-        ELSE IF EXISTS(SELECT * FROM Gral.tbDepartamentos WHERE dept_Descripcion = @dept_Descripcion AND dept_Estado = 0 )
-		BEGIN
-			UPDATE Gral.tbDepartamentos 
-			SET dept_Estado = 1
-			WHERE dept_Descripcion = @dept_Descripcion
-			SELECT 1
-		END
-		ELSE
-		BEGIN
+		IF NOT EXISTS(SELECT dept_Id,dept_Descripcion FROM Gral.tbDepartamentos WHERE dept_id = @dept_Id OR dept_Descripcion = @dept_Descripcion)
+			BEGIN
+				INSERT INTO Gral.tbDepartamentos([dept_Id],[dept_Descripcion], [dept_Estado], [dept_UsuarioCreador], [dept_FechaCreacion], [dept_UsuarioModificador], [dept_FechaModificacion])
+				VALUES(@dept_Id,@dept_Descripcion,1,@dept_UsuarioCreador,GETDATE(),NULL,NULL)
+				SELECT 1
+			END
+		IF EXISTS(SELECT dept_Id,dept_Descripcion FROM Gral.tbDepartamentos WHERE dept_id = @dept_Id AND  dept_Descripcion = @dept_Descripcion AND dept_Estado = 0)
+			BEGIN
+				UPDATE Gral.tbDepartamentos
+				SET dept_Estado = 1
+				WHERE dept_id = @dept_Id
+				SELECT 1
+			END
+		ELSE BEGIN
 			SELECT 2
 		END
-    END TRY
+	END TRY
     BEGIN CATCH
       SELECT 0
     END CATCH
@@ -73,10 +67,10 @@ CREATE OR ALTER PROCEDURE Gral.UDP_tbDepartamentos_EditarDepartamentos
 AS
 BEGIN
 BEGIN TRY
-		IF NOT EXISTS (SELECT * FROM Gral.tbDepartamentos WHERE dept_Descripcion = @dept_Descripcion and dept_Id = @dept_Id)
+		IF NOT EXISTS (SELECT dept_Descripcion FROM Gral.tbDepartamentos WHERE dept_Descripcion = @dept_Descripcion AND dept_Id != @dept_Id)
 			BEGIN
 						UPDATE	Gral.tbDepartamentos							
-				SET		dept_Descripcion			=@dept_Descripcion			,
+				SET		dept_Descripcion			=@dept_Descripcion,
 						dept_UsuarioModificador		=@dept_UsuarioModificador		
 				WHERE	dept_Id = @dept_Id
 				SELECT 1
@@ -103,12 +97,17 @@ SELECT	muni_Id,
 		muni_Descripcion,
 		t2.dept_Id,
 		T2.dept_Descripcion,
-		muni_UsuarioCreador,
+		muni_UsuarioCreador,[UsuarioCreador].usua_Usuario AS muni_UsuarioCreador_Nombre,
 		muni_FechaCreacion,
-		muni_UsuarioModificador,
+		muni_UsuarioModificador,[UsuarioModificador].usua_Usuario AS muni_UsuarioModificador_Nombre,
 		muni_FechaModificacion
 FROM Gral.tbMunicipios T1 INNER JOIN Gral.tbDepartamentos T2
 ON T1.dept_Id = T2.dept_Id
+INNER JOIN Acce.tbUsuarios [UsuarioCreador]
+ON T1.muni_UsuarioCreador = [UsuarioCreador].usua_ID
+LEFT JOIN Acce.tbUsuarios [UsuarioModificador] 
+ON T1.muni_UsuarioModificador = [UsuarioModificador].usua_ID
+
 
 /*Vista Municipios UDP*/
 GO
@@ -121,34 +120,32 @@ END
 --Insertar Municipios
 GO
 CREATE OR ALTER PROCEDURE Gral_tbMunicipios_InsertarMunicipios
+@muni_id				CHAR(4),
 @dept_Id				CHAR(2),
 @muni_Descripcion		NVARCHAR(150),
-@muni_UsuarioCreador	INT,
-@Status					INT OUTPUT
+@muni_UsuarioCreador	INT
 AS
 BEGIN
-BEGIN TRY
-		IF NOT EXISTS (SELECT * FROM Gral.tbMunicipios WHERE muni_Descripcion = @muni_Descripcion AND dept_id = @dept_Id)
+	BEGIN TRY
+		IF NOT EXISTS(SELECT muni_id,muni_Descripcion FROM Gral.tbMunicipios WHERE dept_id != @dept_Id AND muni_id = @muni_id OR muni_Descripcion = @muni_Descripcion)
 			BEGIN
-				DECLARE @IdMuni AS CHAR(2)
-				SELECT @IdMuni = SUBSTRING(muni_Id, 3, 2) FROM Gral.tbMunicipios WHERE dept_Id = @dept_Id ORDER BY muni_Id ASC 
-	
-				DECLARE @muni_Id AS CHAR(4)
-				DECLARE @num AS INT
-				SET @num = CONVERT(INT, @IdMuni) + 1
-				SELECT @muni_Id = @dept_Id + RIGHT('00' + CONVERT(VARCHAR(2), @num), 2)
-				
-				INSERT INTO Gral.tbMunicipios(dept_id, muni_id, muni_Descripcion, muni_Estado, muni_UsuarioCreador, muni_FechaCreacion, muni_UsuarioModificador, muni_FechaModificacion)
-				VALUES (@dept_Id,@muni_Id,@muni_Descripcion,1,@muni_UsuarioCreador,GETDATE(),NULL,NULL);
-				SET @Status = 1
+				INSERT INTO Gral.tbMunicipios([muni_id], [muni_Descripcion], [dept_id], [muni_Estado], [muni_UsuarioCreador], [muni_FechaCreacion], [muni_UsuarioModificador], [muni_FechaModificacion])
+				VALUES(@muni_id,@muni_Descripcion,@dept_Id,1,@muni_UsuarioCreador,GETDATE(),NULL,NULL)
+				SELECT 1
 			END
-		ELSE 
-		BEGIN
-			SET @Status = 2
+		ELSE IF EXISTS (SELECT muni_id,muni_Descripcion FROM Gral.tbMunicipios WHERE dept_id != @dept_Id AND muni_id = @muni_id OR muni_Descripcion = @muni_Descripcion AND muni_Estado = 0)
+			BEGIN
+				UPDATE Gral.tbMunicipios
+				SET muni_Estado = 1
+				WHERE muni_id = @muni_id
+				SELECT 1
+			END
+		ELSE BEGIN
+			SELECT 2
 		END
 	END TRY
 	BEGIN CATCH
-		SET @Status = 0
+		SELECT 0
 	END CATCH
 END
 GO
@@ -158,27 +155,26 @@ CREATE OR ALTER PROCEDURE Gral.UDP_tbMunicipios_EditarMunicipios
 @muni_Id					CHAR(4),
 @dept_Id					CHAR(2),
 @muni_Descripcion			NVARCHAR(150),
-@muni_UsuarioModificador	INT,
-@Status						INT OUTPUT
+@muni_UsuarioModificador	INT
 AS
 BEGIN
 	BEGIN TRY
-		IF NOT EXISTS (SELECT muni_Id FROM Gral.tbMunicipios WHERE muni_Id = @muni_Id)
+		IF NOT EXISTS (SELECT * FROM Gral.tbMunicipios WHERE dept_id != @dept_Id AND muni_id != @muni_Id AND muni_Descripcion = @muni_Descripcion)
 			BEGIN
-				SET @Status = 1
+				UPDATE Gral.tbMunicipios
+				SET dept_id = @dept_Id,
+					muni_Descripcion = @muni_Descripcion,
+					muni_UsuarioModificador = @muni_UsuarioModificador,
+					muni_FechaModificacion = GETDATE()
+					WHERE muni_id = @muni_Id
+					SELECT 1	
 			END	
-		ELSE
-			BEGIN
-				UPDATE	Gral.tbMunicipios							
-				SET		muni_Descripcion			=@muni_Descripcion			,
-						dept_Id 					=@dept_Id,
-						muni_UsuarioModificador		=@muni_UsuarioModificador		
-				WHERE	muni_Id = @muni_Id
-				SET @Status = 2
-			END
+		ELSE BEGIN
+			SELECT 2
+		END
 	END TRY
 	BEGIN CATCH
-		SET @Status = 0
+		SELECT 0
 	END CATCH
 END
 
@@ -255,12 +251,14 @@ END
 --Editar Estados Civiles
 GO
 CREATE OR ALTER PROCEDURE gral.UDP_tbEstadosCiviles_Update
-@esci_Id						CHAR(1),
+@esci_Id						INT,
 @esci_Descripcion				NVARCHAR(150),	
 @esci_UsuarioModificador		INT
 AS
 BEGIN
-	IF NOT EXISTS (SELECT esci_Descripcion FROM Gral.tbEstadosCiviles WHERE esci_Descripcion = @esci_Descripcion AND esci_id = @esci_Id)
+
+BEGIN TRY
+		IF NOT EXISTS (SELECT esci_Descripcion FROM Gral.tbEstadosCiviles WHERE esci_Descripcion = @esci_Descripcion AND esci_id != @esci_Id)
 		BEGIN
 			UPDATE Gral.tbEstadosCiviles
 			SET esci_Descripcion = @esci_Descripcion,
@@ -269,10 +267,14 @@ BEGIN
 			WHERE esci_id = @esci_Id
 			SELECT 1
 		END
-	ELSE
-	BEGIN
-		SELECT 0
+	ELSE BEGIN
+		SELECT 2
 	END
+END TRY
+
+BEGIN CATCH
+	SELECT 0
+END CATCH
 END
 
 --**************************************************** /UDP Y VISTA ESTADOS CIVILES ***************************************************************--
@@ -317,7 +319,13 @@ BEGIN
 				VALUES(@mepa_Descripcion,1,@mepa_UsuarioCreador,GETDATE(),NULL,NULL)
 				SELECT 1
 			END
-		ELSE
+		ELSE IF EXISTS (SELECT mepa_Descripcion FROM Gral.tbMetodosPago WHERE mepa_Descripcion = @mepa_Descripcion AND mepa_Estado = 0)
+			BEGIN
+				UPDATE Gral.tbMetodosPago
+				SET mepa_Estado = 1
+				WHERE mepa_Descripcion = @mepa_Descripcion
+				SELECT 1
+			END
 		BEGIN
 			SELECT 2
 		END
@@ -342,10 +350,10 @@ BEGIN
 				UPDATE Gral.tbMetodosPago
 				SET mepa_Descripcion = @mepa_Descripcion,
 					mepa_FechaModificacion = GETDATE(),
-					mepa_UsuarioCreador = @mepa_UsuarioModificador
+					mepa_UsuarioModificador = @mepa_UsuarioModificador
 					WHERE mepa_id = @mepa_id
 					SELECT 1
-			END
+			END	
 		ELSE BEGIN
 			SELECT 2
 		END
@@ -360,20 +368,17 @@ GO
 
 --Eliminar Metodos de Pago
 CREATE OR ALTER PROCEDURE Gral.UDP_tbMetodosPago_EliminarMetodosPago
-@mepa_id			INT,
-@status				INT OUTPUT
+@mepa_id			INT
 AS
 BEGIN
-BEGIN TRY		
-	
+BEGIN TRY			
 		UPDATE	[Gral].[tbMetodosPago]						
 		SET		mepa_Estado = 0
 		WHERE	mepa_id = @mepa_id
-		SET @status = 1;
-			
+		SELECT 1		
 	END TRY
 	BEGIN CATCH
-		SET @status = 0;
+		SELECT 2
 	END CATCH
 END
 
@@ -393,7 +398,7 @@ play_FechaModificacion
 FROM Acti.tbPlayas play INNER JOIN [Gral].[tbDirecciones] dire
 ON play.dire_Id = dire.dire_Id INNER JOIN Acce.tbUsuarios [UsuarioCreador]
 ON play.play_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
-ON play.play_UsuarioModificador = [UsuarioModificador].usua_ID INNER JOIN 
+ON play.play_UsuarioModificador = [UsuarioModificador].usua_ID
 WHERE play_Estado = 1
 
 /*Vista Playas UDP*/
@@ -495,7 +500,7 @@ END
 
 --**************************************************** /UDP Y VISTA PLAYA ******************************************************************************--
  GO
- --****************************************************UDP Y DIRECCIONES  ********************************************************************************--
+--****************************************************UDP Y DIRECCIONES  ********************************************************************************--
 
 
  --Vista Direcciones
@@ -562,7 +567,7 @@ CREATE OR ALTER PROCEDURE Gral.UDP_tbDirecciones_Update
 AS
 BEGIN
 	BEGIN TRY
-		IF NOT EXISTS(SELECT * FROM tbDirecciones WHERE dire_DireccionExacta = @dire_DireccionExacta AND dire_Id != @dire_Id)
+		IF NOT EXISTS(SELECT * FROM tbDirecciones WHERE dire_DireccionExacta = @dire_DireccionExacta AND dire_Id != @dire_Id AND muni_Id != @muni_Id)
 			BEGIN
 				UPDATE Gral.tbDirecciones 
 				SET dire_DireccionExacta = @dire_DireccionExacta,
@@ -586,8 +591,7 @@ END
 --Eliminar Direcciones
 GO
 CREATE OR ALTER PROCEDURE Gral.UDP_tbDirecciones_EliminarDirecciones
-@dire_Id			INT,
-@status				INT OUTPUT
+@dire_Id			INT
 AS
 BEGIN
 BEGIN TRY		
@@ -595,10 +599,10 @@ BEGIN TRY
 		UPDATE	Gral.tbDirecciones							
 		SET		dire_Estado = 0
 		WHERE	dire_Id = @dire_Id
-		SET @status = 1		
+		SELECT 1
 	END TRY
 	BEGIN CATCH
-		SET @status = 0
+		SELECT 0
 	END CATCH
 END
 GO
@@ -671,7 +675,7 @@ GO
 						END
 				ELSE 
 					BEGIN
-						SELECT 1
+						SELECT 2
 					END
 	END TRY	
 	BEGIN CATCH
@@ -724,12 +728,15 @@ GO
  /*Encargados Delete*/
  GO
  CREATE OR ALTER PROCEDURE Acti.UDP_tbEncargados_Delete
- @enca_id INT
+ @enca_id					INT,
+ @enca_UsuarioModificador	INT
  AS
  BEGIN
 	BEGIN TRY
 		UPDATE Acti.tbEncargados
-		SET enca_Estado = 0
+		SET enca_Estado = 0,
+			enca_UsuarioModificador = @enca_UsuarioModificador,
+			enca_FechaModificacion = GETDATE()
 		WHERE enca_id = @enca_id
 		SELECT 1
 	END TRY
@@ -741,13 +748,13 @@ GO
 
   --****************************************************//////UDP Y VISTA Encargados  *************************************************************************--
 
-  --****************************************************UDP Y VISTA Equipos  *************************************************************************--
+ --****************************************************UDP Y VISTA Equipos  *************************************************************************--
   /*Vista Equipos*/
   GO
   CREATE OR ALTER VIEW Acti.VW_tbEquipos
   AS
   SELECT equi_Id, equi_Descripcion, 
-  equi_UsoActual, equi_UsoLimite, 
+  equi_UsoActual, equi_UsoLimite, equi_ImgUrL,
   equi_Estado, equi_UsuarioCreador,[UsuarioCreador].usua_Usuario AS equi_UsuarioCreador_Nombre, 
   equi_FechaCreacion, equi_UsuarioModificador,[UsuarioModificador].usua_Usuario AS equi_UsuarioModificador_Nombre, 
   equi_FechaModificacion
@@ -764,23 +771,24 @@ GO
     SELECT * FROM Acti.VW_tbEquipos
   END
 
-  /*Vista Equipos Insert */
+  /*Insertar equipos*/
   GO
   CREATE OR ALTER PROCEDURE Acti.UDP_tbEquipos_Insert
   @equi_Descripcion NVARCHAR(250),
   @equi_UsoLimite INT,
+  @equi_ImgUrl NVARCHAR(MAX),
   @equi_UsuarioCreador INT
   AS
   BEGIN
 	BEGIN TRY
 		IF NOT EXISTS(SELECT equi_Descripcion FROM Acti.tbEquipos WHERE equi_Descripcion = @equi_Descripcion)
 			BEGIN
-				INSERT INTO Acti.tbEquipos (equi_Descripcion, 
+				INSERT INTO Acti.tbEquipos (equi_Descripcion, equi_ImgUrL, 
 				equi_UsoActual, equi_UsoLimite, 
 				equi_Estado, equi_UsuarioCreador, 
 				equi_FechaCreacion, equi_UsuarioModificador, 
 				equi_FechaModificacion)
-				VALUES (@equi_Descripcion,0,@equi_UsoLimite,1,@equi_UsuarioCreador,GETDATE(),NULL,NULL)
+				VALUES (@equi_Descripcion,@equi_ImgUrl,0,@equi_UsoLimite,1,@equi_UsuarioCreador,GETDATE(),NULL,NULL)
 				SELECT 1
 			END
 		ELSE IF EXISTS(SELECT equi_Descripcion FROM Acti.tbEquipos WHERE equi_Descripcion = @equi_Descripcion AND equi_Estado = 0)
@@ -805,6 +813,7 @@ GO
   @equi_id INT,
   @equi_Descripcion NVARCHAR(250),
   @equi_UsoLimite INT,
+  @equi_ImgUrl NVARCHAR(MAX),
   @equi_UsuarioModificador INT
   AS
   BEGIN
@@ -814,6 +823,7 @@ GO
 				UPDATE Acti.tbEquipos
 				SET equi_Descripcion = @equi_Descripcion,
 					equi_UsoLimite = @equi_UsoLimite,
+					equi_ImgUrL = @equi_ImgUrl,
 					equi_FechaModificacion = GETDATE(),
 					equi_UsuarioModificador = @equi_UsuarioModificador
 				WHERE equi_Id = @equi_id
@@ -849,21 +859,30 @@ GO
 	
   --******************* *********************************//////UDP Y VISTA Equipos  *************************************************************************--
 
+
     --******************* ********************************UDP Y VISTA Actividades  *************************************************************************--
 	/*Vista Actividades*/
 	GO
 	CREATE OR ALTER VIEW Acti.VW_tbActividades
 	AS
-	SELECT acti_Id, acti_Nombre,  
+	SELECT acti_Id, 
+	acti_Nombre,  
 	acti_Cupo, 
-	acti_Precio, play_playa,play_id, 
-	acti_Estado, acti_UsuarioCreador,[UsuarioCreador].usua_Usuario AS acti_UsuarioCreador_Nombre, 
-	acti_FechaCreacion, acti_UsuarioModificador,[UsuarioModificador].usua_Usuario AS acti_UsuarioModificador_Nombre, 
+	acti_Precio,
+	acti_ImgUrl,
+	play_playa,
+	acti.play_Id, 
+	acti_Estado, 
+	acti_UsuarioCreador,
+	[UsuarioCreador].usua_Usuario AS acti_UsuarioCreador_Nombre, 
+	acti_FechaCreacion, 
+	acti_UsuarioModificador,
+	[UsuarioModificador].usua_Usuario AS acti_UsuarioModificador_Nombre, 
 	acti_FechaModificacion
 	FROM Acti.tbActividades	acti INNER JOIN Acce.tbUsuarios [UsuarioCreador]
 	ON acti.acti_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador] 
-	ON acti.acti_UsuarioModificador = [UsuarioModificador].usua_ID INNER JOIN Acti.Playas playa
-	ON	acti.play_id = playa.play_id
+	ON acti.acti_UsuarioModificador = [UsuarioModificador].usua_ID INNER JOIN Acti.tbPlayas playa
+	ON	acti.play_Id = playa.play_Id
 	WHERE acti_Estado = 1
 
 	--/*Vista Actividades UDP*/
@@ -874,13 +893,47 @@ GO
 	SELECT * FROM Acti.VW_tbActividades
 	END
 
-	/*Actividades Insert*/
+	--******************* ********************************UDP Y VISTA Actividades  *************************************************************************--
+	/*Vista Actividades*/
+	GO
+	CREATE OR ALTER VIEW Acti.VW_tbActividades
+	AS
+	SELECT acti_Id, 
+	acti_Nombre,  
+	acti_Cupo, 
+	acti_Precio,
+	acti_ImgUrl,
+	play_playa,
+	acti.play_Id, 
+	acti_Estado, 
+	acti_UsuarioCreador,
+	[UsuarioCreador].usua_Usuario AS acti_UsuarioCreador_Nombre, 
+	acti_FechaCreacion, 
+	acti_UsuarioModificador,
+	[UsuarioModificador].usua_Usuario AS acti_UsuarioModificador_Nombre, 
+	acti_FechaModificacion
+	FROM Acti.tbActividades	acti INNER JOIN Acce.tbUsuarios [UsuarioCreador]
+	ON acti.acti_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador] 
+	ON acti.acti_UsuarioModificador = [UsuarioModificador].usua_ID INNER JOIN Acti.tbPlayas playa
+	ON	acti.play_Id = playa.play_Id
+	WHERE acti_Estado = 1
+
+	--/*Vista Actividades UDP*/
+	GO 
+	CREATE OR ALTER PROCEDURE Acti.UDP_tbActividades_VW
+	AS
+	BEGIN
+	SELECT * FROM Acti.VW_tbActividades
+	END
+
+	/*Insertar Actividades*/
 	GO
 	CREATE OR ALTER PROCEDURE Acti.UDP_tbActividades_Insert
 	@acti_Nombre				VARCHAR(250),
 	@acti_Cupo					INT,
 	@acti_Precio				DECIMAL(18,2),
 	@play_Id					INT,
+	@acti_ImgUrl				NVARCHAR(MAX),
 	@acti_UsuarioCreador		INT
 	AS
 	BEGIN
@@ -889,23 +942,23 @@ GO
 				BEGIN
 					INSERT INTO Acti.tbActividades(acti_Nombre,  
 					acti_Cupo, 
-					acti_Precio, play_Id, 
+					acti_Precio, play_Id,acti_ImgUrl, 
 					acti_Estado, acti_UsuarioCreador, 
 					acti_FechaCreacion, acti_UsuarioModificador, 
 					acti_FechaModificacion)
-					VALUES(@acti_Nombre,@acti_Cupo,@acti_Precio,@play_Id,1,@acti_UsuarioCreador,GETDATE(),NULL,NULL)
-					SELECT 1
+					VALUES(@acti_Nombre,@acti_Cupo,@acti_Precio,@play_Id,@acti_ImgUrl,1,@acti_UsuarioCreador,GETDATE(),NULL,NULL)
+					SELECT SCOPE_IDENTITY()
 				END
 			IF EXISTS (SELECT acti_Nombre FROM Acti.tbActividades WHERE acti_Nombre = @acti_Nombre AND acti_Estado = 0)
 				BEGIN
 					UPDATE Acti.tbActividades
 					SET acti_Estado = 1
 					WHERE acti_Nombre = @acti_Nombre
-					SELECT 1
+					SELECT -1
 				END
 			ELSE
 				BEGIN
-					SELECT 2
+					SELECT -2
 				END
 		END TRY
 
@@ -921,6 +974,7 @@ GO
 	@acti_Nombre				VARCHAR(250),
 	@acti_Cupo					INT,
 	@acti_Precio				DECIMAL(18,2),
+	@acti_ImgUrl				NVARCHAR(MAX),
 	@play_Id					INT,
 	@acti_UsuarioModificador	INT
 	AS
@@ -932,6 +986,7 @@ GO
 					SET	acti_Nombre = @acti_Nombre,
 					acti_Cupo = @acti_Cupo,
 					acti_Precio = @acti_Precio,
+					acti_ImgUrl = @acti_ImgUrl,
 					play_Id = @play_Id,
 					acti_UsuarioModificador = @acti_UsuarioModificador,
 					acti_FechaModificacion = GETDATE()
@@ -994,38 +1049,123 @@ GO
 
 	/*Reservaciones Insert*/
 	GO
+
+
 	CREATE OR ALTER PROCEDURE Acti.UDP_tbReservaciones_Insert
-	(
-	  @acti_Id INT,
-	  @rese_Cantidad INT,
-	  @rese_FechaReservacion DATE,
-	  @resultado INT OUT
+	(	
+	  @acti_Id					 INT,
+	  @rese_Cantidad			INT,
+	  @rese_FechaReservacion	DATETIME,	
+	  @rese_UsuarioCreador		INT
 	)
 	AS
 	BEGIN
-	  -- Verificar si hay cupo disponible
-	  DECLARE @cuposDisponibles INT
-	  SELECT @cuposDisponibles = acti_Cupo - ISNULL(SUM(acfe_Cantidad), 0)
-	  FROM Acti.tbActividades a
-	  LEFT JOIN Acti.ActividadesXFecha axf ON a.acti_Id = axf.acti_Id
-	  WHERE a.acti_Id = @acti_Id
-	    AND axf.acfe_Fecha = @rese_FechaReservacion
-	  GROUP BY a.acti_Cupo
-	
-	  -- Insertar reservación si hay cupo disponible
-	  IF @cuposDisponibles >= @rese_Cantidad
-	  BEGIN
-	    INSERT INTO Acti.tbReservaciones (acti_Id, rese_Cantidad, rese_FechaReservacion)
-	    VALUES (@acti_Id, @rese_Cantidad, @rese_FechaReservacion)
+	  BEGIN TRY
+					DECLARE @CantidadActividad INT = (SELECT acti_Cupo FROM Acti.tbActividades WHERE acti_Id = @acti_Id)
+					DECLARE @Resultado2 INT = @CantidadActividad - @rese_Cantidad;
+
+					 INSERT INTO [Acti].[tbReservaciones]
+							   ([rese_Cantidad]
+							   ,[acti_Id]
+							   ,[rese_FechaReservacion]
+							   ,[rese_Estado]
+							   ,[rese_UsuarioCreador]
+							   ,[rese_FechaCreacion]
+							   ,[rese_UsuarioModificador]
+							   ,[rese_FechaModificacion])
+						 VALUES
+							   (@rese_Cantidad
+							   ,@acti_Id
+							   ,@rese_FechaReservacion
+							   ,1
+							   ,@rese_UsuarioCreador
+							   ,GETDATE()
+							   ,NULL
+							   ,NULL)
+
+						INSERT INTO [Acti].[tbActividadesXFecha]
+							   ([acti_Id]
+							   ,[acfe_Fecha]
+							   ,[acfe_Cantidad]
+							   ,[acfe_Estado]
+							   ,[acfe_UsuarioCreador]
+							   ,[acfe_FechaCreacion]
+							   ,[acfe_UsuarioModificador]
+							   ,[acfe_FechaModificacion])
+						 VALUES
+							   (@acti_Id
+							   ,@rese_FechaReservacion
+							   ,@Resultado2
+							   ,1
+							   ,@rese_UsuarioCreador
+							   ,GETDATE()
+							   ,NULL
+							   ,NULL)
 	    
-	    SET @resultado = 1 -- Éxito: reservación insertada
-	  END
-	  ELSE
-	  BEGIN
-	    SET @resultado = 0 -- Error: no hay cupo disponible
-	  END
+						DECLARE @LastID2 INT;
+						SELECT TOP 1 @LastID2 =  rese_Id
+						FROM	Acti.tbReservaciones
+						ORDER BY rese_Id DESC
+
+						SELECT  @LastID2 -- Éxito: reservación insertada		
+	  END TRY
+	  BEGIN CATCH
+	    SELECT  0 -- Error: no hay cupo disponible
+	  END CATCH
 	END
 	GO
+
+	CREATE OR ALTER PROCEDURE Acti.UDP_tbReservaciones_InsertExiste
+	(	
+	  @acti_Id					 INT,
+	  @rese_Cantidad			INT,
+	  @rese_FechaReservacion	DATE,	
+	  @rese_UsuarioCreador		INT
+	)
+	AS
+	BEGIN
+		BEGIN TRY
+				DECLARE @acfe_Cantidad INT = (SELECT acfe_Cantidad FROM [Acti].[tbActividadesXFecha] WHERE acfe_Fecha = @rese_FechaReservacion AND acti_Id = @acti_Id)
+				DECLARE @resultado INT = @acfe_Cantidad - @rese_Cantidad;
+
+
+					 INSERT INTO [Acti].[tbReservaciones]
+						   ([rese_Cantidad]
+						   ,[acti_Id]
+						   ,[rese_FechaReservacion]
+						   ,[rese_Estado]
+						   ,[rese_UsuarioCreador]
+						   ,[rese_FechaCreacion]
+						   ,[rese_UsuarioModificador]
+						   ,[rese_FechaModificacion])
+					 VALUES
+						   (@rese_Cantidad
+						   ,@acti_Id
+						   ,@rese_FechaReservacion
+						   ,1
+						   ,@rese_UsuarioCreador
+						   ,GETDATE()
+						   ,NULL
+						   ,NULL)
+
+
+					   UPDATE [Acti].[tbActividadesXFecha]
+					   SET acfe_Cantidad = @resultado
+					   WHERE acfe_Fecha = @rese_FechaReservacion 
+					   AND acti_Id = @acti_Id
+
+
+					DECLARE @LastID INT;
+					SELECT TOP 1 @LastID = rese_Id
+					FROM	Acti.tbReservaciones
+					ORDER BY rese_Id DESC
+
+					SELECT  @LastID -- Éxito: reservación insertada
+		END TRY
+		BEGIN CATCH
+			SELECT 0
+		END CATCH
+	END
 
 	/*Reservacion Update*/
 	GO
@@ -1071,6 +1211,26 @@ BEGIN
 END
 GO
 
+CREATE OR ALTER PROCEDURE Acti.UDP_tbActividadesXFecha_VerificarCuposFecha
+	@acti_Id		INT,
+	@acfe_Fecha		DATE
+AS
+BEGIN
+	BEGIN TRY
+	IF EXISTS (SELECT acfe_Id FROM [Acti].[tbActividadesXFecha] WHERE acti_id = @acti_Id AND acfe_Fecha = @acfe_Fecha)
+		BEGIN
+			SELECT acfe_Cantidad FROM [Acti].[tbActividadesXFecha] WHERE acti_id = @acti_Id AND acfe_Fecha = @acfe_Fecha
+		END
+	ELSE 
+		BEGIN 
+			SELECT -2
+		END		
+	END TRY
+	BEGIN CATCH
+		SELECT -0
+	END CATCH 
+END
+
 
 /*Reservaciones Delete*/
 GO
@@ -1111,7 +1271,7 @@ GO
 CREATE OR ALTER VIEW Acti.VW_tbClientes
 AS
 SELECT	clie_id, clie_Nombres, 
-clie_Apellidos,CONCAT(clie_Nombres,clie_Apellidos) AS clie_NombreCompleto, clie_DNI, 
+clie_Apellidos,CONCAT(clie_Nombres,+' '+clie_Apellidos) AS clie_NombreCompleto, clie_DNI, 
 clie_Email, clie_Sexo, 
 clie_FechaNac, clie_Estado, 
 clie_UsuarioCreador,[UsuarioCreador].usua_Usuario AS clie_UsuarioCreador_Nombre, clie_FechaCreacion, 
@@ -1217,12 +1377,15 @@ END
 /*Clientes Delete*/
 GO
 CREATE OR ALTER PROCEDURE Acti.UDP_tbClientes_Delete
-@clie_id INT 
+@clie_id					INT,
+@clie_UsuarioModificador	INT
 AS
 BEGIN
 	BEGIN TRY
 			UPDATE Acti.tbClientes
-			SET clie_Estado = 1
+			SET clie_Estado = 0,
+				clie_UsuarioModificador = @clie_UsuarioModificador,
+				clie_FechaModificacion = GETDATE()
 			WHERE clie_id = @clie_id
 			SELECT 1
 	END TRY
@@ -1255,7 +1418,7 @@ BEGIN
 	SELECT * FROM Acce.VW_tbRoles
 END
 
-/*Roles Insert*/
+/*******************************Roles insert *************************/
 GO
 CREATE OR ALTER PROCEDURE Acce.UDP_tbRoles_Insert
 @role_Descripcion VARCHAR(250),
@@ -1270,14 +1433,19 @@ BEGIN
 				role_FechaCreacion, role_UsuarioModificador, 
 				role_FechaModificacion)
 				VALUES(@role_Descripcion,1,@role_UsuarioCreador,GETDATE(),NULL,NULL)
-				SELECT 1
+
+				Declare @classid INT = (select top 1 role_ID From Acce.tbRoles order by role_ID desc )
+				SELECT @classid
 			END
 		ELSE IF EXISTS(SELECT * FROM Acce.tbRoles WHERE role_Descripcion = @role_Descripcion AND role_Estado = 0)
 			BEGIN
 				UPDATE Acce.tbRoles
 				SET role_Estado = 1
 				WHERE role_Descripcion = @role_Descripcion
-				SELECT 1
+				
+				SELECT role_ID 
+				from Acce.tbRoles
+				Where role_Descripcion = @role_Descripcion
 			END
 	END TRY
 
@@ -1331,6 +1499,20 @@ BEGIN
 		SELECT 0
 	END CATCH
 END
+
+/****************DDL encargados que no tengan rol**********/
+GO
+CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_DDLencargadosTieneusuario
+AS
+BEGIN
+      SELECT t2.enca_Id,
+             t2.enca_Nombres+''+t2.enca_Apellidos AS enca_NombreCompleto
+      FROM Acce.VW_tbUsuarios  t1 
+ FULL JOIN Acti. tbEncargados  t2
+        ON t1.enca_ID = t2.enca_id 
+     WHERE t1.usua_Id IS NULL 
+       AND t2. enca_Estado  = 1 
+END
 --******************* ********************************///UDP Y VISTA Roles  ****************************************************************************--
 
 --******************* ********************************UDP RolesXPantallas ****************************************************************************--
@@ -1360,6 +1542,8 @@ CREATE OR ALTER PROCEDURE Acce.UDP_RolesXPantallas_Insert
 AS
 BEGIN
 	BEGIN TRY
+
+			
 		INSERT INTO Acce.tbRolesXPantallas (role_ID, pant_ID, 
 		roleXpant_Estado, roleXpant_UsuarioCreador, 
 		roleXpant_FechaCreacion, roleXpant_UsuarioModificador, 
@@ -1390,6 +1574,19 @@ BEGIN
 	END CATCH
 END
 
+
+/*RolesXPantallas_Select_ByRoleID */
+GO
+CREATE OR ALTER PROCEDURE Acce.UDP_tbRolesXPantallas_Select_ByRoleID 
+@role_ID INT
+AS
+BEGIN
+	SELECT t1.role_ID,t1.pant_ID,t2.pant_Descripcion
+	FROM Acce.tbRolesXPantallas t1 inner join Acce.tbPantallas t2 
+	on t1.pant_ID = t2.pant_ID
+	WHERE roleXpant_Estado = 1 AND role_ID = @role_ID
+END
+
 --******************* ********************************///UDP RolesXPantallas ****************************************************************************--
 
 --******************* ********************************UDP Y VISTA Pantallas ****************************************************************************--
@@ -1409,7 +1606,7 @@ GO
 CREATE OR ALTER VIEW Acce.VW_tbUsuarios
 AS
 SELECT usua.usua_ID, usua.usua_Usuario, 
-usua.usua_Clave, usua.usua_EsAdmin, 
+usua.usua_Clave,
 usua.enca_ID,CONCAT(enca.enca_Nombres,enca.enca_Apellidos) AS enca_NombreCompleto, usua.role_ID,role.role_Descripcion, 
 usua.usua_Estado, usua.usua_UsuarioCreador, [UsuarioCreador].usua_Usuario AS usua_UsuarioCreador_Nombre,
 usua.usua_FechaCreacion, usua.usua_UsuarioModificador, [UsuarioModificador].usua_Usuario AS usua_UsuarioModificador_Nombre,
@@ -1480,6 +1677,19 @@ INNER JOIN   Acce.tbRoles tb3
 END
 GO
 
+CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_DDLencargadosTieneusuario
+AS
+BEGIN
+	SELECT t2.enca_id, 
+		   t2.enca_Nombres+' '+  t2.enca_Apellidos as enca_NombreCompleto		  
+	  FROM Acce. tbUsuarios  t1 
+ FULL JOIN Acti.tbEncargados  t2  
+		ON t1.enca_Id = t2.enca_Id 
+	 WHERE t1.usua_Id IS NULL 
+	   AND t2.enca_Estado  = 1 
+END
+
+GO
 
 /*Usuarios Insert*/
 GO
@@ -1534,8 +1744,7 @@ AS
 BEGIN
 	BEGIN TRY
 				UPDATE Acce.tbUsuarios	
-				SET	usua_EsAdmin = @usua_EsAdmin,
-					enca_ID = @enca_ID,
+				SET	enca_ID = @enca_ID,
 					role_ID = @role_ID,
 					usua_FechaModificacion = GETDATE(),
 					usua_UsuarioModificador = @usua_UsuarioModificador
@@ -1766,16 +1975,17 @@ END
 /*Vista Factura Insert*/
 GO
 CREATE OR ALTER PROCEDURE Acti.UDP_tbFactura_Insert
-@rese_Id INT,
-@fuct_Subtotal DECIMAL(18,2),
-@fuct_Isv DECIMAL(18,2),
-@fuct_Total DECIMAL(18,2),
-@fuct_UsuarioCreador INT
+@rese_Id				INT,
+@fuct_Subtotal			DECIMAL(18,2),
+@fuct_Isv				DECIMAL(18,2),
+@fuct_Total				DECIMAL(18,2),
+@mepa_id				INT,
+@fuct_UsuarioCreador	INT
 AS
-BEGIN
+BEGIN	
 	BEGIN TRY
-		INSERT INTO Acti.tbFactura(rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_Estado, fuct_UsuarioCreador, fuct_FechaCreacion, fuct_UsuarioModificador, fuct_FechaModificacion)
-		VALUES(@rese_Id,@fuct_Subtotal,@fuct_Isv,@fuct_Total,1,@fuct_UsuarioCreador,GETDATE(),NULL,NULL)
+		INSERT INTO Acti.tbFactura(rese_Id,mepa_id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_Estado, fuct_UsuarioCreador, fuct_FechaCreacion, fuct_UsuarioModificador, fuct_FechaModificacion)
+		VALUES(@rese_Id,@mepa_id,@fuct_Subtotal,@fuct_Isv,@fuct_Total,1,@fuct_UsuarioCreador,GETDATE(),NULL,NULL)
 		SELECT 1
 	END TRY
 
@@ -1802,3 +2012,101 @@ BEGIN
 END
 GO
 --***************************************************///UDP Y VISTA Factura****************************************************************************--
+
+--*************************************************** UDP Y VISTA tbReservacionesXClientes****************************************************************************--
+
+CREATE OR ALTER PROCEDURE Acti.UDP_tbClienteXReservacion_Insertar
+	@clie_Id				INT,
+	@rese_Id				INT,
+	@clre_UsuarioCreador	INT
+AS
+BEGIN
+	BEGIN TRY
+		INSERT INTO Acti.tbClienteXReservacion([clie_Id], [rese_Id], [clre_Estado], [clre_UsuarioCreador], [clre_FechaCreacion], [clre_UsuarioModificador], [clre_FechaModificacion])
+		VALUES (@clie_Id,@rese_Id,1,@clre_UsuarioCreador,GETDATE(),NULL, NULL ) 
+		SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+
+
+--*************************************************** /UDP Y VISTA tbReservacionesXClientes****************************************************************************--
+
+
+
+--*************************************************** UDP Y VISTA tbEquipoXActividades ****************************************************************************--
+/*Vista EquipoXActividades*/
+GO
+CREATE OR ALTER VIEW Acti.VW_tbEquipoXActividades
+AS
+SELECT [eqac_Id], eqac.[acti_Id],acti.acti_Nombre, 
+eqac.[equi_Id],equi.equi_Descripcion, [eqac_UsuarioCreador], 
+[eqac_FechaCreacion], [eqac_UsuarioModificador], 
+[eqac_FechaModificacion]
+FROM Acti.tbEquipoXActividades eqac INNER JOIN Acti.tbActividades acti
+ON eqac.acti_Id = acti.acti_Id INNER JOIN Acti.tbEquipos equi
+ON eqac.equi_Id = equi.equi_Id
+
+/*Vista EquipoXActividades UDP*/
+GO
+CREATE OR ALTER PROCEDURE Acti.UDP_tbEquipoXActividades_VW
+AS
+BEGIN
+	SELECT * FROM Acti.VW_tbEquipoXActividades
+END
+
+
+
+/*Insertar EquipoXActividades*/
+GO
+CREATE OR ALTER PROCEDURE Acti.UDP_tbEquipoXActividades_Insert
+@acti_Id INT,
+@equi_Id INT,
+@eqac_UsuarioCreador INT
+AS
+BEGIN
+	BEGIN TRY
+		INSERT INTO Acti.tbEquipoXActividades([acti_Id], [equi_Id], [eqac_UsuarioCreador], [eqac_FechaCreacion], [eqac_UsuarioModificador], [eqac_FechaModificacion])
+		VALUES(@acti_Id,@equi_Id,@eqac_UsuarioCreador,GETDATE(),NULL,NULL)
+		SELECT 1
+	END TRY
+
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+
+/*Eliminar EquipoXActividades*/
+GO
+CREATE OR ALTER PROCEDURE Acti.UDP_tbEquipoXActividades_Delete
+@acti_Id INT
+AS
+BEGIN
+	BEGIN TRY
+		DELETE Acti.tbEquipoXActividades
+		WHERE acti_Id = @acti_Id
+		SELECT 1
+	END TRY
+	
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+
+/*EquipoXActividad*/
+GO
+CREATE OR ALTER PROCEDURE UDP_EquipoXActividad 
+@acti_Id INT
+AS
+BEGIN
+    SELECT equi.equi_Id, equi.equi_Descripcion, equi.equi_ImgUrL, equi.equi_UsoActual, 
+           equi.equi_UsoLimite, equi.equi_Estado, equi.equi_UsuarioCreador, 
+           equi.equi_FechaCreacion, equi.equi_UsuarioModificador, equi.equi_FechaModificacion
+    FROM Acti.tbEquipos equi
+    INNER JOIN Acti.tbEquipoXActividades eqac ON equi.equi_Id = eqac.equi_Id
+    WHERE eqac.acti_Id = @acti_Id
+END
+
+--*************************************************** ///UDP Y VISTA tbEquipoXActividades ****************************************************************************--
