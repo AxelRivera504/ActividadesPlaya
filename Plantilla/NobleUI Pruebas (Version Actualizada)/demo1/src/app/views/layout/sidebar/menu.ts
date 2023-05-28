@@ -11,6 +11,44 @@ export const MENU: MenuItem[] = [
     link: '/dashboard'
   },
   {
+    label: 'Generales',
+    isTitle: true
+  },
+  {
+    id:7,
+    label: 'Departamentos',
+    icon: 'map',
+    link: '/icons'
+  },
+  {
+    id:8,
+    label: 'Municipios',
+    icon: 'map',
+    link: '/municipios'
+  },
+  {
+    id:12,
+    label: 'Estados Civiles',
+    icon: 'heart',
+    link: '/estadosciviles'
+  },
+  {
+    id:10,
+    label: 'Metodos de Pago',
+    icon: 'credit-card',
+    link: '/metodospago'
+  },
+  {
+    id:11,
+    label: 'Direcciones',
+    icon: 'map-pin',
+    link: '/direcciones'
+  },
+  {
+    label: 'Actividades',
+    isTitle: true
+  },
+  {
     id:6,
     label: 'Playas',
     icon: 'sunset',
@@ -40,6 +78,7 @@ export const MENU: MenuItem[] = [
     link: '/encargados'
   },
   {
+    id:18,
     label: 'Actividades',
     icon: 'sun',
     link: '/actividades'
@@ -47,49 +86,23 @@ export const MENU: MenuItem[] = [
   {
     id:3,
     label: 'Reservaciones',
-    icon: 'sun',
+    icon: 'star',
     link: '/reservaciones'
   },
   {
-    id:7,
-    label: 'Departamentos',
-    icon: 'home',
-    link: '/departamentos'
-  },
-  {
-    id:8,
-    label: 'Municipios',
-    icon: 'home',
-    link: '/municipios'
-  },
-  {
-    id:12,
-    label: 'Estados Civiles',
-    icon: 'home',
-    link: '/estadosciviles'
-  },
-  {
-    id:10,
-    label: 'Metodos de Pago',
-    icon: 'home',
-    link: '/metodospago'
-  },
-  {
-    id:11,
-    label: 'Direcciones',
-    icon: 'home',
-    link: '/direcciones'
+    label: 'Acceso',
+    isTitle: true
   },
   {
     id:17,
     label: 'Roles',
-    icon: 'home',
+    icon: 'users',
     link: '/roles'
   },
   {
     id:16,
     label: 'Usuarios',
-    icon: 'home',
+    icon: 'user-plus',
     link: '/usuarios'
   },
 ];

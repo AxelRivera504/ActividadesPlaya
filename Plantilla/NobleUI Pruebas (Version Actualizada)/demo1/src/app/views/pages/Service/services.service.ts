@@ -15,6 +15,10 @@ import { estadoscivilesEdit } from '../Model/EstadosCivilesEdit';
 import { direcciones } from '../Model/direcciones';
 import { MantenimientoEdit } from '../Model/MantenimientoEdit';
 import { RolesXPantalla } from '../Model/RolesXPantalla';
+import { Reservaciones } from '../Model/Reservaciones';
+import { ClienteXReservacion } from '../Model/ClienteXReservacion';
+import { ActividadesXFecha } from '../Model/ActividadesXFecha';
+import { Factura } from '../Model/Factura';
 
 @Injectable({
   providedIn: 'root'
@@ -118,5 +122,25 @@ export class ServicesService {
 
   obtenerPantallasPorRol(roleId: number) {
     return this.http.get<RolesXPantalla[]>(this.Url + "/RolesPorPantalla/PantallasXroles"+roleId);
+  }
+
+  InsertarClientesXReservacion(clReservacion:ClienteXReservacion){
+    return this.http.post<ClienteXReservacion[]>(this.Url + "/ClienteXReservacion/InsertarClienteXReservacion",clReservacion)
+  }
+
+  InsertarReservaciones(reservaciones:Reservaciones){
+    return this.http.post<Reservaciones[]>(this.Url + "/Reservaciones/InsertarReservacion",reservaciones)
+  }
+
+   InsertarReservacionesExiste  (reservaciones:Reservaciones){
+    return this.http.post<Reservaciones[]>(this.Url + "/Reservaciones/InsertarReservacionExiste",reservaciones)
+  }
+
+  VerificarCuposActividad(actividadXFecha: ActividadesXFecha){
+    return this.http.post<ActividadesXFecha[]>(this.Url + "/ActividadesXFecha/CantidadActividad",actividadXFecha)
+  }
+
+  InsertarFactura(factura:Factura){
+    return this.http.post<Factura[]>(this.Url + "/Factura/InsertarFactura",factura)
   }
 }

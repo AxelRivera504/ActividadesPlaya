@@ -51,7 +51,7 @@ this.form = new FormGroup({
 
       if (!this.clientes.clie_Nombres || !this.clientes.clie_Apellidos ||
         !this.clientes.clie_DNI || !this.clientes.clie_Email ||
-        !clie_SexoControl || !clie_SexoControl.valid || !this.fechaValida || !this.fechaFormatoValido ) {
+        !this.clientes.clie_Sexo || !this.fechaValida || !this.fechaFormatoValido ) {
       this.submitted = true;  
       this.submitte1 = true;  
       console.log(this.fechaValida)

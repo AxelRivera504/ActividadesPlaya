@@ -26,7 +26,6 @@ import { DataTablesModule } from 'angular-datatables';
     HttpClientModule,
     FormsModule,
     DataTablesModule
-
   ],
   providers: [
     AuthGuard,

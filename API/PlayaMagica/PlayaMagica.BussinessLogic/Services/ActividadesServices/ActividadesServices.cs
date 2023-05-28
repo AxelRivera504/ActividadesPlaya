@@ -16,7 +16,11 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
         private readonly ActividadesRepository _actividadesRepository;
         private readonly EquipoRepository _equipoRepository;
         private readonly MantenimientoRepository _mantenimientoRepository;
-        public ActividadesServices(MantenimientoRepository mantenimientoRepository, EquipoRepository equipoRepository, ActividadesRepository actividadesRepository, EncargadosRepository encargadosRepository, ClientesRepository clientesRepository, PlayasRepository playasRepository)
+        private readonly ReservacionesRepository _reservacionesRepository;
+        private readonly ClienteXReservacionRepository _clienteXReservacionRepository;
+        private readonly ActividadesXFechaRepository _actividadesXFechaRepository;
+        private readonly FacturaRepository _facturaRepository;
+        public ActividadesServices(FacturaRepository facturaRepository ,ActividadesXFechaRepository actividadesXFechaRepository, ClienteXReservacionRepository clienteXReservacionRepository, ReservacionesRepository reservacionesRepository ,MantenimientoRepository mantenimientoRepository, EquipoRepository equipoRepository, ActividadesRepository actividadesRepository, EncargadosRepository encargadosRepository, ClientesRepository clientesRepository, PlayasRepository playasRepository)
         {
             _clientesRepository = clientesRepository;
             _encargadosRepository = encargadosRepository;
@@ -24,6 +28,10 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             _actividadesRepository = actividadesRepository;
             _equipoRepository = equipoRepository;
             _mantenimientoRepository = mantenimientoRepository;
+            _reservacionesRepository = reservacionesRepository;
+            _clienteXReservacionRepository = clienteXReservacionRepository;
+            _actividadesXFechaRepository = actividadesXFechaRepository;
+            _facturaRepository = facturaRepository;
         }
 
 
@@ -411,6 +419,91 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
                 return resultado.Error(ex.Message);
             }
         }
+        #endregion
+
+        #region Reservaciones
+        public ServiceResult InsertarReservaciones(tbReservaciones item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var reservaciones = _reservacionesRepository.InsertarReservaciones(item);
+                return resultado.Ok(reservaciones);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult InsertarReservacionesExiste(tbReservaciones item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var reservaciones = _reservacionesRepository.InsertarReservacionesExiste(item);
+                return resultado.Ok(reservaciones);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+        #endregion
+
+        #region ClientesXReservacion
+        public ServiceResult InsertarClienteXReservacion(tbClienteXReservacion item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var ClienteXReservacion = _clienteXReservacionRepository.InsertarClienteXReservacion(item);
+                return resultado.Ok(ClienteXReservacion);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+        #endregion
+
+        #region ActividadesXFecha
+        public ServiceResult CantidadActividad(tbActividadesXFecha item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Encargados = _actividadesXFechaRepository.CantidadActividad(item);
+                return resultado.Ok(Encargados);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        #endregion
+
+        #region Facturas
+        public ServiceResult InsertarFactura(tbFactura item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Factura = _facturaRepository.InsertarFactura(item);
+                return resultado.Ok(Factura);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
         #endregion
     }
 }

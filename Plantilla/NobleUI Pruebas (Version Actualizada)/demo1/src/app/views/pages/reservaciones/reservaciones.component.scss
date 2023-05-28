@@ -34,3 +34,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.custom-img {
+  height: 200px; /* Establece la altura deseada */
+  width: auto; /* Calcula automáticamente el ancho manteniendo la proporción de la imagen */
+  object-fit: cover; /* Ajusta la imagen para que se ajuste dentro del contenedor sin deformarse */
+}

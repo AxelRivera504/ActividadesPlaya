@@ -163,13 +163,19 @@
             <br>
             <div class="card">
               <div class="card-header text-center my-0">
-                <h3>Escoja la actividad que desea realizar</h3>
+                <h3>Escoja la actividad que desea realizar</h3>              
+              </div>
+              <div class="row">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control" [(ngModel)]="searchTerm" (keydown.enter)="search()" placeholder="Buscar">
+                </div>
               </div>
               <div class="card-body">
                 <div class="row">
-                  <div *ngFor="let item of actividades" class="col-sm-4 mb-3">
+                  <div *ngFor="let item of getFilteredActividades() | slice:(defaultPaginationCurrentPage-1)*itemsPerPage:defaultPaginationCurrentPage*itemsPerPage" class="col-sm-4 mb-3">
                     <div class="card" [class.selected]="item.selected" (click)="selectActivity(item)">
-                      <img src="assets/images/others/placeholder.jpg" class="card-img-top" alt="...">
+                      <img [src]="item.acti_ImgUrl" class="card-img-top custom-img" alt="...">
                       <div class="card-body">
                         <h5 class="card-title">Actividad: {{item.acti_Nombre}}</h5>
                         <p class="card-text mb-3">Cupo de la actividad: {{item.acti_Cupo}}</p>
@@ -180,12 +186,59 @@
                   </div>
                 </div>
               </div>
+              <ngb-pagination
+              [(page)]="defaultPaginationCurrentPage"
+              [pageSize]="itemsPerPage"
+              [collectionSize]="actividades.length"
+              aria-label="Default pagination"
+              class="d-flex justify-content-center mt-3"
+            ></ngb-pagination>
             <div class="card-footer">
               <div class="d-flex justify-content-center mt-2">
                 <button class="btn btn-secondary me-2" type="button" awPreviousStep>  <i class="feather icon-arrow-left"></i> Regresar</button>
-                <button class="btn btn-primary" type="button" (click)="Next2()"> Siguiente <i class="feather icon-arrow-right"></i></button>
+                <button class="btn btn-primary" type="button" (click)="Next2(basicModal)"> Siguiente <i class="feather icon-arrow-right"></i></button>
               </div>
             </div>
+            </div>
+          </aw-wizard-step>
+
+          <aw-wizard-step stepTitle="Factura">
+            <div class="card">
+              <div class="card-header text-center my-0">
+                <h3>Escoja un metodo de pago</h3>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <label for="Nombre"><strong>Subtotal:</strong></label>
+                    <br>
+                    <input type="text" class="form-control" id="Nombre" [(ngModel)]="factu.fuct_Subtotal" disabled>
+                  </div>
+                  <div class="col-sm-4">
+                    <label for="Nombre"><strong>ISV:</strong></label>
+                    <br>
+                    <input type="text" class="form-control" id="Nombre" [(ngModel)]="factu.fuct_Isv" disabled>
+                  </div>
+                  <div class="col-sm-4">
+                    <label for="Nombre"><strong>Total:</strong></label>
+                    <br>
+                    <input type="text" class="form-control" id="Nombre" [(ngModel)]="factu.fuct_Total" disabled>
+                  </div>
+                </div>
+                <br>
+                <div class="col-sm-12">
+                  <label for="Nombre">Metodo de pago:</label>
+                  <br>
+                  <ng-select [(ngModel)]="metodoSeleccionado" [appendTo]="'body'" placeholder="--Seleccione un metodo de pago--"
+                  name="metodoSeleccionado" #mepa="ngModel" required [ngClass]="{ 'is-invalid': submittedMeto && mepa.invalid }">
+                    <ng-option *ngFor="let item of metodos" [value]="item.mepa_id">{{item.mepa_Descripcion}}</ng-option>
+                  </ng-select>
+                  <div class="invalid-feedback" *ngIf="mepa?.errors?.required && submittedMeto">Debe escoger un metodo de pago</div> 
+              </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-center mt-2">
+              <button class="btn btn-success" type="button" (click)="ConfirmarFactura()"><i class="feather icon-check-circle"></i> Confirmar Reservación</button>
             </div>
           </aw-wizard-step>
 
@@ -202,5 +255,31 @@
 
         </aw-wizard>
 
+        <ng-template #basicModal let-modal>
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Escoja la fecha</h5>
+          </div>
+              <div class="modal-body">
+                  <div class="col-sm-12">
+                    <label for="Nombre">Escoja la fecha en la que quiere realizar la actividad:</label>
+                    <br>
+                    <div class="input-group">
+                      <input class="form-control" placeholder="yyyy-mm-dd" 
+                        name="dp" [(ngModel)]="selectedDate1" ngbDatepicker #d="ngbDatepicker" 
+                        #fechaRes="ngModel" required [ngClass]="{ 'is-invalid': (submittedDate && fechaRes.invalid) || (submittedDate && !fechaFormatoValido1) }"
+                        (ngModelChange)="onDateSelect1($event)"  [minDate]="minDate">
+                      <button class="input-group-text" type="button" (click)="d.toggle()">
+                        <i class="feather icon-calendar icon-md text-muted"></i>
+                      </button>
+                      <div class="invalid-feedback" *ngIf="fechaRes?.errors?.required && submittedDate">Debe escoger una fecha para realizar la Reservación</div>
+                      <div class="invalid-feedback" *ngIf="(submittedDate && fechaFormatoValido1)">El formato debe ser 'yyyy-mm-dd'</div>
+                    </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" (click)="CancelarFecha();modal.close('by: close button')">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="Siguiente()">Siguiente<i class="feather icon-arrow-right"></i></button>
+              </div>
+        </ng-template>
       </div>
     </div>

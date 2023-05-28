@@ -58,31 +58,31 @@
                       <div class="invalid-feedback" *ngIf="(submitted && fechaFormatoValido)">El formato debe ser 'yyyy-mm-dd'</div>
                     </div>
                   </div>
-                <div class="col-sm-6">
+                  <div class="col-sm-6">
                     <label for="Nombre">Sexo del cliente:</label>
                     <br>
-                    <div class="container">                       
-                        <div class="form-control" style="display: flex; justify-content: center; height: 30;">
+                    <div class="container">
+                      <div class="form-control" style="display: flex; justify-content: center; height: 30;">
                         <div class="form-check form-check-inline">
-                            <input type="radio" class="form-check-input" value="M" [ngClass]="{ 'is-invalid': submitted && clieSex.invalid }"
-                                [(ngModel)]="clientes.clie_Sexo" required name="radioInline" id="radioInline" #clieSex="ngModel">
-                            <label class="form-check-label" for="radioInline">
-                                Masculino
-                            </label>
+                          <input type="radio" class="form-check-input" value="M" [ngClass]="{ 'is-invalid': submitted && clieSex.invalid }"
+                            [(ngModel)]="clientes.clie_Sexo" required name="radioInline" id="radioInline" #clieSex="ngModel">
+                          <label class="form-check-label" for="radioInline">
+                            Masculino
+                          </label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input type="radio" class="form-check-input" value="F" [ngClass]="{ 'is-invalid': submitted && clieSex.invalid }"
-                                [(ngModel)]="clientes.clie_Sexo" required name="radioInline" #clieSex="ngModel" id="radioInline1">
-                            <label class="form-check-label" for="radioInline1">
-                                Femenino
-                            </label>
+                          <input type="radio" class="form-check-input" value="F" [ngClass]="{ 'is-invalid': submitted && clieSexF.invalid }"
+                            [(ngModel)]="clientes.clie_Sexo" required name="radioInline" #clieSexF="ngModel" id="radioInline1">
+                          <label class="form-check-label" for="radioInline1">
+                            Femenino
+                          </label>
                         </div> 
+                      </div>
+                      <div class="invalid-feedback" *ngIf="submitted && form.get('clie_Sexo')?.invalid && form.get('clie_Sexo')?.touched">
+                        Sexo requerido
+                      </div>
                     </div>
-                        <div class="invalid-feedback" *ngIf="submitted && form.get('clie_Sexo')?.invalid && form.get('clie_Sexo')?.touched">
-                            Sexo requerido
-                          </div>
-                    </div>
-                </div>
+                  </div>
             </div>
             <br>
             <div class="row">

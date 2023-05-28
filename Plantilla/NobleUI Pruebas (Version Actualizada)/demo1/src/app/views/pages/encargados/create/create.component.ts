@@ -59,8 +59,7 @@ export class CreateComponent implements OnInit {
   
     if (!this.encargados.enca_Nombres || !this.encargados.enca_Apellidos ||
         !this.encargados.enca_DNI || !this.encargados.enca_Email ||
-        !this.encargados.enca_Telefono || !enca_SexoControl || 
-        !enca_SexoControl.valid || !this.EstadoCivilSeleccionado || !this.fechaValida || !this.fechaFormatoValido ) {
+        !this.encargados.enca_Telefono || !this.encargados.enca_Sexo  || !this.EstadoCivilSeleccionado || !this.fechaValida || !this.fechaFormatoValido ) {
       this.submitted = true;  
       this.submitte1 = true;  
       Swal.fire({

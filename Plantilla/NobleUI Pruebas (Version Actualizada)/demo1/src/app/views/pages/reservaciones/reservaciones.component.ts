@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,ElementRef,TemplateRef } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Cliente } from '../Model/Clientes';
@@ -10,6 +10,12 @@ import { Person, PeoplesData } from 'src/app/core/dummy-datas/peoples.data';
 import {ClienteDdl} from '../Model/ClienteDdl';
 import { FormBuilder} from '@angular/forms';
 import { Actividades } from '../Model/Actividades';
+import { NgbModal,NgbModalRef  } from '@ng-bootstrap/ng-bootstrap';
+import { Reservaciones } from '../Model/Reservaciones';
+import { ClienteXReservacion } from '../Model/ClienteXReservacion';
+import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { metodospago } from '../Model/metodospago';
+import { Factura } from '../Model/Factura';
 const fillJustifyNav = {
   htmlCode: 
 `<ul ngbNav #fillJustifyNav="ngbNav" class="nav-tabs nav-fill">
@@ -82,19 +88,27 @@ export class CardsComponent {}`
 
 import { WizardComponent as BaseWizardComponent } from 'angular-archwizard';
 import Swal from 'sweetalert2';
+import { ActividadesXFecha } from '../Model/ActividadesXFecha';
 @Component({
   selector: 'app-reservaciones',
   templateUrl: './reservaciones.component.html',
   styleUrls: ['./reservaciones.component.scss']
 })
 export class ReservacionesComponent implements OnInit {
+  selectedDateX: NgbDate | null;
+
+  basicModalCloseResult: string = '';
+  modalRef: NgbModalRef | undefined;
+  basicModalCode: any;
+
   actividades!: Actividades[];
   fillJustifyNavCode: any;
   validationForm1: UntypedFormGroup;
   validationForm2: UntypedFormGroup;
+
   selectedActivity: Actividades | null = null;
   defaultCardCode: any;
-
+  reservaciones:Reservaciones = new Reservaciones()
   isForm1Submitted: Boolean;
   isForm2Submitted: Boolean;
   validar2: boolean = false;
@@ -110,12 +124,36 @@ export class ReservacionesComponent implements OnInit {
   
   selectedPeople: any = null;
   people: Person[] = [];
-  @ViewChild('wizardForm') wizardForm: BaseWizardComponent;
 
-  constructor(public formBuilder: UntypedFormBuilder,private router: Router, private service: ServicesService, private config: NgSelectConfig) { 
+  Actividad: ActividadesXFecha = new ActividadesXFecha();
+  selectedDate1: NgbDateStruct;
+  form3: FormGroup;
+  submittedDate: boolean = false;
+  fechaValida1: boolean = false;
+  fechaFormatoValido1: boolean = true;
+
+  metodos!: metodospago[];
+  metodoSeleccionado: String;
+  submittedMeto:boolean = false;
+  clienReser: ClienteXReservacion = new ClienteXReservacion();
+
+  factu:Factura = new Factura();
+  @ViewChild('wizardForm') wizardForm: BaseWizardComponent;
+  defaultPaginationCurrentPage = 1;
+  itemsPerPage = 6;
+  filteredActividades: any[] = [];
+  searchTerm: string = '';
+  constructor(private calendar: NgbCalendar,public formBuilder: UntypedFormBuilder,private router: Router, private service: ServicesService, private config: NgSelectConfig,private modalService: NgbModal) { 
+   
     this.form = new FormGroup({
       clie_Sexo: new FormControl(null),
     });
+    this.selectedDateX = null;
+  }
+
+  get minDate(): NgbDate {
+    const today = this.calendar.getToday();
+    return new NgbDate(today.year, today.month, today.day);
   }
 
   convertToDate(date: NgbDateStruct): Date {
@@ -123,6 +161,74 @@ export class ReservacionesComponent implements OnInit {
       return new Date(date.year, date.month - 1, date.day);
     }
     return new Date(); // Devuelve la fecha actual como valor predeterminado
+  }
+
+  convertToDate1(date: NgbDateStruct): Date {
+    if (date) {
+      return new Date(date.year, date.month - 1, date.day);
+    }else{
+
+      return new Date(); // Devuelve la fecha actual como valor predeterminado
+    }
+  }
+
+  search(): void {
+    this.filteredActividades = this.actividades.filter(item => {
+      // Puedes ajustar la lógica de búsqueda según tus necesidades
+      return item.acti_Nombre.toLowerCase().includes(this.searchTerm.toLowerCase());
+    });
+  }
+
+  getFilteredActividades() {
+    if (this.searchTerm) {
+      return this.actividades.filter(item =>
+        item.acti_Nombre.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    } else {
+      return this.actividades;
+    }
+  }
+
+  ConfirmarFactura(){
+    if (!this.metodoSeleccionado) {
+    this.submittedMeto = true;  
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      title: '¡Escoja un metodo de pago!',
+      icon: 'warning'
+    })
+    return;
+  }
+  this.factu.mepa_id = parseInt(this.metodoSeleccionado.toString());
+  this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
+    if(data.data.codeStatus == 1){
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        title: '¡Reservación hecha con exito!',
+        icon: 'success'
+      })
+      this.wizardForm.goToNextStep();
+      this.LimpiarTodo()
+    }else{
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        title: '¡ERROR!, ¡oh no!, hubo un error.',
+        icon: 'error'
+      })
+    }
+  })
   }
 
   selectActivity(activity: Actividades) {
@@ -138,7 +244,6 @@ export class ReservacionesComponent implements OnInit {
     this.validar2 = true;
     this.selectedActivity = activity;
     console.log(this.selectedActivity)
-    console.log(activity.selected)
   }
 }
 
@@ -147,7 +252,7 @@ export class ReservacionesComponent implements OnInit {
   
     if (!this.clientesForm.clie_Nombres || !this.clientesForm.clie_Apellidos ||
         !this.clientesForm.clie_DNI || !this.clientesForm.clie_Email ||
-        !clie_SexoControl || !clie_SexoControl.valid || !this.fechaValida || !this.fechaFormatoValido ) {
+        !this.clientesForm.clie_Sexo  || !this.fechaValida || !this.fechaFormatoValido ) {
           console.log(this.clientesForm.clie_Nombres  )
       this.submitted = true;  
       this.submitte1 = true;  
@@ -187,13 +292,14 @@ export class ReservacionesComponent implements OnInit {
           cliente5Element.style.display = 'none';
         }
          this.service.getCliente().subscribe(data =>{
-      console.log(data)
-      this.Clientes = data;
-    })
-    const btnForm1 = document.getElementById('btnContinueForm1');
-    if (btnForm1) {
-      btnForm1.style.display = '';
-    }
+          console.log(data)
+          this.Clientes = data;
+        })
+        const btnForm1 = document.getElementById('btnContinueForm1');
+        if (btnForm1) {
+          btnForm1.style.display = '';
+        }
+        this.Limpiar()
       }else{
         this.submitte1 = true;
         this.clientesForm.clie_DNI = ''
@@ -251,8 +357,71 @@ export class ReservacionesComponent implements OnInit {
   }
 
   
+  onDateSelect1(date: NgbDateStruct) {
+    // Verificar si se ha seleccionado una fecha válida
+    if (date && date.year && date.month && date.day) {
+      this.fechaValida1 = true;
+  
+       // Validar el formato de fecha
+    const utcDate = Date.UTC(date.year, date.month - 1, date.day); // Restar 1 al mes ya que en JavaScript los meses son base 0
+    const selectedDate = new Date(date.year, date.month - 1, date.day, 0, 0, 0)
+    const dateString = selectedDate.toISOString().split('T')[0]; // Obtener la cadena de fecha en formato yyyy-mm-dd
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+    this.fechaFormatoValido1 = regex.test(dateString);
+    console.log(dateString);
+    console.log(selectedDate);
+    this.Actividad.acfe_Fecha = selectedDate;
+    this.Actividad.acti_Id = this.selectedActivity!.acti_Id;
+      this.service.VerificarCuposActividad(this.Actividad).subscribe((response:any)=>{
+          if(response.data.codeStatus != -2 && response.data.codeStatus != 0){
+            Swal.fire({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 4500,
+              timerProgressBar: true,
+              title: 'Los cupos disponibles para esta actividad en esta fecha son de:'+response.data.codeStatus,
+              icon: 'info'
+            })
+          }else{
+            if(response.data.codeStatus = -2){
+              Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4500,
+                timerProgressBar: true,
+                title: 'Los cupos disponibles para esta actividad en esta fecha son de:'+this.selectedActivity!.acti_Cupo,
+                icon: 'info'
+              })
+            }else{
+              Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4500,
+                timerProgressBar: true, 
+                title: 'Error',
+                icon: 'error'
+              })
+            }
+          }
+      })
+    } else {
+      this.fechaValida1 = false;
+      this.fechaFormatoValido1 = true; // Restablecer el formato de fecha válido
+    }
+  }
+
+
+  
 
   ngOnInit(): void {
+    this.service.getMetodosPago().subscribe(data => {
+      this.metodos = data;
+    });
+
+
     this.defaultCardCode = defaultCard;
     this.service.getCliente().subscribe(data =>{
       console.log(data)
@@ -286,8 +455,9 @@ export class ReservacionesComponent implements OnInit {
 
   }
 
-  Next2(){
+  Next2(content: TemplateRef<any>){
     console.log(this.selectedPeople)
+    console.log(this.selectedPeople.length)
     if( this.validar2 == false){
       Swal.fire({
         toast: true,
@@ -298,23 +468,202 @@ export class ReservacionesComponent implements OnInit {
         title: '¡ERROR!, Debe escoger una actividad a realizar',
         icon: 'error'
       })
-    }else{
-      this.wizardForm.goToNextStep(); 
-      Swal.fire({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        title: 'GENIAL!, Reservación realizada con exito ',
-        icon: 'success'
-      })
-      for(var i = 0 ; i<= this.selectedPeople.lenght ; i++){
-        //this.service.Insertar
-      }
+    }else{  
+      this.modalRef = this.modalService.open(content, {});
+      this.modalRef.result.then((result) => {
+        this.basicModalCloseResult = "Modal closed" + result;
+      }).catch((res) => {});        
     }
   }
 
+
+  Siguiente(){
+    if ( !this.fechaValida1 || !this.fechaFormatoValido1 ) {
+    this.submittedDate = true;  
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      title: '¡Debe escoger un fecha!',
+      icon: 'warning'
+    })
+    return;
+    }else{
+      if(this.selectedPeople.length <= this.selectedActivity!.acti_Cupo){
+        this.Actividad.acfe_Fecha = this.convertToDate1(this.selectedDate1);
+        this.Actividad.acfe_Id  =this.selectedActivity!.acti_Id;
+        this.service.VerificarCuposActividad(this.Actividad).subscribe((response:any)=>{
+            if(response.data.codeStatus != -2 && response.data.codeStatus != 0){
+              if(response.data.codeStatus >= this.selectedPeople.length){
+                  const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
+                  if (idUsuario !== undefined) {
+                    this.reservaciones.rese_UsuarioCreador = idUsuario;
+                  }
+                  this.reservaciones.rese_Cantidad = this.selectedPeople.length;
+                  console.log(this.convertToDate1(this.selectedDate1))
+                  this.reservaciones.rese_FechaReservacion =  this.convertToDate1(this.selectedDate1);
+                  this.reservaciones.acti_Id = this.selectedActivity!.acti_Id;
+                  this.service.InsertarReservacionesExiste(this.reservaciones).subscribe((data:any)=>{  
+                    var cont = 0;     
+                    if(data.data.codeStatus != 0){
+                      const idreser = data.data.codeStatus;
+                      console.log(idreser)
+                      if (idUsuario !== undefined) {
+                        this.clienReser.clre_UsuarioCreador = idUsuario;
+                      }
+                      this.clienReser.rese_Id  = data.data.codeStatus;
+                      console.log( this.clienReser.rese_Id );
+                      console.log("ya existe")
+                      for(var i = 0 ; i <= this.selectedPeople.length ; i++){
+                          this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;  
+                          this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
+                            cont ++;  
+                            console.log(cont);
+                            if(cont === this.selectedPeople.length){
+                              Swal.fire({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                title: '!Datos insertados con exito!',
+                                icon: 'success'
+                              })
+                              this.factu.fuct_Subtotal = (this.selectedPeople.length * this.selectedActivity!.acti_Precio);
+                              console.log(this.factu.fuct_Subtotal)
+                              const subtotal = this.factu.fuct_Subtotal;
+                              this.factu.fuct_Isv = (subtotal * 0.15);
+                              console.log(this.factu.fuct_Isv)
+                              this.factu.fuct_Total = (this.factu.fuct_Subtotal + this.factu.fuct_Isv)
+                              if (idUsuario !== undefined) {
+                                this.factu.fuct_UsuarioCreador = idUsuario;
+                              }       
+                              this.factu.rese_Id = idreser;            
+                              console.log(this.factu.fuct_Total)
+                              this.modalService.dismissAll();
+                              this.wizardForm.goToNextStep();
+                            }
+                          })              
+                      }          
+                    }else{
+                      Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        timerProgressBar: true,
+                        title: '!ERROR!, hubo un error al intentar insertar los datos',
+                        icon:'error'
+                      })
+                    }
+                  })
+              }else{
+                Swal.fire({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 6000,
+                  timerProgressBar: true,
+                  title: '!ERROR!, La cantidad de personas en su reservación sobrepasa los cupos disponible para esta actividad \n Cupos disponible:'+response.data.codeStatus + ' y la cantidad de personas que reservan es de: '+this.selectedPeople.length,
+                  icon:'error'
+                })
+              }                              
+            }else{              
+              if(response.data.codeStatus == -2){
+                const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
+                  if (idUsuario !== undefined) {
+                    this.reservaciones.rese_UsuarioCreador = idUsuario;
+                  }
+                  this.reservaciones.rese_Cantidad = this.selectedPeople.length;
+                  console.log(this.convertToDate1(this.selectedDate1))
+                  this.reservaciones.rese_FechaReservacion =  this.convertToDate1(this.selectedDate1);
+                  this.reservaciones.acti_Id = this.selectedActivity!.acti_Id;
+                  this.service.InsertarReservaciones(this.reservaciones).subscribe((data:any)=>{  
+                    var cont = 0;     
+                    if(data.data.codeStatus != 0){
+                      const idreser = data.data.codeStatus;
+                      console.log(idreser)
+                      if (idUsuario !== undefined) {
+                        this.clienReser.clre_UsuarioCreador = idUsuario;
+                      }
+                      this.clienReser.rese_Id  = data.data.codeStatus;
+                      console.log("No existe")
+                      for(var i = 0 ; i <= this.selectedPeople.length ; i++){
+                          this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;  
+                          this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
+                            cont ++;
+                            console.log(cont)  
+                            if(cont === this.selectedPeople.length){
+                              Swal.fire({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                title: '!Datos insertados con exito!',
+                                icon: 'success'
+                              })                           
+                              this.factu.fuct_Subtotal = (this.selectedPeople.length * this.selectedActivity!.acti_Precio);
+                              console.log(this.factu.fuct_Subtotal)
+                              const subtotal = this.factu.fuct_Subtotal;
+                              this.factu.fuct_Isv = (subtotal * 0.15);
+                              console.log(this.factu.fuct_Isv)
+                              this.factu.fuct_Total = (this.factu.fuct_Subtotal + this.factu.fuct_Isv)
+                              if (idUsuario !== undefined) {
+                                this.factu.fuct_UsuarioCreador = idUsuario;
+                              }       
+                              this.factu.rese_Id = idreser;            
+                              console.log(this.factu.fuct_Total)
+                              this.modalService.dismissAll();
+                              this.wizardForm.goToNextStep();
+                            }
+                          })              
+                      }          
+                    }else{
+                      Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        timerProgressBar: true,
+                        title: '!ERROR!, hubo un error al intentar insertar los datos',
+                        icon:'error'
+                      })
+                    }
+                  })
+              }else{
+                Swal.fire({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 4500,
+                  timerProgressBar: true,
+                  title: 'Error',
+                  icon: 'error'
+                })
+              }
+            }
+        }) 
+      }    
+    }
+  }
+  
+  LimpiarTodo(){
+    this.clienReser = new ClienteXReservacion();
+    this.reservaciones = new Reservaciones();
+    this.reservaciones = new Reservaciones();
+    this.Actividad = new ActividadesXFecha();
+    this.factu = new Factura();
+    this.selectedPeople = null;
+  }
+
+  CancelarFecha(){
+    this.fechaValida = false;
+    this.fechaFormatoValido = false;
+    this.submittedDate = false;  
+  }
   
 
 
@@ -322,7 +671,16 @@ export class ReservacionesComponent implements OnInit {
    * Wizard finish function
    */
   finishFunction() {
-    alert('Successfully Completed');
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      title: '!FUNCIONA BRO, POR FIN!!!!',
+      icon: 'success'
+    }) 
+    this.router.navigate(['dashboard']);    
   }
 
   /**
@@ -332,12 +690,11 @@ export class ReservacionesComponent implements OnInit {
     return this.validationForm1.controls;
   }
 
-  /**
-   * Returns form
-   */
   get form2() {
     return this.validationForm2.controls;
   }
+
+
 
   CrearCliente(){
     this.isForm1Submitted = false ;
@@ -386,6 +743,7 @@ export class ReservacionesComponent implements OnInit {
     }
     this.isForm2Submitted = true;
   }
+
 
   scrollTo(element: any) {
     element.scrollIntoView({behavior: 'smooth'});

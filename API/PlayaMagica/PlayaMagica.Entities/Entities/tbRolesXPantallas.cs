@@ -12,6 +12,7 @@ namespace PlayaMagica.Entities.Entities
         public int roleXpant_ID { get; set; }
         public int? role_ID { get; set; }
         public int? pant_ID { get; set; }
+
         [NotMapped]
         public string pant_Descripcion { get; set; }
         public bool? roleXpant_Estado { get; set; }
