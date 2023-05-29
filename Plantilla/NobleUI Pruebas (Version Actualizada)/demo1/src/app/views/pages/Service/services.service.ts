@@ -23,6 +23,7 @@ import { EquipoXActividades } from '../Model/EquipoXActividades';
 import { roles } from '../Model/roles';
 import { pantallas } from '../Model/pantallas';
 import { usuarios } from '../Model/Usuarios';
+import { FactuList } from '../Model/ListaFactura';
 
 @Injectable({
   providedIn: 'root'
@@ -262,6 +263,10 @@ export class ServicesService {
 
   getEncargadosddl(){
     return this.http.get<Encargados[]>(this.Url + "/Encargados/ListarEncargadosddl");
+  }
+
+  getFactura(id: number){
+    return this.http.get<FactuList[]>(this.Url + "/Factura/ListarFactura" + id)
   }
 
 }

@@ -16,6 +16,10 @@ import { ClienteXReservacion } from '../Model/ClienteXReservacion';
 import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { metodospago } from '../Model/metodospago';
 import { Factura } from '../Model/Factura';
+import 'jspdf-autotable';
+import { Encargados } from '../Model/Encargados';
+import jsPDF from 'jspdf';
+import { FactuList } from '../Model/ListaFactura';
 const fillJustifyNav = {
   htmlCode: 
 `<ul ngbNav #fillJustifyNav="ngbNav" class="nav-tabs nav-fill">
@@ -95,6 +99,9 @@ import { ActividadesXFecha } from '../Model/ActividadesXFecha';
   styleUrls: ['./reservaciones.component.scss']
 })
 export class ReservacionesComponent implements OnInit {
+  @ViewChild('pdfViewer') pdfViewer!: ElementRef;
+  errorMessage: string;
+
   selectedDateX: NgbDate | null;
 
   basicModalCloseResult: string = '';
@@ -143,6 +150,12 @@ export class ReservacionesComponent implements OnInit {
   itemsPerPage = 6;
   filteredActividades: any[] = [];
   searchTerm: string = '';
+
+   XD: boolean = false;
+   public isChecked: boolean = false;
+   public isChecked2: boolean = false;
+   isSelectionBlocked = false;
+   fact_Id!: number;
   constructor(private calendar: NgbCalendar,public formBuilder: UntypedFormBuilder,private router: Router, private service: ServicesService, private config: NgSelectConfig,private modalService: NgbModal) { 
    
     this.form = new FormGroup({
@@ -151,11 +164,70 @@ export class ReservacionesComponent implements OnInit {
     this.selectedDateX = null;
   }
 
+  toggleSelection(): void {
+    this.isSelectionBlocked = !this.isSelectionBlocked;
+  }
+  
+  generatePDF(): void {
+    const doc = new jsPDF();
+    const header = ['Id', 'Nombre Completo', 'Sexo', 'Estado Civil'];
+    const tableData: any[] = [];
+    setTimeout(()=>{
+      console.log(this.fact_Id)
+      console.log(localStorage.getItem('idF')!.toString())
+      this.service.getFactura(parseInt(localStorage.getItem('idF')!.toString())).subscribe(
+        (response: any) => {
+          console.log(response); // Verificar la respuesta en la consola
+            const data = response; // Obtener los datos de los empleados
+            data.forEach((factura: FactuList) => {
+              const rowData: any[] = [
+                factura.fuct_Id,
+                factura.acti_Nombre,
+                factura.acti_Precio,
+                factura.dept_Descripcion,
+                factura.fuct_Subtotal,
+                factura.fuct_Total,
+                factura.fuct_Isv,
+                factura.muni_Descripcion,
+                factura.rese_Cantidad,
+                factura.rese_FechaReservacion,
+                factura.play_Playa
+              ];
+    
+              tableData.push(rowData);
+            });
+    
+            // Agregar el título "Listado de Empleados"
+            doc.setFontSize(18);
+            doc.text('Listado de Empleados', 14, 22);
+    
+            // Generar la tabla usando autoTable
+            (doc as any).autoTable({
+              head: [header],
+              body: tableData,
+              margin: { top: 30, bottom: 20 }
+            });
+    
+            // Mostrar el PDF en el visor
+            const pdfDataUri = doc.output('datauristring');
+            this.pdfViewer.nativeElement.src = pdfDataUri;
+        },
+        (error: any) => {
+          this.errorMessage = 'Se produjo un error al obtener los datos de los empleados.';
+          console.error(error);
+        }
+      );
+    },1000)
+  }
+  
+
+
   get minDate(): NgbDate {
     const today = this.calendar.getToday();
     return new NgbDate(today.year, today.month, today.day);
   }
 
+  
   convertToDate(date: NgbDateStruct): Date {
     if (date) {
       return new Date(date.year, date.month - 1, date.day);
@@ -170,6 +242,14 @@ export class ReservacionesComponent implements OnInit {
 
       return new Date(); // Devuelve la fecha actual como valor predeterminado
     }
+  }
+
+  toggleCheckbox() {
+    this.XD = !this.XD;
+  }
+
+  toggleCheckbox1() {
+    this.toggleSelection()
   }
 
   search(): void {
@@ -205,7 +285,10 @@ export class ReservacionesComponent implements OnInit {
   }
   this.factu.mepa_id = parseInt(this.metodoSeleccionado.toString());
   this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
-    if(data.data.codeStatus == 1){
+    console.log(data.data.codeStatus)
+    this.fact_Id = data.data.codeStatus;
+    localStorage.setItem('idF',data.data.codeStatus)
+    if(data.data.codeStatus >= 1){
       Swal.fire({
         toast: true,
         position: 'top-end',
@@ -217,6 +300,7 @@ export class ReservacionesComponent implements OnInit {
       })
       this.wizardForm.goToNextStep();
       this.LimpiarTodo()
+      this.generatePDF();
     }else{
       Swal.fire({
         toast: true,
@@ -413,13 +497,16 @@ export class ReservacionesComponent implements OnInit {
     }
   }
 
+  
 
   
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    this.LimpiarTodo()
     this.service.getMetodosPago().subscribe(data => {
       this.metodos = data;
     });
+
 
 
     this.defaultCardCode = defaultCard;
@@ -542,6 +629,10 @@ export class ReservacionesComponent implements OnInit {
                               }       
                               this.factu.rese_Id = idreser;            
                               console.log(this.factu.fuct_Total)
+                              this.toggleSelection()
+                              this.isChecked2 = true;
+                              const CKX1 = document.getElementById('CKActi');
+                              CKX1!.style.display = '';
                               this.modalService.dismissAll();
                               this.wizardForm.goToNextStep();
                             }
@@ -616,6 +707,10 @@ export class ReservacionesComponent implements OnInit {
                               }       
                               this.factu.rese_Id = idreser;            
                               console.log(this.factu.fuct_Total)
+                              this.toggleSelection()
+                              this.isChecked2 = true;
+                              const CKX1 = document.getElementById('CKActi');
+                              CKX1!.style.display = '';
                               this.modalService.dismissAll();
                               this.wizardForm.goToNextStep();
                             }
@@ -660,6 +755,7 @@ export class ReservacionesComponent implements OnInit {
   }
 
   CancelarFecha(){
+    this.selectedDate1 = new  NgbDate(0,0,0)
     this.fechaValida = false;
     this.fechaFormatoValido = false;
     this.submittedDate = false;  
@@ -719,6 +815,10 @@ export class ReservacionesComponent implements OnInit {
   form1Submit() {
     if(this.validationForm1.valid) {
       this.wizardForm.goToNextStep();
+      this.XD = true
+      this.isChecked = true;
+      const CKX = document.getElementById('ckXD');
+      CKX!.style.display = '';
     }else{
       Swal.fire({
         toast: true,
@@ -733,6 +833,7 @@ export class ReservacionesComponent implements OnInit {
     }
     
   }
+
 
   /**
    * Go to next step while form value is valid

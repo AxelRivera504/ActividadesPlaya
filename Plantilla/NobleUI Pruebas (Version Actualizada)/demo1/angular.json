@@ -33,7 +33,9 @@
               "quill",
               "dayjs",
               "metismenujs",
-              "feather-icons"
+              "feather-icons",
+              "canvg",
+              "jspdf-autotable"
             ],
             "index": "src/index.html",
             "main": "src/main.ts",

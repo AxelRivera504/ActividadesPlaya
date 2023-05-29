@@ -1926,7 +1926,10 @@ BEGIN
 	BEGIN TRY
 		INSERT INTO Acti.tbFactura(rese_Id,mepa_id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_Estado, fuct_UsuarioCreador, fuct_FechaCreacion, fuct_UsuarioModificador, fuct_FechaModificacion)
 		VALUES(@rese_Id,@mepa_id,@fuct_Subtotal,@fuct_Isv,@fuct_Total,1,@fuct_UsuarioCreador,GETDATE(),NULL,NULL)
-		SELECT 1
+		
+		SELECT	TOP 1 t1.fuct_Id
+		FROM    Acti.tbFactura t1
+		Order by t1.fuct_Id
 	END TRY
 
 	BEGIN CATCH
@@ -1945,6 +1948,44 @@ BEGIN
 		SET fuct_Estado = 0
 		WHERE fuct_Id = @fuct_Id
 		SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+GO
+
+CREATE OR ALTER PROCEDURE Acti.UDP_tbFacturas_ListarInfoFactById
+	@fuct_Id INT
+AS
+BEGIN
+	BEGIN TRY
+		SELECT	t1.fuct_Id,
+				t1.fuct_Subtotal,
+				t1.fuct_Isv,
+				t1.fuct_Total,
+				t2.rese_Id,
+				t2.rese_Cantidad,
+				t2.rese_FechaReservacion,
+				t4.acti_Nombre,
+				t4.acti_Precio,
+				t5.play_Playa,
+				t6.dire_DireccionExacta,
+				t7.muni_Descripcion,
+				t8.dept_Descripcion,
+				t9.mepa_Descripcion,
+				t11.enca_Nombres +' '+ t11.enca_Apellidos as NombreCompleto
+		FROM    Acti.tbFactura t1 INNER JOIN Acti.tbReservaciones t2
+		ON		t1.rese_Id = t2.rese_Id  INNER JOIN Acti.tbActividades t4
+		ON		t2.acti_Id = t4.acti_Id INNER JOIN Acti.tbPlayas t5
+		ON		t4.play_Id = t5.play_Id INNER JOIN Gral.tbDirecciones t6
+		ON		t5.dire_Id = t6.dire_Id INNER JOIN Gral.tbMunicipios t7
+		ON		t6.muni_Id = t7.muni_id INNER JOIN Gral.tbDepartamentos t8
+		ON		t7.dept_id = t8.dept_id INNER JOIN Gral.tbMetodosPago t9
+		ON		t1.mepa_id = t9.mepa_id INNER JOIN Acce.tbUsuarios t10
+		ON		t2.rese_UsuarioCreador = t10.usua_ID INNER JOIN Acti.tbEncargados t11
+		ON		t10.enca_ID = t11.enca_id
+		WHERE	t1.fuct_Id = @fuct_Id
 	END TRY
 	BEGIN CATCH
 		SELECT 0
