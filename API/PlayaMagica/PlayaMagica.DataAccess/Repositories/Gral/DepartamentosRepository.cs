@@ -27,6 +27,7 @@ namespace PlayaMagica.DataAccess.Repositories.Gral
             using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
             RequestStatus result = new RequestStatus();
             var parametros = new DynamicParameters();
+            parametros.Add("@dept_Id", item.dept_id, DbType.String, ParameterDirection.Input);
             parametros.Add("@dept_Descripcion", item.dept_Descripcion, DbType.String, ParameterDirection.Input);
             parametros.Add("@dept_UsuarioCreador", item.dept_UsuarioCreador, DbType.Int32, ParameterDirection.Input);
 

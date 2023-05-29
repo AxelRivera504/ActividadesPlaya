@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { UsuariosComponent } from './usuarios.component';
 import { RouterModule, Routes } from '@angular/router';
 import { DataTablesModule } from 'angular-datatables';
-
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 const routes: Routes = [
   {
     path: '',
@@ -17,7 +18,10 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    DataTablesModule
+    DataTablesModule,
+    FormsModule,
+    NgSelectModule
+
   ]
 })
 export class UsuariosModule { }

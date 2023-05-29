@@ -18,7 +18,7 @@ export const MENU: MenuItem[] = [
     id:7,
     label: 'Departamentos',
     icon: 'map',
-    link: '/icons'
+    link: '/departamentos'
   },
   {
     id:8,

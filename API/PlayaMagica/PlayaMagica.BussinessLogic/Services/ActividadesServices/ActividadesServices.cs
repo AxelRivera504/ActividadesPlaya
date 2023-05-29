@@ -20,7 +20,20 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
         private readonly ClienteXReservacionRepository _clienteXReservacionRepository;
         private readonly ActividadesXFechaRepository _actividadesXFechaRepository;
         private readonly FacturaRepository _facturaRepository;
-        public ActividadesServices(FacturaRepository facturaRepository ,ActividadesXFechaRepository actividadesXFechaRepository, ClienteXReservacionRepository clienteXReservacionRepository, ReservacionesRepository reservacionesRepository ,MantenimientoRepository mantenimientoRepository, EquipoRepository equipoRepository, ActividadesRepository actividadesRepository, EncargadosRepository encargadosRepository, ClientesRepository clientesRepository, PlayasRepository playasRepository)
+        private readonly EquipoXActividadesRepository _equipoxactividadesrepository;
+        private readonly EquiposRepository _equiposrepository;
+        public ActividadesServices(FacturaRepository facturaRepository ,
+            ActividadesXFechaRepository actividadesXFechaRepository, 
+            ClienteXReservacionRepository clienteXReservacionRepository, 
+            ReservacionesRepository reservacionesRepository,
+            MantenimientoRepository mantenimientoRepository, 
+            EquipoRepository equipoRepository, 
+            ActividadesRepository actividadesRepository, 
+            EncargadosRepository encargadosRepository, 
+            ClientesRepository clientesRepository, 
+            PlayasRepository playasRepository,
+            EquipoXActividadesRepository equipoxactividadesrepository,
+            EquiposRepository equiposrepository)
         {
             _clientesRepository = clientesRepository;
             _encargadosRepository = encargadosRepository;
@@ -32,6 +45,8 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             _clienteXReservacionRepository = clienteXReservacionRepository;
             _actividadesXFechaRepository = actividadesXFechaRepository;
             _facturaRepository = facturaRepository;
+            _equipoxactividadesrepository = equipoxactividadesrepository;
+            _equiposrepository = equiposrepository;
         }
 
 
@@ -374,6 +389,20 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
         }
 
+        public IEnumerable<VW_tbEquipos> EquipoXActividad(int id)
+        {
+            try
+            {
+                var list = _equipoRepository.EquipoXActividad(id);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return Enumerable.Empty<VW_tbEquipos>();
+            }
+        }
+
 
         public ServiceResult InsertarEquipos(tbEquipos item)
         {
@@ -412,6 +441,38 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             try
             {
                 var Equipos = _equipoRepository.DeleteEquipos(item);
+                return resultado.Ok(Equipos);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+        #endregion
+
+        #region EquipoXActividades
+        public ServiceResult InsertarEquiposXActividades(tbEquipoXActividades item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Equipos = _equipoxactividadesrepository.Insert(item);
+                return resultado.Ok(Equipos);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult EliminarEquiposXActividades(tbEquipoXActividades item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Equipos = _equipoxactividadesrepository.Delete(item);
                 return resultado.Ok(Equipos);
             }
             catch (Exception ex)

@@ -43,7 +43,7 @@ namespace PlayaMagica.DataAccess.Repositories.Acce
             RequestStatus result = new RequestStatus();
             var parametros = new DynamicParameters();
             parametros.Add("@role_Descripcion", item.role_Descripcion, DbType.String, ParameterDirection.Input);
-            parametros.Add("@roles_UsuarioCreador", item.role_UsuarioCreador, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@role_UsuarioCreador", item.role_UsuarioCreador, DbType.Int32, ParameterDirection.Input);
 
             var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbRoles_Insert, parametros, commandType: CommandType.StoredProcedure);
 

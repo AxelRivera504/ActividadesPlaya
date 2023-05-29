@@ -57,10 +57,6 @@ namespace PlayaMagica.Entities.Entities
             tbRolesrole_UsuarioModificadorNavigation = new HashSet<tbRoles>();
         }
 
-        [NotMapped]
-        public string enca_NombreCompleto { get; set; }
-        [NotMapped]
-        public string role_Descripcion { get; set; }
         public int usua_ID { get; set; }
         public string usua_Usuario { get; set; }
         public string usua_Clave { get; set; }
@@ -71,6 +67,11 @@ namespace PlayaMagica.Entities.Entities
         public DateTime? usua_FechaCreacion { get; set; }
         public int? usua_UsuarioModificador { get; set; }
         public DateTime? usua_FechaModificacion { get; set; }
+
+        [NotMapped]
+        public string enca_NombreCompleto { get; set; }
+        [NotMapped]
+        public string role_Descripcion { get; set; }
 
         public virtual tbEncargados enca { get; set; }
         public virtual tbUsuarios usua_UsuarioCreadorNavigation { get; set; }

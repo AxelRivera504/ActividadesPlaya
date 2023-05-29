@@ -3,11 +3,19 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { RolesComponent } from './roles.component';
 import { DataTablesModule } from 'angular-datatables';
+import { CreateComponent } from './Create/create.component';
+
 
 const routes: Routes = [
   {
     path: '',
     component: RolesComponent
+  },
+  {
+
+    path: 'Create',
+    component: CreateComponent
+
   }
 ];
 

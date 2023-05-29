@@ -7,7 +7,7 @@ import { MENU } from './menu';
 import { MenuItem } from './menu.model';
 import { Router, NavigationEnd } from '@angular/router';
 import { ServicesService } from '../../pages/Service/services.service';
-import { RolesXPantalla } from '../../pages/Model/RolesXPantalla';
+import { RolesXpantallas } from '../../pages/Model/RolesXPantallas'; 
 
 @Component({
   selector: 'app-sidebar',
@@ -41,7 +41,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     });
   }
 
-  filtrarMenuPorPantallas(menu: MenuItem[], pantallasPermitidas: RolesXPantalla[]): MenuItem[] {
+  filtrarMenuPorPantallas(menu: MenuItem[], pantallasPermitidas: RolesXpantallas[]): MenuItem[] {
     return menu.filter((item) => {
       if (item.isTitle) {
         return true;

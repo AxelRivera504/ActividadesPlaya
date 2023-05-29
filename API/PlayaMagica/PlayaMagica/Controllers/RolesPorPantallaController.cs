@@ -33,7 +33,6 @@ namespace PlayaMagica.Controllers
             return Ok(listado);
         }
 
-
         [HttpPost("Eliminar")]
         public IActionResult Eliminar(RolesPorPantallaViewModel item)
         {
@@ -49,6 +48,7 @@ namespace PlayaMagica.Controllers
             var listado = _accesoService.ListadoPantallas(id);
             return Ok(listado);
         }
+
 
     }
 }
