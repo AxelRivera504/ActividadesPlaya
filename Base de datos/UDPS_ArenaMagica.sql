@@ -217,7 +217,7 @@ END
 
 --Insertar Estados Civiles
 GO
-CREATE OR ALTER  PROCEDURE gral.UDP_tbEstadosCiviles_Insertar
+CREATE OR ALTER  PROCEDURE Gral.UDP_tbEstadosCiviles_Insertar
 @esci_Descripcion				NVARCHAR(150),	
 @esci_UsuarioCreador			INT
 AS
@@ -250,7 +250,7 @@ END
 
 --Editar Estados Civiles
 GO
-CREATE OR ALTER PROCEDURE gral.UDP_tbEstadosCiviles_Update
+CREATE OR ALTER PROCEDURE Gral.UDP_tbEstadosCiviles_Update
 @esci_Id						INT,
 @esci_Descripcion				NVARCHAR(150),	
 @esci_UsuarioModificador		INT
@@ -1211,27 +1211,6 @@ BEGIN
 END
 GO
 
-CREATE OR ALTER PROCEDURE Acti.UDP_tbActividadesXFecha_VerificarCuposFecha
-	@acti_Id		INT,
-	@acfe_Fecha		DATE
-AS
-BEGIN
-	BEGIN TRY
-	IF EXISTS (SELECT acfe_Id FROM [Acti].[tbActividadesXFecha] WHERE acti_id = @acti_Id AND acfe_Fecha = @acfe_Fecha)
-		BEGIN
-			SELECT acfe_Cantidad FROM [Acti].[tbActividadesXFecha] WHERE acti_id = @acti_Id AND acfe_Fecha = @acfe_Fecha
-		END
-	ELSE 
-		BEGIN 
-			SELECT -2
-		END		
-	END TRY
-	BEGIN CATCH
-		SELECT -0
-	END CATCH 
-END
-
-
 /*Reservaciones Delete*/
 GO
 CREATE OR ALTER PROCEDURE Acti.UDP_tbReservacion_Delete
@@ -1500,19 +1479,6 @@ BEGIN
 	END CATCH
 END
 
-/****************DDL encargados que no tengan rol**********/
-GO
-CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_DDLencargadosTieneusuario
-AS
-BEGIN
-      SELECT t2.enca_Id,
-             t2.enca_Nombres+''+t2.enca_Apellidos AS enca_NombreCompleto
-      FROM Acce.VW_tbUsuarios  t1 
- FULL JOIN Acti. tbEncargados  t2
-        ON t1.enca_ID = t2.enca_id 
-     WHERE t1.usua_Id IS NULL 
-       AND t2. enca_Estado  = 1 
-END
 --******************* ********************************///UDP Y VISTA Roles  ****************************************************************************--
 
 --******************* ********************************UDP RolesXPantallas ****************************************************************************--
@@ -1524,15 +1490,6 @@ BEGIN
 	SELECT * FROM Acce.tbRolesXPantallas WHERE roleXpant_Estado = 1
 END
 
-/*Vista RolesXPantalla ByRoleID*/
-GO
-CREATE OR ALTER PROCEDURE Acce.UDP_tbRolesXPantallas_Select_ByRoleID
-@role_ID INT
-AS
-BEGIN
-	SELECT * FROM Acce.tbRolesXPantallas WHERE roleXpant_Estado = 1 AND role_ID = @role_ID
-END
-
 /*RolesXPantalla Insert*/
 GO
 CREATE OR ALTER PROCEDURE Acce.UDP_RolesXPantallas_Insert
@@ -1541,9 +1498,7 @@ CREATE OR ALTER PROCEDURE Acce.UDP_RolesXPantallas_Insert
 @roleXpant_UsuarioCreador INT
 AS
 BEGIN
-	BEGIN TRY
-
-			
+	BEGIN TRY		
 		INSERT INTO Acce.tbRolesXPantallas (role_ID, pant_ID, 
 		roleXpant_Estado, roleXpant_UsuarioCreador, 
 		roleXpant_FechaCreacion, roleXpant_UsuarioModificador, 
@@ -1628,21 +1583,6 @@ END
 
 /*Login*/
 GO
-CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Login
-@usua_Usuario NVARCHAR(100),
-@usua_Clave VARCHAR(MAX)
-AS
-BEGIN
-DECLARE @contraEncriptada NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Clave);
-	SELECT usua_ID, usua_Usuario, usua_Clave,usua.enca_ID,
-	CONCAT(enca.enca_Nombres,enca.enca_Apellidos) AS enca_NombreCompleto, role_ID 
-	FROM Acce.tbUsuarios usua INNER JOIN Acti.tbEncargados enca
-	ON usua.enca_ID = enca.enca_id
-	WHERE usua_Usuario = @usua_Usuario
-	AND usua_Clave = @usua_Clave 
-	AND usua_Estado = 1
-END
-go
 
 CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Login
 (
@@ -2097,7 +2037,7 @@ END
 
 /*EquipoXActividad*/
 GO
-CREATE OR ALTER PROCEDURE UDP_EquipoXActividad 
+CREATE OR ALTER PROCEDURE Acti.UDP_EquipoXActividad 
 @acti_Id INT
 AS
 BEGIN
@@ -2110,3 +2050,27 @@ BEGIN
 END
 
 --*************************************************** ///UDP Y VISTA tbEquipoXActividades ****************************************************************************--
+GO
+--**************************************************** ///UDP Y Vista tbActividadesXFecha ****************************************************************--
+
+CREATE OR ALTER PROCEDURE Acti.UDP_tbActividadesXFecha_VerificarCuposFecha
+	@acti_Id		INT,
+	@acfe_Fecha		DATE
+AS
+BEGIN
+	BEGIN TRY
+	IF EXISTS (SELECT acfe_Id FROM [Acti].[tbActividadesXFecha] WHERE acti_id = @acti_Id AND acfe_Fecha = @acfe_Fecha)
+		BEGIN
+			SELECT acfe_Cantidad FROM [Acti].[tbActividadesXFecha] WHERE acti_id = @acti_Id AND acfe_Fecha = @acfe_Fecha
+		END
+	ELSE 
+		BEGIN 
+			SELECT -2
+		END		
+	END TRY
+	BEGIN CATCH
+		SELECT -0
+	END CATCH 
+END
+
+--**************************************************** ///UDP Y Vista tbActividadesXFecha ****************************************************************--
