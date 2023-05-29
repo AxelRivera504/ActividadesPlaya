@@ -14,6 +14,8 @@ BEGIN
         SELECT 1
         FROM Acti.ActividadesXFecha axf
         INNER JOIN inserted i ON axf.acti_Id = i.acti_Id
+        INNER JOIN inserted o ON 
+        o.acti_rese_FechaReservacion = axf.acfe_Fecha
     )
     BEGIN
         -- La reserva ya existe, actualizar acfe_Cantidad restando rese_Cantidad
@@ -48,4 +50,3 @@ BEGIN
     INNER JOIN inserted acXeq ON acXeq.equi_Id = equi.equi_Id;
 END
 GO
-

@@ -13,8 +13,10 @@ namespace PlayaMagica.Entities.Entities
         public string dept_Id { get; set; }
         public string dept_Descripcion { get; set; }
         public int? muni_UsuarioCreador { get; set; }
+        public string muni_UsuarioCreador_Nombre { get; set; }
         public DateTime? muni_FechaCreacion { get; set; }
         public int? muni_UsuarioModificador { get; set; }
+        public string muni_UsuarioModificador_Nombre { get; set; }
         public DateTime? muni_FechaModificacion { get; set; }
     }
 }

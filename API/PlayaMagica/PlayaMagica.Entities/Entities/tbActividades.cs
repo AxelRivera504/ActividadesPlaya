@@ -21,12 +21,15 @@ namespace PlayaMagica.Entities.Entities
         public int? acti_Cupo { get; set; }
         public decimal? acti_Precio { get; set; }
         public int? play_Id { get; set; }
+        public string acti_ImgUrl { get; set; }
         public bool? acti_Estado { get; set; }
         public int? acti_UsuarioCreador { get; set; }
         public DateTime? acti_FechaCreacion { get; set; }
         public int? acti_UsuarioModificador { get; set; }
         public DateTime? acti_FechaModificacion { get; set; }
 
+        public virtual tbUsuarios acti_UsuarioCreadorNavigation { get; set; }
+        public virtual tbUsuarios acti_UsuarioModificadorNavigation { get; set; }
         public virtual tbPlayas play { get; set; }
         public virtual ICollection<tbActividadesXFecha> tbActividadesXFecha { get; set; }
         public virtual ICollection<tbEncargadosXActividades> tbEncargadosXActividades { get; set; }

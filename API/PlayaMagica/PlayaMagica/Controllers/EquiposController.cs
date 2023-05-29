@@ -23,10 +23,19 @@ namespace PlayaMagica.Controllers
             _actividadesServices = actividadesServices;
             _mapper = mapper;
         }
+
         [HttpGet("ListarEquipos")]
         public IActionResult ListarEquipos()
         {
             var list = _actividadesServices.ListarEquipos();
+            return Ok(list);
+        }
+
+
+        [HttpGet("EquipoXActividad")]
+        public IActionResult EquipoXActividad(int id)
+        {
+            var list = _actividadesServices.EquipoXActividad(id);
             return Ok(list);
         }
 

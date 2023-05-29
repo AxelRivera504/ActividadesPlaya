@@ -147,16 +147,16 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             var result = new ServiceResult();
             try
             {
-                var roles = _rolesRepository.Insert(item);              
-                return result.Ok(roles);                           
+                var roles = _rolesRepository.Insert(item);
+                return result.Ok(roles);
             }
             catch (Exception e)
             {
                 return result.Error(e.Message);
             }
         }
-           
-public ServiceResult UpdateRoles(tbRoles item)
+
+        public ServiceResult UpdateRoles(tbRoles item)
         {
             var result = new ServiceResult();
             try
@@ -212,7 +212,7 @@ public ServiceResult UpdateRoles(tbRoles item)
             try
             {
                 var insert = _rolesPorPantallaRepository.Insert(item);
-                    return result.Ok(insert.MessageStatus);               
+                return result.Ok(insert.MessageStatus);
             }
             catch (Exception ex)
             {

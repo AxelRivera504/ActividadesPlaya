@@ -9,14 +9,57 @@ namespace PlayaMagica.Entities.Entities
 {
     public partial class tbUsuarios
     {
-        [NotMapped]
-        public string enca_NombreCompleto { get; set; }
-        [NotMapped]
-        public string role_Descripcion { get; set; }
+        public tbUsuarios()
+        {
+            Inverseusua_UsuarioCreadorNavigation = new HashSet<tbUsuarios>();
+            Inverseusua_UsuarioModificadorNavigation = new HashSet<tbUsuarios>();
+            tbActividadesXFechaacfe_UsuarioCreadorNavigation = new HashSet<tbActividadesXFecha>();
+            tbActividadesXFechaacfe_UsuarioModificadorNavigation = new HashSet<tbActividadesXFecha>();
+            tbActividadesacti_UsuarioCreadorNavigation = new HashSet<tbActividades>();
+            tbActividadesacti_UsuarioModificadorNavigation = new HashSet<tbActividades>();
+            tbClienteXReservacionclre_UsuarioCreadorNavigation = new HashSet<tbClienteXReservacion>();
+            tbClienteXReservacionclre_UsuarioModificadorNavigation = new HashSet<tbClienteXReservacion>();
+            tbClientesclie_UsuarioCreadorNavigation = new HashSet<tbClientes>();
+            tbClientesclie_UsuarioModificadorNavigation = new HashSet<tbClientes>();
+            tbDepartamentosdept_UsuarioCreadorNavigation = new HashSet<tbDepartamentos>();
+            tbDepartamentosdept_UsuarioModificadorNavigation = new HashSet<tbDepartamentos>();
+            tbDireccionesdire_UsuarioCreadorNavigation = new HashSet<tbDirecciones>();
+            tbDireccionesdire_UsuarioModificadorNavigation = new HashSet<tbDirecciones>();
+            tbEncargadosXActividadesenac_UsuarioCreadorNavigation = new HashSet<tbEncargadosXActividades>();
+            tbEncargadosXActividadesenac_UsuarioModificadorNavigation = new HashSet<tbEncargadosXActividades>();
+            tbEncargadosenca_UsuarioCreadorNavigation = new HashSet<tbEncargados>();
+            tbEncargadosenca_UsuarioModificadorNavigation = new HashSet<tbEncargados>();
+            tbEquipoXActividadeseqac_UsuarioCreadorNavigation = new HashSet<tbEquipoXActividades>();
+            tbEquipoXActividadeseqac_UsuarioModificadorNavigation = new HashSet<tbEquipoXActividades>();
+            tbEquiposequi_UsuarioCreadorNavigation = new HashSet<tbEquipos>();
+            tbEquiposequi_UsuarioModificadorNavigation = new HashSet<tbEquipos>();
+            tbEstadosCivilesesci_UsuarioCreadorNavigation = new HashSet<tbEstadosCiviles>();
+            tbEstadosCivilesesci_UsuarioModificadorNavigation = new HashSet<tbEstadosCiviles>();
+            tbFacturafuct_UsuarioCreadorNavigation = new HashSet<tbFactura>();
+            tbFacturafuct_UsuarioModificadorNavigation = new HashSet<tbFactura>();
+            tbMantenimientoXEquipomaeq_UsuarioCreadorNavigation = new HashSet<tbMantenimientoXEquipo>();
+            tbMantenimientoXEquipomaeq_UsuarioModificadorNavigation = new HashSet<tbMantenimientoXEquipo>();
+            tbMantenimientomant_UsuarioCreadorNavigation = new HashSet<tbMantenimiento>();
+            tbMantenimientomant_UsuarioModificadorNavigation = new HashSet<tbMantenimiento>();
+            tbMetodosPagomepa_UsuarioCreadorNavigation = new HashSet<tbMetodosPago>();
+            tbMetodosPagomepa_UsuarioModificadorNavigation = new HashSet<tbMetodosPago>();
+            tbMunicipiosmuni_UsuarioCreadorNavigation = new HashSet<tbMunicipios>();
+            tbMunicipiosmuni_UsuarioModificadorNavigation = new HashSet<tbMunicipios>();
+            tbPantallaspant_UsuarioCreadorNavigation = new HashSet<tbPantallas>();
+            tbPantallaspant_UsuarioModificadorNavigation = new HashSet<tbPantallas>();
+            tbPlayasplay_UsuarioCreadorNavigation = new HashSet<tbPlayas>();
+            tbPlayasplay_UsuarioModificadorNavigation = new HashSet<tbPlayas>();
+            tbReservacionesrese_UsuarioCreadorNavigation = new HashSet<tbReservaciones>();
+            tbReservacionesrese_UsuarioModificadorNavigation = new HashSet<tbReservaciones>();
+            tbRolesXPantallasroleXpant_UsuarioCreadorNavigation = new HashSet<tbRolesXPantallas>();
+            tbRolesXPantallasroleXpant_UsuarioModificadorNavigation = new HashSet<tbRolesXPantallas>();
+            tbRolesrole_UsuarioCreadorNavigation = new HashSet<tbRoles>();
+            tbRolesrole_UsuarioModificadorNavigation = new HashSet<tbRoles>();
+        }
+
         public int usua_ID { get; set; }
         public string usua_Usuario { get; set; }
         public string usua_Clave { get; set; }
-        public int? usua_EsAdmin { get; set; }
         public int? enca_ID { get; set; }
         public int? role_ID { get; set; }
         public bool? usua_Estado { get; set; }
@@ -24,5 +67,58 @@ namespace PlayaMagica.Entities.Entities
         public DateTime? usua_FechaCreacion { get; set; }
         public int? usua_UsuarioModificador { get; set; }
         public DateTime? usua_FechaModificacion { get; set; }
+
+        [NotMapped]
+        public string enca_NombreCompleto { get; set; }
+        [NotMapped]
+        public string role_Descripcion { get; set; }
+
+        public virtual tbEncargados enca { get; set; }
+        public virtual tbUsuarios usua_UsuarioCreadorNavigation { get; set; }
+        public virtual tbUsuarios usua_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbUsuarios> Inverseusua_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbUsuarios> Inverseusua_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbActividadesXFecha> tbActividadesXFechaacfe_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbActividadesXFecha> tbActividadesXFechaacfe_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbActividades> tbActividadesacti_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbActividades> tbActividadesacti_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbClienteXReservacion> tbClienteXReservacionclre_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbClienteXReservacion> tbClienteXReservacionclre_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbClientes> tbClientesclie_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbClientes> tbClientesclie_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbDepartamentos> tbDepartamentosdept_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbDepartamentos> tbDepartamentosdept_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbDirecciones> tbDireccionesdire_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbDirecciones> tbDireccionesdire_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbEncargadosXActividades> tbEncargadosXActividadesenac_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbEncargadosXActividades> tbEncargadosXActividadesenac_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbEncargados> tbEncargadosenca_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbEncargados> tbEncargadosenca_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbEquipoXActividades> tbEquipoXActividadeseqac_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbEquipoXActividades> tbEquipoXActividadeseqac_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbEquipos> tbEquiposequi_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbEquipos> tbEquiposequi_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbEstadosCiviles> tbEstadosCivilesesci_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbEstadosCiviles> tbEstadosCivilesesci_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbFactura> tbFacturafuct_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbFactura> tbFacturafuct_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbMantenimientoXEquipo> tbMantenimientoXEquipomaeq_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbMantenimientoXEquipo> tbMantenimientoXEquipomaeq_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbMantenimiento> tbMantenimientomant_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbMantenimiento> tbMantenimientomant_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbMetodosPago> tbMetodosPagomepa_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbMetodosPago> tbMetodosPagomepa_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbMunicipios> tbMunicipiosmuni_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbMunicipios> tbMunicipiosmuni_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbPantallas> tbPantallaspant_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbPantallas> tbPantallaspant_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbPlayas> tbPlayasplay_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbPlayas> tbPlayasplay_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbReservaciones> tbReservacionesrese_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbReservaciones> tbReservacionesrese_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbRolesXPantallas> tbRolesXPantallasroleXpant_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbRolesXPantallas> tbRolesXPantallasroleXpant_UsuarioModificadorNavigation { get; set; }
+        public virtual ICollection<tbRoles> tbRolesrole_UsuarioCreadorNavigation { get; set; }
+        public virtual ICollection<tbRoles> tbRolesrole_UsuarioModificadorNavigation { get; set; }
     }
 }

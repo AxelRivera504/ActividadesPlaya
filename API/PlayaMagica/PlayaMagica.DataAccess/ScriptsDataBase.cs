@@ -57,8 +57,6 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbRoles_Insert = "Acce.UDP_tbRoles_Insert";
         public static string UDP_tbRoles_Update = "Acce.UDP_tbRoles_Update";
         public static string UDP_tbRoles_Delete = "Acce.UDP_tbRoles_Delete";
-     
-        
         #endregion
 
         #region RolesPorPantalla
@@ -66,9 +64,6 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbRolesPorPantalla_Select_ByRoleID = "Acce.UDP_tbRolesXPantallas_Select_ByRoleID";
         public static string UDP_tbRolesPorPantalla_Insert = "Acce.UDP_RolesXPantallas_Insert";
         public static string UDP_tbRolesPorPantalla_Delete = "Acce.UDP_tbRolesXPantalla_Delete";
-
-
-
         #endregion
 
         #region Pantallas
@@ -98,7 +93,6 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbEncargados_Insert = "Acti.UDP_tbEncargados_Insert";
         public static string UDP_tbEncargados_Update = "Acti.UDP_tbEncargados_Update";
         public static string UDP_tbEncargados_Delete = "Acti.UDP_tbEncargados_Delete";
-        public static string UDP_tbEncargados_ddl = "Acce.UDP_tbUsuarios_DDLencargadosTieneusuario";
         #endregion
 
         #region Equipos
@@ -106,6 +100,7 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbEquipos_Insert = "Acti.UDP_tbEquipos_Insert";
         public static string UDP_tbEquipos_Update = "Acti.UDP_tbEquipos_Update";
         public static string UDP_tbEquipos_Delete = "Acti.UDP_tbEquipos_Delete";
+        public static string UDP_EquipoXActividad = "UDP_EquipoXActividad";
         #endregion
 
         #region Actividades
@@ -120,6 +115,7 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbReservaciones_Insert = "Acti.UDP_tbReservaciones_Insert";
         public static string UDP_tbReservaciones_Update = "Acti.UDP_tbReservaciones_Update";
         public static string UDP_tbReservaciones_Delete = "Acti.UDP_tbReservacion_Delete";
+        public static string UDP_tbReservaciones_InsertExiste = "Acti.UDP_tbReservaciones_InsertExiste";
         #endregion
 
         #region Clientes
@@ -148,6 +144,19 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbFactura_Select = "Acti.UDP_tbFactura_VW";
         public static string UDP_tbFactura_Insert = "Acti.UDP_tbFactura_Insert";
         public static string UDP_tbFactura_Update = "Acti.UDP_tbFactura_Delete";
+        #endregion
+
+        #region ClienteXReservacion
+        public static string UDP_tbClienteXReservacion_Insert = "Acti.UDP_tbClienteXReservacion_Insertar";
+        #endregion
+
+        #region ActividadesXFecha
+        public static string UDP_tbActividadesXFecha_VerificarCupos = "Acti.UDP_tbActividadesXFecha_VerificarCuposFecha";
+        #endregion
+
+        #region EquiposXActividades
+        public static string UDP_EquiposXActividades_Insert = "Acti.UDP_tbEquipoXActividades_Insert";
+        public static string UDP_EquiposXActividades_Delelete = "Acti.UDP_tbEquipoXActividades_Delete";
         #endregion
 
         #endregion
