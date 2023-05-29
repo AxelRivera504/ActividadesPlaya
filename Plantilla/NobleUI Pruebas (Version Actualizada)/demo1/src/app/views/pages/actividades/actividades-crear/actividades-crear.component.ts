@@ -1,13 +1,11 @@
 import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ImgbbService } from '../../imgbbService/imgbb.service';
-import { NgxFileDropEntry } from 'ngx-file-drop';
 import { Actividades } from '../../Model/Actividades';
 import { playas } from '../../Model/Playas';
 import { NgSelectConfig } from '@ng-select/ng-select';
 import { ServicesService } from '../../Service/services.service';
 import { trigger } from '@angular/animations';
 import Swal from 'sweetalert2';
-import { FileUploader, FileItem } from 'ng2-file-upload';
 import { DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
 import { data } from 'jquery';
 import { Options } from 'sortablejs';

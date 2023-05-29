@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { playas } from '../Model/Playas';
@@ -12,7 +13,17 @@ import { metodospago } from '../Model/metodospago';
 import { estadosciviles } from '../Model/estadosciviles';
 import { estadoscivilesEdit } from '../Model/EstadosCivilesEdit';
 import { direcciones } from '../Model/direcciones';
+import { MantenimientoEdit } from '../Model/MantenimientoEdit';
+import { RolesXpantallas } from '../Model/RolesXPantallas';
+import { Reservaciones } from '../Model/Reservaciones';
+import { ClienteXReservacion } from '../Model/ClienteXReservacion';
+import { ActividadesXFecha } from '../Model/ActividadesXFecha';
+import { Factura } from '../Model/Factura';
 import { EquipoXActividades } from '../Model/EquipoXActividades';
+import { roles } from '../Model/roles';
+import { pantallas } from '../Model/pantallas';
+import { usuarios } from '../Model/Usuarios';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -33,7 +44,6 @@ export class ServicesService {
     return this.http.post<Equipos[]>(this.Url + "/Equipos/UpdateEquipos",equipos);
   }
 
-
   getPlayas(){
     return this.http.get<playas[]>(this.Url + "/Playas/ListarPlayas");
   }
@@ -44,6 +54,18 @@ export class ServicesService {
 
   getCliente(){
     return this.http.get<Cliente[]>(this.Url + "/Clientes/ListarClientes");
+  }
+
+  InsertarClientes(cliente:Cliente){
+    return this.http.post<Cliente[]>(this.Url + "/Clientes/InsertarClientes",cliente)
+  }
+
+  DeleteClientes(cliente: Cliente){
+    return this.http.post<Cliente[]>(this.Url + "/Clientes/DeleteClientes",cliente)
+  }
+
+  ActualizarClientes(cliente:Cliente){
+    return this.http.post<Cliente[]>(this.Url + "/Clientes/UpdateClientes",cliente)
   }
 
   getEncargados(){
@@ -106,6 +128,18 @@ export class ServicesService {
     return this.http.get<estadosciviles[]>(this.Url + "/EstadosCiviles");
   }
 
+  CreateEstadosCiviles(estadosciviles: estadosciviles){
+    return this.http.post<estadosciviles[]>(this.Url + "/EstadosCiviles/Insert", estadosciviles);
+  }
+
+  DeleteEstadosCiviles(estadosciviles: estadosciviles){
+    return this.http.post<estadosciviles[]>(this.Url + "/EstadosCiviles/Delete", estadosciviles);
+  }
+
+  EditarEstadosCiviles(estadosciviles: estadosciviles){
+    return this.http.post<estadosciviles[]>(this.Url + "/EstadosCiviles/Update", estadosciviles);
+  }
+
   getMetodosPago(){
     return this.http.get<metodospago[]>(this.Url + "/MetodosPago");
   }
@@ -138,19 +172,96 @@ export class ServicesService {
     return this.http.post<direcciones[]>(this.Url + "/Direcciones/Delete", direcciones);
   }
 
-  CreateEstadosCiviles(estadosciviles: estadosciviles){
-    return this.http.post<estadosciviles[]>(this.Url + "/EstadosCiviles/Insert", estadosciviles);
+  DeleteMantenimientos(Mantenimiento: Mantenimiento){
+    return this.http.post<Mantenimiento[]>(this.Url + "/Mantenimientos/DeleteMantenimientos",Mantenimiento)
   }
 
-  getEditEstadosCiviles(ID?: number){
-    return this.http.post<estadoscivilesEdit[]>(this.Url + "/EstadosCiviles/find", estadosciviles);
+  EditarMantenimientos(MantenimientoEditar:MantenimientoEdit){
+    return this.http.post<MantenimientoEdit[]>(this.Url + "/Mantenimientos/UpdateMantenimientos",MantenimientoEditar)
   }
 
-  DeleteEstadosCiviles(estadosciviles: estadosciviles){
-    return this.http.post<estadosciviles[]>(this.Url + "/EstadosCiviles/Delete", estadosciviles);
+  DetailsMantenimiento(id?:number){
+    return this.http.get<Mantenimiento[]>(this.Url + "/Mantenimientos/DetailsMantenimiento"+id)
   }
 
-  EditarEstadosCiviles(estadosciviles: estadosciviles){
-    return this.http.post<estadosciviles[]>(this.Url + "/EstadosCiviles/Update", estadosciviles);
+  InsertarEncargados(encargados:Encargados){
+    return this.http.post<Encargados[]>(this.Url + "/Encargados/InsertarEncargados",encargados)
   }
+
+  DeleteEncargados(encargados:Encargados){
+    return this.http.post<Encargados[]>(this.Url + "/Encargados/DeleteEncargados",encargados)
+  }
+
+  ActualizarEncargados(encargados:Encargados){
+    return this.http.post<Encargados[]>(this.Url + "/Encargados/UpdateEncargados",encargados)
+  }
+
+  InsertarClientesXReservacion(clReservacion:ClienteXReservacion){
+    return this.http.post<ClienteXReservacion[]>(this.Url + "/ClienteXReservacion/InsertarClienteXReservacion",clReservacion)
+  }
+
+  InsertarReservaciones(reservaciones:Reservaciones){
+    return this.http.post<Reservaciones[]>(this.Url + "/Reservaciones/InsertarReservacion",reservaciones)
+  }
+
+   InsertarReservacionesExiste  (reservaciones:Reservaciones){
+    return this.http.post<Reservaciones[]>(this.Url + "/Reservaciones/InsertarReservacionExiste",reservaciones)
+  }
+
+  VerificarCuposActividad(actividadXFecha: ActividadesXFecha){
+    return this.http.post<ActividadesXFecha[]>(this.Url + "/ActividadesXFecha/CantidadActividad",actividadXFecha)
+  }
+
+  InsertarFactura(factura:Factura){
+    return this.http.post<Factura[]>(this.Url + "/Factura/InsertarFactura",factura)
+  }
+
+  getRoles(){
+    return this.http.get<roles[]>(this.Url + "/Roles/ListarRoles");
+  }
+   
+  createRoles(Roles : roles){
+    return this.http.post<roles[]>(this.Url + "/Roles/Insertar", Roles);
+  }
+
+  createRolesXpantallas(rolesXpantallas : RolesXpantallas){
+    return this.http.post<RolesXpantallas[]>(this.Url + "/RolesPorPantalla/Insertar", rolesXpantallas);
+  }
+
+  obtenerPantallasPorRol(role_ID: number) {
+    return this.http.get<RolesXpantallas[]>(this.Url + "/RolesPorPantalla/PantallasXroles" + role_ID);
+  }
+
+  obtenerPantallas() {
+    return this.http.get<pantallas[]>(this.Url + "/Pantallas/Pantallas");
+  }
+  
+  updateRoles(Roles : roles){
+    return this.http.post<roles[]>(this.Url + "/Roles/Actualizar", Roles);
+  }  
+
+  deleteRolesXpantallas(rolesXpantallas : RolesXpantallas){
+    return this.http.post<RolesXpantallas[]>(this.Url + "/RolesPorPantalla/Eliminar", rolesXpantallas);
+  }
+
+  getUsuarios(){
+    return this.http.get<usuarios[]>(this.Url + "/Usuario/Usuarios");
+  }
+ 
+  createUsuarios(usuarios: usuarios){
+    return this.http.post<usuarios[]>(this.Url + "/Usuario/Insertar", usuarios);
+  }
+  
+  updateUsuarios(usuarios: usuarios){
+    return this.http.post<usuarios[]>(this.Url + "/Usuario/Insertar", usuarios);
+  }
+     
+  deleteUsuarios(id: string) {
+    return this.http.delete<usuarios[]>(`${this.Url}/Usuario/Usuario/Delete/${id}`);
+  }
+
+  getEncargadosddl(){
+    return this.http.get<Encargados[]>(this.Url + "/Encargados/ListarEncargadosddl");
+  }
+
 }

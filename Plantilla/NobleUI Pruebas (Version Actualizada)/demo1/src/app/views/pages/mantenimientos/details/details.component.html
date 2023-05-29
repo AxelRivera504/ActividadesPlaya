@@ -1,0 +1,54 @@
+
+<div class="container">
+    <div class="card">
+        <div class="card-header text-center my-0">
+                <h3>Detalles mantenimiento</h3>  
+        </div>
+        <div class="card-body">
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4>ID</h4>
+                    <br>
+                    <label for="xd">{{Mantenimientos.mant_Id}}</label>
+                </div>
+                <div class="col-sm-6">
+                    <h4>Mantenimiento</h4>
+                    <br>
+                    <label for="xd">{{Mantenimientos.mant_Descricion}}</label>
+                </div>
+            </div>       
+            <br>
+            <br>              
+            <div card>
+                <div class="card-header">
+                        <h2>Auditoría</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Acción</th>
+                                <th>Usuario</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Creación</td>
+                                <td>{{Mantenimientos.mant_UsuarioCreador_Nombre}}</td>
+                                <td>{{Mantenimientos.mant_FechaCreacion}}</td>
+                            </tr>
+                            <tr>
+                                <td>Modificación</td>
+                                <td>{{Mantenimientos.mant_UsuarioModificador_Nombre}}</td>
+                                <td>{{Mantenimientos.mant_FechaModificacion}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>  
+            <button type="button" class="btn btn-primary mt-3" (click)="Regresar()"><i class="feather icon-arrow-left"></i>Regresar</button>
+        </div>
+    </div>
+</div>

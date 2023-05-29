@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ActividadesCrearComponent } from './actividades-crear.component';
-import { NgxFileDropModule  } from 'ngx-file-drop';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 // Ngx-dropzone-wrapper
@@ -30,7 +29,6 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    NgxFileDropModule,
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,

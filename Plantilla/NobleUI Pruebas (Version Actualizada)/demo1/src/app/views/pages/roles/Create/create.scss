@@ -1,0 +1,40 @@
+.dropzone {
+    border: 2px dashed #ccc;
+    min-height: 200px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  ::ng-deep .ng-dropdown-panel {
+    z-index: 9999999!important;
+}
+
+
+.input-invalid {
+    background-repeat: no-repeat !important;
+    border: 1px solid #ff3366;
+    border-radius: 4px;
+    padding: 0px;
+  }
+  
+  
+.input-invalid-text{
+    margin-top: 0.25rem;
+    width: 100%;
+    font-size: 0.875em;
+    color: #ff3366;
+}
+
+.invalid-image{
+  border: 1px solid red !important;
+}
+
+.modified{
+border-radius: 0% !important;
+}
+
+
+.scrollable-list {
+  max-height: 200px; /* Ajusta la altura máxima según tus necesidades */
+  overflow-y: auto;
+}

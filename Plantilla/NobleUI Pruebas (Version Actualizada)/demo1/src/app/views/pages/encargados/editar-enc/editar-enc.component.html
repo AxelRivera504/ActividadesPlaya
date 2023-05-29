@@ -1,0 +1,124 @@
+
+<div class="container">
+    <div class="card">
+        <div class="card-header text-center my-0">
+            <h3>Editar Encargados</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="Nombre">Nombres Encargado:</label>
+                    <br>
+                    <input type="text" class="form-control" id="Nombre" required placeholder="Nombre encargado"
+                        [(ngModel)]="encargados.enca_Nombres" name="encargados.enca_Nombres" #encaNombre="ngModel"
+                        [ngClass]="{ 'is-invalid': submitted && encaNombre.invalid }">
+                    <div class="invalid-feedback" *ngIf="encaNombre?.errors?.required && submitted">Nombre requerido</div> 
+                </div>
+                <div class="col-sm-6">
+                    <label for="Apellidos">Apellidos Encargado:</label>
+                    <br>
+                    <input type="text" class="form-control" id="Apellidos" required placeholder="Apellidos encargado"
+                        [(ngModel)]="encargados.enca_Apellidos" name="encargados.enca_Apellidos" #encaApellido="ngModel"
+                        [ngClass]="{ 'is-invalid': submitted && encaApellido.invalid }">
+                    <div class="invalid-feedback" *ngIf="encaApellido?.errors?.required && submitted">Apellidos requerido</div> 
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                     <label for="DNI">DNI Encargado:</label>
+                     <br>
+                     <input type="text" class="form-control" id="DNI" required placeholder="DNI encargado" [hiddenInput]="true" mask="0000-0000-00000"
+                        [(ngModel)]="encargados.enca_DNI" name="encargados.enca_DNI" #encaDNI="ngModel"
+                        [ngClass]="{ 'is-invalid': submitte1 && encaDNI.invalid }">
+                    <div class="invalid-feedback" *ngIf="encaDNI?.errors?.required && submitte1">DNI requerido</div> 
+                    </div>
+                <div class="col-sm-6"> 
+                    <label for="email">Email Encargado:</label>
+                    <br>
+                    <input type="email" class="form-control" id="email" required placeholder="email encargado"
+                    [(ngModel)]="encargados.enca_Email" name="encargados.enca_Email" #encaEmail="ngModel"
+                    [ngClass]="{ 'is-invalid': submitted && encaEmail.invalid }">
+                <div class="invalid-feedback" *ngIf="encaEmail?.errors?.required && submitted">Email requerido</div> 
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="Nombre">Teléfono Encargado:</label>
+                    <br>
+                    <input type="text" class="form-control" prefix="+504" mask=" 00000000" [showMaskTyped] = "true" id="DNI" required placeholder="Teléfono encargado"
+                    [(ngModel)]="encargados.enca_Telefono" name="encargados.enca_Telefono" #encaTelefono="ngModel"
+                    [ngClass]="{ 'is-invalid': submitted && encaTelefono.invalid }">
+                <div class="invalid-feedback" *ngIf="encaTelefono?.errors?.required && submitted">Teléfono requerido</div> 
+                </div>
+                <div class="col-sm-6">
+                    <label for="Nombre">Sexo del Encargado:</label>
+                    <br>
+                    <div class="container">                       
+                        <div class="form-control" style="display: flex; justify-content: center; height: 30;">
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" value="M" [ngClass]="{ 'is-invalid': submitted && encasexo.invalid }"
+                                    [(ngModel)]="encargados.enca_Sexo" required name="radioInline" id="radioInline" #encasexo="ngModel">
+                                <label class="form-check-label" for="radioInline">
+                                    Masculino
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" value="F" [ngClass]="{ 'is-invalid': submitted && encasexo.invalid }"
+                                    [(ngModel)]="encargados.enca_Sexo" required name="radioInline" #encasexo="ngModel" id="radioInline1">
+                                <label class="form-check-label" for="radioInline1">
+                                    Femenino
+                                </label>
+                            </div>
+                        </div>                   
+                        <div class="invalid-feedback" *ngIf="submitted && form.get('enca_Sexo')?.invalid && form.get('enca_Sexo')?.touched">
+                            Sexo requerido
+                          </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="Nombre">Estado Civil Encargado:</label>
+                    <br>
+                    <ng-select [(ngModel)]="EstadoCivilSeleccionado" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+                    name="EstadoCivilSeleccionado" #esci="ngModel" required [ngClass]="{ 'is-invalid': submitted && esci.invalid }">
+                      <ng-option *ngFor="let item of estadocivil" [value]="item.esci_id">{{item.esci_Descripcion}}</ng-option>
+                    </ng-select>
+                    <div class="invalid-feedback" *ngIf="esci?.errors?.required && submitted">Debe escoger un estado civil</div> 
+                </div>
+                <div class="col-sm-6">
+                    <label for="Nombre">Fecha de nacimiento Encargado:</label>
+                    <br>
+                    <div class="input-group">
+                      <input class="form-control" placeholder="yyyy-mm-dd" 
+                        name="dp" [(ngModel)]="selectedDate" ngbDatepicker #d="ngbDatepicker" 
+                        #fechanac="ngModel" required [ngClass]="{ 'is-invalid': (submitted && fechanac.invalid) || (submitted && !fechaFormatoValido) }"
+                        (ngModelChange)="onDateSelect($event)">
+                      <button class="input-group-text" type="button" (click)="d.toggle()">
+                        <i class="feather icon-calendar icon-md text-muted"></i>
+                      </button>
+                      <div class="invalid-feedback" *ngIf="fechanac?.errors?.required && submitted">Debe escoger una fecha de nacimiento</div>
+                      <div class="invalid-feedback" *ngIf="(submitted && fechaFormatoValido)">El formato debe ser 'yyyy-mm-dd'</div>
+                    </div>
+                  </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
+                    <div class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary mt-3 me-3" (click)="Regresar()">
+                            <i class="feather icon-arrow-left"></i>Regresar
+                        </button>
+                        <button type="button" class="btn btn-primary mt-3" (click)="Guardar()">
+                            <i class="feather icon-save"></i>Actualizar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>       
+    </div>
+</div>

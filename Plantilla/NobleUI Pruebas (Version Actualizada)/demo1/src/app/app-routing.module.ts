@@ -36,16 +36,64 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/equipos/equipos-detalles/equipos-detalles.module').then(m => m.EquiposDetallesModule)
       },
       {
+        path: 'usuarios',
+        loadChildren: () => import('./views/pages/usuarios/usuarios.module').then(m => m.UsuariosModule)
+      },
+      {
+        path: 'Detalles',        
+        loadChildren: () => import('./views/pages/usuarios/detalles/usarios-detalle.module').then(m => m.UsuariosDetallesModule)
+      },
+      {
+        path: 'equiposEditar',
+        loadChildren: () => import('./views/pages/equipos/equipos-editar/equipos-editar.module').then(m => m.EquiposEditarModule)
+      },
+      {
+        path: 'equiposDetalles',
+        loadChildren: () => import('./views/pages/equipos/equipos-detalles/equipos-detalles.module').then(m => m.EquiposDetallesModule)
+      },
+      {
         path: 'mantenimientos',
         loadChildren: () => import('./views/pages/mantenimientos/mantenimientos.module').then(m => m.MantenimientosModule)
+      },
+      {
+        path: 'details',
+        loadChildren: () => import('./views/pages/mantenimientos/details/details.module').then(m => m.DetailsModule)
       },
       {
         path: 'clientes',
         loadChildren: () => import('./views/pages/clientes/clientes.module').then(m => m.ClientesModule)
       },
       {
+        path: 'create-clientes',
+        loadChildren: () => import('./views/pages/clientes/create-clientes/create-clientes.module').then(m => m.CreateClientesModule)
+      },
+      {
+        path: 'detailscli',
+        loadChildren: () => import('./views/pages/clientes/detailscli/detailscli.module').then(m => m.DetailscliModule)
+      },
+      {
+        path: 'editar-clientes',
+        loadChildren: () => import('./views/pages/clientes/editar-clientes/editar-clientes.module').then(m => m.EditarClientesModule)
+      },
+      {
         path: 'encargados',
         loadChildren: () => import('./views/pages/encargados/encargados.module').then(m => m.EncargadosModule)
+      },
+      {
+        path: 'details-enc',
+        loadChildren: () => import('./views/pages/encargados/details-enc/details-enc.module').then(m => m.DetailsEncModule)
+      },
+      {
+        path: 'crear',
+        loadChildren: () => import('./views/pages/encargados/create/create.module').then(m => m.CreateModule)
+      },
+      {
+        path: 'Create',
+        loadChildren: () => import('./views/pages/roles/Create/create.module').then(m => m.CreateModule)
+      },  
+      {
+        path: 'editar-enc',
+        loadChildren: () => import('./views/pages/encargados/editar-enc/editar-enc.module').then(m => m.EditarEncModule)
       },
       {
         path: 'actividades',
@@ -62,6 +110,10 @@ const routes: Routes = [
       {
         path: 'actividadesDetalles',
         loadChildren: () => import('./views/pages/actividades/actividades-detalles/actividades-detalles.module').then(m => m.ActividadesDetallesModule)
+      },
+      {
+        path: 'reservaciones',
+        loadChildren: () => import('./views/pages/reservaciones/reservaciones.module').then(m => m.ReservacionesModule)
       },
       {
         path: 'departamentos',
@@ -104,6 +156,14 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/direcciones/direcciones-detalles/direcciones-detalles.module').then(m => m.DireccionesDetallesModule)
       },
       {
+        path: 'roles',
+        loadChildren: () => import('./views/pages/roles/roles.modules').then(m => m.RolesModule)
+      },
+      {
+        path: 'Create',
+        loadChildren: () => import('./views/pages/roles/Create/create.module').then(m => m.CreateModule)
+      }, 
+      {
         path: 'apps',
         loadChildren: () => import('./views/pages/apps/apps.module').then(m => m.AppsModule)
       },
@@ -139,6 +199,7 @@ const routes: Routes = [
         path: 'general',
         loadChildren: () => import('./views/pages/general/general.module').then(m => m.GeneralModule)
       },
+      
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, 
       // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
     ]

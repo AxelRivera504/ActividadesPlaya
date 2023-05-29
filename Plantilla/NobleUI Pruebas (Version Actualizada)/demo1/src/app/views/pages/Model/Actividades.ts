@@ -12,4 +12,5 @@ export class Actividades{
     acti_UsuarioModificador!: number;
     acti_UsuarioModificador_Nombre!: string;
     acti_FechaModificacion!: Date;
+    selected: boolean;
 }
