@@ -12,6 +12,8 @@ import { Options } from 'sortablejs';
 import { Equipos } from '../../Model/Equipos';
 import { Router } from '@angular/router';
 import { EquipoXActividades } from '../../Model/EquipoXActividades';
+import { Encargados } from '../../Model/Encargados';
+import { EncargadosXActividad } from '../../Model/EncargadosXActividad';
 
 @Component({
   selector: 'app-actividades-crear',
@@ -29,8 +31,12 @@ export class ActividadesCrearComponent implements OnInit {
   playasModel = new playas()
   imgstatus = false
   actividadesModel = new Actividades()
-  submitted: boolean = false
+  submitted: boolean = false  
+  encargados: Encargados[]
+  encargadosSeleccionados: any = null
 
+  encargadosXActividades= new EncargadosXActividad()
+  
   public configdropzone: DropzoneConfigInterface = {
     dictDefaultMessage: "Arrastra y suelta los archivos aquí o haz clic para seleccionarlos.",
     clickable: true,
@@ -69,6 +75,11 @@ export class ActividadesCrearComponent implements OnInit {
     this.service.getEquipos()
     .subscribe((data: any)=>{
       this.equipos = data
+    })
+
+    this.service.getEncargados()
+    .subscribe((data:any)=>{
+      this.encargados = data
     })
   }
 
@@ -109,91 +120,104 @@ export class ActividadesCrearComponent implements OnInit {
   }
 
   Crear(){
-    var x = true
+    console.log(this.encargadosSeleccionados)
+    // var x = true
 
-    if(this.actividadesModel.acti_Nombre == undefined || this.actividadesModel.acti_Nombre == ""){
-      x = false
-    }
+    // if(this.actividadesModel.acti_Nombre == undefined || this.actividadesModel.acti_Nombre == ""){
+    //   x = false
+    // }
 
-    if(this.actividadesModel.acti_Cupo == undefined || this.actividadesModel.acti_Cupo == null){
-      x = false
-    }
+    // if(this.actividadesModel.acti_Cupo == undefined || this.actividadesModel.acti_Cupo == null){
+    //   x = false
+    // }
 
-    if(this.actividadesModel.play_Id == undefined || this.actividadesModel.play_Id == null){
-      x = false
-    }
+    // if(this.actividadesModel.play_Id == undefined || this.actividadesModel.play_Id == null){
+    //   x = false
+    // }
 
-    if(this.actividadesModel.acti_Precio == undefined || this.actividadesModel.acti_Precio == null){
-      x = false
-    }
+    // if(this.actividadesModel.acti_Precio == undefined || this.actividadesModel.acti_Precio == null){
+    //   x = false
+    // }
 
-    if(this.actividadesModel.acti_ImgUrl == undefined || this.actividadesModel.acti_ImgUrl == ""){
-      x = false
-    }
+    // if(this.actividadesModel.acti_ImgUrl == undefined || this.actividadesModel.acti_ImgUrl == ""){
+    //   x = false
+    // }
 
-    if(x){
-      const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
-      if (idUsuario !== undefined) {
-        this.actividadesModel.acti_UsuarioCreador = idUsuario;
-        this.equipoxactividades.eqac_UsuarioCreador = idUsuario;
-      }
-      console.log(this.actividadesModel)
-      this.service.createActividades(this.actividadesModel)
-      .subscribe((data:any)=>{
-        console.log(data)
-        if(data.data.codeStatus == -2){
-          Swal.fire({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            title: '¡Ese registro ya existe!',
-            icon: 'warning'
-          })
-        }else  if(data.data.codeStatus == -1){
-          Swal.fire({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            title: '¡Registro Ingresado con exito!',
-            icon: 'success'
-          })
-        }else if(data.data.codeStatus >1){
-         this.equipoxactividades.acti_Id = data.data.codeStatus
-         this.equipos1.forEach(element => {
-          this.equipoxactividades.equi_Id = element.equi_Id
-            this.service.createEquipoXActividades(this.equipoxactividades)
-            .subscribe((data:any)=>{
-              console.log(data)
-            })
-         });
-         Swal.fire({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-          title: '¡Registro Ingresado con exito!',
-          icon: 'success'
-        })
-         this.router.navigate(["/actividades"])
-        }
-      })
-    }else{
-      this.submitted = true
-      Swal.fire({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-        title: '¡Rellene los campos!',
-        icon: 'warning'
-      })
-    }
+    // if(x){
+    //   const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
+    //   if (idUsuario !== undefined) {
+    //     this.actividadesModel.acti_UsuarioCreador = idUsuario;
+    //     this.equipoxactividades.eqac_UsuarioCreador = idUsuario;
+    //     this.encargadosXActividades.enac_UsuarioCreador = idUsuario;
+    //   }
+    //   console.log(this.actividadesModel)
+    //   this.service.createActividades(this.actividadesModel)
+    //   .subscribe((data:any)=>{
+    //     console.log(data)
+    //     if(data.data.codeStatus == -2){
+    //       Swal.fire({
+    //         toast: true,
+    //         position: 'top-end',
+    //         showConfirmButton: false,
+    //         timer: 1500,
+    //         timerProgressBar: true,
+    //         title: '¡Ese registro ya existe!',
+    //         icon: 'warning'
+    //       })
+    //     }else  if(data.data.codeStatus == -1){
+    //       Swal.fire({
+    //         toast: true,
+    //         position: 'top-end',
+    //         showConfirmButton: false,
+    //         timer: 1500,
+    //         timerProgressBar: true,
+    //         title: '¡Registro Ingresado con exito!',
+    //         icon: 'success'
+    //       })
+    //     }else if(data.data.codeStatus > 1){
+    //      this.equipoxactividades.acti_Id = data.data.codeStatus
+         
+    //      this.equipos1.forEach(element => {
+    //       this.equipoxactividades.equi_Id = element.equi_Id
+    //         this.service.createEquipoXActividades(this.equipoxactividades)
+    //         .subscribe((data:any)=>{
+    //           console.log(data)
+    //         })
+    //      });
+
+    //      this.encargadosXActividades.acti_Id = data.data.codeStatus
+    //      this.encargadosSeleccionados.forEach(element => {
+    //       this.encargadosXActividades.enca_Id = element.enca_id
+    //       this.service.createEncargadosXActividad(this.encargadosXActividades)
+    //       .subscribe((data:any)=>{
+    //         console.log(data)
+    //       })
+    //      });
+
+    //      Swal.fire({
+    //       toast: true,
+    //       position: 'top-end',
+    //       showConfirmButton: false,
+    //       timer: 1500,
+    //       timerProgressBar: true,
+    //       title: '¡Registro Ingresado con exito!',
+    //       icon: 'success'
+    //     })
+    //      this.router.navigate(["/actividades"])
+    //     }
+    //   })
+    // }else{
+    //   this.submitted = true
+    //   Swal.fire({
+    //     toast: true,
+    //     position: 'top-end',
+    //     showConfirmButton: false,
+    //     timer: 1500,
+    //     timerProgressBar: true,
+    //     title: '¡Rellene los campos!',
+    //     icon: 'warning'
+    //   })
+    // }
 
   }
 

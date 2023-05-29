@@ -23,6 +23,7 @@ import { EquipoXActividades } from '../Model/EquipoXActividades';
 import { roles } from '../Model/roles';
 import { pantallas } from '../Model/pantallas';
 import { usuarios } from '../Model/Usuarios';
+import { EncargadosXActividad } from '../Model/EncargadosXActividad';
 
 @Injectable({
   providedIn: 'root'
@@ -268,4 +269,11 @@ export class ServicesService {
     return this.http.get<Encargados[]>(this.Url + "/Encargados/ListarEncargadosddl");
   }
 
+  createEncargadosXActividad(EncargadosXActividad: EncargadosXActividad){
+    return this.http.post<EncargadosXActividad[]>(this.Url + "/EncargadosXActividades/Insert", EncargadosXActividad);
+  }
+
+  deleteEncargadosXActividad(EncargadosXActividad: EncargadosXActividad){
+    return this.http.post<EncargadosXActividad[]>(this.Url + "/EncargadosXActividades/Delete", EncargadosXActividad);
+  }
 }

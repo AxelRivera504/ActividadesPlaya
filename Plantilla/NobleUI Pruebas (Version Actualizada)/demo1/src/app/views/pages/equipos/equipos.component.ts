@@ -8,6 +8,8 @@ import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableDirective } from 'angular-datatables';
 import Swal from 'sweetalert2';
+import { Console } from 'console';
+import { data } from 'jquery';
 
 @Component({
   selector: 'app-equipos',
@@ -78,6 +80,7 @@ export class EquiposComponent implements OnInit {
   Eliminar(){
     this.service.deleteEquipos(this.EquiposModel)
     .subscribe((data:any)=>{
+      console.log(data)
         if(data.data.codeStatus == 1){
           Swal.fire({
             toast: true,

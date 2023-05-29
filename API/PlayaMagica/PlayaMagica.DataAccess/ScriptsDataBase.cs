@@ -159,6 +159,12 @@ namespace PlayaMagica.DataAccess
         public static string UDP_EquiposXActividades_Delelete = "Acti.UDP_tbEquipoXActividades_Delete";
         #endregion
 
+        #region EncargadosXActividad
+        public static string UDP_EncargadosXActividad_Insert = "Acti.UDP_tbEncargadosXActividad_Insert";
+        public static string UDP_EncargadosXActividad_Delete = "Acti.UDP_tbEncargadosXActividad_Delete";
+        public static string UDP_EncargadosXActividad = "Acti.UDP_tbEncargadosXActividad";
+        #endregion
+
         #endregion
 
     }

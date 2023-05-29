@@ -12,6 +12,8 @@ namespace PlayaMagica.Entities.Entities
         public string enca_Nombres { get; set; }
         public string enca_Apellidos { get; set; }
         public string enca_DNI { get; set; }
+
+        public string enca_NombreCompleto { get; set; }
         public string enca_Email { get; set; }
         public string enca_Telefono { get; set; }
         public string enca_Sexo { get; set; }

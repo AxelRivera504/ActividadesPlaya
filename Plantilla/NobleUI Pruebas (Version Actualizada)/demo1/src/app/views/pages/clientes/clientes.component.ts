@@ -89,6 +89,16 @@ export class ClientesComponent implements OnInit {
             this.Cliente = data;
             this.rerender();
       })
+      }else if(data.data.codeStatus == 2){
+            Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 30000,
+          timerProgressBar: true,
+          title: '¡El registro esta siendo utilizado!',
+            icon: 'warning'
+        })
       }else{
         Swal.fire({
           toast: true,

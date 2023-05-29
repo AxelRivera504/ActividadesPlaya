@@ -38,3 +38,9 @@ border-radius: 0% !important;
   max-height: 200px; /* Ajusta la altura máxima según tus necesidades */
   overflow-y: auto;
 }
+
+.custom-img {
+  height: 300px; /* Establece la altura deseada /
+  width: auto; / Calcula automáticamente el ancho manteniendo la proporción de la imagen /
+  object-fit: cover; / Ajusta la imagen para que se ajuste dentro del contenedor sin deformarse */
+}

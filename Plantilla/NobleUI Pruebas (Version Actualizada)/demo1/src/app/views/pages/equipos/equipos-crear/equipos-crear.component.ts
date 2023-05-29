@@ -5,6 +5,7 @@ import { ServicesService } from '../../Service/services.service';
 import { Router } from '@angular/router';
 import { DropzoneConfigInterface, DropzoneDirective } from 'ngx-dropzone-wrapper';
 import Swal from 'sweetalert2';
+import { Encargados } from '../../Model/Encargados';
 
 @Component({
   selector: 'app-equipos-crear',

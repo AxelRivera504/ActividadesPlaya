@@ -22,6 +22,7 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
         private readonly FacturaRepository _facturaRepository;
         private readonly EquipoXActividadesRepository _equipoxactividadesrepository;
         private readonly EquiposRepository _equiposrepository;
+        private readonly EncargadosXActividadesRepository _encargadosxactividadesrepository;
         public ActividadesServices(FacturaRepository facturaRepository ,
             ActividadesXFechaRepository actividadesXFechaRepository, 
             ClienteXReservacionRepository clienteXReservacionRepository, 
@@ -33,7 +34,8 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             ClientesRepository clientesRepository, 
             PlayasRepository playasRepository,
             EquipoXActividadesRepository equipoxactividadesrepository,
-            EquiposRepository equiposrepository)
+            EquiposRepository equiposrepository,
+            EncargadosXActividadesRepository encargadosxactividadesrepository)
         {
             _clientesRepository = clientesRepository;
             _encargadosRepository = encargadosRepository;
@@ -47,6 +49,7 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             _facturaRepository = facturaRepository;
             _equipoxactividadesrepository = equipoxactividadesrepository;
             _equiposrepository = equiposrepository;
+            _encargadosxactividadesrepository = encargadosxactividadesrepository;
         }
 
 
@@ -565,6 +568,38 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
         }
 
+        #endregion
+
+        #region EncargadosXActividades
+        public ServiceResult InsertarEncargadosXActivades(tbEncargadosXActividades item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var reservaciones = _encargadosxactividadesrepository.Insert(item);
+                return resultado.Ok(reservaciones);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult EliminarEncargadosXActivades(tbEncargadosXActividades item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var reservaciones = _encargadosxactividadesrepository.Delete(item);
+                return resultado.Ok(reservaciones);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
         #endregion
     }
 }

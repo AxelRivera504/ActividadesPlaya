@@ -372,13 +372,19 @@ CREATE OR ALTER PROCEDURE Gral.UDP_tbMetodosPago_EliminarMetodosPago
 AS
 BEGIN
 BEGIN TRY			
+	IF NOT EXISTS(SELECT mepa_Id FROM Acti.tbFactura WHERE mepa_Id = @mepa_id)
+		BEGIN
 		UPDATE	[Gral].[tbMetodosPago]						
 		SET		mepa_Estado = 0
 		WHERE	mepa_id = @mepa_id
-		SELECT 1		
+		SELECT 1	
+		END
+	ELSE BEGIN
+		SELECT 2
+	END
 	END TRY
 	BEGIN CATCH
-		SELECT 2
+		SELECT 0
 	END CATCH
 END
 
@@ -594,12 +600,17 @@ CREATE OR ALTER PROCEDURE Gral.UDP_tbDirecciones_EliminarDirecciones
 @dire_Id			INT
 AS
 BEGIN
-BEGIN TRY		
-	
-		UPDATE	Gral.tbDirecciones							
-		SET		dire_Estado = 0
-		WHERE	dire_Id = @dire_Id
-		SELECT 1
+	BEGIN TRY		
+		IF NOT EXISTS(SELECT dire_Id FROM Acti.tbPlayas WHERE dire_Id = @dire_Id)
+			BEGIN
+				UPDATE	Gral.tbDirecciones							
+				SET		dire_Estado = 0
+				WHERE	dire_Id = @dire_Id
+				SELECT 1
+			END
+		ELSE BEGIN
+			SELECT 2
+		END
 	END TRY
 	BEGIN CATCH
 		SELECT 0
@@ -613,7 +624,7 @@ GO
  CREATE OR ALTER VIEW Acti.VW_tbEncargados 
  AS 
  SELECT enca.enca_id, enca_Nombres, 
- enca_Apellidos, enca_DNI, 
+ enca_Apellidos,CONCAT(enca_Nombres,' ',enca_Apellidos) AS enca_NombreCompleto, enca_DNI, 
  enca_Email, enca_Telefono, 
  enca_Sexo, enca.esci_id,[EstadoCivil].esci_Descripcion, 
  enca_FechaNac, enca_Estado, 
@@ -847,10 +858,16 @@ GO
  AS
  BEGIN 
 	BEGIN TRY
-		UPDATE Acti.tbEquipos
-		SET equi_Estado = 0
-		WHERE equi_Id = @equi_Id
-		SELECT 1
+		IF NOT EXISTS(SELECT [equi_Id] FROM [Acti].[tbEquipoXActividades] WHERE [equi_Id] = @equi_Id)
+			BEGIN
+				UPDATE Acti.tbEquipos
+				SET equi_Estado = 0
+				WHERE equi_Id = @equi_Id
+				SELECT 1
+			END
+		ELSE BEGIN
+			SELECT 2
+		END
 	END TRY
 	BEGIN CATCH
 		SELECT 0
@@ -1011,10 +1028,16 @@ GO
 	AS
 	BEGIN
 		BEGIN TRY
-			UPDATE Acti.tbActividades
-			SET acti_Estado = 0
-			WHERE acti_Id = @acti_Id
-			SELECT 1
+			IF NOT EXISTS(SELECT acti_Id FROM Acti.tbActividadesXFecha WHERE acti_Id = @acti_Id)
+				BEGIN
+					UPDATE Acti.tbActividades
+					SET acti_Estado = 0
+					WHERE acti_Id = @acti_Id
+					SELECT 1
+				END	
+			ELSE BEGIN
+				SELECT 2
+			END
 		END TRY
 
 		BEGIN CATCH
@@ -1362,18 +1385,23 @@ CREATE OR ALTER PROCEDURE Acti.UDP_tbClientes_Delete
 AS
 BEGIN
 	BEGIN TRY
-			UPDATE Acti.tbClientes
-			SET clie_Estado = 0,
-				clie_UsuarioModificador = @clie_UsuarioModificador,
-				clie_FechaModificacion = GETDATE()
-			WHERE clie_id = @clie_id
-			SELECT 1
+		IF NOT EXISTS(SELECT [clie_Id] FROM [Acti].[tbClienteXReservacion] WHERE clie_Id = @clie_id)
+			BEGIN
+				UPDATE Acti.tbClientes
+				SET clie_Estado = 0
+				WHERE clie_id = @clie_id
+				SELECT 1
+			END
+		ELSE BEGIN
+			SELECT 2
+		END
 	END TRY
 
 	BEGIN CATCH
 	SELECT 0
 	END CATCH
 END
+
 --******************* ********************************////UDP Y VISTA Clientes  ****************************************************************************--
 
 --******************* ********************************UDP Y VISTA Roles  ****************************************************************************--
@@ -1395,7 +1423,7 @@ GO
 CREATE OR ALTER PROCEDURE Acce.UDP_tbRoles_VW
 AS
 BEGIN
-	SELECT * FROM Acce.VW_tbRoles
+	SELECT * FROM Acce.VW_tbRoles WHERE role_Estado =  1
 END
 
 /*******************************Roles insert *************************/
@@ -1464,15 +1492,29 @@ END
 
 /*Roles Delete*/
 GO
-CREATE OR ALTER PROCEDURE Acce.UDP_tbRoles_Delete
+CREATE OR ALTER PROCEDURE Acce.UDP_tbRoles_Delete 19
 @role_ID INT
 AS
 BEGIN
 	BEGIN TRY
-		UPDATE Acce.tbRoles
-		SET role_Estado = 1
-		WHERE role_ID = @role_ID
-		SELECT 1
+		DECLARE @existe INT= 1
+
+		IF EXISTS(SELECT [role_ID] FROM [Acce].[tbUsuarios] WHERE [role_ID] = @role_ID)
+			BEGIN
+				SET @existe = 2
+			END
+
+		IF @existe = 1
+			BEGIN
+				UPDATE Acce.tbRoles
+				SET role_Estado = 0
+				WHERE role_ID = @role_ID
+				SELECT @existe
+			END
+			ELSE BEGIN
+				SELECT @existe
+			END
+
 	END TRY
 
 	BEGIN CATCH
@@ -1704,9 +1746,9 @@ CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Delete
 AS
 BEGIN
 	BEGIN TRY
-		DELETE Acce.tbUsuarios
+		UPDATE Acce.tbUsuarios
+		SET usua_Estado = 0
 		WHERE usua_ID = @usua_ID
-		SELECT 1
 	END TRY
 
 	BEGIN CATCH
@@ -1805,10 +1847,16 @@ CREATE OR ALTER PROCEDURE Acti.UDP_tbMantenimiento_Delete
 AS
 BEGIN
 	BEGIN TRY
-		UPDATE Acti.tbMantenimiento
-		SET	mant_Estado = 0
-		WHERE mant_Id = @mant_Id
+		IF NOT EXISTS(SELECT [mant_Id] FROM [Acti].[tbMantenimientoXEquipo] WHERE [mant_Id] = @mant_Id)
+			BEGIN
+				UPDATE Acti.tbMantenimiento
+				SET	mant_Estado = 0
+				WHERE mant_Id = @mant_Id
 		SELECT 1
+			END
+		ELSE BEGIN
+			SELECT 2
+		END
 	END TRY
 	BEGIN CATCH
 		SELECT 0
@@ -2075,3 +2123,60 @@ BEGIN
 END
 
 --**************************************************** ///UDP Y Vista tbActividadesXFecha ****************************************************************--
+
+
+--**************************************************** UDP Y Vista EncargadosXActividades****************************************************************--
+/*EncargadosXActividad*/
+GO
+CREATE OR ALTER PROCEDURE Acti.UDP_tbEncargadosXActividad
+    @actividadId INT
+AS
+BEGIN
+    SELECT enca.enca_id, enca.enca_Nombres, enca.enca_Apellidos, enca.enca_DNI, enca.enca_Email, enca.enca_Telefono, enca.enca_Sexo, enca.esci_id, enca.enca_FechaNac
+    FROM Acti.tbEncargadosXActividades enac
+    INNER JOIN Acti.tbEncargados enca ON enac.enca_Id = enca.enca_id
+    WHERE enac.acti_Id = @actividadId AND enac.enac_Estado = 1
+END
+GO
+
+/*Insertar EncargadosXActividad*/
+GO
+CREATE OR ALTER PROCEDURE Acti.UDP_tbEncargadosXActividad_Insert
+@enca_Id INT,
+@acti_Id INT,
+@enac_UsuarioCreador INT
+AS
+BEGIN
+	BEGIN TRY
+		INSERT INTO Acti.tbEncargadosXActividades([enca_Id], [acti_Id], 
+		[enac_Estado], [enac_UsuarioCreador], 
+		[enac_FechaCreacion], [enac_UsuarioModificador], 
+		[enac_FechaModificacion])
+		VALUES(@enca_Id,@acti_Id,1,@enac_UsuarioCreador,GETDATE(),NULL,NULL)
+		SELECT 1
+	END TRY
+
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+
+/*Eliminar EncargadosXActividad*/
+GO
+CREATE OR ALTER PROCEDURE Acti.UDP_tbEncargadosXActividad_Delete
+@actividadId INT
+AS
+BEGIN
+	BEGIN TRY
+		DELETE [Acti].[tbEncargadosXActividades]
+		WHERE acti_Id = @actividadId 
+		SELECT 1
+	END TRY
+
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+
+
+--**************************************************** ///UDP Y Vista EncargadosXActividades****************************************************************--
