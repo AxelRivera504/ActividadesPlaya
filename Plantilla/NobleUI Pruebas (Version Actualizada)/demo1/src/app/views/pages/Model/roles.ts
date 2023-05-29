@@ -1,5 +1,5 @@
 export class roles{
-    role_ID!: string;
+    role_ID!: number;
     role_Descripcion!: string;
     usua_Usuario!: number;
     role_UsuarioCreador !: number;

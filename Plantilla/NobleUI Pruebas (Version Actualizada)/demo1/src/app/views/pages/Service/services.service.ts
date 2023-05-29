@@ -96,15 +96,27 @@ export class ServicesService {
     return this.http.post<RolesXpantallas[]>(this.Url + "/RolesPorPantalla/Insertar", rolesXpantallas);
   }
 
-
-
-  obtenerPantallasPorRol(role_ID: string) {
+  obtenerPantallasPorRol(role_ID: number) {
     return this.http.get<pantallas[]>(this.Url + "/RolesPorPantalla/PantallasXroles" + role_ID);
   }
 
   obtenerPantallas() {
     return this.http.get<pantallas[]>(this.Url + "/Pantallas/Pantallas");
   }
+  
+  updateRoles(Roles : roles){
+    return this.http.post<roles[]>(this.Url + "/Roles/Actualizar", Roles);
+  }  
+
+  deleteRolesXpantallas(rolesXpantallas : RolesXpantallas){
+    return this.http.post<RolesXpantallas[]>(this.Url + "/RolesPorPantalla/Eliminar", rolesXpantallas);
+  }
+
+
+
+
+
+
 
   getUsuarios(){
     return this.http.get<usuarios[]>(this.Url + "/Usuario/Usuarios");

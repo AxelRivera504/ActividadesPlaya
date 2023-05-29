@@ -15,7 +15,7 @@ export class RolesComponent implements OnInit {
   roles: roles[] = [];
   pantallas: pantallas[] = [];
   mostrarTablaMaestra: boolean = false;
-  rolSeleccionado: string = '';
+  rolSeleccionado: number = 0;
 
   constructor(private service: ServicesService, private router: Router) { }
 
@@ -58,7 +58,7 @@ export class RolesComponent implements OnInit {
     }, 0);
   }
 
-  mostrarPantallas(roleID: string) {
+  mostrarPantallas(roleID: number) {
     this.rolSeleccionado = roleID;
     this.obtenerPantallasPorRol(roleID).subscribe(
       (data) => {
@@ -73,7 +73,7 @@ export class RolesComponent implements OnInit {
     );
   }
 
-  obtenerPantallasPorRol(roleID: string) {
+  obtenerPantallasPorRol(roleID: number) {
     return this.service.obtenerPantallasPorRol(roleID);
   }
 }
