@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Chris\\Desktop\\Temp\\Merge GOD\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {}
+    "C:\\Users\\LAB01\\Desktop\\nuevo documento\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Chris\\Desktop\\Temp\\Merge GOD\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {
+    "C:\\Users\\LAB01\\Desktop\\nuevo documento\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Chris\\Desktop\\Temp\\Merge GOD\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
+        "projectUniqueName": "C:\\Users\\LAB01\\Desktop\\nuevo documento\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
         "projectName": "PlayaMagica.Entities",
-        "projectPath": "C:\\Users\\Chris\\Desktop\\Temp\\Merge GOD\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
-        "packagesPath": "C:\\Users\\Chris\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Chris\\Desktop\\Temp\\Merge GOD\\API\\PlayaMagica\\PlayaMagica.Entities\\obj\\",
+        "projectPath": "C:\\Users\\LAB01\\Desktop\\nuevo documento\\API\\PlayaMagica\\PlayaMagica.Entities\\PlayaMagica.Entities.csproj",
+        "packagesPath": "C:\\Users\\LAB01\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\LAB01\\Desktop\\nuevo documento\\API\\PlayaMagica\\PlayaMagica.Entities\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Chris\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\LAB01\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -58,7 +54,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.409\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,0 +1,134 @@
+<div class="card">
+    <div class="card-body">
+        <div class="card-title text-center"><h3>Direcciones</h3></div>
+        <div class="text-center">
+            <button type="button" class="btn btn-primary" (click)="openBasicModal(basicModal)">
+              <i class="feather icon-plus"></i>
+              Nuevo
+            </button>
+          </div>
+        <div class="table table-responsive">
+          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Direccion Exacta</th>
+                <th>Municipio ID</th>
+                <th>Municipio</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of direcciones">
+                <td>{{item.dire_Id}}</td>
+                <td>{{item.dire_DireccionExacta}}</td>
+                <td>{{item.muni_Id}}</td>
+                <td>{{item.muni_Descripcion}}</td>
+                <td><button type="button" class="btn btn-warning" (click)="openBasicModal1(basicModal1,item)">    <i class="feather icon-edit"></i></button>
+                    |
+                    <button type="button" class="btn btn-info" (click)="Detalles(item)"> 
+                              <i class="feather icon-list"></i></button>
+                              |
+                              <button type="button" class="btn btn-danger" (click)="openBasicModal2(basicModal2,item)"> 
+                                        <i class="feather icon-trash"></i></button>
+                </td>
+              </tr>
+          </table>
+        </div>
+      </div>
+</div>
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Nueva Direccion</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+      <div class="row">
+          <div class="form-group col-6">
+            <label>Departamento</label>
+            <ng-select [(ngModel)]="departamentoModel.dept_Id" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+            name="departamentoModel.dept_Id" #departamentos="ngModel" required [ngClass]="{ 'input-invalid': submitted && !departamentoModel.dept_Id}"
+            (ngModelChange)="onDepartamentoChange()"> 
+            <ng-option *ngFor="let item of departamento" [value]="item.dept_Id">{{item.dept_Descripcion}}</ng-option>
+            </ng-select>
+                 <div class="input-invalid-text" *ngIf="departamentos?.errors?.required && submitted">El departamento es requerido</div>
+          </div>
+          <div class="form-group col-6">
+            <label>Municipio</label>
+            <ng-select [(ngModel)]="municipioModel.muni_Id" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+            name="municipioModel.muni_Id" #municipios="ngModel" required [ngClass]="{ 'input-invalid': submitted && !municipioModel.muni_Id }">
+            <ng-option *ngFor="let item of municipioddl" [value]="item.muni_Id">{{item.muni_Descripcion}}</ng-option>
+          </ng-select>
+          <div class="input-invalid-text" *ngIf="municipios?.errors?.required && submitted">El municipio es requerido</div>
+          </div>
+          <div class="form-group col-6 mt-3">
+            <label>Direccion Exacta</label>
+            <input type="text" class="form-control" [(ngModel)]="direccionesModel.dire_DireccionExacta" placeholder="Direccion Exacta" name="direccionesModel.dire_DireccionExacta"
+            #direcciones="ngModel" required [ngClass]="{ 'is-invalid': submitted && !direccionesModel.dire_DireccionExacta }" />
+            <div class="invalid-feedback" *ngIf="!direccionesModel.dire_DireccionExacta && submitted">Nombre es requerido</div>
+          </div>
+      </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="Guardar()">Guardar</button>
+  </div>
+</ng-template>
+
+<ng-template #basicModal2 let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Nueva Direccion</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+      <div class="row">
+        <h4>¿Desea eliminar este registro?</h4>
+      </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="Eliminar()">Guardar</button>
+  </div>
+</ng-template>
+
+<ng-template #basicModal1 let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Nueva Direccion</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+      <div class="row">
+          <div class="form-group col-6">
+            <label>Departamento</label>
+            <ng-select [(ngModel)]="departamentoModel.dept_Id" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+            name="departamentoModel.dept_Id" #departamentos="ngModel" required [ngClass]="{ 'input-invalid': submitted && !departamentoModel.dept_Id}"
+            (ngModelChange)="onDepartamentoChange()"> 
+            <ng-option *ngFor="let item of departamento" [value]="item.dept_Id">{{item.dept_Descripcion}}</ng-option>
+            </ng-select>
+                 <div class="input-invalid-text" *ngIf="departamentos?.errors?.required && submitted">El departamento es requerido</div>
+          </div>
+          <div class="form-group col-6">
+            <label>Municipio</label>
+            <ng-select [(ngModel)]="municipioModel.muni_Id" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+            name="municipioModel.muni_Id" #municipios="ngModel" required [ngClass]="{ 'input-invalid': submitted && !municipioModel.muni_Id }">
+            <ng-option *ngFor="let item of municipioddl" [value]="item.muni_Id">{{item.muni_Descripcion}}</ng-option>
+          </ng-select>
+          <div class="input-invalid-text" *ngIf="municipios?.errors?.required && submitted">El municipio es requerido</div>
+          </div>
+          <div class="form-group col-6 mt-3">
+            <label>Direccion Exacta</label>
+            <input type="text" class="form-control" [(ngModel)]="direccionesModel.dire_DireccionExacta" placeholder="Direccion Exacta" name="direccionesModel.dire_DireccionExacta"
+            #direcciones="ngModel" required [ngClass]="{ 'is-invalid': submitted && !direccionesModel.dire_DireccionExacta }" />
+            <div class="invalid-feedback" *ngIf="!direccionesModel.dire_DireccionExacta && submitted">Nombre es requerido</div>
+          </div>
+      </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="Editar()">Guardar</button>
+  </div>
+</ng-template>
+
+
+

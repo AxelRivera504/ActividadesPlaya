@@ -1,0 +1,61 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header text-center my-0">
+                <h3>Clientes</h3>  
+            <button button type="button" class="btn btn-primary" (click)="crear()">
+                <i class="feather icon-plus"></i>
+                Nuevo
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>DNI</th>
+                            <th>Sexo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of Cliente">
+                            <td>{{item.clie_id}}</td>
+                            <td>{{item.clie_Nombres}}</td>
+                            <td>{{item.clie_Apellidos}}</td>
+                            <td>{{item.clie_DNI}}</td>
+                            <td>{{item.clie_Sexo}}</td>
+                            <td><button type="button" class="btn btn-warning btn-icon-text" (click)="Editar(item)">
+                                <i class="feather icon-edit "></i>
+                            </button>
+                                |
+                                <button type="button" class="btn btn-info btn-icon-text" (click)="Detalles(item)">
+                                    <i class="feather icon-list "></i>
+                                </button>
+                                |
+                                <button type="button" class="btn btn-danger btn-icon-text" (click)="openBasicModal1(basicModal1,item.clie_id)">
+                                    <i class="feather icon-trash "></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #basicModal1 let-modal>
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Eliminar registro</h5>
+        </div>                    
+            <div class="modal-body">
+                <h4>¿Desea eliminar este registro?</h4>                                          
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cancelar</button>
+              <button type="button" (click)="Delete()" class="btn btn-primary">Eliminar</button>
+            </div>
+      </ng-template>
+</div>

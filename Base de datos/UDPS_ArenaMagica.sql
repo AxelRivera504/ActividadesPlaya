@@ -372,13 +372,19 @@ CREATE OR ALTER PROCEDURE Gral.UDP_tbMetodosPago_EliminarMetodosPago
 AS
 BEGIN
 BEGIN TRY			
+	IF NOT EXISTS(SELECT mepa_Id FROM Acti.tbFactura WHERE mepa_Id = @mepa_id)
+		BEGIN
 		UPDATE	[Gral].[tbMetodosPago]						
 		SET		mepa_Estado = 0
 		WHERE	mepa_id = @mepa_id
-		SELECT 1		
+		SELECT 1	
+		END
+	ELSE BEGIN
+		SELECT 2
+	END
 	END TRY
 	BEGIN CATCH
-		SELECT 2
+		SELECT 0
 	END CATCH
 END
 
@@ -594,12 +600,17 @@ CREATE OR ALTER PROCEDURE Gral.UDP_tbDirecciones_EliminarDirecciones
 @dire_Id			INT
 AS
 BEGIN
-BEGIN TRY		
-	
-		UPDATE	Gral.tbDirecciones							
-		SET		dire_Estado = 0
-		WHERE	dire_Id = @dire_Id
-		SELECT 1
+	BEGIN TRY		
+		IF NOT EXISTS(SELECT dire_Id FROM Acti.tbPlayas WHERE dire_Id = @dire_Id)
+			BEGIN
+				UPDATE	Gral.tbDirecciones							
+				SET		dire_Estado = 0
+				WHERE	dire_Id = @dire_Id
+				SELECT 1
+			END
+		ELSE BEGIN
+			SELECT 2
+		END
 	END TRY
 	BEGIN CATCH
 		SELECT 0
@@ -807,7 +818,7 @@ GO
 	END CATCH
   END
 
-  /*Equipos Update*/
+  /*Editar Equipos*/
   GO
   CREATE OR ALTER PROCEDURE Acti.UDP_tbEquipos_Update
   @equi_id INT,
@@ -840,16 +851,23 @@ GO
 	END CATCH
   END
  
- /*Equipos Delete*/
+ /*Eliminar Equipos*/
  GO
  CREATE OR ALTER PROCEDURE Acti.UDP_tbEquipos_Delete
  @equi_Id INT
  AS
  BEGIN 
 	BEGIN TRY
-		UPDATE Acti.tbEquipos
-		SET equi_Estado = 0
-		WHERE equi_Id = @equi_Id
+		IF NOT EXISTS(SELECT [equi_Id] FROM [Acti].[tbEquipoXActividades] WHERE [equi_Id] = @equi_Id)
+			BEGIN
+				UPDATE Acti.tbEquipos
+				SET equi_Estado = 0
+				WHERE equi_Id = @equi_Id
+				SELECT 1
+			END
+		ELSE BEGIN
+			SELECT 2
+		END
 	END TRY
 	BEGIN CATCH
 		SELECT 0
@@ -1804,10 +1822,16 @@ CREATE OR ALTER PROCEDURE Acti.UDP_tbMantenimiento_Delete
 AS
 BEGIN
 	BEGIN TRY
-		UPDATE Acti.tbMantenimiento
-		SET	mant_Estado = 0
-		WHERE mant_Id = @mant_Id
+		IF NOT EXISTS(SELECT [mant_Id] FROM [Acti].[tbMantenimientoXEquipo] WHERE [mant_Id] = @mant_Id)
+			BEGIN
+				UPDATE Acti.tbMantenimiento
+				SET	mant_Estado = 0
+				WHERE mant_Id = @mant_Id
 		SELECT 1
+			END
+		ELSE BEGIN
+			SELECT 2
+		END
 	END TRY
 	BEGIN CATCH
 		SELECT 0

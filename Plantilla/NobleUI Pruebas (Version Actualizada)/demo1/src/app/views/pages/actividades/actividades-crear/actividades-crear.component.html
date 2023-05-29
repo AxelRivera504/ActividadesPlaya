@@ -1,0 +1,73 @@
+<div class="card">
+    <div class="card-header text-center">
+      <h4>Nueva Actividad</h4>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        
+        <div class="form-group col-6 mt-3">
+          <label>Actividad:</label>
+          <input type="text" class="form-control mt-1" required placeholder="Ingrese el nombre de la actividad" name="actividadesModel.acti_Nombre" 
+          [(ngModel)]="actividadesModel.acti_Nombre" [ngClass]="{ 'is-invalid': submitted && !actividadesModel.acti_Nombre}" #Actividades="ngModel"/>
+          <div class="invalid-feedback" *ngIf="submitted && !actividadesModel.acti_Nombre">Nombre requerido</div>
+        </div>
+
+        <div class="form-group col-6 mt-3">
+          <label>Cupo Limite:</label>
+          <input type="number" maxlength="5" class="form-control mt-1" required placeholder="Ingrese la cantidad de personas maxima de esta actividad" name="actividadesModel.acti_Cupo" 
+          [(ngModel)]="actividadesModel.acti_Cupo" [ngClass]="{ 'is-invalid': submitted && !actividadesModel.acti_Cupo}" #Actividades="ngModel"/>
+          <div class="invalid-feedback" *ngIf="submitted && !actividadesModel.acti_Cupo">Cupo limite es requerido</div>
+        </div>
+
+        <div class="form-group col-6 mt-3">
+          <label>Playa:</label>
+          <ng-select [(ngModel)]="actividadesModel.play_Id" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+          name="actividadesModel.play_Id" #Actividades="ngModel" required [ngClass]="{ 'input-invalid': submitted && !actividadesModel.play_Id }">
+          <ng-option *ngFor="let item of playas" [value]="item.play_Id">{{item.play_Playa}}</ng-option>
+        </ng-select>
+        <div class="input-invalid-text" *ngIf="submitted && !actividadesModel.play_Id">Playa requerida</div>
+        </div>
+
+        <div class="form-group col-6 mt-3">
+          <label>Precio:</label>
+          <input type="number" class="form-control" placeholder="Precio de la actividad" #Actividades [(ngModel)]="actividadesModel.acti_Precio" 
+          required name="actividadesModel.acti_Precio" [ngClass]="{'is-invalid': submitted && !actividadesModel.acti_Precio}"/>
+          <div class="input-invalid-text" *ngIf="submitted && !actividadesModel.acti_Precio">Precio requerido</div>
+        </div>
+
+              <div class="form-group col-6 mt-3">
+                <label>Imagen:</label>
+                <div class="col-12">
+                      <div class="dropzone" [dropzone]="configdropzone" [ngClass]="{'invalid-image': submitted && !actividadesModel.acti_ImgUrl}" (error)="onUploadError($event)" (success)="onUploadSuccess($event)"></div>
+                      <div class="input-invalid-text" *ngIf="submitted && !actividadesModel.acti_ImgUrl">Imagen requerida</div>
+                      <button class="btn btn-secondary mt-2" (click)="resetDropzoneUploads()">Borrar imagen</button>
+                </div> <!-- col -->
+              </div>
+
+              <div class="form-group col-6 mt-3">
+                <div class="row">
+                  <h6 class="mb-3">Asignar equipo de la actividad:</h6>
+                  <div class="col">  
+                    <label>Opciones:</label>              
+                    <ul class="list-group scrollable-list" [sortablejs]="equipos" [sortablejsOptions]="sharedOptions">
+                      <li class="list-group-item list-group-item-primary" *ngFor="let item of equipos">{{ item.equi_Descripcion }}</li>
+                    </ul>
+                    <!-- <div class="p-3 rounded bg-gray-200 text-dark mt-3"> {{ equipos | json }} </div> -->
+                  </div>
+                  <div class="col">
+                    <label>Asignados:</label>
+                    <ul class="list-group scrollable-list" [sortablejs]="equipos1" [sortablejsOptions]="sharedOptions">
+                      <li class="list-group-item list-group-item-info" *ngFor="let item1 of equipos1">{{ item1.equi_Descripcion }}</li>
+                    </ul>
+                    <!-- <div class="p-3 rounded bg-gray-200 text-dark mt-3"> {{ equipos1 | json }} </div> -->
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group col-12 mt-3 text-center">
+                <button class="btn btn-primary" (click)="Crear()"><i class="feather icon-save"></i>Guardar</button>
+              </div>
+      </div>
+    </div>
+  </div>
+  

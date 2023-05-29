@@ -1,0 +1,68 @@
+ <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title text-center my-0">
+                    <h3>Actividades</h3>  
+                <br>
+                <button button type="button" class="btn btn-primary" (click)="Nuevo()">
+                    <i class="feather icon-plus"></i>
+                    Nuevo
+                </button>
+            </div>
+            </div>
+            <div class="card-body">
+                <div class="table table-responsive">
+                    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Actividades</th>
+                                <th>Cupo actual</th>
+                                <th>Precio</th>
+                                <th>Playa</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of Actividades">
+                                <td>{{item.acti_Id}}</td>
+                                <td>{{item.acti_Nombre}}</td>
+                                <td>{{item.acti_Cupo}}</td>
+                                <td>{{item.acti_Precio}}</td>
+                                <td>{{item.play_Id}}</td>
+                                <td><button type="button"  (click)="Editar(item)" class="btn btn-warning btn-icon-text">
+                                    <i class="feather icon-edit "></i>
+                                </button>
+                                    |
+                                    <button type="button" class="btn btn-info btn-icon-text" (click)="Detalles(item)">
+                                        <i class="feather icon-list "></i>
+                                    </button>
+                                    |
+                                    <button type="button" class="btn btn-danger btn-icon-text" (click)="openBasicModal2(basicModal2,item)">
+                                        <i class="feather icon-trash "></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+  <ng-template #basicModal2 let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Eliminar Actividad</h5>
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+          <h4>¿Desea eliminar este registro?</h4>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+      <button type="button" class="btn btn-primary" (click)="Eliminar()">Eliminar</button>
+    </div>
+  </ng-template>

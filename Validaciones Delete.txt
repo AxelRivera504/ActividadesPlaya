@@ -1,0 +1,9 @@
+-Metodos de Pago X
+-Direcciones X
+-Playas 
+-Equipos X
+-Mantenimientos X (Falta arreglar la logica de la aplicacion)
+-Clientes
+-Actividades
+-Roles
+-Usuarios

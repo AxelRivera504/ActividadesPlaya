@@ -74,10 +74,9 @@ namespace PlayaMagica.DataAccess.Repositories.Acce
             var parametros = new DynamicParameters();
             parametros.Add("@usua_id", item.usua_ID, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@usua_Usuario", item.usua_Usuario, DbType.String, ParameterDirection.Input);
-            parametros.Add("@usua_Clave", item.usua_Clave, DbType.String, ParameterDirection.Input);
             parametros.Add("@enca_ID", item.enca_ID, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@role_ID", item.role_ID, DbType.Int32, ParameterDirection.Input);
-            parametros.Add("@usua_UsuarioCreador", item.usua_UsuarioCreador, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@usua_UsuarioModificador", item.usua_UsuarioModificador, DbType.Int32, ParameterDirection.Input);
 
             var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbUsuarios_Update, parametros, commandType: CommandType.StoredProcedure);
 

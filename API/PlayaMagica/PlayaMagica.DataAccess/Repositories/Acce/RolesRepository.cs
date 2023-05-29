@@ -12,9 +12,9 @@ namespace PlayaMagica.DataAccess.Repositories.Acce
 {
     public class RolesRepository : IRepository<tbRoles, VW_tbRoles>
     {
-        
-        
-        
+
+
+
         public RequestStatus Delete(tbRoles item)
         {
             RequestStatus result = new RequestStatus();
