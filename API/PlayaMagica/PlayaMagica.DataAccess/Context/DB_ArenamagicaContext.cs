@@ -24,6 +24,7 @@ namespace PlayaMagica.DataAccess.Context
         public virtual DbSet<VW_tbDepartamentos> VW_tbDepartamentos { get; set; }
         public virtual DbSet<VW_tbDirecciones> VW_tbDirecciones { get; set; }
         public virtual DbSet<VW_tbEncargados> VW_tbEncargados { get; set; }
+        public virtual DbSet<VW_tbEquipoXActividades> VW_tbEquipoXActividades { get; set; }
         public virtual DbSet<VW_tbEquipos> VW_tbEquipos { get; set; }
         public virtual DbSet<VW_tbEstadosCiviles> VW_tbEstadosCiviles { get; set; }
         public virtual DbSet<VW_tbFactura> VW_tbFactura { get; set; }
@@ -107,7 +108,7 @@ namespace PlayaMagica.DataAccess.Context
 
                 entity.Property(e => e.clie_NombreCompleto)
                     .IsRequired()
-                    .HasMaxLength(600)
+                    .HasMaxLength(601)
                     .IsUnicode(false);
 
                 entity.Property(e => e.clie_Nombres)
@@ -213,6 +214,21 @@ namespace PlayaMagica.DataAccess.Context
                 entity.Property(e => e.esci_Descripcion)
                     .HasMaxLength(200)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<VW_tbEquipoXActividades>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("VW_tbEquipoXActividades", "Acti");
+
+                entity.Property(e => e.acti_Nombre).HasMaxLength(250);
+
+                entity.Property(e => e.eqac_FechaCreacion).HasColumnType("datetime");
+
+                entity.Property(e => e.eqac_FechaModificacion).HasColumnType("datetime");
+
+                entity.Property(e => e.equi_Descripcion).HasMaxLength(250);
             });
 
             modelBuilder.Entity<VW_tbEquipos>(entity =>
@@ -329,6 +345,10 @@ namespace PlayaMagica.DataAccess.Context
                     .HasMaxLength(4)
                     .IsUnicode(false)
                     .IsFixedLength(true);
+
+                entity.Property(e => e.muni_UsuarioCreador_Nombre).HasMaxLength(100);
+
+                entity.Property(e => e.muni_UsuarioModificador_Nombre).HasMaxLength(100);
             });
 
             modelBuilder.Entity<VW_tbPlayas>(entity =>

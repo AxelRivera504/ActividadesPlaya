@@ -16,8 +16,24 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
         private readonly ActividadesRepository _actividadesRepository;
         private readonly EquipoRepository _equipoRepository;
         private readonly MantenimientoRepository _mantenimientoRepository;
-        private readonly EquipoXActividadesRepository _equipoxactividadesRepository;
-        public ActividadesServices(MantenimientoRepository mantenimientoRepository, EquipoRepository equipoRepository, ActividadesRepository actividadesRepository, EncargadosRepository encargadosRepository, ClientesRepository clientesRepository, PlayasRepository playasRepository, EquipoXActividadesRepository equipoxactividadesrepository)
+        private readonly ReservacionesRepository _reservacionesRepository;
+        private readonly ClienteXReservacionRepository _clienteXReservacionRepository;
+        private readonly ActividadesXFechaRepository _actividadesXFechaRepository;
+        private readonly FacturaRepository _facturaRepository;
+        private readonly EquipoXActividadesRepository _equipoxactividadesrepository;
+        private readonly EquiposRepository _equiposrepository;
+        public ActividadesServices(FacturaRepository facturaRepository ,
+            ActividadesXFechaRepository actividadesXFechaRepository, 
+            ClienteXReservacionRepository clienteXReservacionRepository, 
+            ReservacionesRepository reservacionesRepository,
+            MantenimientoRepository mantenimientoRepository, 
+            EquipoRepository equipoRepository, 
+            ActividadesRepository actividadesRepository, 
+            EncargadosRepository encargadosRepository, 
+            ClientesRepository clientesRepository, 
+            PlayasRepository playasRepository,
+            EquipoXActividadesRepository equipoxactividadesrepository,
+            EquiposRepository equiposrepository)
         {
             _clientesRepository = clientesRepository;
             _encargadosRepository = encargadosRepository;
@@ -25,7 +41,12 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             _actividadesRepository = actividadesRepository;
             _equipoRepository = equipoRepository;
             _mantenimientoRepository = mantenimientoRepository;
-            _equipoxactividadesRepository = equipoxactividadesrepository;
+            _reservacionesRepository = reservacionesRepository;
+            _clienteXReservacionRepository = clienteXReservacionRepository;
+            _actividadesXFechaRepository = actividadesXFechaRepository;
+            _facturaRepository = facturaRepository;
+            _equipoxactividadesrepository = equipoxactividadesrepository;
+            _equiposrepository = equiposrepository;
         }
 
 
@@ -436,7 +457,7 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
 
             try
             {
-                var Equipos = _equipoxactividadesRepository.Insert(item);
+                var Equipos = _equipoxactividadesrepository.Insert(item);
                 return resultado.Ok(Equipos);
             }
             catch (Exception ex)
@@ -451,7 +472,7 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
 
             try
             {
-                var Equipos = _equipoxactividadesRepository.Delete(item);
+                var Equipos = _equipoxactividadesrepository.Delete(item);
                 return resultado.Ok(Equipos);
             }
             catch (Exception ex)
@@ -459,6 +480,91 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
                 return resultado.Error(ex.Message);
             }
         }
+        #endregion
+
+        #region Reservaciones
+        public ServiceResult InsertarReservaciones(tbReservaciones item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var reservaciones = _reservacionesRepository.InsertarReservaciones(item);
+                return resultado.Ok(reservaciones);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult InsertarReservacionesExiste(tbReservaciones item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var reservaciones = _reservacionesRepository.InsertarReservacionesExiste(item);
+                return resultado.Ok(reservaciones);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+        #endregion
+
+        #region ClientesXReservacion
+        public ServiceResult InsertarClienteXReservacion(tbClienteXReservacion item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var ClienteXReservacion = _clienteXReservacionRepository.InsertarClienteXReservacion(item);
+                return resultado.Ok(ClienteXReservacion);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+        #endregion
+
+        #region ActividadesXFecha
+        public ServiceResult CantidadActividad(tbActividadesXFecha item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Encargados = _actividadesXFechaRepository.CantidadActividad(item);
+                return resultado.Ok(Encargados);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        #endregion
+
+        #region Facturas
+        public ServiceResult InsertarFactura(tbFactura item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Factura = _facturaRepository.InsertarFactura(item);
+                return resultado.Ok(Factura);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
         #endregion
     }
 }

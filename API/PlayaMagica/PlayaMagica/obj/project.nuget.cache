@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VEI46C/oFhHo6BJFH3Mug7VP1zv0ERJh8WClDmfRDN+4GxZdk4g4UkH21x0sB824+fXESV4FhwiqkqHGsn6l5A==",
+  "dgSpecHash": "ayLNkC5L4E3+HTd7DKGrNfn6v7HEo4b4/J6PIlP6m+p0RW0QR7S6PZoxK0dZSuVxOPOmjSUO44j/vbhYkJp95w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Chris\\Documents\\GitHub\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica\\PlayaMagica.csproj",
+  "projectFilePath": "C:\\Users\\Chris\\Desktop\\Temp\\Merge GOD\\API\\PlayaMagica\\PlayaMagica\\PlayaMagica.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Chris\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\Chris\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\7.0.0\\automapper.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512",

@@ -73,3 +73,18 @@ C:\Users\Juan\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.DataAccess\ob
 C:\Users\Juan\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.dll
 C:\Users\Juan\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.DataAccess\obj\Debug\net5.0\ref\PlayaMagica.DataAccess.dll
 C:\Users\Juan\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.pdb
+C:\Users\Chris\Desktop\Temp\Merge GOD\API\PlayaMagica\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.csproj.AssemblyReference.cache
+C:\Users\Chris\Desktop\Temp\Merge GOD\API\PlayaMagica\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Chris\Desktop\Temp\Merge GOD\API\PlayaMagica\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.AssemblyInfoInputs.cache
+C:\Users\Chris\Desktop\Temp\Merge GOD\API\PlayaMagica\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.AssemblyInfo.cs
+C:\Users\Chris\Desktop\Temp\Merge GOD\API\PlayaMagica\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\Chris\Desktop\Temp\Merge GOD\API\PlayaMagica\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.dll
+C:\Users\Chris\Desktop\Temp\Merge GOD\API\PlayaMagica\PlayaMagica.DataAccess\obj\Debug\net5.0\ref\PlayaMagica.DataAccess.dll
+C:\Users\Chris\Desktop\Temp\Merge GOD\API\PlayaMagica\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.pdb
+C:\Users\Chris\Desktop\Temp\Merge GOD\API\PlayaMagica\PlayaMagica.DataAccess\bin\Debug\net5.0\PlayaMagica.DataAccess.deps.json
+C:\Users\Chris\Desktop\Temp\Merge GOD\API\PlayaMagica\PlayaMagica.DataAccess\bin\Debug\net5.0\PlayaMagica.DataAccess.dll
+C:\Users\Chris\Desktop\Temp\Merge GOD\API\PlayaMagica\PlayaMagica.DataAccess\bin\Debug\net5.0\ref\PlayaMagica.DataAccess.dll
+C:\Users\Chris\Desktop\Temp\Merge GOD\API\PlayaMagica\PlayaMagica.DataAccess\bin\Debug\net5.0\PlayaMagica.DataAccess.pdb
+C:\Users\Chris\Desktop\Temp\Merge GOD\API\PlayaMagica\PlayaMagica.DataAccess\bin\Debug\net5.0\PlayaMagica.Entities.dll
+C:\Users\Chris\Desktop\Temp\Merge GOD\API\PlayaMagica\PlayaMagica.DataAccess\bin\Debug\net5.0\PlayaMagica.Entities.pdb
+C:\Users\Chris\Desktop\Temp\Merge GOD\API\PlayaMagica\PlayaMagica.DataAccess\obj\Debug\net5.0\PlayaMagica.DataAccess.csproj.CopyComplete
