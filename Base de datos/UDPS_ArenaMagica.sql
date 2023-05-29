@@ -807,7 +807,7 @@ GO
 	END CATCH
   END
 
-  /*Equipos Update*/
+  /*Editar Equipos*/
   GO
   CREATE OR ALTER PROCEDURE Acti.UDP_tbEquipos_Update
   @equi_id INT,
@@ -840,7 +840,7 @@ GO
 	END CATCH
   END
  
- /*Equipos Delete*/
+ /*Eliminar Equipos*/
  GO
  CREATE OR ALTER PROCEDURE Acti.UDP_tbEquipos_Delete
  @equi_Id INT
@@ -850,6 +850,7 @@ GO
 		UPDATE Acti.tbEquipos
 		SET equi_Estado = 0
 		WHERE equi_Id = @equi_Id
+		SELECT 1
 	END TRY
 	BEGIN CATCH
 		SELECT 0

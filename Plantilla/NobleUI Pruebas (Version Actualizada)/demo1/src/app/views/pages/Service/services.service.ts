@@ -44,6 +44,10 @@ export class ServicesService {
     return this.http.post<Equipos[]>(this.Url + "/Equipos/UpdateEquipos",equipos);
   }
 
+  deleteEquipos(equipos: Equipos){
+    return this.http.post<Equipos[]>(this.Url + "/Equipos/DeleteEquipos",equipos);
+  }
+
   getPlayas(){
     return this.http.get<playas[]>(this.Url + "/Playas/ListarPlayas");
   }

@@ -36,7 +36,7 @@
                                     <i class="feather icon-list "></i>
                                 </button>
                                 |
-                                <button type="button" class="btn btn-danger btn-icon-text">
+                                <button type="button" class="btn btn-danger btn-icon-text" (click)="openBasicModal3(basicModal3,item)">
                                     <i class="feather icon-trash "></i>
                                 </button>
                             </td>
@@ -47,4 +47,18 @@
         </div>
     </div>
 </div>
+
+<ng-template #basicModal3 let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Eliminar equipo</h5>
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <h4>¿Desea eliminar este registro?</h4>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+      <button type="button" class="btn btn-primary" (click)="Eliminar()">Eliminar</button>
+    </div>
+  </ng-template>
 
