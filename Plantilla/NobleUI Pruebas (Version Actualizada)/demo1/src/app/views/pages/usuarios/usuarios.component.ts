@@ -276,7 +276,7 @@ export class UsuariosComponent implements OnInit {
     if (usua_id !== undefined) {
       this.UsuariosEdit.usua_ID = usua_id.toString();
     }
-   
+      
     this.service.deleteUsuarios(this.UsuariosEdit).subscribe((data: any) => {
     console.log(data);
     console.log(data.data.codeStatus)

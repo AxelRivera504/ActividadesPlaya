@@ -1,59 +1,69 @@
 <div class="container">
   <div class="card">
-      <div class="card-header text-center my-0">
-          <h3>Crear Roles</h3>
-      </div>
-      <div class="card-body">
-          <div class="row">
-              <div class="col-sm-6">
-                  <label for="Nombre">Nombre del Role:</label>
-                  <br>
-                  <input type="text" class="form-control" id="Nombre" required placeholder="Nombre del rol" name="roles.role_Descripcion" 
-                  [(ngModel)]="roles.role_Descripcion" [ngClass]="{ 'is-invalid': submitted && !roles.role_Descripcion}" #Roles="ngModel"/>               
-                  <div class="invalid-feedback" *ngIf="submitted && !roles.role_Descripcion">Role requerido</div>
-                </div>
-          
+    <div class="card-header text-center my-0">
+      <h3>Crear Roles</h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-6">
+          <label for="Nombre">Nombre del Role:</label>
+          <br>
+          <input type="text" class="form-control" id="Nombre" required placeholder="Nombre del rol"
+            name="roles.role_Descripcion" [(ngModel)]="roles.role_Descripcion"
+            [ngClass]="{ 'is-invalid': submitted && !roles.role_Descripcion}" #Roles="ngModel" />
+          <div class="invalid-feedback" *ngIf="submitted && !roles.role_Descripcion">Role requerido</div>
+        </div>
 
+
+        <div class="form-group col-6 mt-3">
+          <div class="row">
+            <h6 class="mb-3">Asignar pantallas al rol:</h6>
           
-          <div class="form-group col-6 mt-3">
-              <div class="row">
-                <h6 class="mb-3">Asignar pantallas al rol:</h6>
-                <div class="col">  
-                  <label>Pantallas</label>              
-                  <ul class="list-group scrollable-list" [sortablejs]="pantallas" [sortablejsOptions]="sharedOptions">
-                    <li class="list-group-item list-group-item-primary" *ngFor="let item of pantallas">{{ item.pant_Descripcion }}</li>
-                  </ul>
-                </div>
+            <div class="col-6">
+              <label>Pantallas</label>
+              <div class="form-group mt-3 custom-border">
                 <div class="col">
-                  <label>Pantallas elegidas</label>
-                  <ul class="list-group scrollable-list" [sortablejs]="pantallas1" [sortablejsOptions]="sharedOptions">
-                    <li class="list-group-item list-group-item-info" *ngFor="let item1 of pantallas1">{{ item1.pant_Descripcion }}</li>
+                  <ul class="list-group scrollable-list" [sortablejs]="pantallas" [sortablejsOptions]="sharedOptions">
+                    <ng-container *ngIf="pantallas.length === 0">
+                      <div class="placeholder">No hay pantallas para seleccionar
+                      </div>
+                    </ng-container>
+                    <li class="list-group-item list-group-item-primary" *ngFor="let item of pantallas">{{ item.pant_Descripcion }}</li>
                   </ul>
                 </div>
               </div>
             </div>
-          
-          </div>
-          <br>
-          <div class="row">
-              <div class="col-sm-3"></div>
-              <div class="col-sm-6">
-                  <div class="d-flex justify-content-center">
-                      <button type="button" class="btn btn-primary mt-3 me-3" (click)="Regresar()">
-                          <i class="feather icon-arrow-left"></i>Regresar
-                      </button>
-                      <button type="button" class="btn btn-primary mt-3" (click)="Guardar()">
-                          <i class="feather icon-save"></i>Guardar
-                      </button>
-                  </div>
+            <div class="col-6">
+              <label>Pantallas elegidas</label>
+              <div class="form-group mt-3 custom-border">
+                <div class="col">
+                  <ul class="list-group scrollable-list" [sortablejs]="pantallas1" [sortablejsOptions]="sharedOptions">
+                    <ng-container *ngIf="pantallas1.length === 0">
+                      <div class="placeholder">Arrastre una pantalla</div>
+                    </ng-container>
+                    <li class="list-group-item list-group-item-primary" *ngFor="let item1 of pantallas1">{{ item1.pant_Descripcion }}</li>
+                  </ul>
+                </div>
               </div>
+            </div>
           </div>
-      </div>       
+        </div>
+
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6">
+          <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-primary mt-3 me-3" (click)="Regresar()">
+              <i class="feather icon-arrow-left"></i>Regresar
+            </button>
+            <button type="button" class="btn btn-primary mt-3" (click)="Guardar()">
+              <i class="feather icon-save"></i>Guardar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
-
-
-
-
-
