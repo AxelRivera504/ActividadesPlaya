@@ -22,11 +22,11 @@
               <td>{{ item.role_ID }}</td>
               <td>{{ item.role_Descripcion }}</td>
               <td>
-                <button type="button" (click)="Editar(item)" class="btn btn-warning">
+                <button type="button" (click)="Editar(item)" class="btn btn-warning" >
                   <i class="feather icon-edit"></i>
                 </button>
                 |
-                <button type="button" class="btn btn-info">
+                <button type="button" class="btn btn-info" (click)="Detalles(item)"> 
                   <i class="feather icon-list"></i>
                 </button>
                 |

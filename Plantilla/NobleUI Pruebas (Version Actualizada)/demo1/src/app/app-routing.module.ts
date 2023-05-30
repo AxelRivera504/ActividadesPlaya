@@ -72,6 +72,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/clientes/detailscli/detailscli.module').then(m => m.DetailscliModule)
       },
       {
+        path: 'DetallesRoles',
+        loadChildren: () => import('./views/pages/roles/DetailsRoles/roles.details.modeule').then(m => m.RolesDetallesModule)
+      },
+      {
         path: 'editar-clientes',
         loadChildren: () => import('./views/pages/clientes/editar-clientes/editar-clientes.module').then(m => m.EditarClientesModule)
       },

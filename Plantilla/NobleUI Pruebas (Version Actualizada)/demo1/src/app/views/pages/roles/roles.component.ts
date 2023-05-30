@@ -86,4 +86,12 @@ export class RolesComponent implements OnInit {
   obtenerPantallasPorRol(roleID: number) {
     return this.service.obtenerPantallasPorRol(roleID);
   }
+
+  Detalles(roles: roles){
+    localStorage.setItem('roles', JSON.stringify(roles));
+    this.router.navigate(["/DetallesRoles"])
+  }
+
+
+
 }
