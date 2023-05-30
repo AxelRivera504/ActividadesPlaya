@@ -60,7 +60,7 @@ export class RolesComponent implements OnInit {
     this.modalRef.result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result;
     }).catch((res) => {});
-    localStorage.setItem("clie_Id",id.toString())
+    localStorage.setItem("role_ID",id.toString())
   }
   
   crear() {
@@ -109,7 +109,7 @@ export class RolesComponent implements OnInit {
   
   
   Eliminar( ){
-    const role_Id : number | undefined = isNaN(parseInt(localStorage.getItem("usua_ID") ?? '', 0)) ? undefined: parseInt(localStorage.getItem("usua_ID") ?? '', 0);
+    const role_Id : number | undefined = isNaN(parseInt(localStorage.getItem("role_ID") ?? '', 0)) ? undefined: parseInt(localStorage.getItem("role_ID") ?? '', 0);
     
     console.log(this.roles)
     if (role_Id !== undefined) {
@@ -125,7 +125,7 @@ export class RolesComponent implements OnInit {
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2000,
         timerProgressBar: true,
         title: '¡Roles eliminado con éxito!',
         icon: 'success'
@@ -138,17 +138,24 @@ export class RolesComponent implements OnInit {
 
       }, 0.5);
     }
-    else if(data.data.codeStatus == 1)
+    else if(data.data.codeStatus == 2)
      {
       Swal.fire({
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2000,
         timerProgressBar: true,
         title: '¡El rol que quiere eliminar esta en uso!',
         icon: 'error'
       })
+      this.modalService.dismissAll()
+      setTimeout(() => {
+        this.service.getRoles().subscribe(data => {
+          this.roles = data;
+        });
+
+      }, 0.5);
      }
 
 
