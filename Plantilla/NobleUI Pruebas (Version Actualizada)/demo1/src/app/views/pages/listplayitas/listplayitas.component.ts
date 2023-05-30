@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
   templateUrl: './listplayitas.component.html',
   styleUrls: ['./listplayitas.component.scss']
 })
-export class ListplayitasComponent implements OnInit, AfterViewInit {
+export class ListplayitasComponent implements OnInit{
   playas!: playas[];
 
   @ViewChild('myTable', { static: false }) table!: ElementRef;
@@ -34,23 +34,4 @@ export class ListplayitasComponent implements OnInit, AfterViewInit {
     };
   }
 
-  ngAfterViewInit(): void {
-    // No es necesario inicializar DataTable aquí
-  }
-
-  private initializeDataTable(): void {
-    const dataTableOptions = {
-      searchable: true, // Habilitar la barra de búsqueda
-      paging: true, // Habilitar la paginación
-      perPage: 10,
-      labels:{
-        placeholder: "Buscar...",
-        info: "Mostrando {start} de {end} de {rows} entradas",
-        noRows: "No encuentra resutados",
-        perPage: "{select} entradas por pagina",
-        noResults: "No hay coincidencias",
-      }
-    };
-
-  }
 }
