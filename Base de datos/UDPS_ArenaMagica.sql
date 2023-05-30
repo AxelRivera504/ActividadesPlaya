@@ -1027,17 +1027,40 @@ GO
 	--******************* ********************************  UDP Y VISTA Reservaciones  *************************************************************************--
 	/*Vista Reservaciones*/
 	GO
-	CREATE OR ALTER VIEW Acti.VW_tbReservaciones
+	CREATE OR ALTER VIEW  Acti.VW_tbReservaciones
 	AS
-	SELECT rese_Id, rese_Cantidad, 
-	rese.acti_Id,acti.acti_Nombre, rese_Estado, 
-	rese_UsuarioCreador,[UsuarioCreador].usua_Usuario AS rese_UsuarioCreador_Nombre, rese_FechaCreacion, 
-	rese_UsuarioModificador,[UsuarioModificador].usua_Usuario AS rese_UsuarioModificador_Nombre, rese_FechaModificacion
+	SELECT	rese.rese_Id,
+			rese.rese_Cantidad, 
+			rese.acti_Id,acti.acti_Nombre,
+			rese.rese_Estado, 
+			rese.rese_UsuarioCreador,
+			[UsuarioCreador].usua_Usuario AS rese_UsuarioCreador_Nombre,
+			rese_FechaCreacion, 
+			rese_UsuarioModificador,
+			[UsuarioModificador].usua_Usuario AS rese_UsuarioModificador_Nombre,
+			rese_FechaModificacion,
+			tbcl.clie_Nombres
 	FROM Acti.tbReservaciones rese INNER JOIN Acti.tbActividades acti
 	ON rese.acti_Id = acti.acti_Id  INNER JOIN Acce.tbUsuarios [UsuarioCreador]
 	ON rese.rese_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
-	ON rese.rese_UsuarioModificador = [UsuarioModificador].usua_ID
-	WHERE rese_Estado = 1
+	ON rese.rese_UsuarioModificador = [UsuarioModificador].usua_ID INNER JOIN Acti.tbFactura fact
+	ON	rese.rese_Id = fact.rese_Id INNER JOIN Acti.tbClienteXReservacion clier
+	ON	rese.rese_Id = clier.rese_Id INNER JOIN Acti.tbClientes tbcl
+	ON	clier.clie_Id = tbcl.clie_id	
+	WHERE rese_Id in (select top 1 t1.rese_Id from tbClienteXReservacion t1 order by rese_Id desc)
+
+
+
+
+
+
+SELECT DISTINCT t1.clie_Id, t1.rese_Id
+FROM Acti.tbClienteXReservacion t1
+INNER JOIN Acti.tbClientes t2 ON t1.clie_Id = t2.clie_id;
+
+
+	select * from Acti.tbClienteXReservacion
+
 
 	/*Vista Reservaciones UDP*/
 	GO
@@ -1046,6 +1069,14 @@ GO
 	BEGIN
 		SELECT * FROM Acti.VW_tbReservaciones
 	END
+
+
+	SELECT t1.rese_Id,
+			t3.
+	FROM  Acti.tbClienteXReservacion t1 INNER JOIN Acti.tbReservaciones t2
+	ON		t1.rese_Id = t2.rese_Id INNER JOIN Acti.tbClientes t3
+	ON		t1.clie_Id = t3.clie_id
+	
 
 	/*Reservaciones Insert*/
 	GO
