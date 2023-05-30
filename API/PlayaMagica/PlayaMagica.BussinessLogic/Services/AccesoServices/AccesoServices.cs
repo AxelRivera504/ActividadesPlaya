@@ -148,12 +148,12 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             }
         }
 
-        public ServiceResult BorrarRoles(int id)
+        public ServiceResult BorrarRoles(tbRoles item)
         {
             var result = new ServiceResult();
             try
             {
-                var delete = _rolesRepository.Delete(id);
+                var delete = _rolesRepository.Delete(item);
                 return result.Ok(delete);
 
             }

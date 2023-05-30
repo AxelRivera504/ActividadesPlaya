@@ -263,6 +263,10 @@ export class ServicesService {
   deleteUsuarios(usuarios : usuarios ) {
     return this.http.post<usuarios[]>(this.Url + "/Usuario/Usuario/Delete",usuarios);
   }
+  
+  deleteRoles(roles : roles ) {
+    return this.http.post<roles[]>(this.Url + "/Roles/Delete",roles);
+  }
 
   getEncargadosddl(){
     return this.http.get<Encargados[]>(this.Url + "/Encargados/ListarEncargadosddl");

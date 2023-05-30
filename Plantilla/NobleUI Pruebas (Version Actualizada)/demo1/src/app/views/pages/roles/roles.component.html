@@ -30,7 +30,7 @@
                   <i class="feather icon-list"></i>
                 </button>
                 |
-                <button type="button" class="btn btn-danger">
+                <button type="button" class="btn btn-danger" (click)="openBasicModal1(basicModal2,item.role_ID)"   >
                   <i class="feather icon-trash"></i>
                 </button>
                 |
@@ -67,3 +67,19 @@
     </div>
   </div>
 </div>
+
+<ng-template #basicModal2 let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Eliminar Roles</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    
+              <h4> ¿Desea eliminar este rol?</h4>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="Eliminar()">Eliminar</button>
+  </div>
+</ng-template>
+
