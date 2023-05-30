@@ -12,6 +12,6 @@ export class FactuList {
       play_Playa!:String;
       muni_Descripcion!:String;
       dept_Descripcion!:String
-      NombreCompleto!:String;
+      nombreCompleto!:String;
       dire_DireccionExacta!:String;
 }

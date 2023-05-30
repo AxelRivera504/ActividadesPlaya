@@ -199,7 +199,7 @@ export class ReservacionesComponent implements OnInit {
       doc.setFont('Pacifico', 'normal');
       doc.text(
         '¡Gracias por preferirnos para sus actividades playeras',
-        50,
+        60,
         doc.internal.pageSize.height - 10
       );
   
@@ -207,7 +207,7 @@ export class ReservacionesComponent implements OnInit {
       doc.setFont('Pacifico', 'normal');
       doc.text(
         '¡Playa mágica les desea lo mejor en sus actividades playeras aventureros!',
-        35,
+        45,
         doc.internal.pageSize.height - 20
       );
     };
@@ -242,7 +242,7 @@ export class ReservacionesComponent implements OnInit {
 
           doc.setFontSize(12); 
           doc.setFont("Pacifico", "normal");
-          doc.text("Empleado:"+ data.NombreCompleto , 5, 66);
+          doc.text("Empleado:"+ data.nombreCompleto , 5, 66);
 
           doc.setDrawColor(0, 0, 0);
           doc.setLineWidth(0.5);
@@ -420,6 +420,10 @@ export class ReservacionesComponent implements OnInit {
       })
     }
   })
+  }
+
+  ConfirmarFact(){
+    this.wizardForm.goToNextStep();
   }
 
   selectActivity(activity: Actividades) {
@@ -884,7 +888,7 @@ export class ReservacionesComponent implements OnInit {
       showConfirmButton: false,
       timer: 3000,
       timerProgressBar: true,
-      title: '!FUNCIONA BRO, POR FIN!!!!',
+      title: 'ESDRA THE BEST LA QUEREMOS ♥ ❣ ❤ ❥ ღ',
       icon: 'success'
     }) 
     this.router.navigate(['dashboard']);    
