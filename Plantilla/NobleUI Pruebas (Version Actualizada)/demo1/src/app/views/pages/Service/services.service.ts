@@ -260,8 +260,8 @@ export class ServicesService {
     return this.http.post<usuarios[]>(this.Url + "/Usuario/Actualizar", usuarios);
   }
      
-  deleteUsuarios(id: string) {
-    return this.http.delete<usuarios[]>(`${this.Url}/Usuario/Usuario/Delete/${id}`);
+  deleteUsuarios(usuarios : usuarios ) {
+    return this.http.post<usuarios[]>(this.Url + "/Usuario/Usuario/Delete",usuarios);
   }
 
   getEncargadosddl(){

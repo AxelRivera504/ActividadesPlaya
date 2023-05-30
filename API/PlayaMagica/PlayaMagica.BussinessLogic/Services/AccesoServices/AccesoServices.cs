@@ -83,28 +83,18 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             }
         }
 
-        public ServiceResult BorrarUsuarios(int id)
+        public ServiceResult BorrarUsuarios(tbUsuarios item)
         {
             var result = new ServiceResult();
             try
             {
-                var delete = _usuariosRepository.Delete(id);
-                if (delete.CodeStatus == 1)
-                {
-                    return result.Ok(delete.MessageStatus);
-                }
-                else if (delete.MessageStatus == "Registro inexistente")
-                {
-                    return result.Conflict(delete.MessageStatus);
-                }
-                else
-                {
-                    return result.BadRequest(delete.MessageStatus);
-                }
+                var delete = _usuariosRepository.Delete(item);                
+                return result.Ok(delete);
+              
             }
             catch (Exception e)
             {
-                return null;
+                return result.Error(e.Message);
             }
 
         }

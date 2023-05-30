@@ -70,7 +70,7 @@ export class CreateComponent implements OnInit {
 
   Guardar() {
     var x = true;
-    if (this.roles.role_Descripcion == undefined || this.roles.role_Descripcion == "") {
+    if  (this.roles.role_Descripcion == undefined || this.roles.role_Descripcion == "" || this.pantallas1.length === 0) {
       x = false;
     }
     if (x) {
@@ -121,6 +121,19 @@ export class CreateComponent implements OnInit {
         timer: 1500,
         timerProgressBar: true,
         title: '¡Rellene los campos!',
+        icon: 'warning'
+      });
+    }
+
+    if(this.pantallas1.length === 0)
+    {
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        title: '¡Seleccione al menos una pantalla!',
         icon: 'warning'
       });
     }

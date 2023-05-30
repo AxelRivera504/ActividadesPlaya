@@ -1,3 +1,4 @@
+
 CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Update
 @usua_ID INT,
 @enca_ID INT,
@@ -29,7 +30,6 @@ GO
 CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Insert
 @usua_Usuario NVARCHAR(100),
 @usua_Clave VARCHAR(MAX),
-@usua_EsAdmin INT,
 @enca_ID INT,
 @role_ID INT,
 @usua_UsuarioCreador INT
@@ -40,12 +40,12 @@ BEGIN
 			BEGIN
 				DECLARE @contraEncriptada NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Clave);
 				INSERT INTO Acce.tbUsuarios(usua_Usuario, usua_Clave, 
-				usua_EsAdmin, enca_ID, 
+				 enca_ID, 
 				role_ID, usua_Estado, 
 				usua_UsuarioCreador, usua_FechaCreacion, 
 				usua_UsuarioModificador, usua_FechaModificacion)
 				VALUES(@usua_Usuario,@contraEncriptada,
-				@usua_EsAdmin,@enca_ID,
+			   @enca_ID,
 				@role_ID,1,@usua_UsuarioCreador,
 				GETDATE(),NULL,NULL)
 				SELECT 1
@@ -151,3 +151,18 @@ BEGIN
 	END CATCH
 END
 
+CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Delete 
+@usua_ID INT
+AS
+BEGIN
+	BEGIN TRY
+		Update Acce.tbUsuarios
+		SET usua_Estado = 0
+		WHERE usua_ID = @usua_ID
+		SELECT 1
+	END TRY
+
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END

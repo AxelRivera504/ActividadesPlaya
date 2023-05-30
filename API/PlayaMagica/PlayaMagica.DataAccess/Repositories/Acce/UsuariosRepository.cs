@@ -12,16 +12,21 @@ namespace PlayaMagica.DataAccess.Repositories.Acce
 {
     public class UsuariosRepository : IRepository<tbUsuarios, VW_tbUsuarios>
     {
-        public RequestStatus Delete(int id)
+        public RequestStatus Delete(tbUsuarios item)
         {
             RequestStatus result = new RequestStatus();
             using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
             var parametros = new DynamicParameters();
 
-            parametros.Add("@usua_id",id, DbType.Int32, ParameterDirection.Input);
-            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_tbRoles_Delete, parametros, commandType: CommandType.StoredProcedure);
-            result.MessageStatus = answer;
+            parametros.Add("@usua_id",item.usua_ID, DbType.Int32, ParameterDirection.Input);
+            var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbUsuarios_Delete, parametros, commandType: CommandType.StoredProcedure);
+            result.CodeStatus = answer;
             return result;
+        }
+
+        public RequestStatus Delete(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public VW_tbUsuarios Find(int id)

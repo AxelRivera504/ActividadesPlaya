@@ -49,11 +49,12 @@ namespace PlayaMagica.Controllers
             return Ok(Result);
         }
 
-        [HttpPost("Usuario/Delete/{id}")]
-        public IActionResult Delete(int id)
+        [HttpPost("Usuario/Delete")]
+        public IActionResult Delete(UsuariosViewModel item)
         {
-            var listado = _accesoServices.BorrarUsuarios(id);
-            return Ok(listado);
+            var listado = _mapper.Map<tbUsuarios>(item);
+            var result = _accesoServices.BorrarUsuarios(listado);
+            return Ok(result);
         }
 
         [HttpPost("ValidarLogin")]
