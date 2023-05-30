@@ -20,6 +20,7 @@ import 'jspdf-autotable';
 import { Encargados } from '../Model/Encargados';
 import jsPDF from 'jspdf';
 import { FactuList } from '../Model/ListaFactura';
+import { ReportData } from '../Model/ReportData';
 const fillJustifyNav = {
   htmlCode: 
 `<ul ngbNav #fillJustifyNav="ngbNav" class="nav-tabs nav-fill">
@@ -156,6 +157,8 @@ export class ReservacionesComponent implements OnInit {
    public isChecked2: boolean = false;
    isSelectionBlocked = false;
    fact_Id!: number;
+   InfoFact!:[];
+   clientesFac: Cliente = new Cliente()
   constructor(private calendar: NgbCalendar,public formBuilder: UntypedFormBuilder,private router: Router, private service: ServicesService, private config: NgSelectConfig,private modalService: NgbModal) { 
    
     this.form = new FormGroup({
@@ -170,56 +173,160 @@ export class ReservacionesComponent implements OnInit {
   
   generatePDF(): void {
     const doc = new jsPDF();
-    const header = ['Id', 'Nombre Completo', 'Sexo', 'Estado Civil'];
-    const tableData: any[] = [];
-    setTimeout(()=>{
-      console.log(this.fact_Id)
-      console.log(localStorage.getItem('idF')!.toString())
-      this.service.getFactura(parseInt(localStorage.getItem('idF')!.toString())).subscribe(
-        (response: any) => {
-          console.log(response); // Verificar la respuesta en la consola
-            const data = response; // Obtener los datos de los empleados
-            data.forEach((factura: FactuList) => {
-              const rowData: any[] = [
-                factura.fuct_Id,
-                factura.acti_Nombre,
-                factura.acti_Precio,
-                factura.dept_Descripcion,
-                factura.fuct_Subtotal,
-                factura.fuct_Total,
-                factura.fuct_Isv,
-                factura.muni_Descripcion,
-                factura.rese_Cantidad,
-                factura.rese_FechaReservacion,
-                factura.play_Playa
-              ];
-    
-              tableData.push(rowData);
-            });
-    
-            // Agregar el título "Listado de Empleados"
-            doc.setFontSize(18);
-            doc.text('Listado de Empleados', 14, 22);
-    
-            // Generar la tabla usando autoTable
-            (doc as any).autoTable({
-              head: [header],
-              body: tableData,
-              margin: { top: 30, bottom: 20 }
-            });
-    
-            // Mostrar el PDF en el visor
-            const pdfDataUri = doc.output('datauristring');
-            this.pdfViewer.nativeElement.src = pdfDataUri;
+    const header = function (doc: any) {
+      doc.setFontSize(18);
+      const pageWidth = doc.internal.pageSize.width;
+      doc.setTextColor(40);
+  
+      // Agregar imagen
+      doc.addImage(
+        'https://i.ibb.co/ZddkzHw/Green-Yellow-Abstract-Summers-Island-Logo-1.png',
+        'png',
+        pageWidth - 70,
+        -15,
+        80,
+        80
+      );
+  
+      // Agregar texto
+      doc.setFontSize(30);
+      doc.setFont('Pacifico', 'normal');
+      doc.text('FACTURA', 10, 30);
+    };
+  
+    const footer = function (doc: any) {
+      doc.setFontSize(12);
+      doc.setFont('Pacifico', 'normal');
+      doc.text(
+        '¡Gracias por preferirnos para sus actividades playeras',
+        50,
+        doc.internal.pageSize.height - 10
+      );
+  
+      doc.setFontSize(12);
+      doc.setFont('Pacifico', 'normal');
+      doc.text(
+        '¡Playa mágica les desea lo mejor en sus actividades playeras aventureros!',
+        35,
+        doc.internal.pageSize.height - 20
+      );
+    };
+  
+    console.log(this.fact_Id);
+    console.log(localStorage.getItem('idF')!.toString());
+    console.log(this.selectedPeople);
+    console.log(localStorage.getItem('array'))
+    const arrayFromLocalStorage = JSON.parse(localStorage.getItem('array')!);
+    const arrayFromLocalStorage1 = localStorage.getItem('array');
+    console.log(arrayFromLocalStorage); 
+    this.service
+      .getFactura(parseInt(localStorage.getItem('idF')!.toString()))
+      .subscribe(
+        (response: FactuList[]) => {
+          const data: FactuList = response[0];
+          doc.setFontSize(18);
+          const pageWidth = doc.internal.pageSize.width;
+          doc.setTextColor(40);
+          doc.setTextColor(40);
+          doc.setDrawColor(0, 0, 0);
+          doc.setLineWidth(0.5);
+          // Agregar datos de la factura
+          doc.setFontSize(12);
+          doc.setFontSize(13); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Factura Nº: " + data.fuct_Id, 5, 54);
+
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Dirección empresa: San Pedro sula, Barrio san juan, a saber donde", 5, 60);
+
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Empleado:"+ data.NombreCompleto , 5, 66);
+
+          doc.setDrawColor(0, 0, 0);
+          doc.setLineWidth(0.5);
+
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Actividad-: "+ data.acti_Nombre , 5, 72);
+
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Precio actividad:"+data.acti_Precio , 100, 72);
+          
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal"); 
+         doc.text("Lugar de la actividad:", + 5, 78);
+
+         doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal"); 
+         doc.text("Departamento:"+data.dept_Descripcion ,5, 84);
+         
+         doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal"); 
+         doc.text("Municipio:"+data.muni_Descripcion ,5, 90);
+
+         doc.setFontSize(12); 
+         doc.setFont("Pacifico", "normal"); 
+         doc.text("Dirección exacta:"+data.dire_DireccionExacta ,5, 96);
+         
+         doc.setFontSize(12); 
+         doc.setFont("Pacifico", "normal"); 
+         doc.text("Playa:"+data.play_Playa ,5, 102);
+
+          doc.setFontSize(12);
+          doc.text(`Fecha de Reservación: ${data.rese_FechaReservacion}`, 5, 108);
+          doc.setFontSize(12);
+          // Agregar más datos según sea necesario
+  
+          // Llamar a las funciones de encabezado y pie de página
+          header(doc);
+          footer(doc);
+          
+          
+          (doc as any).autoTable({
+            head: [['ID', 'Nombres', 'Apellidos', 'DNI', 'Email']],
+            body: arrayFromLocalStorage!.map((cliente: Cliente) => [
+              cliente.clie_id,
+              cliente.clie_Nombres,
+              cliente.clie_Apellidos,
+              cliente.clie_DNI,
+              cliente.clie_Email,
+            ]),           
+            startY: 140,
+            margin: { top: 10 },
+          });
+
+          (doc as any).autoTable({
+            body: [
+              ['SubTotal:', data.fuct_Subtotal],
+              ['IVA:', data.fuct_Isv],
+              ['TOTAL:', data.fuct_Total]
+            ],
+            startY: (doc as any).autoTable.previous.finalY + 1,
+            margin: { top: 150, right: 15, bottom: 20, left: 115 },
+            styles: {
+              cellWidth: 'wrap',
+              cellPadding: 2,
+              fontSize: 10
+            },
+            columnStyles: {
+              1: { cellWidth: 25 } // Elige el valor que necesites
+            }
+          });
+         
+  
+          // Mostrar el PDF en el visor
+          const pdfDataUri = doc.output('datauristring');
+          this.pdfViewer.nativeElement.src = pdfDataUri;
         },
         (error: any) => {
           this.errorMessage = 'Se produjo un error al obtener los datos de los empleados.';
           console.error(error);
         }
       );
-    },1000)
   }
-  
 
 
   get minDate(): NgbDate {
@@ -603,6 +710,8 @@ export class ReservacionesComponent implements OnInit {
                       this.clienReser.rese_Id  = data.data.codeStatus;
                       console.log( this.clienReser.rese_Id );
                       console.log("ya existe")
+                      const selectedPeopleString = JSON.stringify(this.selectedPeople);
+                    localStorage.setItem('array', selectedPeopleString);
                       for(var i = 0 ; i <= this.selectedPeople.length ; i++){
                           this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;  
                           this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
@@ -681,6 +790,8 @@ export class ReservacionesComponent implements OnInit {
                       }
                       this.clienReser.rese_Id  = data.data.codeStatus;
                       console.log("No existe")
+                      const selectedPeopleString = JSON.stringify(this.selectedPeople);
+                    localStorage.setItem('array', selectedPeopleString);
                       for(var i = 0 ; i <= this.selectedPeople.length ; i++){
                           this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;  
                           this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
