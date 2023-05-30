@@ -55,19 +55,19 @@ export class UsuariosComponent implements OnInit {
   openBasicModal1(content: TemplateRef<any>, usuarios: usuarios) {
     this.UsuariosEdit = {...usuarios} ;
     this.modalRef = this.modalService.open(content, {});
+    this.UsuariosEdit.enca_ID = usuarios.enca_ID;
     this.modalRef.result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result;
     }).catch((res) => {});
   }
 
   openBasicModal2(content: TemplateRef<any>, id: string) {
-    this.UsuarioId = id ;
     this.modalRef = this.modalService.open(content, {});
     this.modalRef.result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result;
     }).catch((res) => {});
+    localStorage.setItem("usua_ID",id.toString())
   }
-   
 
   ngOnInit(): void {
     this.service.getUsuarios().subscribe(data => {
@@ -82,7 +82,7 @@ export class UsuariosComponent implements OnInit {
       }
     };
     
-    this.service.getEncargadosddl().subscribe(data => {
+    this.service.getEncargados().subscribe(data => {
       console.log(data);
       this.encargados = data;
     });
@@ -269,28 +269,43 @@ export class UsuariosComponent implements OnInit {
     }
     }
 
-   Eliminar(){
-    console.log(this.UsuarioId)
-    this.service.deleteUsuarios(this.UsuarioId)
-   }
- 
- 
+   Eliminar( ){
+    const usua_id : number | undefined = isNaN(parseInt(localStorage.getItem("usua_ID") ?? '', 0)) ? undefined: parseInt(localStorage.getItem("usua_ID") ?? '', 0);
+    
+    console.log(this.UsuariosEdit)
+    if (usua_id !== undefined) {
+      this.UsuariosEdit.usua_ID = usua_id.toString();
+    }
+   
+    this.service.deleteUsuarios(this.UsuariosEdit).subscribe((data: any) => {
+    console.log(data);
+    console.log(data.data.codeStatus)
+    if (data.data.codeStatus == 1) {
+      console.log(data.data.codeStatus)
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        title: '¡Usuario eliminado con éxito!',
+        icon: 'success'
+      });
+      this.modalService.dismissAll()
+      setTimeout(() => {
+        this.service.getUsuarios().subscribe(data => {
+          this.usuarios = data;
+        });
+
+      }, 0.5);
+    }
+  });
+  
+}
    Detalles(usuarios: usuarios){
     localStorage.setItem('usuario', JSON.stringify(usuarios));
-    this.router.navigate(["/detalles"])
+    this.router.navigate(["/Detalles"])
   }
-
- 
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
  }
 
 

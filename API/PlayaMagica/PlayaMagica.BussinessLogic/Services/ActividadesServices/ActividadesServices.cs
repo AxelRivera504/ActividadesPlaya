@@ -582,6 +582,18 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
         }
 
+        public IEnumerable<tbFactura> ListarFactura(int id)
+        {
+            try
+            {
+                return _facturaRepository.ListarFactura(id);
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<tbFactura>();
+            }
+        }
+
         #endregion
 
         #region EncargadosXActividades

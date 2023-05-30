@@ -24,6 +24,7 @@ import { roles } from '../Model/roles';
 import { pantallas } from '../Model/pantallas';
 import { usuarios } from '../Model/Usuarios';
 import { EncargadosXActividad } from '../Model/EncargadosXActividad';
+import { FactuList } from '../Model/FactuList';
 
 @Injectable({
   providedIn: 'root'
@@ -220,6 +221,35 @@ export class ServicesService {
   InsertarFactura(factura:Factura){
     return this.http.post<Factura[]>(this.Url + "/Factura/InsertarFactura",factura)
   }
+  
+  obtenerPantallas() {
+    return this.http.get<pantallas[]>(this.Url + "/Pantallas/Pantallas");
+  }
+  
+  getUsuarios(){
+    return this.http.get<usuarios[]>(this.Url + "/Usuario/Usuarios");
+  }
+ 
+  getEncargadosddl(){
+    return this.http.get<Encargados[]>(this.Url + "/Encargados/ListarEncargadosddl");
+  }
+
+  getEncargadosXActividad(id: number){
+    return this.http.get<Encargados[]>(this.Url + "/Encargados/EncargadosXActividad?id=" + id);
+  }
+
+
+  createEncargadosXActividad(EncargadosXActividad: EncargadosXActividad){
+    return this.http.post<EncargadosXActividad[]>(this.Url + "/EncargadosXActividades/Insert", EncargadosXActividad);
+  }
+
+  deleteEncargadosXActividad(EncargadosXActividad: EncargadosXActividad){
+    return this.http.post<EncargadosXActividad[]>(this.Url + "/EncargadosXActividades/Delete", EncargadosXActividad);
+  }
+
+  getFactura(id: number){
+    return this.http.get<FactuList[]>(this.Url + "/Factura/ListarFactura" + id)
+  }
 
   getRoles(){
     return this.http.get<roles[]>(this.Url + "/Roles/ListarRoles");
@@ -236,12 +266,7 @@ export class ServicesService {
   obtenerPantallasPorRol(role_ID: number) {
     return this.http.get<RolesXpantallas[]>(this.Url + "/RolesPorPantalla/PantallasXroles" + role_ID);
   }
-
-  obtenerPantallas() {
-    return this.http.get<pantallas[]>(this.Url + "/Pantallas/Pantallas");
-  }
-  
-  updateRoles(Roles : roles){
+updateRoles(Roles : roles){
     return this.http.post<roles[]>(this.Url + "/Roles/Actualizar", Roles);
   }  
 
@@ -249,36 +274,20 @@ export class ServicesService {
     return this.http.post<RolesXpantallas[]>(this.Url + "/RolesPorPantalla/Eliminar", rolesXpantallas);
   }
 
-  getUsuarios(){
-    return this.http.get<usuarios[]>(this.Url + "/Usuario/Usuarios");
-  }
- 
-  createUsuarios(usuarios: usuarios){
+
+ createUsuarios(usuarios: usuarios){
     return this.http.post<usuarios[]>(this.Url + "/Usuario/Insertar", usuarios);
   }
   
   updateUsuarios(usuarios: usuarios){
-    return this.http.post<usuarios[]>(this.Url + "/Usuario/Insertar", usuarios);
+    return this.http.post<usuarios[]>(this.Url + "/Usuario/Actualizar", usuarios);
   }
      
-  deleteUsuarios(id: string) {
-    return this.http.delete<usuarios[]>(`${this.Url}/Usuario/Usuario/Delete/${id}`);
+  deleteUsuarios(usuarios : usuarios ) {
+    return this.http.post<usuarios[]>(this.Url + "/Usuario/Usuario/Delete",usuarios);
   }
-
-  getEncargadosddl(){
-    return this.http.get<Encargados[]>(this.Url + "/Encargados/ListarEncargadosddl");
-  }
-
-  getEncargadosXActividad(id: number){
-    return this.http.get<Encargados[]>(this.Url + "/Encargados/EncargadosXActividad?id=" + id);
-  }
-
-
-  createEncargadosXActividad(EncargadosXActividad: EncargadosXActividad){
-    return this.http.post<EncargadosXActividad[]>(this.Url + "/EncargadosXActividades/Insert", EncargadosXActividad);
-  }
-
-  deleteEncargadosXActividad(EncargadosXActividad: EncargadosXActividad){
-    return this.http.post<EncargadosXActividad[]>(this.Url + "/EncargadosXActividades/Delete", EncargadosXActividad);
+  
+  deleteRoles(roles : roles ) {
+    return this.http.post<roles[]>(this.Url + "/Roles/Delete",roles);
   }
 }

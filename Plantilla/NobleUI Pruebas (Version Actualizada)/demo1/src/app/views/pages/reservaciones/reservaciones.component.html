@@ -21,8 +21,10 @@
                     bindLabel="clie_NombreCompleto"
                     placeholder="Selecciona un cliente"
                     [(ngModel)]="selectedPeople"
-                    [ngClass]="{'is-invalid': isForm1Submitted && form1.firstName.errors}"
+                    [ngClass]="{'is-invalid': isForm1Submitted && validationForm1.controls.firstName.errors}"
                     formControlName="firstName"
+                    [readonly]="XD"
+                    [disabled]="XD"
                   >
                   </ng-select>
                   <div *ngIf="isForm1Submitted && form1.firstName.errors?.required" class="invalid-feedback">
@@ -30,19 +32,24 @@
                   </div>
                 </div>
                 <div class="col-sm-2">
-                  <button button type="button" class="btn btn-primary" (click)="CrearCliente()">
+                  <button button type="button" class="btn btn-primary" (click)="CrearCliente()" [disabled]="XD" >
                     <i class="feather icon-plus"></i>
                     Nuevo cliente
                   </button>
                 </div>
+                
               </div>
               <br>
               <br>                     
               <div class="d-flex justify-content-center mt-2">
-                <button button class="btn btn-primary" type="submit" id="btnContinueForm1" style="display:'';">
-                  Siguiente<i class="feather icon-arrow-right"></i>                
+                <button class="btn btn-primary" type="submit" id="btnContinueForm1">
+                  Siguiente <i class="feather icon-arrow-right"></i>
                 </button>
-              </div>              
+                <div class="custom-checkbox" id="ckXD" style="display: none;">
+                  <input type="checkbox" id="ck" (change)="toggleCheckbox()">
+                  <label for="ck">¿Desea editar los datos del cliente?</label>
+                </div>
+              </div>        
             </form>
             <div id="Cliente5" style="display: none;">
                 <div class="example">
@@ -165,22 +172,29 @@
               <div class="card-header text-center my-0">
                 <h3>Escoja la actividad que desea realizar</h3>              
               </div>
+              <br>
               <div class="row">
-                <div class="col-sm-8"></div>
-                <div class="col-sm-4">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-7">
+                  <div class="custom-checkbox" id="CKActi" style="display: none;">
+                    <input type="checkbox" id="CKActi" (change)="toggleCheckbox1()">
+                    <label for="ck">¿Desea cambiar de actividad?</label>
+                  </div>
+                </div>
+                <div class="col-sm-3">
                   <input type="text" class="form-control" [(ngModel)]="searchTerm" (keydown.enter)="search()" placeholder="Buscar">
                 </div>
               </div>
               <div class="card-body">
                 <div class="row">
                   <div *ngFor="let item of getFilteredActividades() | slice:(defaultPaginationCurrentPage-1)*itemsPerPage:defaultPaginationCurrentPage*itemsPerPage" class="col-sm-4 mb-3">
-                    <div class="card" [class.selected]="item.selected" (click)="selectActivity(item)">
+                    <div class="card" [class.selected]="item.selected" (click)="selectActivity(item)" [style.pointerEvents]="isSelectionBlocked ? 'none' : 'auto'" [class.disabled]="isSelectionBlocked">  
                       <img [src]="item.acti_ImgUrl" class="card-img-top custom-img" alt="...">
                       <div class="card-body">
                         <h5 class="card-title">Actividad: {{item.acti_Nombre}}</h5>
                         <p class="card-text mb-3">Cupo de la actividad: {{item.acti_Cupo}}</p>
                         <p class="card-text mb-3">Precio: {{item.acti_Precio}} LPS</p>
-                        <input type="radio" [checked]="item.selected" [name]="'actividad'" style="position: center;">
+                        <input type="radio" [checked]="item.selected" [name]="'actividad'" style="position: center;" >
                       </div>
                     </div>
                   </div>
@@ -197,7 +211,7 @@
               <div class="d-flex justify-content-center mt-2">
                 <button class="btn btn-secondary me-2" type="button" awPreviousStep>  <i class="feather icon-arrow-left"></i> Regresar</button>
                 <button class="btn btn-primary" type="button" (click)="Next2(basicModal)"> Siguiente <i class="feather icon-arrow-right"></i></button>
-              </div>
+              </div>             
             </div>
             </div>
           </aw-wizard-step>
@@ -238,8 +252,30 @@
               </div>
             </div>
             <div class="d-flex justify-content-center mt-2">
+              <button class="btn btn-secondary me-2" type="button" awPreviousStep>  <i class="feather icon-arrow-left"></i> Regresar</button>
               <button class="btn btn-success" type="button" (click)="ConfirmarFactura()"><i class="feather icon-check-circle"></i> Confirmar Reservación</button>
             </div>
+          </aw-wizard-step>
+
+          <aw-wizard-step stepTitle="Ver Factura">
+            <br>
+            <div class="card">
+              <div class="card-header text-center my-0">
+                <h3>Vea su Factura</h3>
+              </div>              
+                 <div class="card-body">
+                  <iframe #pdfViewer width="100%" height="800px"></iframe>
+                  <div *ngIf="errorMessage">
+                    <p>{{ errorMessage }}</p>
+                  </div>
+                 </div>
+            </div>
+            <div class="card-footer">
+              <div class="d-flex justify-content-center mt-2">
+                <button class="btn btn-success" type="button" (click)="ConfirmarFact()"><i class="feather icon-check-circle"></i> Finalizar</button>
+              </div>
+            </div>
+           
           </aw-wizard-step>
 
           <aw-wizard-step stepTitle="finish">

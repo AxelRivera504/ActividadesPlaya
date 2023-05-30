@@ -57,22 +57,13 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             try
             {
                 var insert = _usuariosRepository.Insert(item);
-                if (insert.CodeStatus == 1)
-                {
-                    return result.Ok(insert.MessageStatus);
-                }
-                else if (insert.CodeStatus == 2)
-                {
-                    return result.Conflict(insert.MessageStatus);
-                }
-                else
-                {
-                    return result.BadRequest(insert.MessageStatus);
-                }
+           
+                    return result.Ok(insert);
+               
             }
             catch (Exception e)
             {
-                return null;
+                return result.Error(e.Message);
             }
         }
 
@@ -82,43 +73,28 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             try
             {
                 var insert = _usuariosRepository.Update(item);
-                if (insert.CodeStatus == 1)
-                {
-                    return result.Ok(insert.MessageStatus);
-                }
-                else
-                {
-                    return result.BadRequest(insert.MessageStatus);
-                }
+               
+                    return result.Ok(insert);
+                
             }
             catch (Exception e)
             {
-                return null;
+                return result.Error(e.Message);
             }
         }
 
-        public ServiceResult BorrarUsuarios(int id)
+        public ServiceResult BorrarUsuarios(tbUsuarios item)
         {
             var result = new ServiceResult();
             try
             {
-                var delete = _usuariosRepository.Delete(id);
-                if (delete.CodeStatus == 1)
-                {
-                    return result.Ok(delete.MessageStatus);
-                }
-                else if (delete.MessageStatus == "Registro inexistente")
-                {
-                    return result.Conflict(delete.MessageStatus);
-                }
-                else
-                {
-                    return result.BadRequest(delete.MessageStatus);
-                }
+                var delete = _usuariosRepository.Delete(item);                
+                return result.Ok(delete);
+              
             }
             catch (Exception e)
             {
-                return null;
+                return result.Error(e.Message);
             }
 
         }
@@ -162,43 +138,28 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             try
             {
                 var insert = _rolesRepository.Update(item);
-                if (insert.CodeStatus == 1)
-                {
-                    return result.Ok(insert.MessageStatus);
-                }
-                else
-                {
-                    return result.BadRequest(insert.MessageStatus);
-                }
+
+                return result.Ok(insert);
+
             }
             catch (Exception e)
             {
-                return null;
+                return result.Error(e.Message);
             }
         }
 
-        public ServiceResult BorrarRoles(int id)
+        public ServiceResult BorrarRoles(tbRoles item)
         {
             var result = new ServiceResult();
             try
             {
-                var delete = _rolesRepository.Delete(id);
-                if (delete.CodeStatus == 1)
-                {
-                    return result.Ok(delete.MessageStatus);
-                }
-                else if (delete.MessageStatus == "Registro inexistente")
-                {
-                    return result.Conflict(delete.MessageStatus);
-                }
-                else
-                {
-                    return result.BadRequest(delete.MessageStatus);
-                }
+                var delete = _rolesRepository.Delete(item);
+                return result.Ok(delete);
+
             }
             catch (Exception e)
             {
-                return null;
+                return result.Error(e.Message);
             }
 
         }
@@ -220,26 +181,6 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             }
         }
 
-        public ServiceResult DeleteRolesXPantalla(tbRolesXPantallas item)
-        {
-            var result = new ServiceResult();
-            try
-            {
-                var insert = _rolesPorPantallaRepository.Delete(item);
-                if (insert.MessageStatus == "Registro eliminado exitosamente")
-                {
-                    return result.Ok(insert.MessageStatus);
-                }
-                else
-                {
-                    return result.BadRequest(insert.MessageStatus);
-                }
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
-        }
         public IEnumerable<tbRolesXPantallas> ListadoPantallas(int id)
         {
             try
@@ -252,6 +193,20 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             }
         }
 
+        public ServiceResult DeleteRolesXpantallas(tbRolesXPantallas item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var RolesXpant = _rolesPorPantallaRepository.DeleteRolesXPantallas(item);
+                return resultado.Ok(RolesXpant);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
 
 
         #endregion

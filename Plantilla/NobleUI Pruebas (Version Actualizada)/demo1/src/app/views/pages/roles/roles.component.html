@@ -3,7 +3,7 @@
     <div class="card-title text-center"><h3>Roles</h3></div>
     <div class="text-center">
       <button type="button" class="btn btn-primary" (click)="crear()">
-        <i class="feather icon-plus" ></i>
+        <i class="feather icon-plus"></i>
         Nuevo
       </button>
     </div>
@@ -19,18 +19,18 @@
         <tbody>
           <ng-container *ngFor="let item of roles; let i = index">
             <tr>
-              <td>{{item.role_ID}}</td>
-              <td>{{item.role_Descripcion}}</td>
+              <td>{{ item.role_ID }}</td>
+              <td>{{ item.role_Descripcion }}</td>
               <td>
-                <button type="button" class="btn btn-warning">
+                <button type="button" (click)="Editar(item)" class="btn btn-warning" >
                   <i class="feather icon-edit"></i>
                 </button>
                 |
-                <button type="button" class="btn btn-info">
+                <button type="button" class="btn btn-info" (click)="Detalles(item)"> 
                   <i class="feather icon-list"></i>
                 </button>
                 |
-                <button type="button" class="btn btn-danger">
+                <button type="button" class="btn btn-danger" (click)="openBasicModal1(basicModal2,item.role_ID)"   >
                   <i class="feather icon-trash"></i>
                 </button>
                 |
@@ -47,12 +47,12 @@
                       <table class="table table-striped table-bordered">
                         <thead>
                           <tr>
-                            <th>Descripción</th>
+                            <th>Pantallas</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let item of pantallas">
-                            <td>{{item.pant_Descripcion}}</td>
+                          <tr *ngFor="let pantalla of pantallas">
+                            <td>{{ pantalla.pant_Descripcion }}</td>
                           </tr>
                         </tbody>
                       </table>
@@ -67,3 +67,19 @@
     </div>
   </div>
 </div>
+
+<ng-template #basicModal2 let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Eliminar Roles</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    
+              <h4> ¿Desea eliminar este rol?</h4>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="Eliminar()">Eliminar</button>
+  </div>
+</ng-template>
+

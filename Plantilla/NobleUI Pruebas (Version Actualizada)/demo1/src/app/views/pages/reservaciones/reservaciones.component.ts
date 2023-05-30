@@ -16,6 +16,11 @@ import { ClienteXReservacion } from '../Model/ClienteXReservacion';
 import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { metodospago } from '../Model/metodospago';
 import { Factura } from '../Model/Factura';
+import 'jspdf-autotable';
+import { Encargados } from '../Model/Encargados';
+import jsPDF from 'jspdf';
+import { FactuList } from '../Model/FactuList'; 
+import { ReportData } from '../Model/ReportData';
 const fillJustifyNav = {
   htmlCode: 
 `<ul ngbNav #fillJustifyNav="ngbNav" class="nav-tabs nav-fill">
@@ -95,6 +100,9 @@ import { ActividadesXFecha } from '../Model/ActividadesXFecha';
   styleUrls: ['./reservaciones.component.scss']
 })
 export class ReservacionesComponent implements OnInit {
+  @ViewChild('pdfViewer') pdfViewer!: ElementRef;
+  errorMessage: string;
+
   selectedDateX: NgbDate | null;
 
   basicModalCloseResult: string = '';
@@ -143,6 +151,14 @@ export class ReservacionesComponent implements OnInit {
   itemsPerPage = 6;
   filteredActividades: any[] = [];
   searchTerm: string = '';
+
+   XD: boolean = false;
+   public isChecked: boolean = false;
+   public isChecked2: boolean = false;
+   isSelectionBlocked = false;
+   fact_Id!: number;
+   InfoFact!:[];
+   clientesFac: Cliente = new Cliente()
   constructor(private calendar: NgbCalendar,public formBuilder: UntypedFormBuilder,private router: Router, private service: ServicesService, private config: NgSelectConfig,private modalService: NgbModal) { 
    
     this.form = new FormGroup({
@@ -151,11 +167,174 @@ export class ReservacionesComponent implements OnInit {
     this.selectedDateX = null;
   }
 
+  toggleSelection(): void {
+    this.isSelectionBlocked = !this.isSelectionBlocked;
+  }
+  
+  generatePDF(): void {
+    const doc = new jsPDF();
+    const header = function (doc: any) {
+      doc.setFontSize(18);
+      const pageWidth = doc.internal.pageSize.width;
+      doc.setTextColor(40);
+  
+      // Agregar imagen
+      doc.addImage(
+        'https://i.ibb.co/ZddkzHw/Green-Yellow-Abstract-Summers-Island-Logo-1.png',
+        'png',
+        pageWidth - 70,
+        -15,
+        80,
+        80
+      );
+  
+      // Agregar texto
+      doc.setFontSize(30);
+      doc.setFont('Pacifico', 'normal');
+      doc.text('FACTURA', 10, 30);
+    };
+  
+    const footer = function (doc: any) {
+      doc.setFontSize(12);
+      doc.setFont('Pacifico', 'normal');
+      doc.text(
+        '¡Gracias por preferirnos para sus actividades playeras',
+        60,
+        doc.internal.pageSize.height - 10
+      );
+  
+      doc.setFontSize(12);
+      doc.setFont('Pacifico', 'normal');
+      doc.text(
+        '¡Playa mágica les desea lo mejor en sus actividades playeras aventureros!',
+        45,
+        doc.internal.pageSize.height - 20
+      );
+    };
+  
+    console.log(this.fact_Id);
+    console.log(localStorage.getItem('idF')!.toString());
+    console.log(this.selectedPeople);
+    console.log(localStorage.getItem('array'))
+    const arrayFromLocalStorage = JSON.parse(localStorage.getItem('array')!);
+    const arrayFromLocalStorage1 = localStorage.getItem('array');
+    console.log(arrayFromLocalStorage); 
+    this.service
+      .getFactura(parseInt(localStorage.getItem('idF')!.toString()))
+      .subscribe(
+        (response: FactuList[]) => {
+          const data: FactuList = response[0];
+          doc.setFontSize(18);
+          const pageWidth = doc.internal.pageSize.width;
+          doc.setTextColor(40);
+          doc.setTextColor(40);
+          doc.setDrawColor(0, 0, 0);
+          doc.setLineWidth(0.5);
+          // Agregar datos de la factura
+          doc.setFontSize(12);
+          doc.setFontSize(13); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Factura Nº: " + data.fuct_Id, 5, 54);
+
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Dirección empresa: San Pedro sula, Barrio san juan, a saber donde", 5, 60);
+
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Empleado:"+ data.nombreCompleto , 5, 66);
+
+          doc.setDrawColor(0, 0, 0);
+          doc.setLineWidth(0.5);
+
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Actividad-: "+ data.acti_Nombre , 5, 72);
+
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Precio actividad:"+data.acti_Precio , 100, 72);
+          
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal"); 
+         doc.text("Lugar de la actividad:", + 5, 78);
+
+         doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal"); 
+         doc.text("Departamento:"+data.dept_Descripcion ,5, 84);
+         
+         doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal"); 
+         doc.text("Municipio:"+data.muni_Descripcion ,5, 90);
+
+         doc.setFontSize(12); 
+         doc.setFont("Pacifico", "normal"); 
+         doc.text("Dirección exacta:"+data.dire_DireccionExacta ,5, 96);
+         
+         doc.setFontSize(12); 
+         doc.setFont("Pacifico", "normal"); 
+         doc.text("Playa:"+data.play_Playa ,5, 102);
+
+          doc.setFontSize(12);
+          doc.text(`Fecha de Reservación: ${data.rese_FechaReservacion}`, 5, 108);
+          doc.setFontSize(12);
+          // Agregar más datos según sea necesario
+  
+          // Llamar a las funciones de encabezado y pie de página
+          header(doc);
+          footer(doc);
+          
+          
+          (doc as any).autoTable({
+            head: [['ID', 'Nombres', 'Apellidos', 'DNI', 'Email']],
+            body: arrayFromLocalStorage!.map((cliente: Cliente) => [
+              cliente.clie_id,
+              cliente.clie_Nombres,
+              cliente.clie_Apellidos,
+              cliente.clie_DNI,
+              cliente.clie_Email,
+            ]),           
+            startY: 140,
+            margin: { top: 10 },
+          });
+
+          (doc as any).autoTable({
+            body: [
+              ['SubTotal:', data.fuct_Subtotal],
+              ['IVA:', data.fuct_Isv],
+              ['TOTAL:', data.fuct_Total]
+            ],
+            startY: (doc as any).autoTable.previous.finalY + 1,
+            margin: { top: 150, right: 15, bottom: 20, left: 115 },
+            styles: {
+              cellWidth: 'wrap',
+              cellPadding: 2,
+              fontSize: 10
+            },
+            columnStyles: {
+              1: { cellWidth: 25 } // Elige el valor que necesites
+            }
+          });
+         
+  
+          // Mostrar el PDF en el visor
+          const pdfDataUri = doc.output('datauristring');
+          this.pdfViewer.nativeElement.src = pdfDataUri;
+        },
+        (error: any) => {
+          this.errorMessage = 'Se produjo un error al obtener los datos de los empleados.';
+          console.error(error);
+        }
+      );
+  }
+
+
   get minDate(): NgbDate {
     const today = this.calendar.getToday();
     return new NgbDate(today.year, today.month, today.day);
   }
 
+  
   convertToDate(date: NgbDateStruct): Date {
     if (date) {
       return new Date(date.year, date.month - 1, date.day);
@@ -170,6 +349,14 @@ export class ReservacionesComponent implements OnInit {
 
       return new Date(); // Devuelve la fecha actual como valor predeterminado
     }
+  }
+
+  toggleCheckbox() {
+    this.XD = !this.XD;
+  }
+
+  toggleCheckbox1() {
+    this.toggleSelection()
   }
 
   search(): void {
@@ -205,7 +392,10 @@ export class ReservacionesComponent implements OnInit {
   }
   this.factu.mepa_id = parseInt(this.metodoSeleccionado.toString());
   this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
-    if(data.data.codeStatus == 1){
+    console.log(data.data.codeStatus)
+    this.fact_Id = data.data.codeStatus;
+    localStorage.setItem('idF',data.data.codeStatus)
+    if(data.data.codeStatus >= 1){
       Swal.fire({
         toast: true,
         position: 'top-end',
@@ -217,6 +407,7 @@ export class ReservacionesComponent implements OnInit {
       })
       this.wizardForm.goToNextStep();
       this.LimpiarTodo()
+      this.generatePDF();
     }else{
       Swal.fire({
         toast: true,
@@ -229,6 +420,10 @@ export class ReservacionesComponent implements OnInit {
       })
     }
   })
+  }
+
+  ConfirmarFact(){
+    this.wizardForm.goToNextStep();
   }
 
   selectActivity(activity: Actividades) {
@@ -413,13 +608,16 @@ export class ReservacionesComponent implements OnInit {
     }
   }
 
+  
 
   
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    this.LimpiarTodo()
     this.service.getMetodosPago().subscribe(data => {
       this.metodos = data;
     });
+
 
 
     this.defaultCardCode = defaultCard;
@@ -516,6 +714,8 @@ export class ReservacionesComponent implements OnInit {
                       this.clienReser.rese_Id  = data.data.codeStatus;
                       console.log( this.clienReser.rese_Id );
                       console.log("ya existe")
+                      const selectedPeopleString = JSON.stringify(this.selectedPeople);
+                    localStorage.setItem('array', selectedPeopleString);
                       for(var i = 0 ; i <= this.selectedPeople.length ; i++){
                           this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;  
                           this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
@@ -542,6 +742,10 @@ export class ReservacionesComponent implements OnInit {
                               }       
                               this.factu.rese_Id = idreser;            
                               console.log(this.factu.fuct_Total)
+                              this.toggleSelection()
+                              this.isChecked2 = true;
+                              const CKX1 = document.getElementById('CKActi');
+                              CKX1!.style.display = '';
                               this.modalService.dismissAll();
                               this.wizardForm.goToNextStep();
                             }
@@ -590,6 +794,8 @@ export class ReservacionesComponent implements OnInit {
                       }
                       this.clienReser.rese_Id  = data.data.codeStatus;
                       console.log("No existe")
+                      const selectedPeopleString = JSON.stringify(this.selectedPeople);
+                    localStorage.setItem('array', selectedPeopleString);
                       for(var i = 0 ; i <= this.selectedPeople.length ; i++){
                           this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;  
                           this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
@@ -616,6 +822,10 @@ export class ReservacionesComponent implements OnInit {
                               }       
                               this.factu.rese_Id = idreser;            
                               console.log(this.factu.fuct_Total)
+                              this.toggleSelection()
+                              this.isChecked2 = true;
+                              const CKX1 = document.getElementById('CKActi');
+                              CKX1!.style.display = '';
                               this.modalService.dismissAll();
                               this.wizardForm.goToNextStep();
                             }
@@ -660,6 +870,7 @@ export class ReservacionesComponent implements OnInit {
   }
 
   CancelarFecha(){
+    this.selectedDate1 = new  NgbDate(0,0,0)
     this.fechaValida = false;
     this.fechaFormatoValido = false;
     this.submittedDate = false;  
@@ -677,7 +888,7 @@ export class ReservacionesComponent implements OnInit {
       showConfirmButton: false,
       timer: 3000,
       timerProgressBar: true,
-      title: '!FUNCIONA BRO, POR FIN!!!!',
+      title: 'ESDRA THE BEST LA QUEREMOS ♥ ❣ ❤ ❥ ღ',
       icon: 'success'
     }) 
     this.router.navigate(['dashboard']);    
@@ -719,6 +930,10 @@ export class ReservacionesComponent implements OnInit {
   form1Submit() {
     if(this.validationForm1.valid) {
       this.wizardForm.goToNextStep();
+      this.XD = true
+      this.isChecked = true;
+      const CKX = document.getElementById('ckXD');
+      CKX!.style.display = '';
     }else{
       Swal.fire({
         toast: true,
@@ -733,6 +948,7 @@ export class ReservacionesComponent implements OnInit {
     }
     
   }
+
 
   /**
    * Go to next step while form value is valid

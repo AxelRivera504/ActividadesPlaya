@@ -49,11 +49,12 @@ namespace PlayaMagica.Controllers
             return Ok(Result);
         }
 
-        [HttpPost("Roles/Delete/{id}")]
-        public IActionResult Delete(int id)
+        [HttpPost("Delete")]
+        public IActionResult Delete(RolesViewModel item)
         {
-            var listado = _accesoServices.BorrarRoles(id);
-            return Ok(listado);
+            var listado = _mapper.Map<tbRoles>(item);
+            var result = _accesoServices.BorrarRoles(listado);
+            return Ok(result);
         }
 
     }

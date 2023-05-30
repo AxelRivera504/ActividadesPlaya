@@ -13,7 +13,7 @@ export class UsuariosDetallesComponent implements OnInit {
   constructor(private router:Router,) { }
 
   ngOnInit(): void {
-    const getUsuarios = localStorage.getItem('usuarios');
+    const getUsuarios = localStorage.getItem('usuario');
     if (getUsuarios) {
       this.usuarios = JSON.parse(getUsuarios);
       console.log(this.usuarios)

@@ -29,5 +29,12 @@ namespace PlayaMagica.Controllers
             var respuesta = _actividadesServices.InsertarFactura(facturas);
             return Ok(respuesta);
         }
+
+        [HttpGet("ListarFactura{id}")]
+        public IActionResult ListarFactura(int id)
+        {
+            var listado = _actividadesServices.ListarFactura(id);
+            return Ok(listado);
+        }
     }
 }

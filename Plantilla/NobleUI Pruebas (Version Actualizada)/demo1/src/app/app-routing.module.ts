@@ -192,6 +192,15 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/tables/tables.module').then(m => m.TablesModule)
       },
       {
+        path: 'DetallesRoles',
+        loadChildren: () => import('./views/pages/roles/DetailsRoles/roles.details.modeule').then(m => m.RolesDetallesModule)
+      },
+
+      {
+        path: 'EditarRoles',
+        loadChildren: () => import('./views/pages/roles/Edit/roles.Edit.module').then(m => m.RolesEditarModule)
+      },
+      {
         path: 'icons',
         loadChildren: () => import('./views/pages/icons/icons.module').then(m => m.IconsModule)
       },

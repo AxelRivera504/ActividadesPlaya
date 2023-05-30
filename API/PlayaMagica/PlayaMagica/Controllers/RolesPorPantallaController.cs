@@ -33,14 +33,6 @@ namespace PlayaMagica.Controllers
             return Ok(listado);
         }
 
-        [HttpPost("Eliminar")]
-        public IActionResult Eliminar(RolesPorPantallaViewModel item)
-        {
-            var listadoMapeado = _mapper.Map<tbRolesXPantallas>(item);
-            var listado = _accesoService.DeleteRolesXPantalla(listadoMapeado);
-            return Ok(listado);
-        }
-
         [HttpGet("PantallasXroles{id}")]
         public IActionResult listarPantallas(int id)
         {
@@ -49,7 +41,13 @@ namespace PlayaMagica.Controllers
             return Ok(listado);
         }
 
-
+        [HttpPost("Eliminar")]
+        public IActionResult DeleteRolesXpantallas(RolesPorPantallaViewModel item)
+        {
+            var roles = _mapper.Map<tbRolesXPantallas>(item);
+            var respuesta = _accesoService.DeleteRolesXpantallas(roles);
+            return Ok(respuesta);
+        }
     }
 }
 

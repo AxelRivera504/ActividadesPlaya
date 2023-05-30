@@ -59,7 +59,17 @@ namespace PlayaMagica.DataAccess.Repositories.Acce
             parametros.Add("@role_ID", id, DbType.Int32, ParameterDirection.Input);
             return db.Query<tbRolesXPantallas>(ScriptsDataBase.UDP_tbRolesPorPantalla_Select_ByRoleID, parametros, commandType: CommandType.StoredProcedure);
         }
+        public RequestStatus DeleteRolesXPantallas(tbRolesXPantallas item)
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@role_ID", item.role_ID, DbType.Int32, ParameterDirection.Input);
+            var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbRolesPorPantalla_Delete, parametros, commandType: CommandType.StoredProcedure);
 
+            result.CodeStatus = answer;
+            return result;
+        }
 
         public RequestStatus Update(tbRolesXPantallas item)
         {
