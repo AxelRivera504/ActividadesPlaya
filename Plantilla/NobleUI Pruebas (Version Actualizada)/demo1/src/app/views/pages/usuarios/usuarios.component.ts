@@ -69,10 +69,6 @@ export class UsuariosComponent implements OnInit {
     localStorage.setItem("usua_ID",id.toString())
   }
 
-    
-  
-   
-
   ngOnInit(): void {
     this.service.getUsuarios().subscribe(data => {
       console.log(data);
@@ -280,8 +276,8 @@ export class UsuariosComponent implements OnInit {
     if (usua_id !== undefined) {
       this.UsuariosEdit.usua_ID = usua_id.toString();
     }
-
-  this.service.deleteUsuarios(this.UsuariosEdit).subscribe((data: any) => {
+   
+    this.service.deleteUsuarios(this.UsuariosEdit).subscribe((data: any) => {
     console.log(data);
     console.log(data.data.codeStatus)
     if (data.data.codeStatus == 1) {

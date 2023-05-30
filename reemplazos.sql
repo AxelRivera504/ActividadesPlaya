@@ -24,7 +24,34 @@ BEGIN
 		SELECT 0 
 	END CATCH
 END
+CREATE OR ALTER PROCEDURE Acce.UDP_tbRoles_Delete 
+@role_ID INT
+AS
+BEGIN
+	BEGIN TRY
+		IF NOT EXISTS(SELECT t1.usua_Usuario FROM Acce.tbUsuarios t1 WHERE  role_ID = @role_ID)
+			BEGIN
+		
+		UPDATE Acce.tbRoles
+		SET role_Estado = 0
+		WHERE role_ID = @role_ID
+		
+		DELETE Acce.tbRolesXPantallas
+		WHERE role_ID = @role_ID
+				
+	   SELECT 1
+	     
+		END
 
+		 else begin 
+		 select 2
+		 END
+	END TRY
+
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
 
 GO
 CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Insert
