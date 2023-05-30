@@ -23,7 +23,6 @@ import { never } from 'rxjs';
   })
   export class ActividadesEditarComponent implements OnInit {
 
-  
     actividades!: Actividades[];
     playas!: playas[];
     equipos: Equipos[] = [];
@@ -205,14 +204,21 @@ import { never } from 'rxjs';
             })           
 
             setTimeout(() => {
-              this.encargadosSeleccionados.forEach(element => {
-                this.encargadosXActividades.enca_Id = element
+              this.encargadosSeleccionados.forEach((element: any) => { // Declaramos element como tipo 'any'
+                if (typeof element === 'object' && 'enca_id' in element) {
+                  this.encargadosXActividades.enca_Id = element.enca_id;
+                } else {
+                  this.encargadosXActividades.enca_Id = element;
+                }
+                
                 this.service.createEncargadosXActividad(this.encargadosXActividades)
-                .subscribe((data:any)=>{
-                  console.log("Encargado a insertar:" + data.enca_Id)
-                })
+                  .subscribe((data:any)=>{
+                    console.log("Encargado a insertar:" + data.enca_Id);
+                  });
               });
             }, 1000);
+            
+
 
             this.router.navigate(["/actividades"])
           }else if(data.data.codeStatus == 2)
