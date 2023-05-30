@@ -13,7 +13,7 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
     public class EncargadosXActividadesRepository : IRepository<tbEncargadosXActividades>
     {
    
-        public tbEncargadosXActividades Find(int? id)
+        public IEnumerable<tbEncargadosXActividades> Find(int? id)
         {
             throw new NotImplementedException();
         }
@@ -31,7 +31,7 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             return result;
         }
 
-
+  
         public RequestStatus Delete(tbEncargadosXActividades item)
         {
             using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);

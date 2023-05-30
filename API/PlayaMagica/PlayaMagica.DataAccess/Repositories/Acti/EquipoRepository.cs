@@ -71,7 +71,6 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             var parametros = new DynamicParameters();
             parametros.Add("@acti_Id", id, DbType.Int32, ParameterDirection.Input);
             return db.Query<VW_tbEquipos>(ScriptsDataBase.UDP_EquipoXActividad, parametros, commandType: CommandType.StoredProcedure);
-        
         }
 
         public IEnumerable<VW_tbEquipos> List()

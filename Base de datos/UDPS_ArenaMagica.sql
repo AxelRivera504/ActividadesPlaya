@@ -2132,10 +2132,8 @@ CREATE OR ALTER PROCEDURE Acti.UDP_tbEncargadosXActividad
     @actividadId INT
 AS
 BEGIN
-    SELECT enca.enca_id, enca.enca_Nombres, enca.enca_Apellidos, enca.enca_DNI, enca.enca_Email, enca.enca_Telefono, enca.enca_Sexo, enca.esci_id, enca.enca_FechaNac
-    FROM Acti.tbEncargadosXActividades enac
-    INNER JOIN Acti.tbEncargados enca ON enac.enca_Id = enca.enca_id
-    WHERE enac.acti_Id = @actividadId AND enac.enac_Estado = 1
+    SELECT * FROM [Acti].[tbEncargados] enca INNER JOIN Acti.tbEncargadosXActividades enac
+	ON enca.enca_id = enac.enca_Id WHERE enac.acti_Id = @actividadId
 END
 GO
 

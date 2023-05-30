@@ -269,6 +269,11 @@ export class ServicesService {
     return this.http.get<Encargados[]>(this.Url + "/Encargados/ListarEncargadosddl");
   }
 
+  getEncargadosXActividad(id: number){
+    return this.http.get<Encargados[]>(this.Url + "/Encargados/EncargadosXActividad?id=" + id);
+  }
+
+
   createEncargadosXActividad(EncargadosXActividad: EncargadosXActividad){
     return this.http.post<EncargadosXActividad[]>(this.Url + "/EncargadosXActividades/Insert", EncargadosXActividad);
   }

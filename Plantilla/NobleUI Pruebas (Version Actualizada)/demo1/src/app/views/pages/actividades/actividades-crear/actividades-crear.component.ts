@@ -33,8 +33,9 @@ export class ActividadesCrearComponent implements OnInit {
   actividadesModel = new Actividades()
   submitted: boolean = false  
   encargados: Encargados[]
-  encargadosSeleccionados: Encargados[] = []
-  encargadosXActividades= new EncargadosXActividad()
+  encargadosSeleccionados: []
+  ddl: boolean
+  encargadosXActividades = new EncargadosXActividad()
   
   public configdropzone: DropzoneConfigInterface = {
     dictDefaultMessage: "Arrastra y suelta los archivos aquí o haz clic para seleccionarlos.",
@@ -141,6 +142,15 @@ export class ActividadesCrearComponent implements OnInit {
       x = false
     }
 
+    if(this.encargadosSeleccionados){
+      if(this.encargadosSeleccionados.length == 0 || this.encargadosSeleccionados == null || this.encargadosSeleccionados == undefined){
+        this.ddl = false
+        x = false
+      }else{
+        this.ddl = true
+      }
+    }
+
     if(x){
       const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
       if (idUsuario !== undefined) {
@@ -185,7 +195,7 @@ export class ActividadesCrearComponent implements OnInit {
 
          this.encargadosXActividades.acti_Id = data.data.codeStatus
          this.encargadosSeleccionados.forEach(element => {
-          this.encargadosXActividades.enca_Id = element.enca_id
+          this.encargadosXActividades.enca_Id = element
           this.service.createEncargadosXActividad(this.encargadosXActividades)
           .subscribe((data:any)=>{
             console.log(data)
@@ -216,7 +226,6 @@ export class ActividadesCrearComponent implements OnInit {
         icon: 'warning'
       })
     }
-
   }
 
 }

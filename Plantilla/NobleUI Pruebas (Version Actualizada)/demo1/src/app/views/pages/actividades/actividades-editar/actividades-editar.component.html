@@ -75,6 +75,22 @@
                   </div>
                 </div>
               </div>
+
+              <div class="form-group col-6 mt-3">
+                <label>Asignar encargados a esta actividad:</label>
+                <ng-select [items]="encargados"
+                [(ngModel)]="encargadosSeleccionados"
+                [multiple]="true"
+                [bindValue]="'enca_id'"
+                [closeOnSelect]="false"
+                [bindLabel]="'enca_NombreCompleto'"
+                placeholder="Selecciona encargados"
+                [dropdownPosition]="'bottom'"
+                [compareWith]="compareFn"
+                [ngClass]="{ 'input-invalid': submitted && !ddl }">
+          </ng-select>
+          <div class="input-invalid-text" *ngIf="submitted && !ddl">Encargado requerido</div>
+              </div>
               
               <div class="form-group col-12 mt-3 text-center">
                 <button class="btn btn-primary" (click)="Editar()"><i class="feather icon-save"></i>Guardar</button>

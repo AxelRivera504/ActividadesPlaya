@@ -19,6 +19,15 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             return con.VW_tbEncargados.AsList();
         }
 
+        public IEnumerable<VW_tbEncargados> EncargadosXActividad(int? id)
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@actividadId", id, DbType.Int32, ParameterDirection.Input);
+            return db.Query<VW_tbEncargados>(ScriptsDataBase.UDP_EncargadosXActividad, parametros, commandType: CommandType.StoredProcedure);
+        }
+
+
         public RequestStatus InsertarEncargados(tbEncargados item)
         {
             using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);

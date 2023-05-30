@@ -68,6 +68,20 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
         }
 
+        public IEnumerable<VW_tbEncargados> EncargadosXActividad(int? id)
+        {
+            try
+            {
+                var list = _encargadosRepository.EncargadosXActividad(id);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return Enumerable.Empty<VW_tbEncargados>();
+            }
+        }
+
 
         public ServiceResult InsetarEncargados(tbEncargados item)
         {
@@ -571,6 +585,7 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
         #endregion
 
         #region EncargadosXActividades
+
         public ServiceResult InsertarEncargadosXActivades(tbEncargadosXActividades item)
         {
             var resultado = new ServiceResult();

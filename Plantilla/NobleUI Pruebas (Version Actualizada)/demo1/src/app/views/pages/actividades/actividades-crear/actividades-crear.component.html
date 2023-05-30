@@ -71,8 +71,11 @@
                 [multiple]="true"
                 [bindValue]="'enca_id'"
                 [bindLabel]="'enca_NombreCompleto'"
-                placeholder="Selecciona encargados">
+                placeholder="Selecciona encargados"
+                [dropdownPosition]="'bottom'"
+                required [ngClass]="{ 'input-invalid': submitted && !ddl }">
           </ng-select>
+          <div class="input-invalid-text" *ngIf="submitted && !ddl">Encargado requerido</div>
               </div>
               
               <div class="form-group col-12 mt-3 text-center">
