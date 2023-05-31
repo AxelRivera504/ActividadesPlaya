@@ -20,6 +20,18 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/listplayitas/listplayitas.module').then(m => m.ListplayitasModule)
       },
       {
+        path: 'createplayitas',
+        loadChildren: () => import('./views/pages/listplayitas/create-playitas/create-playitas.module').then(m => m.CreatePlayitasModule)
+      },
+      {
+        path: 'editplayitas',
+        loadChildren: () => import('./views/pages/listplayitas/edit-playitas/edit-playitas.module').then(m => m.EditPlayitasModule)
+      },
+      {
+        path: 'detallesplayitas',
+        loadChildren: () => import('./views/pages/listplayitas/detallesplayitas/detallesplayitas.module').then(m => m.DetallesplayitasModule)
+      },
+      {
         path: 'equipos',
         loadChildren: () => import('./views/pages/equipos/equipos.module').then(m => m.EquiposModule)
       },

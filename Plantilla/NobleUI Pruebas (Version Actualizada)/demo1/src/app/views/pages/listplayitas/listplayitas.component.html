@@ -4,7 +4,7 @@
             <div class="card-title text-center my-0">
                 <h3>playas</h3>  
             <br>
-            <button button type="button" class="btn btn-primary">
+            <button button type="button" class="btn btn-primary" (click)="Crear()">
                 <i class="feather icon-plus"></i>
                 Nuevo
             </button>
@@ -26,11 +26,11 @@
                 <td>{{item.play_Id}}</td>
                 <td>{{item.play_Playa}}</td>
                 <td>{{item.dire_DireccionExacta}}</td>
-                <td><button type="button" class="btn btn-warning btn-icon-text">
+                <td><button type="button" class="btn btn-warning btn-icon-text" (click)="Editar(item)">
                   <i class="feather icon-edit "></i>
               </button>
                   |
-                  <button type="button" class="btn btn-info btn-icon-text">
+                  <button type="button" class="btn btn-info btn-icon-text" (click)="Detalles(item)">
                       <i class="feather icon-list "></i>
                   </button>
                   |

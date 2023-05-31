@@ -34,4 +34,17 @@ export class ListplayitasComponent implements OnInit{
     };
   }
 
+  Crear(){
+    this.router.navigate(["/createplayitas"])
+  }
+
+  Editar(playas: playas){
+    localStorage.setItem('playas', JSON.stringify(playas));
+    this.router.navigate(["/editplayitas"])
+  }
+
+  Detalles(playas: playas){
+    localStorage.setItem('playas', JSON.stringify(playas));
+    this.router.navigate(["/detallesplayitas"])
+  }
 }
