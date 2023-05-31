@@ -1,6 +1,6 @@
-USE DB_ArenaMagica
+--USE DB_ArenaMagica
 
-GO
+--GO
 
 
 /***************************Insertar tbRoles ****************************/

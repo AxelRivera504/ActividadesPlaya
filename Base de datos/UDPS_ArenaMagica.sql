@@ -1051,7 +1051,7 @@ GO
     rese.acti_Id,acti.acti_Nombre, rese_Estado, 
     rese_UsuarioCreador,[UsuarioCreador].usua_Usuario AS rese_UsuarioCreador_Nombre, rese_FechaCreacion, 
     rese_UsuarioModificador,[UsuarioModificador].usua_Usuario AS rese_UsuarioModificador_Nombre, rese_FechaModificacion
-    FROM Acti.tbReservaciones rese INNER JOIN Acti.tbActividades acti
+    FROM Acti.tbReservaciones rese INNER JOIN Acti.tbActividades acti	
     ON rese.acti_Id = acti.acti_Id  INNER JOIN Acce.tbUsuarios [UsuarioCreador]
     ON rese.rese_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
     ON rese.rese_UsuarioModificador = [UsuarioModificador].usua_ID
