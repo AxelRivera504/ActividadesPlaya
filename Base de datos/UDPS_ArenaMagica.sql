@@ -1,5 +1,5 @@
-USE DB_ArenaMagica
-GO
+--USE DB_ArenaMagica
+--GO
 
 --******************************************* Procedimientos Almacenados y vistas ***********************************************************--
 
@@ -386,7 +386,7 @@ END
  GO
  --****************************************************UDP Y VISTA PLAYA  *************************************************************************--
 
- /*Vista Playa*/
+/*Vista Playa*/
  CREATE OR ALTER VIEW Acti.VW_tbPlayas
 AS
 SELECT play_Id, play_Playa, 
@@ -453,8 +453,7 @@ CREATE OR ALTER PROCEDURE Acti.UDP_tbPlayas_EditarPlayas
 	@play_Playa					NVARCHAR(150),
 	@dire_id					INT,
 	@play_ImgUrl				NVARCHAR(MAX),
-	@play_UsuarioModificador	INT,
-	@Status						INT OUTPUT
+	@play_UsuarioModificador	INT
 AS
 BEGIN 
 	BEGIN TRY
@@ -1045,42 +1044,18 @@ GO
 	--******************* ********************************////UDP Y VISTA Actividades  *************************************************************************--
 
 	--******************* ********************************  UDP Y VISTA Reservaciones  *************************************************************************--
-	/*Vista Reservaciones*/
-	GO
-	CREATE OR ALTER VIEW  Acti.VW_tbReservaciones
-	AS
-	SELECT	rese.rese_Id,
-			rese.rese_Cantidad, 
-			rese.acti_Id,acti.acti_Nombre,
-			rese.rese_Estado, 
-			rese.rese_UsuarioCreador,
-			[UsuarioCreador].usua_Usuario AS rese_UsuarioCreador_Nombre,
-			rese_FechaCreacion, 
-			rese_UsuarioModificador,
-			[UsuarioModificador].usua_Usuario AS rese_UsuarioModificador_Nombre,
-			rese_FechaModificacion,
-			tbcl.clie_Nombres
-	FROM Acti.tbReservaciones rese INNER JOIN Acti.tbActividades acti
-	ON rese.acti_Id = acti.acti_Id  INNER JOIN Acce.tbUsuarios [UsuarioCreador]
-	ON rese.rese_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
-	ON rese.rese_UsuarioModificador = [UsuarioModificador].usua_ID INNER JOIN Acti.tbFactura fact
-	ON	rese.rese_Id = fact.rese_Id INNER JOIN Acti.tbClienteXReservacion clier
-	ON	rese.rese_Id = clier.rese_Id INNER JOIN Acti.tbClientes tbcl
-	ON	clier.clie_Id = tbcl.clie_id	
-	WHERE rese_Id in (select top 1 t1.rese_Id from tbClienteXReservacion t1 order by rese_Id desc)
-
-
-
-
-
-
-SELECT DISTINCT t1.clie_Id, t1.rese_Id
-FROM Acti.tbClienteXReservacion t1
-INNER JOIN Acti.tbClientes t2 ON t1.clie_Id = t2.clie_id;
-
-
-	select * from Acti.tbClienteXReservacion
-
+    GO
+    CREATE OR ALTER VIEW Acti.VW_tbReservaciones
+    AS
+    SELECT rese_Id, rese_Cantidad, 
+    rese.acti_Id,acti.acti_Nombre, rese_Estado, 
+    rese_UsuarioCreador,[UsuarioCreador].usua_Usuario AS rese_UsuarioCreador_Nombre, rese_FechaCreacion, 
+    rese_UsuarioModificador,[UsuarioModificador].usua_Usuario AS rese_UsuarioModificador_Nombre, rese_FechaModificacion
+    FROM Acti.tbReservaciones rese INNER JOIN Acti.tbActividades acti
+    ON rese.acti_Id = acti.acti_Id  INNER JOIN Acce.tbUsuarios [UsuarioCreador]
+    ON rese.rese_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
+    ON rese.rese_UsuarioModificador = [UsuarioModificador].usua_ID
+    WHERE rese_Estado = 1
 
 	/*Vista Reservaciones UDP*/
 	GO
@@ -1214,7 +1189,7 @@ INNER JOIN Acti.tbClientes t2 ON t1.clie_Id = t2.clie_id;
 					SELECT  @LastID -- Éxito: reservación insertada
 		END TRY
 		BEGIN CATCH
-			SELECT 0
+			SELECT -5
 		END CATCH
 	END
 
@@ -1500,7 +1475,7 @@ BEGIN
 					role_UsuarioModificador = @role_UsuarioModificador,
 					role_FechaModificacion = GETDATE()
 				WHERE role_ID = @role_ID
-				SELECT 1
+				SELECT @role_ID
 			END
 		ELSE BEGIN
 			SELECT 2
@@ -1514,15 +1489,28 @@ END
 
 /*Roles Delete*/
 GO
-CREATE OR ALTER PROCEDURE Acce.UDP_tbRoles_Delete
+CREATE OR ALTER PROCEDURE Acce.UDP_tbRoles_Delete 
 @role_ID INT
 AS
 BEGIN
 	BEGIN TRY
+		IF NOT EXISTS(SELECT t1.usua_Usuario FROM Acce.tbUsuarios t1 WHERE  role_ID = @role_ID)
+			BEGIN
+		
 		UPDATE Acce.tbRoles
-		SET role_Estado = 1
+		SET role_Estado = 0
 		WHERE role_ID = @role_ID
-		SELECT 1
+		
+		DELETE Acce.tbRolesXPantallas
+		WHERE role_ID = @role_ID
+				
+	   SELECT 1
+	     
+		END
+
+		 else begin 
+		 select 2
+		 END
 	END TRY
 
 	BEGIN CATCH
@@ -1549,7 +1537,9 @@ CREATE OR ALTER PROCEDURE Acce.UDP_RolesXPantallas_Insert
 @roleXpant_UsuarioCreador INT
 AS
 BEGIN
-	BEGIN TRY		
+	BEGIN TRY
+
+			
 		INSERT INTO Acce.tbRolesXPantallas (role_ID, pant_ID, 
 		roleXpant_Estado, roleXpant_UsuarioCreador, 
 		roleXpant_FechaCreacion, roleXpant_UsuarioModificador, 
@@ -1565,13 +1555,13 @@ END
 
 /*RolesXPantalla Delete*/
 GO
-CREATE OR ALTER PROCEDURE Acce.UDP_tbRolesXPantalla_Delete
-@roleXpant_ID INT
+CREATE OR ALTER PROCEDURE Acce.UDP_tbRolesXPantalla_Delete 
+@role_ID INT
 AS
 BEGIN
 	BEGIN TRY
 		DELETE Acce.tbRolesXPantallas
-		WHERE roleXpant_ID = @roleXpant_ID
+		WHERE role_ID = @role_ID
 		SELECT 1
 	END TRY
 
@@ -1579,6 +1569,7 @@ BEGIN
 		SELECT 0
 	END CATCH
 END
+
 
 
 /*RolesXPantallas_Select_ByRoleID */
@@ -1727,18 +1718,22 @@ END
 GO
 CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Update
 @usua_ID INT,
-@usua_EsAdmin INT,
 @enca_ID INT,
 @role_ID INT,
+@usua_Usuario NVARCHAR(350),
 @usua_UsuarioModificador INT
 AS
 BEGIN
 	BEGIN TRY
 				UPDATE Acce.tbUsuarios	
-				SET	enca_ID = @enca_ID,
+				SET	
+					enca_ID = @enca_ID,
+					usua_Usuario = @usua_Usuario,
 					role_ID = @role_ID,
 					usua_FechaModificacion = GETDATE(),
 					usua_UsuarioModificador = @usua_UsuarioModificador
+				WHERE usua_ID = @usua_ID
+
 				SELECT 1
 	END TRY
 
@@ -1746,15 +1741,15 @@ BEGIN
 		SELECT 0 
 	END CATCH
 END
-
 /*Usuarios Delete*/
 GO
-CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Delete
+CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Delete 
 @usua_ID INT
 AS
 BEGIN
 	BEGIN TRY
-		DELETE Acce.tbUsuarios
+		Update Acce.tbUsuarios
+		SET usua_Estado = 0
 		WHERE usua_ID = @usua_ID
 		SELECT 1
 	END TRY
@@ -2050,12 +2045,13 @@ GO
 CREATE OR ALTER PROCEDURE Acti.UDP_tbClienteXReservacion_Insertar
 	@clie_Id				INT,
 	@rese_Id				INT,
+	@rese_OwnerPayy			BIT,
 	@clre_UsuarioCreador	INT
 AS
 BEGIN
 	BEGIN TRY
-		INSERT INTO Acti.tbClienteXReservacion([clie_Id], [rese_Id], [clre_Estado], [clre_UsuarioCreador], [clre_FechaCreacion], [clre_UsuarioModificador], [clre_FechaModificacion])
-		VALUES (@clie_Id,@rese_Id,1,@clre_UsuarioCreador,GETDATE(),NULL, NULL ) 
+		INSERT INTO Acti.tbClienteXReservacion([clie_Id], [rese_Id],[rese_OwnerPayy], [clre_Estado], [clre_UsuarioCreador], [clre_FechaCreacion], [clre_UsuarioModificador], [clre_FechaModificacion])
+		VALUES (@clie_Id,@rese_Id,@rese_OwnerPayy,1,@clre_UsuarioCreador,GETDATE(),NULL, NULL ) 
 		SELECT 1
 	END TRY
 	BEGIN CATCH
@@ -2163,6 +2159,18 @@ BEGIN
 	BEGIN CATCH
 		SELECT -0
 	END CATCH 
+END
+
+GO
+
+
+CREATE OR ALTER PROCEDURE Acti_tbActividadesXFecha_ObtenerCantidadVisitantes
+AS
+BEGIN
+    SELECT [acfe_Fecha], SUM([acfe_Cantidad]) AS CantidadVisitantes
+    FROM [Acti].[tbActividadesXFecha] t1
+    GROUP BY [acfe_Fecha]
+	order by [acfe_Fecha]
 END
 
 --**************************************************** ///UDP Y Vista tbActividadesXFecha ****************************************************************--

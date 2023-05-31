@@ -24,7 +24,7 @@ namespace PlayaMagica.Controllers
         }
         [HttpPost("CantidadActividad")]
         public IActionResult CantidadActividad(ActividadesXFechaViewModel item)
-        {
+            {
             var actividadesXFecha = _mapper.Map<tbActividadesXFecha>(item);
             var respuesta = _actividadesServices.CantidadActividad(actividadesXFecha);
             return Ok(respuesta);

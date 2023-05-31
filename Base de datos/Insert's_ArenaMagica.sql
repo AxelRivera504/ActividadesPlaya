@@ -26,7 +26,7 @@ SET @Clave = '123';
 SET @Pass = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @Clave),2)
 
 INSERT INTO acce.tbUsuarios(usua_Usuario, usua_Clave, enca_ID, role_ID, usua_Estado, usua_UsuarioCreador, usua_FechaCreacion, usua_UsuarioModificador, usua_FechaModificacion)
-VALUES('admin', @Pass, 1, 1, 1,1,GETDATE(),NULL,NULL)
+VALUES('admin', @Pass, 1, 2, 1,1,GETDATE(),NULL,NULL)
 GO
 
 --Digitador usuario
@@ -35,7 +35,7 @@ SET @Clave1 = 'qwerty';
 SET @Pass1 = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @Clave1),2)
 
 INSERT INTO acce.tbUsuarios(usua_Usuario, usua_Clave, enca_ID, role_ID, usua_Estado, usua_UsuarioCreador, usua_FechaCreacion, usua_UsuarioModificador, usua_FechaModificacion)
-VALUES('Juan', @Pass1, 1, 2, 1,1,GETDATE(),NULL,NULL)
+VALUES('Juan', @Pass1, 2, 1, 1,1,GETDATE(),NULL,NULL)
 GO
 
 --Invitado usuario
@@ -44,7 +44,7 @@ SET @Clave2 = 'awsd';
 SET @Pass2 = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @Clave2),2)
 
 INSERT INTO acce.tbUsuarios(usua_Usuario, usua_Clave, enca_ID, role_ID, usua_Estado, usua_UsuarioCreador, usua_FechaCreacion, usua_UsuarioModificador, usua_FechaModificacion)
-VALUES('Christopher', @Pass2, 1, 1, 1,1,GETDATE(),NULL,NULL)
+VALUES('Christopher', @Pass2, 3, 1, 1,1,GETDATE(),NULL,NULL)
 GO
 
 --Esdra usuario
@@ -53,7 +53,7 @@ SET @Clave3 = 'ECERNA';
 SET @Pass3 = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @Clave3),2)
 
 INSERT INTO acce.tbUsuarios(usua_Usuario, usua_Clave, enca_ID, role_ID, usua_Estado, usua_UsuarioCreador, usua_FechaCreacion, usua_UsuarioModificador, usua_FechaModificacion)
-VALUES('Esdrinha7', @Pass3, 1, 1, 1,1,GETDATE(),NULL,NULL)
+VALUES('Esdrinha7', @Pass3, 4, 3, 1,1,GETDATE(),NULL,NULL)
 GO
 
 /***************************Insertar tbUsuarios ****************************/
@@ -1362,69 +1362,9 @@ VALUES ('Visita Guiada', 20, 5000.50, 4);
 GO
 
 /**************************Insert tbReservaciones*********************************/
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
-VALUES (2, 1,'05-6-2023');
-GO
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
-VALUES (3, 2,'06-6-2023');
-GO
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
-VALUES (1, 3,'07-6-2023');
-GO
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
-VALUES (4, 1,'10-6-2023');
-GO
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
-VALUES (2, 4,'11-6-2023');
-GO
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
-VALUES (5, 5,'10-6-2023');
-GO
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
-VALUES (2, 2,'05-7-2023');
-GO
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
-VALUES (3, 3,'10-7-2023');
-GO
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
-VALUES (1, 5,'02-7-2023');
-GO
-INSERT INTO Acti.tbReservaciones (rese_Cantidad, acti_Id,rese_FechaReservacion)
-VALUES (4, 4,'01-7-2023');
-GO
 
 
 /***************************Insert ClientesXReservaciones**********************/
-INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
-VALUES (1, 1);
-GO
-INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
-VALUES (2, 2);
-GO
-INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
-VALUES (3, 3);
-GO
-INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
-VALUES (4, 4);
-GO
-INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
-VALUES (5, 5);
-GO
-INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
-VALUES (1, 2);
-GO
-INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
-VALUES (2, 3);
-GO
-INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
-VALUES (3, 4);
-GO
-INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
-VALUES (4, 5);
-GO
-INSERT INTO Acti.tbClienteXReservacion (clie_Id, rese_Id)
-VALUES (5, 1);
-GO
 
 
 
@@ -1575,35 +1515,7 @@ GO
 
 
 /***************************Insertar tbFactura****************************/
-INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
-VALUES (1, 100.00, 15.00, 115.00, 1, GETDATE());
 
-INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
-VALUES (2, 200.00, 30.00, 230.00, 2, GETDATE());
-
-INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
-VALUES (3, 150.00, 22.50, 172.50, 1, GETDATE());
-
-INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
-VALUES (4, 180.00, 27.00, 207.00, 1, GETDATE());
-
-INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
-VALUES (5, 250.00, 37.50, 287.50, 2, GETDATE());
-
-INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
-VALUES (6, 300.00, 45.00, 345.00, 1, GETDATE());
-
-INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
-VALUES (7, 220.00, 33.00, 253.00, 1, GETDATE());
-
-INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
-VALUES (8, 190.00, 28.50, 218.50, 2, GETDATE());
-
-INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
-VALUES (9, 280.00, 42.00, 322.00, 1, GETDATE());
-
-INSERT INTO Acti.tbFactura (rese_Id, fuct_Subtotal, fuct_Isv, fuct_Total, fuct_UsuarioCreador, fuct_FechaCreacion) 
-VALUES (10, 150.00, 22.50, 172.50, 1, GETDATE());
 	
 	-------Insertar Pantallas-----
 INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
@@ -1659,6 +1571,9 @@ VALUES ('Usuarios',1, GETDATE());
 	  
 INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
 VALUES ('Roles',1, GETDATE());
+
+INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
+VALUES ('Encargados',1, GETDATE());
 
 GO
 	  -------Insertar RolesXPantallas-----

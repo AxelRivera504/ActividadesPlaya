@@ -578,10 +578,14 @@ export class ReservacionesComponent implements OnInit {
   }
 
   ConfirmarFactura(){
+    const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
+    if (idUsuario !== undefined) {
+      this.reservaciones.rese_UsuarioCreador = idUsuario;
+    }
     if(!this.metodoSeleccionado){
       return new Promise((resolve, reject) => {
         Swal.fire({
-          titleText: '¿Seguro que no desea pagar la reservación por el momento?',
+          titleText: '¿Desea pagar la reservación ahora?',
           position: 'center',
           showCancelButton: true,
           showConfirmButton: true,
@@ -591,6 +595,7 @@ export class ReservacionesComponent implements OnInit {
           icon: 'info'
         }).then((result) => {
           if (result.isConfirmed) {
+            //El Usuario quiere pagar la factura y le imprimira en la factura el reporte de la información de la factura completa
             Swal.fire({
               toast: true,
               position: 'top-end',
@@ -599,305 +604,261 @@ export class ReservacionesComponent implements OnInit {
               timerProgressBar: true,
               title: 'Debe escoger un metodo de pago',
               icon: 'info'
-            })          
-            this.wizardForm.goToNextStep();
-            this.generatePDF(); 
+            })        
+            this.submittedMeto = true;
+            this.Activo = true;           
+            console.log("quiere pagar ahorita")
+            
             resolve(true);
           } else if (result.dismiss === Swal.DismissReason.cancel) {
-            this.Activo = true;
-            const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
-            if (idUsuario !== undefined) {
-              this.reservaciones.rese_UsuarioCreador = idUsuario;
+            //El Usuario no quiere pagar de momento la factura y le imprimira en la factura el reporte de la información de reseravación     
+            console.log("No quiere pagar ahorita")      
+            this.submittedMeto = false; //apagar alerta del metodo de pago
+            if(this.ExistsOrNot){ //verificar con el chequeo de la fechas de la actividad si esta existe, Si existe hara un update y sino la insertara
+              console.log("EXISTE EL ACTI")
+              this.service.InsertarReservacionesExiste(this.reservaciones).subscribe((data:any)=>{  //Pasar Model reservación para insertar la reservación
+                var cont = 0;     
+                if(data.data.codeStatus != 0){//Verificar si se inserto correctamente la reservacion
+                  const idreser = data.data.codeStatus;//Capturar el id de la reservacion
+                  console.log(idreser)
+                  if (idUsuario !== undefined) {
+                    this.clienReser.clre_UsuarioCreador = idUsuario;//Comenzamos a llenar el model para insertar los clientes en la tabla de ClienteXReservación, en este caso el Usua_Creador
+                  }
+                  this.clienReser.rese_Id  = data.data.codeStatus;//Meter el id de la reservación a la cual perteneceran esos clientes o participantes
+                  console.log( this.clienReser.rese_Id+'-id reservacion para el clienteXReservacion' );//Verificar que el id de la reservacion este dentro del modelo de clienteXReservacion
+                  const selectedPeopleString = JSON.stringify(this.selectedPeople);
+                  localStorage.setItem('array', selectedPeopleString);//Metemos las personas seleccionadas en un localstorage en forma de arreglo para meterlo en el reporte de información de la reservación
+                  for(var i = 0 ; i <= this.selectedPeople.length ; i++){ //Recorremos el array de clientes seleccionados y tomamos cada id para insertarlo uno por uno en clienteXReservación
+                    this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;
+                      if(cont == 0){
+                        this.clienReser.rese_OwnerPayy = true;
+                      }else{
+                        this.clienReser.rese_OwnerPayy = false;
+                      }//Recorrido del array  
+                      cont ++;//Contador que ir aumentado de a uno, para saber en que momento termino de insertar los clientes  
+                      this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{//Service para insertar los cliente pasando como parameter el model de clienteXReservación
+                        console.log('Se inserto el cliente:'+cont);
+                        if(cont === this.selectedPeople.length){//Validacion para verificar cuando se insertaron los clientes
+                          //Aqui no se insertara la factura ya que no quiso ser pagada en este momento por el cliente
+                          this.wizardForm.goToNextStep();//Tabula a la siguiente tabulación
+                          this.LimpiarTodo()//Limpia todos lo que se ha utilizado
+                          this.generatePDF();//genera el pdf de de la información de la reservación
+                        }
+                      })              
+                  }          
+                }else{
+                  Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    title: '!ERROR!, hubo un error al intentar insertar la reservación',
+                    icon:'error'
+                  })
+                }
+              })
+            }else{//Aqui significa que la actividad No existe por lo cual se debe realalizar un insert a la BD
+              console.log("NO EXISTE EL ACTI")
+              this.service.InsertarReservaciones(this.reservaciones).subscribe((data:any)=>{  //Pasar Model reservación para insertar la reservación
+                var cont = 0;     
+                if(data.data.codeStatus != 0){//Verificar si se inserto correctamente la reservacion
+                  const idreser = data.data.codeStatus;//Capturar el id de la reservacion
+                  console.log(idreser)
+                  if (idUsuario !== undefined) {
+                    this.clienReser.clre_UsuarioCreador = idUsuario;//Comenzamos a llenar el model para insertar los clientes en la tabla de ClienteXReservación, en este caso el Usua_Creador
+                  }
+                  this.clienReser.rese_Id  = data.data.codeStatus;//Meter el id de la reservación a la cual perteneceran esos clientes o participantes
+                  console.log( this.clienReser.rese_Id+'-id reservacion para el clienteXReservacion' );//Verificar que el id de la reservacion este dentro del modelo de clienteXReservacion
+                  const selectedPeopleString = JSON.stringify(this.selectedPeople);
+                  localStorage.setItem('array', selectedPeopleString);//Metemos las personas seleccionadas en un localstorage en forma de arreglo para meterlo en el reporte de información de la reservación
+                  for(var i = 0 ; i <= this.selectedPeople.length ; i++){ //Recorremos el array de clientes seleccionados y tomamos cada id para insertarlo uno por uno en clienteXReservación
+                    this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;
+                    if(cont === 0){
+                      console.log("1")
+                      this.clienReser.rese_OwnerPayy = true;
+                    }else{
+                      console.log("0")
+                      this.clienReser.rese_OwnerPayy = false;
+                    }//Recorrido del array  
+                    cont ++;//Contador que ir aumentado de a uno, para saber en que momento termino de insertar los clientes  
+                      this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{//Service para insertar los cliente pasando como parameter el model de clienteXReservación
+                        console.log('Se inserto el cliente:'+cont);
+                        if(cont === this.selectedPeople.length){//Validacion para verificar cuando se insertaron los clientes
+                          //Aqui no se insertara la factura ya que no quiso ser pagada en este momento por el cliente
+                          this.wizardForm.goToNextStep();//Tabula a la siguiente tabulación
+                          this.LimpiarTodo()//Limpia todos lo que se ha utilizado
+                          this.generatePDF();//genera el pdf de de la información de la reservación
+                        }
+                      })              
+                  }          
+                }else{
+                  Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    title: '!ERROR!, hubo un error al intentar insertar la reservación',
+                    icon:'error'
+                  })
+                }
+              })
             }
-          if(this.ExistsOrNot){            
-            this.service.InsertarReservacionesExiste(this.reservaciones).subscribe((data:any)=>{  
-              var cont = 0;     
-              if(data.data.codeStatus != 0){
-                const idreser = data.data.codeStatus;
-                console.log(idreser)
-                if (idUsuario !== undefined) {
-                  this.clienReser.clre_UsuarioCreador = idUsuario;
-                }
-                this.clienReser.rese_Id  = data.data.codeStatus;
-                console.log( this.clienReser.rese_Id );
-                console.log("ya existe")
-                const selectedPeopleString = JSON.stringify(this.selectedPeople);
-              localStorage.setItem('array', selectedPeopleString);
-                for(var i = 0 ; i <= this.selectedPeople.length ; i++){
-                    this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;  
-                    this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
-                      cont ++;  
-                      console.log(cont);
-                      if(cont === this.selectedPeople.length){
-                        Swal.fire({
-                          toast: true,
-                          position: 'top-end',
-                          showConfirmButton: false,
-                          timer: 3000,
-                          timerProgressBar: true,
-                          title: '!Datos insertados con exito!',
-                          icon: 'success'
-                        })
-                        this.factu.rese_Id = idreser;
-                        this.factu.mepa_id = parseInt(this.metodoSeleccionado.toString());
-                        this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
-                          console.log(data.data.codeStatus)
-                          this.fact_Id = data.data.codeStatus;
-                          localStorage.setItem('idF',data.data.codeStatus)
-                          if(data.data.codeStatus >= 1){
-                            Swal.fire({
-                              toast: true,
-                              position: 'top-end',
-                              showConfirmButton: false,
-                              timer: 1500,
-                              timerProgressBar: true,
-                              title: '¡Reservación hecha con exito!',
-                              icon: 'success'
-                            })
-                            this.wizardForm.goToNextStep();
-                            this.LimpiarTodo()
-                            this.generatePDF2();
-                          }else{
-                            Swal.fire({
-                              toast: true,
-                              position: 'top-end',
-                              showConfirmButton: false,
-                              timer: 1500,
-                              timerProgressBar: true,
-                              title: '¡ERROR!, ¡oh no!, hubo un error.',
-                              icon: 'error'
-                            })
-                          }
-                        })
-                      }
-                    })              
-                }          
-              }else{
-                Swal.fire({
-                  toast: true,
-                  position: 'top-end',
-                  showConfirmButton: false,
-                  timer: 1500,
-                  timerProgressBar: true,
-                  title: '!ERROR!, hubo un error al intentar insertar los datos',
-                  icon:'error'
-                })
-              }
-            })
-          }else{
-            this.service.InsertarReservaciones(this.reservaciones).subscribe((data:any)=>{  
-              var cont = 0;     
-              if(data.data.codeStatus != 0){
-                const idreser = data.data.codeStatus;
-                console.log(idreser)
-                if (idUsuario !== undefined) {
-                  this.clienReser.clre_UsuarioCreador = idUsuario;
-                }
-                this.clienReser.rese_Id  = data.data.codeStatus;
-                console.log("No existe")
-                const selectedPeopleString = JSON.stringify(this.selectedPeople);
-                localStorage.setItem('array', selectedPeopleString);
-                for(var i = 0 ; i <= this.selectedPeople.length ; i++){
-                    this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;  
-                    this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
-                      cont ++;
-                      console.log(cont)  
-                      if(cont === this.selectedPeople.length){
-                        Swal.fire({
-                          toast: true,
-                          position: 'top-end',
-                          showConfirmButton: false,
-                          timer: 3000,
-                          timerProgressBar: true,
-                          title: '!Datos insertados con exito!',
-                          icon: 'success'
-                        })                                 
-                        this.factu.rese_Id = idreser;
-                        this.factu.mepa_id = parseInt(this.metodoSeleccionado.toString());
-                        this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
-                          console.log(data.data.codeStatus)
-                          this.fact_Id = data.data.codeStatus;
-                          localStorage.setItem('idF',data.data.codeStatus)
-                          if(data.data.codeStatus >= 1){
-                            Swal.fire({
-                              toast: true,
-                              position: 'top-end',
-                              showConfirmButton: false,
-                              timer: 1500,
-                              timerProgressBar: true,
-                              title: '¡Reservación hecha con exito!',
-                              icon: 'success'
-                            })
-                            this.wizardForm.goToNextStep();
-                            this.LimpiarTodo()
-                            this.generatePDF2();
-                          }else{
-                            Swal.fire({
-                              toast: true,
-                              position: 'top-end',
-                              showConfirmButton: false,
-                              timer: 1500,
-                              timerProgressBar: true,
-                              title: '¡ERROR!, ¡oh no!, hubo un error.',
-                              icon: 'error'
-                            })
-                          }
-                        })
-                      }
-                    })              
-                }          
-              }else{
-                Swal.fire({
-                  toast: true,
-                  position: 'top-end',
-                  showConfirmButton: false,
-                  timer: 1500,
-                  timerProgressBar: true,
-                  title: '!ERROR!, hubo un error al intentar insertar los datos',
-                  icon:'error'
-                })
-              }
-            })
-          }   
-            console.log("Confirmo")
-            this.submittedMeto = true;
-            this.generatePDF2(); 
+
             resolve(false);
           } else {
-            console.log("Que random?")
+            //Solo cierra el modal al presionar fuera de el
+            console.log("cerro el modal")
             reject();
           }
         });
       });
     }else{
+             //El Usuario quiere pagar la factura y escogio el de un solo el metodo de pago y debe le imprimir la factura el reporte de la información de la factura completa
+            //El Usuario no quiere pagar de momento la factura y le imprimira en la factura el reporte de la información de reseravación     
+            console.log("No quiere pagar ahorita")      
+            this.submittedMeto = false; //apagar alerta del metodo de pago
+            if(this.ExistsOrNot){ //verificar con el chequeo de la fechas de la actividad si esta existe, Si existe hara un update y sino la insertara
+              console.log("EXISTE EL ACTI")
+              this.service.InsertarReservacionesExiste(this.reservaciones).subscribe((data:any)=>{  //Pasar Model reservación para insertar la reservación
+                var cont = 0;     
+                console.log("PASO 1")
+                if(data.data.codeStatus != 0){//Verificar si se inserto correctamente la reservacion
+                  const idreser = data.data.codeStatus;//Capturar el id de la reservacion
+                  console.log(idreser)
+                  if (idUsuario !== undefined) {
+                    this.clienReser.clre_UsuarioCreador = idUsuario;//Comenzamos a llenar el model para insertar los clientes en la tabla de ClienteXReservación, en este caso el Usua_Creador
+                  }
+                  this.clienReser.rese_Id  = data.data.codeStatus;//Meter el id de la reservación a la cual perteneceran esos clientes o participantes
+                  console.log( this.clienReser.rese_Id+'-id reservacion para el clienteXReservacion' );//Verificar que el id de la reservacion este dentro del modelo de clienteXReservacion
+                  const selectedPeopleString = JSON.stringify(this.selectedPeople);
+                  localStorage.setItem('array', selectedPeopleString);//Metemos las personas seleccionadas en un localstorage en forma de arreglo para meterlo en el reporte de información de la reservación
+                  for(var i = 0 ; i <= this.selectedPeople.length ; i++){
+                    console.log("PASO 2") //Recorremos el array de clientes seleccionados y tomamos cada id para insertarlo uno por uno en clienteXReservación
+                    this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;
+                      if(cont == 0){
+                        this.clienReser.rese_OwnerPayy = true;
+                      }else{
+                        this.clienReser.rese_OwnerPayy = false;
+                      }//Recorrido del array  
+                      cont ++;//Contador que ir aumentado de a uno, para saber en que momento termino de insertar los clientes  
+                      this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
+                        console.log("PASO 3")//Service para insertar los cliente pasando como parameter el model de clienteXReservación
+                        console.log('Se inserto el cliente:'+cont);
+                        if(cont === this.selectedPeople.length){//Validacion para verificar cuando se insertaron los clientes
+                          //Aqui no se insertara la factura ya que no quiso ser pagada en este momento por el cliente
+                          this.factu.rese_Id = idreser;
+                          this.factu.mepa_id = parseInt(this.metodoSeleccionado.toString());
+                          this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
+                            console.log("PASO 4")
+                            console.log(data.data.codeStatus)
+                            this.fact_Id = data.data.codeStatus;
+                            localStorage.setItem('idF',data.data.codeStatus)
+                            if(data.data.codeStatus >= 1){                           
+                              this.wizardForm.goToNextStep();
+                              this.LimpiarTodo()
+                              this.generatePDF2();
+                            }else{
+                              Swal.fire({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 1500,
+                                timerProgressBar: true,
+                                title: '¡ERROR!, ¡oh no!, hubo un error.',
+                                icon: 'error'
+                              })
+                            }
+                          })  
+                        }
+                      })              
+                  }          
+                }else{
+                  Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    title: '!ERROR!, hubo un error al intentar insertar la reservación',
+                    icon:'error'
+                  })
+                }
+              })
+            }else{//Aqui significa que la actividad No existe por lo cual se debe realalizar un insert a la BD
+              console.log("NO EXISTE EL ACTI")
+              console.log("PASO 1")
+              this.service.InsertarReservaciones(this.reservaciones).subscribe((data:any)=>{  //Pasar Model reservación para insertar la reservación
+                var cont = 0;     
+                if(data.data.codeStatus != 0){//Verificar si se inserto correctamente la reservacion
+                  const idreser = data.data.codeStatus;//Capturar el id de la reservacion
+                  console.log(idreser)
+                  if (idUsuario !== undefined) {
+                    this.clienReser.clre_UsuarioCreador = idUsuario;//Comenzamos a llenar el model para insertar los clientes en la tabla de ClienteXReservación, en este caso el Usua_Creador
+                  }
+                  console.log("PASO 2 E")
+                  this.clienReser.rese_Id  = data.data.codeStatus;//Meter el id de la reservación a la cual perteneceran esos clientes o participantes
+                  console.log( this.clienReser.rese_Id+'-id reservacion para el clienteXReservacion' );//Verificar que el id de la reservacion este dentro del modelo de clienteXReservacion
+                  const selectedPeopleString = JSON.stringify(this.selectedPeople);
+                  localStorage.setItem('array', selectedPeopleString);//Metemos las personas seleccionadas en un localstorage en forma de arreglo para meterlo en el reporte de información de la reservación
+                  for(var i = 0 ; i <= this.selectedPeople.length ; i++){
+                    console.log("PASO 3 E") //Recorremos el array de clientes seleccionados y tomamos cada id para insertarlo uno por uno en clienteXReservación
+                    this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;
+                    if(cont === 0){
+                      console.log("1")
+                      this.clienReser.rese_OwnerPayy = true;
+                    }else{
+                      console.log("0")
+                      this.clienReser.rese_OwnerPayy = false;
+                    }//Recorrido del array  
+                    cont ++;//Contador que ir aumentado de a uno, para saber en que momento termino de insertar los clientes  
+                      this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
+                        console.log("PASO 4E")//Service para insertar los cliente pasando como parameter el model de clienteXReservación
+                        console.log('Se inserto el cliente:'+cont);
+                        if(cont === this.selectedPeople.length){//Validacion para verificar cuando se insertaron los clientes
+                          //Aqui no se insertara la factura ya que no quiso ser pagada en este momento por el cliente
+                          this.factu.rese_Id = idreser;
+                          this.factu.mepa_id = parseInt(this.metodoSeleccionado.toString());
+                          this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
+                            console.log(data.data.codeStatus)
+                            this.fact_Id = data.data.codeStatus;
+                            localStorage.setItem('idF',data.data.codeStatus)
+                            if(data.data.codeStatus >= 1){   
+                              console.log("PASO 5")                        
+                              this.wizardForm.goToNextStep();
+                              this.LimpiarTodo()
+                              this.generatePDF2();
+                            }else{
+                              Swal.fire({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 1500,
+                                timerProgressBar: true,
+                                title: '¡ERROR!, ¡oh no!, hubo un error.',
+                                icon: 'error'
+                              })
+                            }
+                          })  
+                        }
+                      })              
+                  }          
+                }else{
+                  Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    title: '!ERROR!, hubo un error al intentar insertar la reservación',
+                    icon:'error'
+                  })
+                }
+              })
+            }
       this.Activo = true;
-      const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
-      if (idUsuario !== undefined) {
-        this.reservaciones.rese_UsuarioCreador = idUsuario;
-      }
-    if(this.ExistsOrNot){            
-      this.service.InsertarReservacionesExiste(this.reservaciones).subscribe((data:any)=>{  
-        var cont = 0;     
-        if(data.data.codeStatus != 0){
-          const idreser = data.data.codeStatus;
-          console.log(idreser)
-          if (idUsuario !== undefined) {
-            this.clienReser.clre_UsuarioCreador = idUsuario;
-          }
-          this.clienReser.rese_Id  = data.data.codeStatus;
-          console.log( this.clienReser.rese_Id );
-          console.log("ya existe")
-          const selectedPeopleString = JSON.stringify(this.selectedPeople);
-        localStorage.setItem('array', selectedPeopleString);
-          for(var i = 0 ; i <= this.selectedPeople.length ; i++){
-              this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;  
-              this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
-                cont ++;  
-                console.log(cont);
-                if(cont === this.selectedPeople.length){                 
-                  this.factu.rese_Id = idreser;
-                  this.factu.mepa_id = parseInt(this.metodoSeleccionado.toString());
-                  this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
-                    console.log(data.data.codeStatus)
-                    this.fact_Id = data.data.codeStatus;
-                    localStorage.setItem('idF',data.data.codeStatus)
-                    if(data.data.codeStatus >= 1){
-                      Swal.fire({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 1500,
-                        timerProgressBar: true,
-                        title: '¡Reservación hecha con exito!',
-                        icon: 'success'
-                      })
-                      this.wizardForm.goToNextStep();
-                      this.LimpiarTodo()
-                      this.generatePDF2();
-                    }else{
-                      Swal.fire({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 1500,
-                        timerProgressBar: true,
-                        title: '¡ERROR!, ¡oh no!, hubo un error.',
-                        icon: 'error'
-                      })
-                    }
-                  })
-                }
-              })              
-          }          
-        }else{
-          Swal.fire({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            title: '!ERROR!, hubo un error al intentar insertar los datos',
-            icon:'error'
-          })
-        }
-      })
-    }else{
-      this.service.InsertarReservaciones(this.reservaciones).subscribe((data:any)=>{  
-        var cont = 0;     
-        if(data.data.codeStatus != 0){
-          const idreser = data.data.codeStatus;
-          console.log(idreser)
-          if (idUsuario !== undefined) {
-            this.clienReser.clre_UsuarioCreador = idUsuario;
-          }
-          this.clienReser.rese_Id  = data.data.codeStatus;
-          console.log("No existe")
-          const selectedPeopleString = JSON.stringify(this.selectedPeople);
-          localStorage.setItem('array', selectedPeopleString);
-          for(var i = 0 ; i <= this.selectedPeople.length ; i++){
-              this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;  
-              this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
-                cont ++;
-                console.log(cont)  
-                if(cont === this.selectedPeople.length){                                        
-                  this.factu.rese_Id = idreser;
-                  this.factu.mepa_id = parseInt(this.metodoSeleccionado.toString());
-                  this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
-                    console.log(data.data.codeStatus)
-                    this.fact_Id = data.data.codeStatus;
-                    localStorage.setItem('idF',data.data.codeStatus)
-                    if(data.data.codeStatus >= 1){
-                      this.wizardForm.goToNextStep();
-                      this.LimpiarTodo()
-                      this.generatePDF2();
-                    }else{
-                      Swal.fire({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 1500,
-                        timerProgressBar: true,
-                        title: '¡ERROR!, ¡oh no!, hubo un error.',
-                        icon: 'error'
-                      })
-                    }
-                  })
-                }
-              })              
-          }          
-        }else{
-          Swal.fire({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            title: '!ERROR!, hubo un error al intentar insertar los datos',
-            icon:'error'
-          })
-        }
-      })  
-    }   
+      console.log("Cuando se escoge un un metodo de pago de un solo")
     }
    return null;
   }
@@ -1048,38 +1009,18 @@ export class ReservacionesComponent implements OnInit {
     this.Actividad.acfe_Fecha = selectedDate;
     this.Actividad.acti_Id = this.selectedActivity!.acti_Id;
       this.service.VerificarCuposActividad(this.Actividad).subscribe((response:any)=>{
-          if(response.data.codeStatus != -2 && response.data.codeStatus != 0){
-            Swal.fire({
-              toast: true,
-              position: 'top-end',
-              showConfirmButton: false,
-              timer: 4500,
-              timerProgressBar: true,
-              title: 'Los cupos disponibles para esta actividad en esta fecha son de:'+response.data.codeStatus,
-              icon: 'info'
-            })
-          }else{
-            if(response.data.codeStatus = -2){
+          if(response.data.codeStatus != -2 && response.data.codeStatus != -5){
+            if(response.data.codeStatus == 0){
               Swal.fire({
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
                 timer: 4500,
                 timerProgressBar: true,
-                title: 'Los cupos disponibles para esta actividad en esta fecha son de:'+this.selectedActivity!.acti_Cupo,
-                icon: 'info'
-              })
-            }else{
-              Swal.fire({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 4500,
-                timerProgressBar: true, 
-                title: 'Error',
+                title: 'Ya no hay cupos para esta actividad',
                 icon: 'error'
               })
-            }
+            }          
           }
       })
     } else {
@@ -1173,8 +1114,18 @@ export class ReservacionesComponent implements OnInit {
         this.Actividad.acfe_Fecha = this.convertToDate1(this.selectedDate1);
         this.Actividad.acfe_Id  =this.selectedActivity!.acti_Id;
         this.service.VerificarCuposActividad(this.Actividad).subscribe((response:any)=>{
-            if(response.data.codeStatus != -2 && response.data.codeStatus != 0){
-              if(response.data.codeStatus >= this.selectedPeople.length){
+            if(response.data.codeStatus != -2 && response.data.codeStatus != -5){
+              if(response.data.codeStatus <= this.selectedPeople.length && response.data.codeStatus == 0 ){
+                Swal.fire({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 6000,
+                  timerProgressBar: true,
+                  title: '!ERROR!, Ya no hay cupos para esta actividad en esta fecha',
+                  icon:'error'
+                })
+              }else{
                 console.log("existe")
                 this.ExistsOrNot = true;
                   const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
@@ -1199,17 +1150,8 @@ export class ReservacionesComponent implements OnInit {
                   localStorage.setItem('array', selectedPeopleString);
                   this.modalService.dismissAll();
                   this.wizardForm.goToNextStep();
-              }else{
-                Swal.fire({
-                  toast: true,
-                  position: 'top-end',
-                  showConfirmButton: false,
-                  timer: 6000,
-                  timerProgressBar: true,
-                  title: '!ERROR!, La cantidad de personas en su reservación sobrepasa los cupos disponible para esta actividad \n Cupos disponible:'+response.data.codeStatus + ' y la cantidad de personas que reservan es de: '+this.selectedPeople.length,
-                  icon:'error'
-                })
-              }                              
+              }
+                            
             }else{              
               if(response.data.codeStatus == -2){
                 this.ExistsOrNot = false;
@@ -1276,7 +1218,7 @@ export class ReservacionesComponent implements OnInit {
    */
   finishFunction() {
     Swal.fire({
-      titleText: '¡Reservación ingresada exitosamente!',
+      titleText: '¡Reservación realizada exitosamente!',
       position: 'center',
       timerProgressBar: true,
       timer:5000,

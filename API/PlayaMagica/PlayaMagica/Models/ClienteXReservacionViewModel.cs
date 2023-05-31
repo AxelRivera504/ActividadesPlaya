@@ -10,6 +10,7 @@ namespace PlayaMagica.Models
         public int clre_Id { get; set; }
         public int? clie_Id { get; set; }
         public int? rese_Id { get; set; }
+        public bool? rese_OwnerPayy { get; set; }
         public bool? clre_Estado { get; set; }
         public int? clre_UsuarioCreador { get; set; }
         public DateTime? clre_FechaCreacion { get; set; }

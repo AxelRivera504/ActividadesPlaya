@@ -39,7 +39,6 @@ namespace PlayaMagica.Entities.Entities
         public DateTime? fuct_FechaCreacion { get; set; }
         public int? fuct_UsuarioModificador { get; set; }
         public DateTime? fuct_FechaModificacion { get; set; }
-
         public virtual tbUsuarios fuct_UsuarioCreadorNavigation { get; set; }
         public virtual tbUsuarios fuct_UsuarioModificadorNavigation { get; set; }
         public virtual tbMetodosPago mepa { get; set; }

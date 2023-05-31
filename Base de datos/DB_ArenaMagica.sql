@@ -2,10 +2,10 @@
 --DROP SCHEMA Gral
 --DROP SCHEMA Acce
 --DROP SCHEMA Acti
-CREATE DATABASE DB_ArenaMagica
-go
-use DB_ArenaMagica
-go 
+--CREATE DATABASE DB_ArenaMagica
+--go
+--use DB_ArenaMagica
+--go 
 
 CREATE SCHEMA Gral
 
@@ -198,7 +198,7 @@ CREATE TABLE Acti.tbClienteXReservacion
    clre_Id                      INT IDENTITY(1,1), 
    clie_Id                      INT, 
    rese_Id                      INT,
-
+   rese_OwnerPayy				BIT,
    clre_Estado					BIT DEFAULT 1,
    clre_UsuarioCreador			INT DEFAULT 1,
    clre_FechaCreacion			DATETIME DEFAULT GETDATE(),
