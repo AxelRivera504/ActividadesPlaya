@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ServicesService } from '../Service/services.service';
+
 import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+
+import { ServicesService } from '../Service/services.service';
+
+
+
+
+
+
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +27,7 @@ export class DashboardComponent implements OnInit {
   public revenueChartOptions: any = {};
   public monthlySalesChartOptions: any = {};
   public cloudStorageChartOptions: any = {};
-
+  public visitantesChartOptions: any = {};
   // colors and font variables for apex chart 
   obj = {
     primary        : "#6571ff",
@@ -42,43 +50,63 @@ export class DashboardComponent implements OnInit {
    */
   currentDate: NgbDateStruct;
 
-  constructor(private calendar: NgbCalendar,private service: ServicesService) {}
+  constructor(private calendar: NgbCalendar,private service:ServicesService) {}
 
   ngOnInit(): void {
     this.currentDate = this.calendar.getToday();
-    
-    this.service.getVisitantesXFecha().subscribe(data => {     
-      const fechas = data.map(item => item.acfe_Fecha);     
-      const cantidades = data.map(item => item.acfe_Cantidad);   
-      this.revenueChartOptions = getRevenueChartOptions(this.obj, fechas, cantidades);
-    });
-
-
-    function getRevenueChartOptions(obj: any, fechas: Date[], cantidades: number[]) {
-      return {
-        // ...
-    
-        xaxis: {
-          type: 'datetime',
-          categories: fechas, // Utiliza las categorías de fecha recibidas como parámetro
-        },
-    
-        series: [{
-          name: "Revenue",
-          data: cantidades, // Utiliza los valores de cantidad recibidos como parámetro
-        }],
-    
-        // ...
-      };
-    }
-
 
     this.customersChartOptions = getCustomerseChartOptions(this.obj);
     this.ordersChartOptions = getOrdersChartOptions(this.obj);
     this.growthChartOptions = getGrowthChartOptions(this.obj);
+    this.revenueChartOptions = getRevenueChartOptions(this.obj);
     this.monthlySalesChartOptions = getMonthlySalesChartOptions(this.obj);
     this.cloudStorageChartOptions = getCloudStorageChartOptions(this.obj);
+   
+    this.currentDate = this.calendar.getToday();
 
+    // ...
+    
+    this.service.getVisitantesXFecha().subscribe(data => 
+      {
+        const visitantesData = data.map(item => item.cantidadVisitantes);
+        const fechasData = data.map(item => item.acfe_Fecha);
+  
+        this.visitantesChartOptions = getVisitantesChartOptions(this.obj, visitantesData, fechasData);
+       console.log(data);
+      })
+     
+
+      function getVisitantesChartOptions(obj: any, visitantesData: number[], fechasData: Date[]) {
+        
+        console.log('visitantes',visitantesData);
+        console.log('fechas',fechasData);
+        return {
+          series: [{  
+            name: 'Visitantes',
+            data: visitantesData
+          }],
+          chart: {
+            type: 'line',
+            height: 300,
+            toolbar: {
+              show: true
+            }
+          },
+          colors: [obj.primary],
+          xaxis: {
+            type: 'datetime',
+            categories: fechasData.map(date => date)
+          },
+          stroke: {
+            width: 2,
+            curve: 'smooth'
+          },
+          markers: {
+            size: 0
+          }
+        };
+      }
+ 
     // Some RTL fixes. (feel free to remove if you are using LTR))
     if (document.querySelector('html')?.getAttribute('dir') === 'rtl') {
       this.addRtlOptions();
@@ -208,156 +236,6 @@ function getRevenueChartOptions(obj: any) {
     series: [{
       name: "Revenue",
       data: [
-        49.3,
-        48.7,
-        50.6,
-        53.3,
-        54.7,
-        53.8,
-        54.6,
-        56.7,
-        56.9,
-        56.1,
-        56.5,
-        60.3,
-        58.7,
-        61.4,
-        61.1,
-        58.5,
-        54.7,
-        52.0,
-        51.0,
-        47.4,
-        48.5,
-        48.9,
-        53.5,
-        50.2,
-        46.2,
-        48.6,
-        51.7,
-        51.3,
-        50.2,
-        54.6,
-        52.4,
-        53.0,
-        57.0,
-        52.9,
-        48.7,
-        52.6,
-        53.5,
-        58.5,
-        55.1,
-        58.0,
-        61.3,
-        57.7,
-        60.2,
-        61.0,
-        57.7,
-        56.8,
-        58.9,
-        62.4,
-        58.7,
-        58.4,
-        56.7,
-        52.7,
-        52.3,
-        50.5,
-        55.4,
-        50.4,
-        52.4,
-        48.7,
-        47.4,
-        43.3,
-        38.9,
-        34.7,
-        31.0,
-        32.6,
-        36.8,
-        35.8,
-        32.7,
-        33.2,
-        30.8,
-        28.6,
-        28.4,
-        27.7,
-        27.7,
-        25.9,
-        24.3,
-        21.9,
-        22.0,
-        23.5,
-        27.3,
-        30.2,
-        27.2,
-        29.9,
-        25.1,
-        23.0,
-        23.7,
-        23.4,
-        27.9,
-        23.2,
-        23.9,
-        19.2,
-        15.1,
-        15.0,
-        11.0,
-        9.20,
-        7.47,
-        11.6,
-        15.7,
-        13.9,
-        12.5,
-        13.5,
-        15.0,
-        13.9,
-        13.2,
-        18.1,
-        20.6,
-        21.0,
-        25.3,
-        25.3,
-        20.9,
-        18.7,
-        15.3,
-        14.5,
-        17.9,
-        15.9,
-        16.3,
-        14.1,
-        12.1,
-        14.8,
-        17.2,
-        17.7,
-        14.0,
-        18.6,
-        18.4,
-        22.6,
-        25.0,
-        28.1,
-        28.0,
-        24.1,
-        24.2,
-        28.2,
-        26.2,
-        29.3,
-        26.0,
-        23.9,
-        28.8,
-        25.1,
-        21.7,
-        23.0,
-        20.7,
-        29.7,
-        30.2,
-        32.5,
-        31.4,
-        33.6,
-        30.0,
-        34.2,
-        36.9,
-        35.5,
-        34.7,
-        36.9
       ]
     }],
     chart: {

@@ -24,6 +24,9 @@ BEGIN
 		SELECT 0 
 	END CATCH
 END
+
+
+go
 CREATE OR ALTER PROCEDURE Acce.UDP_tbRoles_Delete 
 @role_ID INT
 AS
@@ -51,47 +54,6 @@ BEGIN
 	BEGIN CATCH
 		SELECT 0
 	END CATCH
-END
-
-GO
-CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Insert
-@usua_Usuario NVARCHAR(100),
-@usua_Clave VARCHAR(MAX),
-@enca_ID INT,
-@role_ID INT,
-@usua_UsuarioCreador INT
-AS
-BEGIN
- BEGIN TRY
- 		IF NOT EXISTS(SELECT * FROM Acce.tbUsuarios WHERE usua_Usuario = @usua_Usuario)
-			BEGIN
-				DECLARE @contraEncriptada NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Clave);
-				INSERT INTO Acce.tbUsuarios(usua_Usuario, usua_Clave, 
-				 enca_ID, 
-				role_ID, usua_Estado, 
-				usua_UsuarioCreador, usua_FechaCreacion, 
-				usua_UsuarioModificador, usua_FechaModificacion)
-				VALUES(@usua_Usuario,@contraEncriptada,
-			   @enca_ID,
-				@role_ID,1,@usua_UsuarioCreador,
-				GETDATE(),NULL,NULL)
-				SELECT 1
-			END
-		IF EXISTS (SELECT * FROM Acce.tbUsuarios WHERE usua_Usuario = @usua_Usuario AND usua_Estado = 0)
-			BEGIN
-				UPDATE Acce.tbUsuarios 
-				SET usua_Estado = 1
-				WHERE usua_Usuario = @usua_Usuario
-				SELECT 1
-			END
-		ELSE BEGIN
-			SELECT 2
-		END
- END TRY
-
- BEGIN CATCH
-	SELECT 0
- END CATCH
 END
 
 go
@@ -178,6 +140,8 @@ BEGIN
 	END CATCH
 END
 
+
+go
 CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Delete 
 @usua_ID INT
 AS
@@ -203,5 +167,6 @@ BEGIN
     SELECT [acfe_Fecha], SUM([acfe_Cantidad]) AS CantidadVisitantes
     FROM [Acti].[tbActividadesXFecha] t1
     GROUP BY [acfe_Fecha]
+	order by [acfe_Fecha]
 END
 
