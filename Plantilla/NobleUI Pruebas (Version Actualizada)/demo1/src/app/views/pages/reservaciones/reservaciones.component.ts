@@ -21,6 +21,7 @@ import { Encargados } from '../Model/Encargados';
 import jsPDF from 'jspdf';
 import { FactuList } from '../Model/ListaFactura';
 import { ReportData } from '../Model/ReportData';
+
 const fillJustifyNav = {
   htmlCode: 
 `<ul ngbNav #fillJustifyNav="ngbNav" class="nav-tabs nav-fill">
@@ -159,6 +160,9 @@ export class ReservacionesComponent implements OnInit {
    fact_Id!: number;
    InfoFact!:[];
    clientesFac: Cliente = new Cliente()
+
+   Activo: boolean = true;
+   ExistsOrNot: boolean = false;
   constructor(private calendar: NgbCalendar,public formBuilder: UntypedFormBuilder,private router: Router, private service: ServicesService, private config: NgSelectConfig,private modalService: NgbModal) { 
    
     this.form = new FormGroup({
@@ -177,53 +181,73 @@ export class ReservacionesComponent implements OnInit {
       doc.setFontSize(18);
       const pageWidth = doc.internal.pageSize.width;
       doc.setTextColor(40);
-  
+      
       // Agregar imagen
       doc.addImage(
-        'https://i.ibb.co/ZddkzHw/Green-Yellow-Abstract-Summers-Island-Logo-1.png',
+        'https://i.ibb.co/W3vSBmv/Green-Yellow-Abstract-Summers-Island-Logo-1-removebg-preview.png',
         'png',
         pageWidth - 70,
-        -15,
+        -10,
         80,
         80
       );
   
       // Agregar texto
       doc.setFontSize(30);
-      doc.setFont('Pacifico', 'normal');
-      doc.text('FACTURA', 10, 30);
+      doc.setFont('', 'normal');
+      doc.setTextColor('#004447');
+      doc.text('Datos de su reservación', 10, 30);
     };
   
     const footer = function (doc: any) {
-      doc.setFontSize(12);
-      doc.setFont('Pacifico', 'normal');
+      // Obtener las dimensiones del footer
+      const footerHeight = 65; // Altura del footer en mm
+    
+      // Agregar imagen en el footer
+      const imageUrl = 'https://i.ibb.co/jzbQb6B/14064375-5439134.jpg';
+      const imageWidth = doc.internal.pageSize.getWidth();
+      const imageHeight = footerHeight;
+    
+      doc.addImage(imageUrl, 'JPEG', 0, doc.internal.pageSize.getHeight() - footerHeight, imageWidth, imageHeight);
+    
+      // Agregar textos en el footer
+      doc.setFontSize(16);
+      doc.setFont('Helvetica', 'bold');
+      doc.setTextColor(0, 0, 0);  // Establecer color de texto en negro
+    
       doc.text(
-        '¡Gracias por preferirnos para sus actividades playeras',
-        60,
-        doc.internal.pageSize.height - 10
+        '¡Gracias por preferirnos para sus actividades playeras!',
+        35,
+        doc.internal.pageSize.getHeight() - footerHeight + 25
       );
-  
-      doc.setFontSize(12);
-      doc.setFont('Pacifico', 'normal');
+    
       doc.text(
         '¡Playa mágica les desea lo mejor en sus actividades playeras aventureros!',
-        45,
-        doc.internal.pageSize.height - 20
+        5,
+        doc.internal.pageSize.getHeight() - footerHeight + 35
       );
     };
+    
   
-    console.log(this.fact_Id);
-    console.log(localStorage.getItem('idF')!.toString());
     console.log(this.selectedPeople);
     console.log(localStorage.getItem('array'))
+    const Actividad = this.selectedActivity;
+    const fecha = this.selectedDate1;
     const arrayFromLocalStorage = JSON.parse(localStorage.getItem('array')!);
-    const arrayFromLocalStorage1 = localStorage.getItem('array');
     console.log(arrayFromLocalStorage); 
     this.service
-      .getFactura(parseInt(localStorage.getItem('idF')!.toString()))
+      .getEncargadosByIdReport2(this.selectedActivity!.acti_Id)
       .subscribe(
-        (response: FactuList[]) => {
-          const data: FactuList = response[0];
+        (response: Encargados[]) => {
+          const data = response.map((Encarga: Encargados) => [
+            Encarga.nombreCompletoEnca,
+            Encarga.enca_Telefono,
+            Encarga.enca_Email
+          ]);
+
+          doc.setLineWidth(1); // Establecer el grosor de la línea en 1 (puedes ajustar este valor según tus necesidades)
+          doc.setDrawColor(0, 0, 0); // Establecer el color de la línea en negro (valores RGB: 0, 0, 0)
+          doc.line(10, 55, doc.internal.pageSize.getWidth() - 10, 55);
           doc.setFontSize(18);
           const pageWidth = doc.internal.pageSize.width;
           doc.setTextColor(40);
@@ -234,56 +258,54 @@ export class ReservacionesComponent implements OnInit {
           doc.setFontSize(12);
           doc.setFontSize(13); 
           doc.setFont("Pacifico", "normal");
-          doc.text("Factura Nº: " + data.fuct_Id, 5, 54);
+          doc.text("Actividad Id: " + Actividad!.acti_Id, 10, 60);
 
           doc.setFontSize(12); 
           doc.setFont("Pacifico", "normal");
-          doc.text("Dirección empresa: San Pedro sula, Barrio san juan, a saber donde", 5, 60);
-
-          doc.setFontSize(12); 
-          doc.setFont("Pacifico", "normal");
-          doc.text("Empleado:"+ data.nombreCompleto , 5, 66);
+          doc.text("Nombre de actividad:"+ Actividad!.acti_Nombre , 100, 60);
 
           doc.setDrawColor(0, 0, 0);
           doc.setLineWidth(0.5);
 
           doc.setFontSize(12); 
           doc.setFont("Pacifico", "normal");
-          doc.text("Actividad-: "+ data.acti_Nombre , 5, 72);
-
+          doc.text("Actividad precio: "+ Actividad!.acti_Precio , 10, 66);
           doc.setFontSize(12); 
-          doc.setFont("Pacifico", "normal");
-          doc.text("Precio actividad:"+data.acti_Precio , 100, 72);
+          doc.setFont("Pacifico", "normal"); 
+         doc.text("Fecha de la reservación:"+ fecha.day+'/'+fecha.month+'/'+fecha.year ,100, 66);
+
+          doc.setLineWidth(1); // Establecer el grosor de la línea en 1 (puedes ajustar este valor según tus necesidades)
+          doc.setDrawColor(0, 0, 0); // Establecer el color de la línea en negro (valores RGB: 0, 0, 0)
+          doc.line(10, 70, doc.internal.pageSize.getWidth() - 10, 70);
+
+
+
+
           
-          doc.setFontSize(12); 
-          doc.setFont("Pacifico", "normal"); 
-         doc.text("Lugar de la actividad:", + 5, 78);
-
-         doc.setFontSize(12); 
-          doc.setFont("Pacifico", "normal"); 
-         doc.text("Departamento:"+data.dept_Descripcion ,5, 84);
-         
-         doc.setFontSize(12); 
-          doc.setFont("Pacifico", "normal"); 
-         doc.text("Municipio:"+data.muni_Descripcion ,5, 90);
-
-         doc.setFontSize(12); 
-         doc.setFont("Pacifico", "normal"); 
-         doc.text("Dirección exacta:"+data.dire_DireccionExacta ,5, 96);
-         
-         doc.setFontSize(12); 
-         doc.setFont("Pacifico", "normal"); 
-         doc.text("Playa:"+data.play_Playa ,5, 102);
-
-          doc.setFontSize(12);
-          doc.text(`Fecha de Reservación: ${data.rese_FechaReservacion}`, 5, 108);
-          doc.setFontSize(12);
-          // Agregar más datos según sea necesario
-  
-          // Llamar a las funciones de encabezado y pie de página
           header(doc);
           footer(doc);
+          const headerColor = '#F49334';
           
+
+          (doc as any).autoTable({
+            head: [['Nombres encargados', 'DNI encargados', 'Email encargados']],
+            body: data,         
+            startY: 100,
+            margin: { top: 10 },
+            theme: 'grid', // Aplica un tema (opcional)
+              styles: {
+                headStyles: {
+                  fillColor: headerColor, // Cambia el color de relleno de la barra de encabezado
+                  textColor: '#F49334', // Cambia el color del texto de la barra de encabezado
+                },
+              },
+          });
+          doc.text('Información sobre los encargados de la actividad: ', 14, 93); 
+          
+          const secondTableY = (doc as any).autoTable.previous.finalY + 10; // Ajusta el valor de desplazamiento vertical según tus necesidades
+          doc.text('Participantes de la actividad: ', 14, secondTableY);
+          
+          // ...
           
           (doc as any).autoTable({
             head: [['ID', 'Nombres', 'Apellidos', 'DNI', 'Email']],
@@ -294,8 +316,180 @@ export class ReservacionesComponent implements OnInit {
               cliente.clie_DNI,
               cliente.clie_Email,
             ]),           
-            startY: 140,
+            startY: secondTableY + 10, // Ajusta el valor de desplazamiento vertical según tus necesidades
+            margin: { top: 200, right: 15, bottom: 10 },
+            theme: 'grid',
+            styles: {
+              cellWidth: 'wrap',
+              headStyles: {
+                fillColor: headerColor, // Cambia el color de relleno de la barra de encabezado
+                textColor: '#F49334', // Cambia el color del texto de la barra de encabezado
+              },
+            },
+            columnStyles: {
+              1: { cellWidth: 35 } // Elige el valor que necesites
+            }
+          }); 
+      
+          // Mostrar el PDF en el visor
+          const pdfDataUri = doc.output('datauristring');
+          this.pdfViewer.nativeElement.src = pdfDataUri;
+        },
+        (error: any) => {
+          this.errorMessage = 'Se produjo un error al obtener los datos de los empleados.';
+          console.error(error);
+        }
+        );
+  }
+
+
+
+  generatePDF2(): void {
+    const doc = new jsPDF();
+    const header = function (doc: any) {
+      doc.setFontSize(18);
+      const pageWidth = doc.internal.pageSize.width;
+      doc.setTextColor(40);
+      // Agregar imagen
+      doc.addImage(
+        'https://i.ibb.co/W3vSBmv/Green-Yellow-Abstract-Summers-Island-Logo-1-removebg-preview.png',
+        'png',
+        pageWidth - 70,
+        -10,
+        65,
+        65
+      );
+  
+      // Agregar texto
+      doc.setFontSize(30);
+      doc.setFont('Pacifico', 'normal');
+      doc.text('FACTURA', 10, 30);
+    };
+  
+    const footer = function (doc: any) {
+      // Obtener las dimensiones del footer
+      const footerHeight = 65; // Altura del footer en mm
+    
+      // Agregar imagen en el footer
+      const imageUrl = 'https://i.ibb.co/jzbQb6B/14064375-5439134.jpg';
+      const imageWidth = doc.internal.pageSize.getWidth();
+      const imageHeight = footerHeight;
+    
+      doc.addImage(imageUrl, 'JPEG', 0, doc.internal.pageSize.getHeight() - footerHeight, imageWidth, imageHeight);
+    
+      // Agregar textos en el footer
+      doc.setFontSize(16);
+      doc.setFont('Helvetica', 'bold');
+      doc.setTextColor(0, 0, 0);  // Establecer color de texto en negro
+    
+      doc.text(
+        '¡Gracias por preferirnos para sus actividades playeras!',
+        35,
+        doc.internal.pageSize.getHeight() - footerHeight + 25
+      );
+    
+      doc.text(
+        '¡Playa mágica les desea lo mejor en sus actividades playeras aventureros!',
+        5,
+        doc.internal.pageSize.getHeight() - footerHeight + 35
+      );
+    };
+  
+    console.log(this.fact_Id);
+    console.log(localStorage.getItem('idF')!.toString());
+    console.log(this.selectedPeople);
+    console.log(localStorage.getItem('array'))
+    const arrayFromLocalStorage = JSON.parse(localStorage.getItem('array')!);
+    console.log(arrayFromLocalStorage); 
+    this.service
+      .getFactura(parseInt(localStorage.getItem('idF')!.toString()))
+      .subscribe(
+        (response: FactuList[]) => {
+          doc.setLineWidth(1); // Establecer el grosor de la línea en 1 (puedes ajustar este valor según tus necesidades)
+          doc.setDrawColor(0, 0, 0); // Establecer el color de la línea en negro (valores RGB: 0, 0, 0)
+          doc.line(10, 47, doc.internal.pageSize.getWidth() - 10, 47);
+          const data: FactuList = response[0];
+          doc.setFontSize(18);
+          const pageWidth = doc.internal.pageSize.width;
+          doc.setTextColor(40);
+          doc.setTextColor(40);
+          doc.setDrawColor(0, 0, 0);
+          doc.setLineWidth(0.5);
+          // Agregar datos de la factura
+          doc.setFontSize(12);
+          doc.setFontSize(16); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Información de la factura", 10, 54);
+
+          doc.setFontSize(13); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Factura Nº: " + data.fuct_Id, 10, 58);
+
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Empleado: "+ data.nombreCompleto , 100, 58);
+
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Dirección empresa: San Pedro sula, Barrio san juan, a saber donde", 10, 62);
+
+          doc.setFontSize(12);
+          doc.text(`Fecha de Reservación: ${data.rese_FechaReservacion}`, 10, 66);
+          
+          doc.setLineWidth(1); // Establecer el grosor de la línea en 1 (puedes ajustar este valor según tus necesidades)
+          doc.setDrawColor(0, 0, 0); // Establecer el color de la línea en negro (valores RGB: 0, 0, 0)
+          doc.line(10, 73, doc.internal.pageSize.getWidth() - 10, 73);
+
+          doc.setFontSize(16); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Información de la actividad", 10, 80);
+
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Actividad-: "+ data.acti_Nombre , 10, 84);
+
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Precio actividad:"+data.acti_Precio , 100, 84);
+          
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal"); 
+         doc.text("Lugar de la actividad:", + 10, 88);
+
+         doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal"); 
+         doc.text("Departamento:"+data.dept_Descripcion +'- Municipio: '+data.muni_Descripcion+'- Dirección: '+data.dire_DireccionExacta +'- Playa: '+data.play_Playa,10, 92);
+          
+          doc.setFontSize(12);
+
+          doc.setLineWidth(1); // Establecer el grosor de la línea en 1 (puedes ajustar este valor según tus necesidades)
+          doc.setDrawColor(0, 0, 0); // Establecer el color de la línea en negro (valores RGB: 0, 0, 0)
+          doc.line(10, 99, doc.internal.pageSize.getWidth() - 10, 99);
+          // Agregar más datos según sea necesario
+  
+          // Llamar a las funciones de encabezado y pie de página
+          header(doc);
+          footer(doc);
+          const headerColor = '#F49334';
+          
+          (doc as any).autoTable({
+            head: [['ID', 'Nombres', 'Apellidos', 'DNI', 'Email']],
+            body: arrayFromLocalStorage!.map((cliente: Cliente) => [
+              cliente.clie_id,
+              cliente.clie_Nombres,
+              cliente.clie_Apellidos,
+              cliente.clie_DNI,
+              cliente.clie_Email,
+            ]),           
+            startY: 112,
             margin: { top: 10 },
+            theme: 'grid', // Aplica un tema (opcional)
+              styles: {
+                headStyles: {
+                  fillColor: headerColor, // Cambia el color de relleno de la barra de encabezado
+                  textColor: '#F49334', // Cambia el color del texto de la barra de encabezado
+                },
+              },
           });
 
           (doc as any).autoTable({
@@ -306,6 +500,7 @@ export class ReservacionesComponent implements OnInit {
             ],
             startY: (doc as any).autoTable.previous.finalY + 1,
             margin: { top: 150, right: 15, bottom: 20, left: 115 },
+            theme: 'grid',
             styles: {
               cellWidth: 'wrap',
               cellPadding: 2,
@@ -313,9 +508,14 @@ export class ReservacionesComponent implements OnInit {
             },
             columnStyles: {
               1: { cellWidth: 25 } // Elige el valor que necesites
-            }
+            },
+            headStyles: {
+              fillColor: headerColor, // Cambia el color de relleno de la barra de encabezado
+              textColor: '#F49334', // Cambia el color del texto de la barra de encabezado
+            },
           });
          
+          doc.text('Participantes de la actividad: ', 14, 106); 
   
           // Mostrar el PDF en el visor
           const pdfDataUri = doc.output('datauristring');
@@ -327,6 +527,7 @@ export class ReservacionesComponent implements OnInit {
         }
       );
   }
+
 
 
   get minDate(): NgbDate {
@@ -377,49 +578,328 @@ export class ReservacionesComponent implements OnInit {
   }
 
   ConfirmarFactura(){
-    if (!this.metodoSeleccionado) {
-    this.submittedMeto = true;  
-    Swal.fire({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 1500,
-      timerProgressBar: true,
-      title: '¡Escoja un metodo de pago!',
-      icon: 'warning'
-    })
-    return;
-  }
-  this.factu.mepa_id = parseInt(this.metodoSeleccionado.toString());
-  this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
-    console.log(data.data.codeStatus)
-    this.fact_Id = data.data.codeStatus;
-    localStorage.setItem('idF',data.data.codeStatus)
-    if(data.data.codeStatus >= 1){
-      Swal.fire({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-        title: '¡Reservación hecha con exito!',
-        icon: 'success'
-      })
-      this.wizardForm.goToNextStep();
-      this.LimpiarTodo()
-      this.generatePDF();
+    if(!this.metodoSeleccionado){
+      return new Promise((resolve, reject) => {
+        Swal.fire({
+          titleText: '¿Seguro que no desea pagar la reservación por el momento?',
+          position: 'center',
+          showCancelButton: true,
+          showConfirmButton: true,
+          cancelButtonText: 'No',
+          confirmButtonText: 'Si',
+          timerProgressBar: true,
+          icon: 'info'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+              title: 'Debe escoger un metodo de pago',
+              icon: 'info'
+            })          
+            this.wizardForm.goToNextStep();
+            this.generatePDF(); 
+            resolve(true);
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            this.Activo = true;
+            const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
+            if (idUsuario !== undefined) {
+              this.reservaciones.rese_UsuarioCreador = idUsuario;
+            }
+          if(this.ExistsOrNot){            
+            this.service.InsertarReservacionesExiste(this.reservaciones).subscribe((data:any)=>{  
+              var cont = 0;     
+              if(data.data.codeStatus != 0){
+                const idreser = data.data.codeStatus;
+                console.log(idreser)
+                if (idUsuario !== undefined) {
+                  this.clienReser.clre_UsuarioCreador = idUsuario;
+                }
+                this.clienReser.rese_Id  = data.data.codeStatus;
+                console.log( this.clienReser.rese_Id );
+                console.log("ya existe")
+                const selectedPeopleString = JSON.stringify(this.selectedPeople);
+              localStorage.setItem('array', selectedPeopleString);
+                for(var i = 0 ; i <= this.selectedPeople.length ; i++){
+                    this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;  
+                    this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
+                      cont ++;  
+                      console.log(cont);
+                      if(cont === this.selectedPeople.length){
+                        Swal.fire({
+                          toast: true,
+                          position: 'top-end',
+                          showConfirmButton: false,
+                          timer: 3000,
+                          timerProgressBar: true,
+                          title: '!Datos insertados con exito!',
+                          icon: 'success'
+                        })
+                        this.factu.rese_Id = idreser;
+                        this.factu.mepa_id = parseInt(this.metodoSeleccionado.toString());
+                        this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
+                          console.log(data.data.codeStatus)
+                          this.fact_Id = data.data.codeStatus;
+                          localStorage.setItem('idF',data.data.codeStatus)
+                          if(data.data.codeStatus >= 1){
+                            Swal.fire({
+                              toast: true,
+                              position: 'top-end',
+                              showConfirmButton: false,
+                              timer: 1500,
+                              timerProgressBar: true,
+                              title: '¡Reservación hecha con exito!',
+                              icon: 'success'
+                            })
+                            this.wizardForm.goToNextStep();
+                            this.LimpiarTodo()
+                            this.generatePDF2();
+                          }else{
+                            Swal.fire({
+                              toast: true,
+                              position: 'top-end',
+                              showConfirmButton: false,
+                              timer: 1500,
+                              timerProgressBar: true,
+                              title: '¡ERROR!, ¡oh no!, hubo un error.',
+                              icon: 'error'
+                            })
+                          }
+                        })
+                      }
+                    })              
+                }          
+              }else{
+                Swal.fire({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 1500,
+                  timerProgressBar: true,
+                  title: '!ERROR!, hubo un error al intentar insertar los datos',
+                  icon:'error'
+                })
+              }
+            })
+          }else{
+            this.service.InsertarReservaciones(this.reservaciones).subscribe((data:any)=>{  
+              var cont = 0;     
+              if(data.data.codeStatus != 0){
+                const idreser = data.data.codeStatus;
+                console.log(idreser)
+                if (idUsuario !== undefined) {
+                  this.clienReser.clre_UsuarioCreador = idUsuario;
+                }
+                this.clienReser.rese_Id  = data.data.codeStatus;
+                console.log("No existe")
+                const selectedPeopleString = JSON.stringify(this.selectedPeople);
+                localStorage.setItem('array', selectedPeopleString);
+                for(var i = 0 ; i <= this.selectedPeople.length ; i++){
+                    this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;  
+                    this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
+                      cont ++;
+                      console.log(cont)  
+                      if(cont === this.selectedPeople.length){
+                        Swal.fire({
+                          toast: true,
+                          position: 'top-end',
+                          showConfirmButton: false,
+                          timer: 3000,
+                          timerProgressBar: true,
+                          title: '!Datos insertados con exito!',
+                          icon: 'success'
+                        })                                 
+                        this.factu.rese_Id = idreser;
+                        this.factu.mepa_id = parseInt(this.metodoSeleccionado.toString());
+                        this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
+                          console.log(data.data.codeStatus)
+                          this.fact_Id = data.data.codeStatus;
+                          localStorage.setItem('idF',data.data.codeStatus)
+                          if(data.data.codeStatus >= 1){
+                            Swal.fire({
+                              toast: true,
+                              position: 'top-end',
+                              showConfirmButton: false,
+                              timer: 1500,
+                              timerProgressBar: true,
+                              title: '¡Reservación hecha con exito!',
+                              icon: 'success'
+                            })
+                            this.wizardForm.goToNextStep();
+                            this.LimpiarTodo()
+                            this.generatePDF2();
+                          }else{
+                            Swal.fire({
+                              toast: true,
+                              position: 'top-end',
+                              showConfirmButton: false,
+                              timer: 1500,
+                              timerProgressBar: true,
+                              title: '¡ERROR!, ¡oh no!, hubo un error.',
+                              icon: 'error'
+                            })
+                          }
+                        })
+                      }
+                    })              
+                }          
+              }else{
+                Swal.fire({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 1500,
+                  timerProgressBar: true,
+                  title: '!ERROR!, hubo un error al intentar insertar los datos',
+                  icon:'error'
+                })
+              }
+            })
+          }   
+            console.log("Confirmo")
+            this.submittedMeto = true;
+            this.generatePDF2(); 
+            resolve(false);
+          } else {
+            console.log("Que random?")
+            reject();
+          }
+        });
+      });
     }else{
-      Swal.fire({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-        title: '¡ERROR!, ¡oh no!, hubo un error.',
-        icon: 'error'
+      this.Activo = true;
+      const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
+      if (idUsuario !== undefined) {
+        this.reservaciones.rese_UsuarioCreador = idUsuario;
+      }
+    if(this.ExistsOrNot){            
+      this.service.InsertarReservacionesExiste(this.reservaciones).subscribe((data:any)=>{  
+        var cont = 0;     
+        if(data.data.codeStatus != 0){
+          const idreser = data.data.codeStatus;
+          console.log(idreser)
+          if (idUsuario !== undefined) {
+            this.clienReser.clre_UsuarioCreador = idUsuario;
+          }
+          this.clienReser.rese_Id  = data.data.codeStatus;
+          console.log( this.clienReser.rese_Id );
+          console.log("ya existe")
+          const selectedPeopleString = JSON.stringify(this.selectedPeople);
+        localStorage.setItem('array', selectedPeopleString);
+          for(var i = 0 ; i <= this.selectedPeople.length ; i++){
+              this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;  
+              this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
+                cont ++;  
+                console.log(cont);
+                if(cont === this.selectedPeople.length){                 
+                  this.factu.rese_Id = idreser;
+                  this.factu.mepa_id = parseInt(this.metodoSeleccionado.toString());
+                  this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
+                    console.log(data.data.codeStatus)
+                    this.fact_Id = data.data.codeStatus;
+                    localStorage.setItem('idF',data.data.codeStatus)
+                    if(data.data.codeStatus >= 1){
+                      Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        timerProgressBar: true,
+                        title: '¡Reservación hecha con exito!',
+                        icon: 'success'
+                      })
+                      this.wizardForm.goToNextStep();
+                      this.LimpiarTodo()
+                      this.generatePDF2();
+                    }else{
+                      Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        timerProgressBar: true,
+                        title: '¡ERROR!, ¡oh no!, hubo un error.',
+                        icon: 'error'
+                      })
+                    }
+                  })
+                }
+              })              
+          }          
+        }else{
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            title: '!ERROR!, hubo un error al intentar insertar los datos',
+            icon:'error'
+          })
+        }
       })
+    }else{
+      this.service.InsertarReservaciones(this.reservaciones).subscribe((data:any)=>{  
+        var cont = 0;     
+        if(data.data.codeStatus != 0){
+          const idreser = data.data.codeStatus;
+          console.log(idreser)
+          if (idUsuario !== undefined) {
+            this.clienReser.clre_UsuarioCreador = idUsuario;
+          }
+          this.clienReser.rese_Id  = data.data.codeStatus;
+          console.log("No existe")
+          const selectedPeopleString = JSON.stringify(this.selectedPeople);
+          localStorage.setItem('array', selectedPeopleString);
+          for(var i = 0 ; i <= this.selectedPeople.length ; i++){
+              this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;  
+              this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
+                cont ++;
+                console.log(cont)  
+                if(cont === this.selectedPeople.length){                                        
+                  this.factu.rese_Id = idreser;
+                  this.factu.mepa_id = parseInt(this.metodoSeleccionado.toString());
+                  this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
+                    console.log(data.data.codeStatus)
+                    this.fact_Id = data.data.codeStatus;
+                    localStorage.setItem('idF',data.data.codeStatus)
+                    if(data.data.codeStatus >= 1){
+                      this.wizardForm.goToNextStep();
+                      this.LimpiarTodo()
+                      this.generatePDF2();
+                    }else{
+                      Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        timerProgressBar: true,
+                        title: '¡ERROR!, ¡oh no!, hubo un error.',
+                        icon: 'error'
+                      })
+                    }
+                  })
+                }
+              })              
+          }          
+        }else{
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            title: '!ERROR!, hubo un error al intentar insertar los datos',
+            icon:'error'
+          })
+        }
+      })  
+    }   
     }
-  })
+   return null;
   }
 
   ConfirmarFact(){
@@ -448,7 +928,7 @@ export class ReservacionesComponent implements OnInit {
     if (!this.clientesForm.clie_Nombres || !this.clientesForm.clie_Apellidos ||
         !this.clientesForm.clie_DNI || !this.clientesForm.clie_Email ||
         !this.clientesForm.clie_Sexo  || !this.fechaValida || !this.fechaFormatoValido ) {
-          console.log(this.clientesForm.clie_Nombres  )
+          console.log(this.clientesForm.clie_Nombres)
       this.submitted = true;  
       this.submitte1 = true;  
       Swal.fire({
@@ -695,6 +1175,8 @@ export class ReservacionesComponent implements OnInit {
         this.service.VerificarCuposActividad(this.Actividad).subscribe((response:any)=>{
             if(response.data.codeStatus != -2 && response.data.codeStatus != 0){
               if(response.data.codeStatus >= this.selectedPeople.length){
+                console.log("existe")
+                this.ExistsOrNot = true;
                   const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
                   if (idUsuario !== undefined) {
                     this.reservaciones.rese_UsuarioCreador = idUsuario;
@@ -703,66 +1185,20 @@ export class ReservacionesComponent implements OnInit {
                   console.log(this.convertToDate1(this.selectedDate1))
                   this.reservaciones.rese_FechaReservacion =  this.convertToDate1(this.selectedDate1);
                   this.reservaciones.acti_Id = this.selectedActivity!.acti_Id;
-                  this.service.InsertarReservacionesExiste(this.reservaciones).subscribe((data:any)=>{  
-                    var cont = 0;     
-                    if(data.data.codeStatus != 0){
-                      const idreser = data.data.codeStatus;
-                      console.log(idreser)
-                      if (idUsuario !== undefined) {
-                        this.clienReser.clre_UsuarioCreador = idUsuario;
-                      }
-                      this.clienReser.rese_Id  = data.data.codeStatus;
-                      console.log( this.clienReser.rese_Id );
-                      console.log("ya existe")
-                      const selectedPeopleString = JSON.stringify(this.selectedPeople);
-                    localStorage.setItem('array', selectedPeopleString);
-                      for(var i = 0 ; i <= this.selectedPeople.length ; i++){
-                          this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;  
-                          this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
-                            cont ++;  
-                            console.log(cont);
-                            if(cont === this.selectedPeople.length){
-                              Swal.fire({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 3000,
-                                timerProgressBar: true,
-                                title: '!Datos insertados con exito!',
-                                icon: 'success'
-                              })
-                              this.factu.fuct_Subtotal = (this.selectedPeople.length * this.selectedActivity!.acti_Precio);
-                              console.log(this.factu.fuct_Subtotal)
-                              const subtotal = this.factu.fuct_Subtotal;
-                              this.factu.fuct_Isv = (subtotal * 0.15);
-                              console.log(this.factu.fuct_Isv)
-                              this.factu.fuct_Total = (this.factu.fuct_Subtotal + this.factu.fuct_Isv)
-                              if (idUsuario !== undefined) {
-                                this.factu.fuct_UsuarioCreador = idUsuario;
-                              }       
-                              this.factu.rese_Id = idreser;            
-                              console.log(this.factu.fuct_Total)
-                              this.toggleSelection()
-                              this.isChecked2 = true;
-                              const CKX1 = document.getElementById('CKActi');
-                              CKX1!.style.display = '';
-                              this.modalService.dismissAll();
-                              this.wizardForm.goToNextStep();
-                            }
-                          })              
-                      }          
-                    }else{
-                      Swal.fire({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 1500,
-                        timerProgressBar: true,
-                        title: '!ERROR!, hubo un error al intentar insertar los datos',
-                        icon:'error'
-                      })
-                    }
-                  })
+                  this.factu.fuct_Subtotal = (this.selectedPeople.length * this.selectedActivity!.acti_Precio);
+                  console.log(this.factu.fuct_Subtotal)
+                  const subtotal = this.factu.fuct_Subtotal;
+                  this.factu.fuct_Isv = (subtotal * 0.15);
+                  console.log(this.factu.fuct_Isv)
+                  this.factu.fuct_Total = (this.factu.fuct_Subtotal + this.factu.fuct_Isv)
+                  if (idUsuario !== undefined) {
+                    this.factu.fuct_UsuarioCreador = idUsuario;
+                  }                  
+                  console.log(this.factu.fuct_Total)
+                  const selectedPeopleString = JSON.stringify(this.selectedPeople);
+                  localStorage.setItem('array', selectedPeopleString);
+                  this.modalService.dismissAll();
+                  this.wizardForm.goToNextStep();
               }else{
                 Swal.fire({
                   toast: true,
@@ -776,6 +1212,8 @@ export class ReservacionesComponent implements OnInit {
               }                              
             }else{              
               if(response.data.codeStatus == -2){
+                this.ExistsOrNot = false;
+                console.log("No existe")
                 const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
                   if (idUsuario !== undefined) {
                     this.reservaciones.rese_UsuarioCreador = idUsuario;
@@ -783,66 +1221,21 @@ export class ReservacionesComponent implements OnInit {
                   this.reservaciones.rese_Cantidad = this.selectedPeople.length;
                   console.log(this.convertToDate1(this.selectedDate1))
                   this.reservaciones.rese_FechaReservacion =  this.convertToDate1(this.selectedDate1);
-                  this.reservaciones.acti_Id = this.selectedActivity!.acti_Id;
-                  this.service.InsertarReservaciones(this.reservaciones).subscribe((data:any)=>{  
-                    var cont = 0;     
-                    if(data.data.codeStatus != 0){
-                      const idreser = data.data.codeStatus;
-                      console.log(idreser)
-                      if (idUsuario !== undefined) {
-                        this.clienReser.clre_UsuarioCreador = idUsuario;
-                      }
-                      this.clienReser.rese_Id  = data.data.codeStatus;
-                      console.log("No existe")
-                      const selectedPeopleString = JSON.stringify(this.selectedPeople);
-                    localStorage.setItem('array', selectedPeopleString);
-                      for(var i = 0 ; i <= this.selectedPeople.length ; i++){
-                          this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;  
-                          this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
-                            cont ++;
-                            console.log(cont)  
-                            if(cont === this.selectedPeople.length){
-                              Swal.fire({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 3000,
-                                timerProgressBar: true,
-                                title: '!Datos insertados con exito!',
-                                icon: 'success'
-                              })                           
-                              this.factu.fuct_Subtotal = (this.selectedPeople.length * this.selectedActivity!.acti_Precio);
-                              console.log(this.factu.fuct_Subtotal)
-                              const subtotal = this.factu.fuct_Subtotal;
-                              this.factu.fuct_Isv = (subtotal * 0.15);
-                              console.log(this.factu.fuct_Isv)
-                              this.factu.fuct_Total = (this.factu.fuct_Subtotal + this.factu.fuct_Isv)
-                              if (idUsuario !== undefined) {
-                                this.factu.fuct_UsuarioCreador = idUsuario;
-                              }       
-                              this.factu.rese_Id = idreser;            
-                              console.log(this.factu.fuct_Total)
-                              this.toggleSelection()
-                              this.isChecked2 = true;
-                              const CKX1 = document.getElementById('CKActi');
-                              CKX1!.style.display = '';
-                              this.modalService.dismissAll();
-                              this.wizardForm.goToNextStep();
-                            }
-                          })              
-                      }          
-                    }else{
-                      Swal.fire({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 1500,
-                        timerProgressBar: true,
-                        title: '!ERROR!, hubo un error al intentar insertar los datos',
-                        icon:'error'
-                      })
-                    }
-                  })
+                  this.reservaciones.acti_Id = this.selectedActivity!.acti_Id;  
+                  this.factu.fuct_Subtotal = (this.selectedPeople.length * this.selectedActivity!.acti_Precio);
+                  console.log(this.factu.fuct_Subtotal)
+                  const subtotal = this.factu.fuct_Subtotal;
+                  this.factu.fuct_Isv = (subtotal * 0.15);
+                  console.log(this.factu.fuct_Isv)
+                  this.factu.fuct_Total = (this.factu.fuct_Subtotal + this.factu.fuct_Isv)
+                  if (idUsuario !== undefined) {
+                    this.factu.fuct_UsuarioCreador = idUsuario;
+                  }                  
+                  console.log(this.factu.fuct_Total)
+                  const selectedPeopleString = JSON.stringify(this.selectedPeople);
+                  localStorage.setItem('array', selectedPeopleString);
+                  this.modalService.dismissAll();
+                  this.wizardForm.goToNextStep();              
               }else{
                 Swal.fire({
                   toast: true,
@@ -883,14 +1276,12 @@ export class ReservacionesComponent implements OnInit {
    */
   finishFunction() {
     Swal.fire({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 3000,
+      titleText: '¡Reservación ingresada exitosamente!',
+      position: 'center',
       timerProgressBar: true,
-      title: 'ESDRA THE BEST LA QUEREMOS ♥ ❣ ❤ ❥ ღ',
+      timer:5000,
       icon: 'success'
-    }) 
+    })
     this.router.navigate(['dashboard']);    
   }
 
@@ -964,6 +1355,5 @@ export class ReservacionesComponent implements OnInit {
   scrollTo(element: any) {
     element.scrollIntoView({behavior: 'smooth'});
   }
-
-
 }
+

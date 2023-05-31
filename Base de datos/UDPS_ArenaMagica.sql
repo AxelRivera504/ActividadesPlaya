@@ -746,6 +746,26 @@ GO
 	END CATCH
  END
 
+ GO
+
+  /*Listar encargados por id actividad */
+  CREATE OR ALTER PROCEDURE Acti.UDP_tbEncargadosXActividad_ListarEncargadosById
+	@acti_Id	INT
+  AS
+  BEGIN
+	BEGIN TRY
+		SELECT	t2.enca_Nombres +' '+ t2.enca_Apellidos as NombreCompletoEnca,
+				t2.enca_Telefono,
+				t2.enca_Email
+		FROM	Acti.tbEncargadosXActividades t1 INNER JOIN Acti.tbEncargados t2
+		ON		t1.enca_Id = t2.enca_id
+		WHERE	t1.acti_Id = @acti_Id
+	END TRY
+	BEGIN CATCH
+	
+	END CATCH
+  END;
+
   --****************************************************//////UDP Y VISTA Encargados  *************************************************************************--
 
  --****************************************************UDP Y VISTA Equipos  *************************************************************************--

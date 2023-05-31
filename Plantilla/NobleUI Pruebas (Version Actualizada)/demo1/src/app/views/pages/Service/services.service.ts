@@ -269,4 +269,9 @@ export class ServicesService {
     return this.http.get<FactuList[]>(this.Url + "/Factura/ListarFactura" + id)
   }
 
+  getEncargadosByIdReport2(id: number){
+    return this.http.get<Encargados[]>(this.Url + "/EncargadosXActividad/ListarEncargadosById" + id)
+  }
+
+
 }

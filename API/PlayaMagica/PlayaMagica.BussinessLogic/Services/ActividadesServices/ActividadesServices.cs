@@ -22,7 +22,9 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
         private readonly FacturaRepository _facturaRepository;
         private readonly EquipoXActividadesRepository _equipoxactividadesrepository;
         private readonly EquiposRepository _equiposrepository;
-        public ActividadesServices(FacturaRepository facturaRepository ,
+        private readonly EncargadosXActividadesRepository _encargadosXActividadesRepository;
+        public ActividadesServices(EncargadosXActividadesRepository encargadosXActividadesRepository,
+            FacturaRepository facturaRepository ,
             ActividadesXFechaRepository actividadesXFechaRepository, 
             ClienteXReservacionRepository clienteXReservacionRepository, 
             ReservacionesRepository reservacionesRepository,
@@ -47,6 +49,7 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             _facturaRepository = facturaRepository;
             _equipoxactividadesrepository = equipoxactividadesrepository;
             _equiposrepository = equiposrepository;
+            _encargadosXActividadesRepository = encargadosXActividadesRepository;
         }
 
 
@@ -108,6 +111,24 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             catch (Exception ex)
             {
                 return resultado.Error(ex.Message);
+            }
+        }
+
+
+        #endregion
+
+        #region EncargadosXActividades
+        public IEnumerable<tbEncargadosXActividades> ListarEncargadosById(int id)
+        {
+            try
+            {
+                var list = _encargadosXActividadesRepository.ListarEncargadosById(id);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return Enumerable.Empty<tbEncargadosXActividades>();
             }
         }
         #endregion

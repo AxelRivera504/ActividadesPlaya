@@ -54,5 +54,7 @@ namespace PlayaMagica.Controllers
             var respuesta = _actividadesServices.DeleteEncargados(encargados);
             return Ok(respuesta);
         }
+
+
     }
 }
