@@ -53,6 +53,18 @@ export class ServicesService {
   getPlayas(){
     return this.http.get<playas[]>(this.Url + "/Playas/ListarPlayas");
   }
+
+  createPlayas(playas: playas){
+    return this.http.post<playas>(this.Url + "/Playas/InsertarPlayas" ,playas)
+  }
+
+  editPlayas(playas: playas){
+    return this.http.post<playas>(this.Url + "/Playas/Update" ,playas)
+  }
+
+  deletePlayas(playas: playas){
+    return this.http.post<playas>(this.Url + "/Playas/Delete" ,playas)
+  }
   
   getMantenimientos(){
     return this.http.get<[Mantenimiento]>(this.Url + "/Mantenimientos/ListarMantenimientos");

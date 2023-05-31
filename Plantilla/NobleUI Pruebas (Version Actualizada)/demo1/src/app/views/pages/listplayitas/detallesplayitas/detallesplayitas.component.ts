@@ -20,7 +20,7 @@ export class DetallesplayitasComponent implements OnInit {
   }
 
   Regresar(){
-    this.router.navigate(["/actividades"])
+    this.router.navigate(["/listplayitas"])
   }
 
 }

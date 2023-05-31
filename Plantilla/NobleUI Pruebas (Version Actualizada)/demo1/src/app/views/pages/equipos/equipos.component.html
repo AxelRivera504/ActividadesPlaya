@@ -19,6 +19,7 @@
                             <th>Descripcion</th>
                             <th>Uso actual</th>
                             <th>Uso limite</th>
+                            <th>Mantenimiento</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -28,6 +29,11 @@
                             <td>{{item.equi_Descripcion}}</td>
                             <td>{{item.equi_UsoActual}}</td>
                             <td>{{item.equi_UsoLimite}}</td>
+                            <td [ngClass]="{
+                                'epa': item.mantenimiento === 'Requerido',
+                                'mmm': item.mantenimiento === 'Recomendado',
+                                'nice': item.mantenimiento === 'No requerido'
+                              }">{{item.mantenimiento}}</td>
                             <td><button type="button" class="btn btn-warning btn-icon-text" (click)="Editar(item)">
                                 <i class="feather icon-edit "></i>
                             </button>
@@ -38,6 +44,10 @@
                                 |
                                 <button type="button" class="btn btn-danger btn-icon-text" (click)="openBasicModal3(basicModal3,item)">
                                     <i class="feather icon-trash "></i>
+                                </button>
+                                |
+                                <button type="button" class="btn btn-success btn-icon-text" (click)="openBasicModal4(basicModal4,item)">
+                                    <i class="feather icon-settings "></i>
                                 </button>
                             </td>
                         </tr>
@@ -59,6 +69,27 @@
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
       <button type="button" class="btn btn-primary" (click)="Eliminar()">Eliminar</button>
+    </div>
+  </ng-template>
+
+  <ng-template #basicModal4 let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Mantenimiento del equipo</h5>
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group col-12">
+        <label>Mantenimiento:</label>
+        <ng-select [(ngModel)]="MantenimientosModel.mant_Id" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+        name="MantenimientosModel.mant_Id" required [ngClass]="{ 'input-invalid': submitted && !MantenimientosModel.mant_Id}">
+        <ng-option *ngFor="let item of Mantenimientos" [value]="item.mant_Id">{{item.mant_Descricion}}</ng-option>
+      </ng-select>
+      <div class="input-invalid-text" *ngIf="!MantenimientosModel.mant_Id && submitted">Descripcion de mantenimiento requerida</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+      <button type="button" class="btn btn-primary" (click)="Mantenimiento()">Realizar</button>
     </div>
   </ng-template>
 

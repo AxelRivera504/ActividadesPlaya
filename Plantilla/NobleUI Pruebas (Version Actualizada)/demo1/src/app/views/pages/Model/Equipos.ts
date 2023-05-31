@@ -13,4 +13,5 @@ export class Equipos{
     equi_UsuarioModificador!: number;
     equi_UsuarioModificador_Nombre!: string;
     equi_FechaModificacion!: Date;
+    mantenimiento!: string;
 }

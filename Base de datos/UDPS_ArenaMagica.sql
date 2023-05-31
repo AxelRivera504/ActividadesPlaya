@@ -459,8 +459,7 @@ CREATE OR ALTER PROCEDURE Acti.UDP_tbPlayas_EditarPlayas
 	@play_Playa					NVARCHAR(150),
 	@dire_id					INT,
 	@play_ImgUrl				NVARCHAR(MAX),
-	@play_UsuarioModificador	INT,
-	@Status						INT OUTPUT
+	@play_UsuarioModificador	INT
 AS
 BEGIN 
 	BEGIN TRY
@@ -761,19 +760,34 @@ GO
 
  --****************************************************UDP Y VISTA Equipos  *************************************************************************--
   /*Vista Equipos*/
-  GO
-  CREATE OR ALTER VIEW Acti.VW_tbEquipos
-  AS
-  SELECT equi_Id, equi_Descripcion, 
-  equi_UsoActual, equi_UsoLimite, equi_ImgUrL,
-  equi_Estado, equi_UsuarioCreador,[UsuarioCreador].usua_Usuario AS equi_UsuarioCreador_Nombre, 
-  equi_FechaCreacion, equi_UsuarioModificador,[UsuarioModificador].usua_Usuario AS equi_UsuarioModificador_Nombre, 
-  equi_FechaModificacion
-  FROM Acti.tbEquipos equi INNER JOIN Acce.tbUsuarios [UsuarioCreador]
-  ON equi.equi_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador]
-  ON equi.equi_UsuarioModificador = [UsuarioModificador].usua_ID
-  WHERE equi_Estado = 1
-
+GO
+CREATE OR ALTER VIEW Acti.VW_tbEquipos
+AS
+SELECT
+  equi_Id,
+  equi_Descripcion,
+  equi_UsoActual,
+  equi_UsoLimite,
+  equi_ImgUrL,
+  equi_Estado,
+  equi_UsuarioCreador,
+  [UsuarioCreador].usua_Usuario AS equi_UsuarioCreador_Nombre,
+  equi_FechaCreacion,
+  equi_UsuarioModificador,
+  [UsuarioModificador].usua_Usuario AS equi_UsuarioModificador_Nombre,
+  equi_FechaModificacion,
+  CASE
+    WHEN equi_UsoActual >= equi_UsoLimite THEN 'Requerido'
+    WHEN equi_UsoLimite - equi_UsoActual <= 3 THEN 'Recomendado'
+    ELSE 'No requerido'
+  END AS mantenimiento
+FROM
+  Acti.tbEquipos equi
+  INNER JOIN Acce.tbUsuarios [UsuarioCreador] ON equi.equi_UsuarioCreador = [UsuarioCreador].usua_ID
+  LEFT JOIN Acce.tbUsuarios [UsuarioModificador] ON equi.equi_UsuarioModificador = [UsuarioModificador].usua_ID
+WHERE
+  equi_Estado = 1
+	
   /*Vista Equipos UDP*/
   GO
   CREATE OR ALTER PROCEDURE Acti.UDP_tbEquipos_VW
@@ -869,6 +883,32 @@ GO
 			SELECT 2
 		END
 	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+ END
+
+ /*Mantenimiento equipo*/
+ GO
+ CREATE OR ALTER PROCEDURE Acti.UDP_tbEquipos_Mantenimiento
+ @equi_Id INT
+ AS
+ BEGIN
+	BEGIN TRY
+		DECLARE @usoActual INT = (SELECT equi_UsoActual FROM Acti.tbEquipos WHERE equi_Id = @equi_Id)
+		DECLARE @usoLimte INT = (SELECT equi_UsoLimite FROM Acti.tbEquipos WHERE equi_Id = @equi_Id)
+		IF @usoLimte - @usoActual <= 3 
+			BEGIN
+				UPDATE Acti.tbEquipos
+				SET equi_UsoActual = 0
+				WHERE equi_Id = @equi_Id
+				SELECT 1
+			END	
+		ELSE BEGIN
+			SELECT 2
+		END
+	END TRY
+
 	BEGIN CATCH
 		SELECT 0
 	END CATCH

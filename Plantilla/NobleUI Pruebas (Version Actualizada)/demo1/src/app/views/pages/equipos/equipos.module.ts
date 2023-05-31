@@ -6,6 +6,8 @@ import { DataTablesModule } from 'angular-datatables';
 import { EquiposCrearComponent } from './equipos-crear/equipos-crear.component';
 import { EquiposEditarComponent } from './equipos-editar/equipos-editar.component';
 import { EquiposDetallesComponent } from './equipos-detalles/equipos-detalles.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 const routes: Routes = [
@@ -20,8 +22,10 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    DataTablesModule
-
+    DataTablesModule,
+    NgSelectModule,
+    ReactiveFormsModule,
+    FormsModule,
   ]
 })
 export class EquiposModule { }

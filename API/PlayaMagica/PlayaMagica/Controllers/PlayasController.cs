@@ -38,7 +38,7 @@ namespace PlayaMagica.Controllers
             return Ok(respuesta);
         }
 
-        [HttpPost("UpdateEncargados")]
+        [HttpPost("Update")]
         public IActionResult UpdateEncargados(PlayasViewModel item)
         {
             var playas = _mapper.Map<tbPlayas>(item);
@@ -46,7 +46,7 @@ namespace PlayaMagica.Controllers
             return Ok(respuesta);
         }
 
-        [HttpPost("DeleteEncargados")]
+        [HttpPost("Delete")]
         public IActionResult DeleteEncargados(PlayasViewModel item)
         {
             var playas = _mapper.Map<tbPlayas>(item);

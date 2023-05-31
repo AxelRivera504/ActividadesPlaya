@@ -23,9 +23,11 @@ export class CreatePlayitasComponent implements OnInit {
   direcciones!: direcciones[]
   departamentos!: departamentos[]
   municipios!: municipios[]
+  municipioddl!: municipios[];
   direccionesModel = new direcciones()
   playasModel = new playas()
   departamentosModel = new departamentos()
+  municipioModel = new municipios()
   submitted: boolean = false  
   submitted1: boolean = false  
   departamentoModel: departamentos = new departamentos();
@@ -61,14 +63,13 @@ export class CreatePlayitasComponent implements OnInit {
     }
   }
 
-
   constructor(private service: ServicesService,
     private imgbbService: ImgbbService,
     private config: NgSelectConfig,
     private router:Router,
     private modalService: NgbModal) { 
              /*Cosas del select*/
-    this.config.notFoundText = 'Custom not found';
+    this.config.notFoundText = 'Seleccione un departamento';
     this.config.appendTo = 'body';
     this.config.bindValue = 'value';
     /*/Cosas del select*/
@@ -97,9 +98,22 @@ export class CreatePlayitasComponent implements OnInit {
     })
   }
 
+  onDepartamentoChange() {
+    this.municipioModel = new municipios()
+    if(this.departamentoModel.dept_Id == null){
+      this.municipioddl = []
+      this.municipioModel = new municipios()
+    }
+    setTimeout(() => {
+      const municipiosDepartamento = this.municipios.filter(item => item.dept_Id === this.departamentoModel.dept_Id);
+      console.log(municipiosDepartamento)
+      this.municipioddl = municipiosDepartamento
+    }, 1);
+  }
+
 
   openBasicModal(content: TemplateRef<any>) {
-    this.submitted = false;
+    this.submitted1 = false;
     this.direccionesModel = new direcciones()
     this.modalService.open(content, {}).result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result
@@ -112,7 +126,7 @@ export class CreatePlayitasComponent implements OnInit {
       x = false
     } 
   
-    if(this.direccionesModel.muni_Id == undefined || this.direccionesModel.muni_Id == ""){
+    if(this.municipioModel.muni_Id == undefined || this.municipioModel.muni_Id == ""){
       x = false
     }
   
@@ -121,10 +135,12 @@ export class CreatePlayitasComponent implements OnInit {
     }
   
     if(x){
+   
       const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
       if (idUsuario !== undefined) {
         this.direccionesModel.dire_UsuarioCreador = idUsuario;
       }
+      this.direccionesModel.muni_Id = this.municipioModel.muni_Id
       this.service.createDirecciones(this.direccionesModel)
       .subscribe((data:any) =>{
         if(data.data.codeStatus == 1){
@@ -201,9 +217,56 @@ export class CreatePlayitasComponent implements OnInit {
     }
 
     if(x){
-
+      const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
+      if (idUsuario !== undefined) {
+        this.playasModel.play_UsuarioCreador = idUsuario;
+      }
+      this.service.createPlayas(this.playasModel)
+      .subscribe((data:any)=>{
+        if(data.data.codeStatus == 1){
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            title: '¡Registro Ingresado con exito!',
+            icon: 'success'
+          })
+          this.router.navigate(["/listplayitas"])
+        }else if(data.data.codeStatus == 2){
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            title: '¡Ese registro ya existe!',
+            icon: 'warning'
+          })
+        }else{
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            title: '¡Ha ocurrido un error!',
+            icon: 'error'
+          })
+        }
+      })
     }else{
       this.submitted = true
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        title: '¡Rellene los campos!',
+        icon: 'warning'
+      })
     }
   }
 

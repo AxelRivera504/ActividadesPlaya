@@ -10,6 +10,7 @@ import { DataTableDirective } from 'angular-datatables';
 import Swal from 'sweetalert2';
 import { Console } from 'console';
 import { data } from 'jquery';
+import { Mantenimiento } from '../Model/Mantenimiento';
 
 @Component({
   selector: 'app-equipos',
@@ -19,9 +20,12 @@ import { data } from 'jquery';
 export class EquiposComponent implements OnInit {
 
   Equipos!: Equipos[];
+  Mantenimientos!:Mantenimiento[];
   EquiposModel = new Equipos()
+  MantenimientosModel = new Mantenimiento()
   modalRef: NgbModalRef | undefined;
   basicModalCloseResult: string = '';
+  submitted: boolean = false
   @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective
   @ViewChild('myTable', { static: false }) table!: ElementRef;
@@ -44,8 +48,12 @@ export class EquiposComponent implements OnInit {
         url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json',
       }
     };
-  }
 
+    this.service.getMantenimientos()
+    .subscribe((data:any)=>{
+      this.Mantenimientos = data
+    })
+  }
 
   openBasicModal3(content: TemplateRef<any>, equipo: Equipos) {
     this.EquiposModel =  equipo;
@@ -55,6 +63,15 @@ export class EquiposComponent implements OnInit {
       this.basicModalCloseResult = "Modal closed" + result;
     }).catch((res) => {});
   }
+  openBasicModal4(content: TemplateRef<any>, equipo: Equipos) {
+    this.EquiposModel =  equipo;
+    
+    this.modalRef = this.modalService.open(content, {});
+    this.modalRef.result.then((result) => {
+      this.basicModalCloseResult = "Modal closed" + result;
+    }).catch((res) => {});
+  }
+
 
        /*Agregue esta funcion que renderiza la tabla otra vez para que la paginacion no se bugee XD*/
        rerender(): void {
@@ -126,5 +143,19 @@ export class EquiposComponent implements OnInit {
   Detalles(equipo: Equipos){
     localStorage.setItem('equipo', JSON.stringify(equipo));
     this.router.navigate(["/equiposDetalles"])
+  }
+
+
+  Mantenimiento(){
+    var x = true
+    if(this.MantenimientosModel.mant_Id == undefined || this.MantenimientosModel.mant_Id == null){
+      x = false
+    }
+
+    if (x){
+
+    }else{
+      this.submitted = true
+    }
   }
 }

@@ -53,7 +53,8 @@
             <div class="form-group col-6">
               <label>Departamento</label>
               <ng-select [(ngModel)]="departamentoModel.dept_Id" [appendTo]="'body'" placeholder="--Seleccione una opción--"
-              name="departamentoModel.dept_Id" #direcciones="ngModel" required [ngClass]="{ 'input-invalid': submitted1 && !departamentoModel.dept_Id}"> 
+              name="departamentoModel.dept_Id" #direcciones="ngModel" required [ngClass]="{ 'input-invalid': submitted1 && !departamentoModel.dept_Id}"
+              (ngModelChange)="onDepartamentoChange()"> 
               <ng-option *ngFor="let item of departamentos" [value]="item.dept_Id">{{item.dept_Descripcion}}</ng-option>
               </ng-select>
                    <div class="input-invalid-text" *ngIf=" !departamentoModel.dept_Id && submitted1">El departamento es requerido</div>
@@ -61,11 +62,11 @@
 
             <div class="form-group col-6">
               <label>Municipio</label>
-              <ng-select [(ngModel)]="direccionesModel.muni_Id" [appendTo]="'body'" placeholder="--Seleccione una opción--"
-              name="direccionesModel.muni_Id" #direcciones="ngModel" required [ngClass]="{ 'input-invalid': submitted1 && !direccionesModel.muni_Id }">
-              <ng-option *ngFor="let item of municipios" [value]="item.muni_Id">{{item.muni_Descripcion}}</ng-option>
+              <ng-select [(ngModel)]="municipioModel.muni_Id" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+              name="municipioModel.muni_Id" #direcciones="ngModel" required [ngClass]="{ 'input-invalid': submitted1 && !municipioModel.muni_Id }">
+              <ng-option *ngFor="let item of municipioddl" [value]="item.muni_Id">{{item.muni_Descripcion}}</ng-option>
             </ng-select>
-            <div class="input-invalid-text" *ngIf="!direccionesModel.muni_Id && submitted1">El municipio es requerido</div>
+            <div class="input-invalid-text" *ngIf="!municipioModel.muni_Id && submitted1">El municipio es requerido</div>
             </div>
 
             <div class="form-group col-6 mt-3">
