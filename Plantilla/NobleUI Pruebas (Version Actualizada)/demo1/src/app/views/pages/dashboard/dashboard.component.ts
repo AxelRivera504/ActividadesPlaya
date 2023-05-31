@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ServicesService } from '../Service/services.service';
 import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -42,15 +42,40 @@ export class DashboardComponent implements OnInit {
    */
   currentDate: NgbDateStruct;
 
-  constructor(private calendar: NgbCalendar) {}
+  constructor(private calendar: NgbCalendar,private service: ServicesService) {}
 
   ngOnInit(): void {
     this.currentDate = this.calendar.getToday();
+    
+    this.service.getVisitantesXFecha().subscribe(data => {     
+      const fechas = data.map(item => item.acfe_Fecha);     
+      const cantidades = data.map(item => item.acfe_Cantidad);   
+      this.revenueChartOptions = getRevenueChartOptions(this.obj, fechas, cantidades);
+    });
+
+
+    function getRevenueChartOptions(obj: any, fechas: Date[], cantidades: number[]) {
+      return {
+        // ...
+    
+        xaxis: {
+          type: 'datetime',
+          categories: fechas, // Utiliza las categorías de fecha recibidas como parámetro
+        },
+    
+        series: [{
+          name: "Revenue",
+          data: cantidades, // Utiliza los valores de cantidad recibidos como parámetro
+        }],
+    
+        // ...
+      };
+    }
+
 
     this.customersChartOptions = getCustomerseChartOptions(this.obj);
     this.ordersChartOptions = getOrdersChartOptions(this.obj);
     this.growthChartOptions = getGrowthChartOptions(this.obj);
-    this.revenueChartOptions = getRevenueChartOptions(this.obj);
     this.monthlySalesChartOptions = getMonthlySalesChartOptions(this.obj);
     this.cloudStorageChartOptions = getCloudStorageChartOptions(this.obj);
 

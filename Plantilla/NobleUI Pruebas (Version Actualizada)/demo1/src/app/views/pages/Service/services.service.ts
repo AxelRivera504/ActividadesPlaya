@@ -272,4 +272,9 @@ export class ServicesService {
     return this.http.get<Encargados[]>(this.Url + "/Encargados/ListarEncargadosddl");
   }
 
+  getVisitantesXFecha(){
+    return this.http.get<ActividadesXFecha[]>(this.Url + "/ActividadesXFecha/visitantes");
+  }
+
+
 }

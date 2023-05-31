@@ -193,3 +193,15 @@ BEGIN
 		SELECT 0
 	END CATCH
 END
+
+GO
+
+
+CREATE OR ALTER PROCEDURE Acti_tbActividadesXFecha_ObtenerCantidadVisitantes
+AS
+BEGIN
+    SELECT [acfe_Fecha], SUM([acfe_Cantidad]) AS CantidadVisitantes
+    FROM [Acti].[tbActividadesXFecha] t1
+    GROUP BY [acfe_Fecha]
+END
+

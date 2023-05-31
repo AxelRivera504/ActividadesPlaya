@@ -152,6 +152,7 @@ namespace PlayaMagica.DataAccess
 
         #region ActividadesXFecha
         public static string UDP_tbActividadesXFecha_VerificarCupos = "Acti.UDP_tbActividadesXFecha_VerificarCuposFecha";
+        public static string UDP_tbActividadesXFecha_Visitantes = "Acti_tbActividadesXFecha_ObtenerCantidadVisitantes";
         #endregion
 
         #region EquiposXActividades
