@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,6 +11,10 @@ namespace PlayaMagica.Models
         public int enca_id { get; set; }
         public string enca_Nombres { get; set; }
         public string enca_Apellidos { get; set; }
+
+        
+        public string enca_NombreCompleto { get; set; }
+
         public string enca_DNI { get; set; }
         public string enca_Email { get; set; }
         public string enca_Telefono { get; set; }

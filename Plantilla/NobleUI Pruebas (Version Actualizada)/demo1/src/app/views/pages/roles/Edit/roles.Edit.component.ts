@@ -58,17 +58,20 @@ export class RolesEditarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.service.obtenerPantallas()
-      .subscribe((data: any) => {
-        this.pantallas = data
-      });
+ 
 
+        this.service.obtenerPantallas()
+        .subscribe((data: any) => {
+          this.pantallas = data
+      })
+    
 
     const getRoles = localStorage.getItem('roles');
     if (getRoles) {
       this.roles = JSON.parse(getRoles);
     }
 
+      setTimeout(() => {
     this.service.obtenerPantallasPorRol(this.roles.role_ID)
       .subscribe((data: any) => {
         this.pantallas1 = data
@@ -77,6 +80,9 @@ export class RolesEditarComponent implements OnInit {
           return !this.pantallas1.some((pantalla1) => pantalla1.pant_ID === pantalla.pant_ID);
         });
       })
+    },100);
+
+      
   }
 
   onUploadError(event: any): void {

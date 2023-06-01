@@ -68,6 +68,20 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
         }
 
+        public IEnumerable<tbEncargados> ListarEncargadosddl()
+        {
+            try
+            {
+                var list = _encargadosRepository.ListarEncargadosddl();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return Enumerable.Empty<tbEncargados>();
+            }
+        }
+
 
         public ServiceResult InsetarEncargados(tbEncargados item)
         {

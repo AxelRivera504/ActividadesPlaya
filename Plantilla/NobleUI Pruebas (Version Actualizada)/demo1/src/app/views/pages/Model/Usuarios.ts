@@ -3,7 +3,7 @@ export class usuarios{
     usua_Usuario!: string;
     usua_Clave!: string;
     enca_NombreCompleto!: string;
-    enca_ID!: string;
+    enca_ID!: number;
     role_ID!: string;
     role_Descripcion!: string;
     usua_UsuarioCreador_Nombre!: number;

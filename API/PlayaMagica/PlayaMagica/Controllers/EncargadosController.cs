@@ -31,6 +31,15 @@ namespace PlayaMagica.Controllers
             return Ok(list);
         }
 
+        [HttpGet("ListarEncargadosddl")]
+        public IActionResult ListarEncargadosddl()
+        {
+            var list = _actividadesServices.ListarEncargadosddl();
+            return Ok(list);
+        }
+
+
+
         [HttpPost("InsertarEncargados")]
         public IActionResult InsetarEncargados(EncargadosViewModel item)
         {

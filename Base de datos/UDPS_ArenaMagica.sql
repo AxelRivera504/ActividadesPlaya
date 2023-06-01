@@ -1667,10 +1667,10 @@ BEGIN
 	  FROM Acce. tbUsuarios  t1 
  FULL JOIN Acti.tbEncargados  t2  
 		ON t1.enca_Id = t2.enca_Id 
-	 WHERE t1.usua_Id IS NULL 
+	 WHERE t1.usua_ID is null 
+	   or t1.usua_Estado = 0
 	   AND t2.enca_Estado  = 1 
 END
-
 GO
 
 /*Usuarios Insert*/
@@ -1725,6 +1725,8 @@ CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Update
 AS
 BEGIN
 	BEGIN TRY
+	         IF @enca_ID != -1
+			  BEGIN	
 				UPDATE Acce.tbUsuarios	
 				SET	
 					enca_ID = @enca_ID,
@@ -1735,6 +1737,20 @@ BEGIN
 				WHERE usua_ID = @usua_ID
 
 				SELECT 1
+			END 
+			ELSE
+			BEGIN
+			   UPDATE Acce.tbUsuarios	
+				SET
+					usua_Usuario = @usua_Usuario,
+					role_ID = @role_ID,
+					usua_FechaModificacion = GETDATE(),
+					usua_UsuarioModificador = @usua_UsuarioModificador
+				WHERE usua_ID = @usua_ID
+
+				SELECT 1 			  
+			END 
+
 	END TRY
 
 	BEGIN CATCH
