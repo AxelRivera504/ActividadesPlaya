@@ -24,23 +24,15 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             result.CodeStatus = answer;
             return result;
         }
-
-
-
+        public RequestStatus Delete(tbActividadesXFecha item)
+        {
+            throw new NotImplementedException();
+        }
         public IEnumerable<tbActividadesXFecha> CantidadVisitantesXfecha()
         {
             using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
             var parametros = new DynamicParameters();
             return db.Query<tbActividadesXFecha>(ScriptsDataBase.UDP_tbActividadesXFecha_Visitantes, null, commandType: CommandType.StoredProcedure);
-        }
-
-
-
-
-
-        public RequestStatus Delete(tbActividadesXFecha item)
-        {
-            throw new NotImplementedException();
         }
 
         public RequestStatus Delete(int id)

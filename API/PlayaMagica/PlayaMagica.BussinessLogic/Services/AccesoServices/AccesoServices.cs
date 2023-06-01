@@ -57,9 +57,9 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             try
             {
                 var insert = _usuariosRepository.Insert(item);
-           
-                    return result.Ok(insert);
-               
+
+                return result.Ok(insert);
+
             }
             catch (Exception e)
             {
@@ -73,9 +73,9 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             try
             {
                 var insert = _usuariosRepository.Update(item);
-               
-                    return result.Ok(insert);
-                
+
+                return result.Ok(insert);
+
             }
             catch (Exception e)
             {
@@ -88,9 +88,9 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             var result = new ServiceResult();
             try
             {
-                var delete = _usuariosRepository.Delete(item);                
+                var delete = _usuariosRepository.Delete(item);
                 return result.Ok(delete);
-              
+
             }
             catch (Exception e)
             {
@@ -208,8 +208,9 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             }
         }
 
-
         #endregion
+
+       
 
         #region Pantallas
 

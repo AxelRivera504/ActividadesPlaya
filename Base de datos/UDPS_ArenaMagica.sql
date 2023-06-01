@@ -1066,8 +1066,8 @@ GO
 	END
 
 
-	SELECT t1.rese_Id,
-			t3.
+	SELECT t1.rese_Id
+		
 	FROM  Acti.tbClienteXReservacion t1 INNER JOIN Acti.tbReservaciones t2
 	ON		t1.rese_Id = t2.rese_Id INNER JOIN Acti.tbClientes t3
 	ON		t1.clie_Id = t3.clie_id

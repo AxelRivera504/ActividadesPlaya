@@ -35,14 +35,7 @@ const routes: Routes = [
         path: 'equiposDetalles',
         loadChildren: () => import('./views/pages/equipos/equipos-detalles/equipos-detalles.module').then(m => m.EquiposDetallesModule)
       },
-      {
-        path: 'usuarios',
-        loadChildren: () => import('./views/pages/usuarios/usuarios.module').then(m => m.UsuariosModule)
-      },
-      {
-        path: 'Detalles',        
-        loadChildren: () => import('./views/pages/usuarios/detalles/usarios-detalle.module').then(m => m.UsuariosDetallesModule)
-      },
+      
       {
         path: 'equiposEditar',
         loadChildren: () => import('./views/pages/equipos/equipos-editar/equipos-editar.module').then(m => m.EquiposEditarModule)
@@ -72,10 +65,6 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/clientes/detailscli/detailscli.module').then(m => m.DetailscliModule)
       },
       {
-        path: 'DetallesRoles',
-        loadChildren: () => import('./views/pages/roles/DetailsRoles/roles.details.modeule').then(m => m.RolesDetallesModule)
-      },
-      {
         path: 'editar-clientes',
         loadChildren: () => import('./views/pages/clientes/editar-clientes/editar-clientes.module').then(m => m.EditarClientesModule)
       },
@@ -91,10 +80,7 @@ const routes: Routes = [
         path: 'crear',
         loadChildren: () => import('./views/pages/encargados/create/create.module').then(m => m.CreateModule)
       },
-      {
-        path: 'Create',
-        loadChildren: () => import('./views/pages/roles/Create/create.module').then(m => m.CreateModule)
-      },  
+
       {
         path: 'editar-enc',
         loadChildren: () => import('./views/pages/encargados/editar-enc/editar-enc.module').then(m => m.EditarEncModule)
@@ -131,12 +117,6 @@ const routes: Routes = [
         path: 'municipios',
         loadChildren: () => import('./views/pages/municipios/municipios.module').then(m => m.MunicipiosModule)
       },
-      
-      {
-        path: 'EditarRoles',
-        loadChildren: () => import('./views/pages/roles/Edit/roles.Edit.module').then(m => m.RolesEditarModule)
-      },
-      
       {
         path: 'municipiosDetalles',
         loadChildren: () => import('./views/pages/municipios/municipios-detalles/municipios-detalles.module').then(m => m.MunicipiosDetallesModule)
@@ -165,14 +145,39 @@ const routes: Routes = [
         path: 'direccionesDetalles',
         loadChildren: () => import('./views/pages/direcciones/direcciones-detalles/direcciones-detalles.module').then(m => m.DireccionesDetallesModule)
       },
-      {
-        path: 'roles',
-        loadChildren: () => import('./views/pages/roles/roles.modules').then(m => m.RolesModule)
-      },
-      {
-        path: 'Create',
-        loadChildren: () => import('./views/pages/roles/Create/create.module').then(m => m.CreateModule)
-      }, 
+      
+    
+//----------------------------Juan
+{
+  path: 'roles',
+  loadChildren: () => import('./views/pages/roles/roles.modules').then(m => m.RolesModule)
+},
+{
+  path: 'Create',
+  loadChildren: () => import('./views/pages/roles/Create/create.module').then(m => m.CreateModule)
+}, 
+{
+  path: 'DetallesRoles',
+  loadChildren: () => import('./views/pages/roles/DetailsRoles/roles.details.modeule').then(m => m.RolesDetallesModule)
+},
+
+{
+  path: 'EditarRoles',
+  loadChildren: () => import('./views/pages/roles/Edit/roles.Edit.module').then(m => m.RolesEditarModule)
+},
+
+{
+  path: 'usuarios',
+  loadChildren: () => import('./views/pages/usuarios/usuarios.module').then(m => m.UsuariosModule)
+},
+{
+  path: 'Detalles',        
+  loadChildren: () => import('./views/pages/usuarios/detalles/usarios-detalle.module').then(m => m.UsuariosDetallesModule)
+},
+
+
+
+
       {
         path: 'apps',
         loadChildren: () => import('./views/pages/apps/apps.module').then(m => m.AppsModule)

@@ -1,4 +1,4 @@
 DDL de encargados no funciona
 Pantalla roles arreglar tabla maestra
-Departamento Validacion del Id (Arreglado)
+Departamento Validacion del Id
 Hacer el Edit, y detalles de algunas pantallas en las que falta

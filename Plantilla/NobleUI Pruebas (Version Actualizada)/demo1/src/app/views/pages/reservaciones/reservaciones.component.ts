@@ -16,6 +16,12 @@ import { ClienteXReservacion } from '../Model/ClienteXReservacion';
 import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { metodospago } from '../Model/metodospago';
 import { Factura } from '../Model/Factura';
+import 'jspdf-autotable';
+import { Encargados } from '../Model/Encargados';
+import jsPDF from 'jspdf';
+import { FactuList } from '../Model/ListaFactura';
+import { ReportData } from '../Model/ReportData';
+
 const fillJustifyNav = {
   htmlCode: 
 `<ul ngbNav #fillJustifyNav="ngbNav" class="nav-tabs nav-fill">
@@ -95,6 +101,9 @@ import { ActividadesXFecha } from '../Model/ActividadesXFecha';
   styleUrls: ['./reservaciones.component.scss']
 })
 export class ReservacionesComponent implements OnInit {
+  @ViewChild('pdfViewer') pdfViewer!: ElementRef;
+  errorMessage: string;
+
   selectedDateX: NgbDate | null;
 
   basicModalCloseResult: string = '';
@@ -143,6 +152,17 @@ export class ReservacionesComponent implements OnInit {
   itemsPerPage = 6;
   filteredActividades: any[] = [];
   searchTerm: string = '';
+
+   XD: boolean = false;
+   public isChecked: boolean = false;
+   public isChecked2: boolean = false;
+   isSelectionBlocked = false;
+   fact_Id!: number;
+   InfoFact!:[];
+   clientesFac: Cliente = new Cliente()
+
+   Activo: boolean = true;
+   ExistsOrNot: boolean = false;
   constructor(private calendar: NgbCalendar,public formBuilder: UntypedFormBuilder,private router: Router, private service: ServicesService, private config: NgSelectConfig,private modalService: NgbModal) { 
    
     this.form = new FormGroup({
@@ -151,11 +171,371 @@ export class ReservacionesComponent implements OnInit {
     this.selectedDateX = null;
   }
 
+  toggleSelection(): void {
+    this.isSelectionBlocked = !this.isSelectionBlocked;
+  }
+  
+  generatePDF(): void {
+    const doc = new jsPDF();
+    const header = function (doc: any) {
+      doc.setFontSize(18);
+      const pageWidth = doc.internal.pageSize.width;
+      doc.setTextColor(40);
+      
+      // Agregar imagen
+      doc.addImage(
+        'https://i.ibb.co/W3vSBmv/Green-Yellow-Abstract-Summers-Island-Logo-1-removebg-preview.png',
+        'png',
+        pageWidth - 70,
+        -10,
+        80,
+        80
+      );
+  
+      // Agregar texto
+      doc.setFontSize(30);
+      doc.setFont('', 'normal');
+      doc.setTextColor('#004447');
+      doc.text('Datos de su reservación', 10, 30);
+    };
+  
+    const footer = function (doc: any) {
+      // Obtener las dimensiones del footer
+      const footerHeight = 65; // Altura del footer en mm
+    
+      // Agregar imagen en el footer
+      const imageUrl = 'https://i.ibb.co/jzbQb6B/14064375-5439134.jpg';
+      const imageWidth = doc.internal.pageSize.getWidth();
+      const imageHeight = footerHeight;
+    
+      doc.addImage(imageUrl, 'JPEG', 0, doc.internal.pageSize.getHeight() - footerHeight, imageWidth, imageHeight);
+    
+      // Agregar textos en el footer
+      doc.setFontSize(16);
+      doc.setFont('Helvetica', 'bold');
+      doc.setTextColor(0, 0, 0);  // Establecer color de texto en negro
+    
+      doc.text(
+        '¡Gracias por preferirnos para sus actividades playeras!',
+        35,
+        doc.internal.pageSize.getHeight() - footerHeight + 25
+      );
+    
+      doc.text(
+        '¡Playa mágica les desea lo mejor en sus actividades playeras aventureros!',
+        5,
+        doc.internal.pageSize.getHeight() - footerHeight + 35
+      );
+    };
+    
+  
+    console.log(this.selectedPeople);
+    console.log(localStorage.getItem('array'))
+    const Actividad = this.selectedActivity;
+    const fecha = this.selectedDate1;
+    const arrayFromLocalStorage = JSON.parse(localStorage.getItem('array')!);
+    console.log(arrayFromLocalStorage); 
+    this.service
+      .getEncargadosByIdReport2(this.selectedActivity!.acti_Id)
+      .subscribe(
+        (response: Encargados[]) => {
+          const data = response.map((Encarga: Encargados) => [
+            Encarga.nombreCompletoEnca,
+            Encarga.enca_Telefono,
+            Encarga.enca_Email
+          ]);
+
+          doc.setLineWidth(1); // Establecer el grosor de la línea en 1 (puedes ajustar este valor según tus necesidades)
+          doc.setDrawColor(0, 0, 0); // Establecer el color de la línea en negro (valores RGB: 0, 0, 0)
+          doc.line(10, 55, doc.internal.pageSize.getWidth() - 10, 55);
+          doc.setFontSize(18);
+          const pageWidth = doc.internal.pageSize.width;
+          doc.setTextColor(40);
+          doc.setTextColor(40);
+          doc.setDrawColor(0, 0, 0);
+          doc.setLineWidth(0.5);
+          // Agregar datos de la factura
+          doc.setFontSize(12);
+          doc.setFontSize(13); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Actividad Id: " + Actividad!.acti_Id, 10, 60);
+
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Nombre de actividad:"+ Actividad!.acti_Nombre , 100, 60);
+
+          doc.setDrawColor(0, 0, 0);
+          doc.setLineWidth(0.5);
+
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Actividad precio: "+ Actividad!.acti_Precio , 10, 66);
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal"); 
+         doc.text("Fecha de la reservación:"+ fecha.day+'/'+fecha.month+'/'+fecha.year ,100, 66);
+
+          doc.setLineWidth(1); // Establecer el grosor de la línea en 1 (puedes ajustar este valor según tus necesidades)
+          doc.setDrawColor(0, 0, 0); // Establecer el color de la línea en negro (valores RGB: 0, 0, 0)
+          doc.line(10, 70, doc.internal.pageSize.getWidth() - 10, 70);
+
+
+
+
+          
+          header(doc);
+          footer(doc);
+          const headerColor = '#F49334';
+          
+
+          (doc as any).autoTable({
+            head: [['Nombres encargados', 'DNI encargados', 'Email encargados']],
+            body: data,         
+            startY: 100,
+            margin: { top: 10 },
+            theme: 'grid', // Aplica un tema (opcional)
+              styles: {
+                headStyles: {
+                  fillColor: headerColor, // Cambia el color de relleno de la barra de encabezado
+                  textColor: '#F49334', // Cambia el color del texto de la barra de encabezado
+                },
+              },
+          });
+          doc.text('Información sobre los encargados de la actividad: ', 14, 93); 
+          
+          const secondTableY = (doc as any).autoTable.previous.finalY + 10; // Ajusta el valor de desplazamiento vertical según tus necesidades
+          doc.text('Participantes de la actividad: ', 14, secondTableY);
+          
+          // ...
+          
+          (doc as any).autoTable({
+            head: [['ID', 'Nombres', 'Apellidos', 'DNI', 'Email']],
+            body: arrayFromLocalStorage!.map((cliente: Cliente) => [
+              cliente.clie_id,
+              cliente.clie_Nombres,
+              cliente.clie_Apellidos,
+              cliente.clie_DNI,
+              cliente.clie_Email,
+            ]),           
+            startY: secondTableY + 10, // Ajusta el valor de desplazamiento vertical según tus necesidades
+            margin: { top: 200, right: 15, bottom: 10 },
+            theme: 'grid',
+            styles: {
+              cellWidth: 'wrap',
+              headStyles: {
+                fillColor: headerColor, // Cambia el color de relleno de la barra de encabezado
+                textColor: '#F49334', // Cambia el color del texto de la barra de encabezado
+              },
+            },
+            columnStyles: {
+              1: { cellWidth: 35 } // Elige el valor que necesites
+            }
+          }); 
+      
+          // Mostrar el PDF en el visor
+          const pdfDataUri = doc.output('datauristring');
+          this.pdfViewer.nativeElement.src = pdfDataUri;
+        },
+        (error: any) => {
+          this.errorMessage = 'Se produjo un error al obtener los datos de los empleados.';
+          console.error(error);
+        }
+        );
+  }
+
+
+
+  generatePDF2(): void {
+    const doc = new jsPDF();
+    const header = function (doc: any) {
+      doc.setFontSize(18);
+      const pageWidth = doc.internal.pageSize.width;
+      doc.setTextColor(40);
+      // Agregar imagen
+      doc.addImage(
+        'https://i.ibb.co/W3vSBmv/Green-Yellow-Abstract-Summers-Island-Logo-1-removebg-preview.png',
+        'png',
+        pageWidth - 70,
+        -10,
+        65,
+        65
+      );
+  
+      // Agregar texto
+      doc.setFontSize(30);
+      doc.setFont('Pacifico', 'normal');
+      doc.text('FACTURA', 10, 30);
+    };
+  
+    const footer = function (doc: any) {
+      // Obtener las dimensiones del footer
+      const footerHeight = 65; // Altura del footer en mm
+    
+      // Agregar imagen en el footer
+      const imageUrl = 'https://i.ibb.co/jzbQb6B/14064375-5439134.jpg';
+      const imageWidth = doc.internal.pageSize.getWidth();
+      const imageHeight = footerHeight;
+    
+      doc.addImage(imageUrl, 'JPEG', 0, doc.internal.pageSize.getHeight() - footerHeight, imageWidth, imageHeight);
+    
+      // Agregar textos en el footer
+      doc.setFontSize(16);
+      doc.setFont('Helvetica', 'bold');
+      doc.setTextColor(0, 0, 0);  // Establecer color de texto en negro
+    
+      doc.text(
+        '¡Gracias por preferirnos para sus actividades playeras!',
+        35,
+        doc.internal.pageSize.getHeight() - footerHeight + 25
+      );
+    
+      doc.text(
+        '¡Playa mágica les desea lo mejor en sus actividades playeras aventureros!',
+        5,
+        doc.internal.pageSize.getHeight() - footerHeight + 35
+      );
+    };
+  
+    console.log(this.fact_Id);
+    console.log(localStorage.getItem('idF')!.toString());
+    console.log(this.selectedPeople);
+    console.log(localStorage.getItem('array'))
+    const arrayFromLocalStorage = JSON.parse(localStorage.getItem('array')!);
+    console.log(arrayFromLocalStorage); 
+    this.service
+      .getFactura(parseInt(localStorage.getItem('idF')!.toString()))
+      .subscribe(
+        (response: FactuList[]) => {
+          doc.setLineWidth(1); // Establecer el grosor de la línea en 1 (puedes ajustar este valor según tus necesidades)
+          doc.setDrawColor(0, 0, 0); // Establecer el color de la línea en negro (valores RGB: 0, 0, 0)
+          doc.line(10, 47, doc.internal.pageSize.getWidth() - 10, 47);
+          const data: FactuList = response[0];
+          doc.setFontSize(18);
+          const pageWidth = doc.internal.pageSize.width;
+          doc.setTextColor(40);
+          doc.setTextColor(40);
+          doc.setDrawColor(0, 0, 0);
+          doc.setLineWidth(0.5);
+          // Agregar datos de la factura
+          doc.setFontSize(12);
+          doc.setFontSize(16); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Información de la factura", 10, 54);
+
+          doc.setFontSize(13); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Factura Nº: " + data.fuct_Id, 10, 58);
+
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Empleado: "+ data.nombreCompleto , 100, 58);
+
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Dirección empresa: San Pedro sula, Barrio san juan, a saber donde", 10, 62);
+
+          doc.setFontSize(12);
+          doc.text(`Fecha de Reservación: ${data.rese_FechaReservacion}`, 10, 66);
+          
+          doc.setLineWidth(1); // Establecer el grosor de la línea en 1 (puedes ajustar este valor según tus necesidades)
+          doc.setDrawColor(0, 0, 0); // Establecer el color de la línea en negro (valores RGB: 0, 0, 0)
+          doc.line(10, 73, doc.internal.pageSize.getWidth() - 10, 73);
+
+          doc.setFontSize(16); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Información de la actividad", 10, 80);
+
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Actividad-: "+ data.acti_Nombre , 10, 84);
+
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal");
+          doc.text("Precio actividad:"+data.acti_Precio , 100, 84);
+          
+          doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal"); 
+         doc.text("Lugar de la actividad:", + 10, 88);
+
+         doc.setFontSize(12); 
+          doc.setFont("Pacifico", "normal"); 
+         doc.text("Departamento:"+data.dept_Descripcion +'- Municipio: '+data.muni_Descripcion+'- Dirección: '+data.dire_DireccionExacta +'- Playa: '+data.play_Playa,10, 92);
+          
+          doc.setFontSize(12);
+
+          doc.setLineWidth(1); // Establecer el grosor de la línea en 1 (puedes ajustar este valor según tus necesidades)
+          doc.setDrawColor(0, 0, 0); // Establecer el color de la línea en negro (valores RGB: 0, 0, 0)
+          doc.line(10, 99, doc.internal.pageSize.getWidth() - 10, 99);
+          // Agregar más datos según sea necesario
+  
+          // Llamar a las funciones de encabezado y pie de página
+          header(doc);
+          footer(doc);
+          const headerColor = '#F49334';
+          
+          (doc as any).autoTable({
+            head: [['ID', 'Nombres', 'Apellidos', 'DNI', 'Email']],
+            body: arrayFromLocalStorage!.map((cliente: Cliente) => [
+              cliente.clie_id,
+              cliente.clie_Nombres,
+              cliente.clie_Apellidos,
+              cliente.clie_DNI,
+              cliente.clie_Email,
+            ]),           
+            startY: 112,
+            margin: { top: 10 },
+            theme: 'grid', // Aplica un tema (opcional)
+              styles: {
+                headStyles: {
+                  fillColor: headerColor, // Cambia el color de relleno de la barra de encabezado
+                  textColor: '#F49334', // Cambia el color del texto de la barra de encabezado
+                },
+              },
+          });
+
+          (doc as any).autoTable({
+            body: [
+              ['SubTotal:', data.fuct_Subtotal],
+              ['IVA:', data.fuct_Isv],
+              ['TOTAL:', data.fuct_Total]
+            ],
+            startY: (doc as any).autoTable.previous.finalY + 1,
+            margin: { top: 150, right: 15, bottom: 20, left: 115 },
+            theme: 'grid',
+            styles: {
+              cellWidth: 'wrap',
+              cellPadding: 2,
+              fontSize: 10
+            },
+            columnStyles: {
+              1: { cellWidth: 25 } // Elige el valor que necesites
+            },
+            headStyles: {
+              fillColor: headerColor, // Cambia el color de relleno de la barra de encabezado
+              textColor: '#F49334', // Cambia el color del texto de la barra de encabezado
+            },
+          });
+         
+          doc.text('Participantes de la actividad: ', 14, 106); 
+  
+          // Mostrar el PDF en el visor
+          const pdfDataUri = doc.output('datauristring');
+          this.pdfViewer.nativeElement.src = pdfDataUri;
+        },
+        (error: any) => {
+          this.errorMessage = 'Se produjo un error al obtener los datos de los empleados.';
+          console.error(error);
+        }
+      );
+  }
+
+
+
   get minDate(): NgbDate {
     const today = this.calendar.getToday();
     return new NgbDate(today.year, today.month, today.day);
   }
 
+  
   convertToDate(date: NgbDateStruct): Date {
     if (date) {
       return new Date(date.year, date.month - 1, date.day);
@@ -170,6 +550,14 @@ export class ReservacionesComponent implements OnInit {
 
       return new Date(); // Devuelve la fecha actual como valor predeterminado
     }
+  }
+
+  toggleCheckbox() {
+    this.XD = !this.XD;
+  }
+
+  toggleCheckbox1() {
+    this.toggleSelection()
   }
 
   search(): void {
@@ -190,45 +578,293 @@ export class ReservacionesComponent implements OnInit {
   }
 
   ConfirmarFactura(){
-    if (!this.metodoSeleccionado) {
-    this.submittedMeto = true;  
-    Swal.fire({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 1500,
-      timerProgressBar: true,
-      title: '¡Escoja un metodo de pago!',
-      icon: 'warning'
-    })
-    return;
-  }
-  this.factu.mepa_id = parseInt(this.metodoSeleccionado.toString());
-  this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
-    if(data.data.codeStatus == 1){
-      Swal.fire({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-        title: '¡Reservación hecha con exito!',
-        icon: 'success'
-      })
-      this.wizardForm.goToNextStep();
-      this.LimpiarTodo()
-    }else{
-      Swal.fire({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-        title: '¡ERROR!, ¡oh no!, hubo un error.',
-        icon: 'error'
-      })
+    const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
+    if (idUsuario !== undefined) {
+      this.reservaciones.rese_UsuarioCreador = idUsuario;
     }
-  })
+    if(!this.metodoSeleccionado){
+      return new Promise((resolve, reject) => {
+        Swal.fire({
+          titleText: '¿Desea pagar la reservación ahora?',
+          position: 'center',
+          showCancelButton: true,
+          showConfirmButton: true,
+          cancelButtonText: 'No',
+          confirmButtonText: 'Si',
+          timerProgressBar: true,
+          icon: 'info'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            //El Usuario quiere pagar la factura y le imprimira en la factura el reporte de la información de la factura completa
+            Swal.fire({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+              title: 'Debe escoger un metodo de pago',
+              icon: 'info'
+            })        
+            this.submittedMeto = true;
+            this.Activo = true;           
+            console.log("quiere pagar ahorita")
+            
+            resolve(true);
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            //El Usuario no quiere pagar de momento la factura y le imprimira en la factura el reporte de la información de reseravación     
+            console.log("No quiere pagar ahorita")      
+            this.submittedMeto = false; //apagar alerta del metodo de pago
+            if(this.ExistsOrNot){ //verificar con el chequeo de la fechas de la actividad si esta existe, Si existe hara un update y sino la insertara
+              console.log("EXISTE EL ACTI")
+              this.service.InsertarReservacionesExiste(this.reservaciones).subscribe((data:any)=>{  //Pasar Model reservación para insertar la reservación
+                var cont = 0;     
+                if(data.data.codeStatus != 0){//Verificar si se inserto correctamente la reservacion
+                  const idreser = data.data.codeStatus;//Capturar el id de la reservacion
+                  console.log(idreser)
+                  if (idUsuario !== undefined) {
+                    this.clienReser.clre_UsuarioCreador = idUsuario;//Comenzamos a llenar el model para insertar los clientes en la tabla de ClienteXReservación, en este caso el Usua_Creador
+                  }
+                  this.clienReser.rese_Id  = data.data.codeStatus;//Meter el id de la reservación a la cual perteneceran esos clientes o participantes
+                  console.log( this.clienReser.rese_Id+'-id reservacion para el clienteXReservacion' );//Verificar que el id de la reservacion este dentro del modelo de clienteXReservacion
+                  const selectedPeopleString = JSON.stringify(this.selectedPeople);
+                  localStorage.setItem('array', selectedPeopleString);//Metemos las personas seleccionadas en un localstorage en forma de arreglo para meterlo en el reporte de información de la reservación
+                  for(var i = 0 ; i <= this.selectedPeople.length ; i++){ //Recorremos el array de clientes seleccionados y tomamos cada id para insertarlo uno por uno en clienteXReservación
+                    this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;
+                      if(cont == 0){
+                        this.clienReser.rese_OwnerPayy = true;
+                      }else{
+                        this.clienReser.rese_OwnerPayy = false;
+                      }//Recorrido del array  
+                      cont ++;//Contador que ir aumentado de a uno, para saber en que momento termino de insertar los clientes  
+                      this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{//Service para insertar los cliente pasando como parameter el model de clienteXReservación
+                        console.log('Se inserto el cliente:'+cont);
+                        if(cont === this.selectedPeople.length){//Validacion para verificar cuando se insertaron los clientes
+                          //Aqui no se insertara la factura ya que no quiso ser pagada en este momento por el cliente
+                          this.wizardForm.goToNextStep();//Tabula a la siguiente tabulación
+                          this.LimpiarTodo()//Limpia todos lo que se ha utilizado
+                          this.generatePDF();//genera el pdf de de la información de la reservación
+                        }
+                      })              
+                  }          
+                }else{
+                  Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    title: '!ERROR!, hubo un error al intentar insertar la reservación',
+                    icon:'error'
+                  })
+                }
+              })
+            }else{//Aqui significa que la actividad No existe por lo cual se debe realalizar un insert a la BD
+              console.log("NO EXISTE EL ACTI")
+              this.service.InsertarReservaciones(this.reservaciones).subscribe((data:any)=>{  //Pasar Model reservación para insertar la reservación
+                var cont = 0;     
+                if(data.data.codeStatus != 0){//Verificar si se inserto correctamente la reservacion
+                  const idreser = data.data.codeStatus;//Capturar el id de la reservacion
+                  console.log(idreser)
+                  if (idUsuario !== undefined) {
+                    this.clienReser.clre_UsuarioCreador = idUsuario;//Comenzamos a llenar el model para insertar los clientes en la tabla de ClienteXReservación, en este caso el Usua_Creador
+                  }
+                  this.clienReser.rese_Id  = data.data.codeStatus;//Meter el id de la reservación a la cual perteneceran esos clientes o participantes
+                  console.log( this.clienReser.rese_Id+'-id reservacion para el clienteXReservacion' );//Verificar que el id de la reservacion este dentro del modelo de clienteXReservacion
+                  const selectedPeopleString = JSON.stringify(this.selectedPeople);
+                  localStorage.setItem('array', selectedPeopleString);//Metemos las personas seleccionadas en un localstorage en forma de arreglo para meterlo en el reporte de información de la reservación
+                  for(var i = 0 ; i <= this.selectedPeople.length ; i++){ //Recorremos el array de clientes seleccionados y tomamos cada id para insertarlo uno por uno en clienteXReservación
+                    this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;
+                    if(cont === 0){
+                      console.log("1")
+                      this.clienReser.rese_OwnerPayy = true;
+                    }else{
+                      console.log("0")
+                      this.clienReser.rese_OwnerPayy = false;
+                    }//Recorrido del array  
+                    cont ++;//Contador que ir aumentado de a uno, para saber en que momento termino de insertar los clientes  
+                      this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{//Service para insertar los cliente pasando como parameter el model de clienteXReservación
+                        console.log('Se inserto el cliente:'+cont);
+                        if(cont === this.selectedPeople.length){//Validacion para verificar cuando se insertaron los clientes
+                          //Aqui no se insertara la factura ya que no quiso ser pagada en este momento por el cliente
+                          this.wizardForm.goToNextStep();//Tabula a la siguiente tabulación
+                          this.LimpiarTodo()//Limpia todos lo que se ha utilizado
+                          this.generatePDF();//genera el pdf de de la información de la reservación
+                        }
+                      })              
+                  }          
+                }else{
+                  Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    title: '!ERROR!, hubo un error al intentar insertar la reservación',
+                    icon:'error'
+                  })
+                }
+              })
+            }
+
+            resolve(false);
+          } else {
+            //Solo cierra el modal al presionar fuera de el
+            console.log("cerro el modal")
+            reject();
+          }
+        });
+      });
+    }else{
+             //El Usuario quiere pagar la factura y escogio el de un solo el metodo de pago y debe le imprimir la factura el reporte de la información de la factura completa
+            //El Usuario no quiere pagar de momento la factura y le imprimira en la factura el reporte de la información de reseravación     
+            console.log("No quiere pagar ahorita")      
+            this.submittedMeto = false; //apagar alerta del metodo de pago
+            if(this.ExistsOrNot){ //verificar con el chequeo de la fechas de la actividad si esta existe, Si existe hara un update y sino la insertara
+              console.log("EXISTE EL ACTI")
+              this.service.InsertarReservacionesExiste(this.reservaciones).subscribe((data:any)=>{  //Pasar Model reservación para insertar la reservación
+                var cont = 0;     
+                console.log("PASO 1")
+                if(data.data.codeStatus != 0){//Verificar si se inserto correctamente la reservacion
+                  const idreser = data.data.codeStatus;//Capturar el id de la reservacion
+                  console.log(idreser)
+                  if (idUsuario !== undefined) {
+                    this.clienReser.clre_UsuarioCreador = idUsuario;//Comenzamos a llenar el model para insertar los clientes en la tabla de ClienteXReservación, en este caso el Usua_Creador
+                  }
+                  this.clienReser.rese_Id  = data.data.codeStatus;//Meter el id de la reservación a la cual perteneceran esos clientes o participantes
+                  console.log( this.clienReser.rese_Id+'-id reservacion para el clienteXReservacion' );//Verificar que el id de la reservacion este dentro del modelo de clienteXReservacion
+                  const selectedPeopleString = JSON.stringify(this.selectedPeople);
+                  localStorage.setItem('array', selectedPeopleString);//Metemos las personas seleccionadas en un localstorage en forma de arreglo para meterlo en el reporte de información de la reservación
+                  for(var i = 0 ; i <= this.selectedPeople.length ; i++){
+                    console.log("PASO 2") //Recorremos el array de clientes seleccionados y tomamos cada id para insertarlo uno por uno en clienteXReservación
+                    this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;
+                      if(cont == 0){
+                        this.clienReser.rese_OwnerPayy = true;
+                      }else{
+                        this.clienReser.rese_OwnerPayy = false;
+                      }//Recorrido del array  
+                      cont ++;//Contador que ir aumentado de a uno, para saber en que momento termino de insertar los clientes  
+                      this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
+                        console.log("PASO 3")//Service para insertar los cliente pasando como parameter el model de clienteXReservación
+                        console.log('Se inserto el cliente:'+cont);
+                        if(cont === this.selectedPeople.length){//Validacion para verificar cuando se insertaron los clientes
+                          //Aqui no se insertara la factura ya que no quiso ser pagada en este momento por el cliente
+                          this.factu.rese_Id = idreser;
+                          this.factu.mepa_id = parseInt(this.metodoSeleccionado.toString());
+                          this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
+                            console.log("PASO 4")
+                            console.log(data.data.codeStatus)
+                            this.fact_Id = data.data.codeStatus;
+                            localStorage.setItem('idF',data.data.codeStatus)
+                            if(data.data.codeStatus >= 1){                           
+                              this.wizardForm.goToNextStep();
+                              this.LimpiarTodo()
+                              this.generatePDF2();
+                            }else{
+                              Swal.fire({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 1500,
+                                timerProgressBar: true,
+                                title: '¡ERROR!, ¡oh no!, hubo un error.',
+                                icon: 'error'
+                              })
+                            }
+                          })  
+                        }
+                      })              
+                  }          
+                }else{
+                  Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    title: '!ERROR!, hubo un error al intentar insertar la reservación',
+                    icon:'error'
+                  })
+                }
+              })
+            }else{//Aqui significa que la actividad No existe por lo cual se debe realalizar un insert a la BD
+              console.log("NO EXISTE EL ACTI")
+              console.log("PASO 1")
+              this.service.InsertarReservaciones(this.reservaciones).subscribe((data:any)=>{  //Pasar Model reservación para insertar la reservación
+                var cont = 0;     
+                if(data.data.codeStatus != 0){//Verificar si se inserto correctamente la reservacion
+                  const idreser = data.data.codeStatus;//Capturar el id de la reservacion
+                  console.log(idreser)
+                  if (idUsuario !== undefined) {
+                    this.clienReser.clre_UsuarioCreador = idUsuario;//Comenzamos a llenar el model para insertar los clientes en la tabla de ClienteXReservación, en este caso el Usua_Creador
+                  }
+                  console.log("PASO 2 E")
+                  this.clienReser.rese_Id  = data.data.codeStatus;//Meter el id de la reservación a la cual perteneceran esos clientes o participantes
+                  console.log( this.clienReser.rese_Id+'-id reservacion para el clienteXReservacion' );//Verificar que el id de la reservacion este dentro del modelo de clienteXReservacion
+                  const selectedPeopleString = JSON.stringify(this.selectedPeople);
+                  localStorage.setItem('array', selectedPeopleString);//Metemos las personas seleccionadas en un localstorage en forma de arreglo para meterlo en el reporte de información de la reservación
+                  for(var i = 0 ; i <= this.selectedPeople.length ; i++){
+                    console.log("PASO 3 E") //Recorremos el array de clientes seleccionados y tomamos cada id para insertarlo uno por uno en clienteXReservación
+                    this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;
+                    if(cont === 0){
+                      console.log("1")
+                      this.clienReser.rese_OwnerPayy = true;
+                    }else{
+                      console.log("0")
+                      this.clienReser.rese_OwnerPayy = false;
+                    }//Recorrido del array  
+                    cont ++;//Contador que ir aumentado de a uno, para saber en que momento termino de insertar los clientes  
+                      this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
+                        console.log("PASO 4E")//Service para insertar los cliente pasando como parameter el model de clienteXReservación
+                        console.log('Se inserto el cliente:'+cont);
+                        if(cont === this.selectedPeople.length){//Validacion para verificar cuando se insertaron los clientes
+                          //Aqui no se insertara la factura ya que no quiso ser pagada en este momento por el cliente
+                          this.factu.rese_Id = idreser;
+                          this.factu.mepa_id = parseInt(this.metodoSeleccionado.toString());
+                          this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
+                            console.log(data.data.codeStatus)
+                            this.fact_Id = data.data.codeStatus;
+                            localStorage.setItem('idF',data.data.codeStatus)
+                            if(data.data.codeStatus >= 1){   
+                              console.log("PASO 5")                        
+                              this.wizardForm.goToNextStep();
+                              this.LimpiarTodo()
+                              this.generatePDF2();
+                            }else{
+                              Swal.fire({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 1500,
+                                timerProgressBar: true,
+                                title: '¡ERROR!, ¡oh no!, hubo un error.',
+                                icon: 'error'
+                              })
+                            }
+                          })  
+                        }
+                      })              
+                  }          
+                }else{
+                  Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    title: '!ERROR!, hubo un error al intentar insertar la reservación',
+                    icon:'error'
+                  })
+                }
+              })
+            }
+      this.Activo = true;
+      console.log("Cuando se escoge un un metodo de pago de un solo")
+    }
+   return null;
+  }
+
+  ConfirmarFact(){
+    this.wizardForm.goToNextStep();
   }
 
   selectActivity(activity: Actividades) {
@@ -253,7 +889,7 @@ export class ReservacionesComponent implements OnInit {
     if (!this.clientesForm.clie_Nombres || !this.clientesForm.clie_Apellidos ||
         !this.clientesForm.clie_DNI || !this.clientesForm.clie_Email ||
         !this.clientesForm.clie_Sexo  || !this.fechaValida || !this.fechaFormatoValido ) {
-          console.log(this.clientesForm.clie_Nombres  )
+          console.log(this.clientesForm.clie_Nombres)
       this.submitted = true;  
       this.submitte1 = true;  
       Swal.fire({
@@ -373,38 +1009,18 @@ export class ReservacionesComponent implements OnInit {
     this.Actividad.acfe_Fecha = selectedDate;
     this.Actividad.acti_Id = this.selectedActivity!.acti_Id;
       this.service.VerificarCuposActividad(this.Actividad).subscribe((response:any)=>{
-          if(response.data.codeStatus != -2 && response.data.codeStatus != 0){
-            Swal.fire({
-              toast: true,
-              position: 'top-end',
-              showConfirmButton: false,
-              timer: 4500,
-              timerProgressBar: true,
-              title: 'Los cupos disponibles para esta actividad en esta fecha son de:'+response.data.codeStatus,
-              icon: 'info'
-            })
-          }else{
-            if(response.data.codeStatus = -2){
+          if(response.data.codeStatus != -2 && response.data.codeStatus != -5){
+            if(response.data.codeStatus == 0){
               Swal.fire({
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
                 timer: 4500,
                 timerProgressBar: true,
-                title: 'Los cupos disponibles para esta actividad en esta fecha son de:'+this.selectedActivity!.acti_Cupo,
-                icon: 'info'
-              })
-            }else{
-              Swal.fire({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 4500,
-                timerProgressBar: true, 
-                title: 'Error',
+                title: 'Ya no hay cupos para esta actividad',
                 icon: 'error'
               })
-            }
+            }          
           }
       })
     } else {
@@ -413,13 +1029,16 @@ export class ReservacionesComponent implements OnInit {
     }
   }
 
+  
 
   
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    this.LimpiarTodo()
     this.service.getMetodosPago().subscribe(data => {
       this.metodos = data;
     });
+
 
 
     this.defaultCardCode = defaultCard;
@@ -495,8 +1114,20 @@ export class ReservacionesComponent implements OnInit {
         this.Actividad.acfe_Fecha = this.convertToDate1(this.selectedDate1);
         this.Actividad.acfe_Id  =this.selectedActivity!.acti_Id;
         this.service.VerificarCuposActividad(this.Actividad).subscribe((response:any)=>{
-            if(response.data.codeStatus != -2 && response.data.codeStatus != 0){
-              if(response.data.codeStatus >= this.selectedPeople.length){
+            if(response.data.codeStatus != -2 && response.data.codeStatus != -5){
+              if(response.data.codeStatus <= this.selectedPeople.length && response.data.codeStatus == 0 ){
+                Swal.fire({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 6000,
+                  timerProgressBar: true,
+                  title: '!ERROR!, Ya no hay cupos para esta actividad en esta fecha',
+                  icon:'error'
+                })
+              }else{
+                console.log("existe")
+                this.ExistsOrNot = true;
                   const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
                   if (idUsuario !== undefined) {
                     this.reservaciones.rese_UsuarioCreador = idUsuario;
@@ -505,73 +1136,26 @@ export class ReservacionesComponent implements OnInit {
                   console.log(this.convertToDate1(this.selectedDate1))
                   this.reservaciones.rese_FechaReservacion =  this.convertToDate1(this.selectedDate1);
                   this.reservaciones.acti_Id = this.selectedActivity!.acti_Id;
-                  this.service.InsertarReservacionesExiste(this.reservaciones).subscribe((data:any)=>{  
-                    var cont = 0;     
-                    if(data.data.codeStatus != 0){
-                      const idreser = data.data.codeStatus;
-                      console.log(idreser)
-                      if (idUsuario !== undefined) {
-                        this.clienReser.clre_UsuarioCreador = idUsuario;
-                      }
-                      this.clienReser.rese_Id  = data.data.codeStatus;
-                      console.log( this.clienReser.rese_Id );
-                      console.log("ya existe")
-                      for(var i = 0 ; i <= this.selectedPeople.length ; i++){
-                          this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;  
-                          this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
-                            cont ++;  
-                            console.log(cont);
-                            if(cont === this.selectedPeople.length){
-                              Swal.fire({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 3000,
-                                timerProgressBar: true,
-                                title: '!Datos insertados con exito!',
-                                icon: 'success'
-                              })
-                              this.factu.fuct_Subtotal = (this.selectedPeople.length * this.selectedActivity!.acti_Precio);
-                              console.log(this.factu.fuct_Subtotal)
-                              const subtotal = this.factu.fuct_Subtotal;
-                              this.factu.fuct_Isv = (subtotal * 0.15);
-                              console.log(this.factu.fuct_Isv)
-                              this.factu.fuct_Total = (this.factu.fuct_Subtotal + this.factu.fuct_Isv)
-                              if (idUsuario !== undefined) {
-                                this.factu.fuct_UsuarioCreador = idUsuario;
-                              }       
-                              this.factu.rese_Id = idreser;            
-                              console.log(this.factu.fuct_Total)
-                              this.modalService.dismissAll();
-                              this.wizardForm.goToNextStep();
-                            }
-                          })              
-                      }          
-                    }else{
-                      Swal.fire({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 1500,
-                        timerProgressBar: true,
-                        title: '!ERROR!, hubo un error al intentar insertar los datos',
-                        icon:'error'
-                      })
-                    }
-                  })
-              }else{
-                Swal.fire({
-                  toast: true,
-                  position: 'top-end',
-                  showConfirmButton: false,
-                  timer: 6000,
-                  timerProgressBar: true,
-                  title: '!ERROR!, La cantidad de personas en su reservación sobrepasa los cupos disponible para esta actividad \n Cupos disponible:'+response.data.codeStatus + ' y la cantidad de personas que reservan es de: '+this.selectedPeople.length,
-                  icon:'error'
-                })
-              }                              
+                  this.factu.fuct_Subtotal = (this.selectedPeople.length * this.selectedActivity!.acti_Precio);
+                  console.log(this.factu.fuct_Subtotal)
+                  const subtotal = this.factu.fuct_Subtotal;
+                  this.factu.fuct_Isv = (subtotal * 0.15);
+                  console.log(this.factu.fuct_Isv)
+                  this.factu.fuct_Total = (this.factu.fuct_Subtotal + this.factu.fuct_Isv)
+                  if (idUsuario !== undefined) {
+                    this.factu.fuct_UsuarioCreador = idUsuario;
+                  }                  
+                  console.log(this.factu.fuct_Total)
+                  const selectedPeopleString = JSON.stringify(this.selectedPeople);
+                  localStorage.setItem('array', selectedPeopleString);
+                  this.modalService.dismissAll();
+                  this.wizardForm.goToNextStep();
+              }
+                            
             }else{              
               if(response.data.codeStatus == -2){
+                this.ExistsOrNot = false;
+                console.log("No existe")
                 const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
                   if (idUsuario !== undefined) {
                     this.reservaciones.rese_UsuarioCreador = idUsuario;
@@ -579,60 +1163,21 @@ export class ReservacionesComponent implements OnInit {
                   this.reservaciones.rese_Cantidad = this.selectedPeople.length;
                   console.log(this.convertToDate1(this.selectedDate1))
                   this.reservaciones.rese_FechaReservacion =  this.convertToDate1(this.selectedDate1);
-                  this.reservaciones.acti_Id = this.selectedActivity!.acti_Id;
-                  this.service.InsertarReservaciones(this.reservaciones).subscribe((data:any)=>{  
-                    var cont = 0;     
-                    if(data.data.codeStatus != 0){
-                      const idreser = data.data.codeStatus;
-                      console.log(idreser)
-                      if (idUsuario !== undefined) {
-                        this.clienReser.clre_UsuarioCreador = idUsuario;
-                      }
-                      this.clienReser.rese_Id  = data.data.codeStatus;
-                      console.log("No existe")
-                      for(var i = 0 ; i <= this.selectedPeople.length ; i++){
-                          this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;  
-                          this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
-                            cont ++;
-                            console.log(cont)  
-                            if(cont === this.selectedPeople.length){
-                              Swal.fire({
-                                toast: true,
-                                position: 'top-end',
-                                showConfirmButton: false,
-                                timer: 3000,
-                                timerProgressBar: true,
-                                title: '!Datos insertados con exito!',
-                                icon: 'success'
-                              })                           
-                              this.factu.fuct_Subtotal = (this.selectedPeople.length * this.selectedActivity!.acti_Precio);
-                              console.log(this.factu.fuct_Subtotal)
-                              const subtotal = this.factu.fuct_Subtotal;
-                              this.factu.fuct_Isv = (subtotal * 0.15);
-                              console.log(this.factu.fuct_Isv)
-                              this.factu.fuct_Total = (this.factu.fuct_Subtotal + this.factu.fuct_Isv)
-                              if (idUsuario !== undefined) {
-                                this.factu.fuct_UsuarioCreador = idUsuario;
-                              }       
-                              this.factu.rese_Id = idreser;            
-                              console.log(this.factu.fuct_Total)
-                              this.modalService.dismissAll();
-                              this.wizardForm.goToNextStep();
-                            }
-                          })              
-                      }          
-                    }else{
-                      Swal.fire({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 1500,
-                        timerProgressBar: true,
-                        title: '!ERROR!, hubo un error al intentar insertar los datos',
-                        icon:'error'
-                      })
-                    }
-                  })
+                  this.reservaciones.acti_Id = this.selectedActivity!.acti_Id;  
+                  this.factu.fuct_Subtotal = (this.selectedPeople.length * this.selectedActivity!.acti_Precio);
+                  console.log(this.factu.fuct_Subtotal)
+                  const subtotal = this.factu.fuct_Subtotal;
+                  this.factu.fuct_Isv = (subtotal * 0.15);
+                  console.log(this.factu.fuct_Isv)
+                  this.factu.fuct_Total = (this.factu.fuct_Subtotal + this.factu.fuct_Isv)
+                  if (idUsuario !== undefined) {
+                    this.factu.fuct_UsuarioCreador = idUsuario;
+                  }                  
+                  console.log(this.factu.fuct_Total)
+                  const selectedPeopleString = JSON.stringify(this.selectedPeople);
+                  localStorage.setItem('array', selectedPeopleString);
+                  this.modalService.dismissAll();
+                  this.wizardForm.goToNextStep();              
               }else{
                 Swal.fire({
                   toast: true,
@@ -660,6 +1205,7 @@ export class ReservacionesComponent implements OnInit {
   }
 
   CancelarFecha(){
+    this.selectedDate1 = new  NgbDate(0,0,0)
     this.fechaValida = false;
     this.fechaFormatoValido = false;
     this.submittedDate = false;  
@@ -672,14 +1218,12 @@ export class ReservacionesComponent implements OnInit {
    */
   finishFunction() {
     Swal.fire({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 3000,
+      titleText: '¡Reservación realizada exitosamente!',
+      position: 'center',
       timerProgressBar: true,
-      title: '!FUNCIONA BRO, POR FIN!!!!',
+      timer:5000,
       icon: 'success'
-    }) 
+    })
     this.router.navigate(['dashboard']);    
   }
 
@@ -719,6 +1263,10 @@ export class ReservacionesComponent implements OnInit {
   form1Submit() {
     if(this.validationForm1.valid) {
       this.wizardForm.goToNextStep();
+      this.XD = true
+      this.isChecked = true;
+      const CKX = document.getElementById('ckXD');
+      CKX!.style.display = '';
     }else{
       Swal.fire({
         toast: true,
@@ -734,6 +1282,7 @@ export class ReservacionesComponent implements OnInit {
     
   }
 
+
   /**
    * Go to next step while form value is valid
    */
@@ -748,6 +1297,5 @@ export class ReservacionesComponent implements OnInit {
   scrollTo(element: any) {
     element.scrollIntoView({behavior: 'smooth'});
   }
-
-
 }
+

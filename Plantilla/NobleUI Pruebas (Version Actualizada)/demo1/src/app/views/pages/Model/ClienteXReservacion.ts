@@ -6,4 +6,5 @@ export class ClienteXReservacion{
     clre_FechaCreacion!:Date;
     clre_UsuarioModificador!:number;
     clre_FechaModificacion!:Date;
+    rese_OwnerPayy!:boolean;
 }

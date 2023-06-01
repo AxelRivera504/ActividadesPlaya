@@ -57,6 +57,7 @@ namespace PlayaMagica.Controllers
             return Ok(result);
         }
 
+
         [HttpPost("ValidarLogin")]
         public IActionResult ValidarLogin(UsuariosViewModel item)
         {

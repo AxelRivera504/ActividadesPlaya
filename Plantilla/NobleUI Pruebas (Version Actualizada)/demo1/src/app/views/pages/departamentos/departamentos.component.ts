@@ -102,16 +102,11 @@ export class DepartamentosComponent implements OnInit {
     }
 
     if(this.departamentoCreate.dept_Id){
-      if(this.departamentoCreate.dept_Id.length != 2 && this.departamentoCreate.dept_Id != ""){
-        this.submitted = true
+      if(this.departamentoCreate.dept_Id.length != 2){
         this.nice = false
       }else{
-        this.submitted = true
         this.nice = true
       }
-    }else{
-      this.submitted = true
-      this.nice = false
     }
 
     const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);

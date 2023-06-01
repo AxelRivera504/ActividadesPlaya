@@ -28,6 +28,16 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             result.CodeStatus = answer;
             return result;
         }
+
+        public IEnumerable<tbFactura> ListarFactura(int id)
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@fuct_Id", id, DbType.Int32, ParameterDirection.Input);
+            return db.Query<tbFactura>(ScriptsDataBase.UDP_tbFactura_ListarFacturabyId, parametros, commandType: CommandType.StoredProcedure);
+        }
+
+
         public RequestStatus Delete(tbFactura item)
         {
             throw new NotImplementedException();

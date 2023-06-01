@@ -16,4 +16,5 @@ export class Encargados{
     enca_FechaCreacion!: number;
     enca_UsuarioCreador_Nombre!:string;
     enca_UsuarioCreador!:number;
+    nombreCompletoEnca!: String;
 }
