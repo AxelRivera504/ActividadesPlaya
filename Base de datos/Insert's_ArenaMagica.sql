@@ -1575,6 +1575,9 @@ VALUES ('Roles',1, GETDATE());
 INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
 VALUES ('Encargados',1, GETDATE());
 
+INSERT INTO [acce].[tbPantallas]([pant_Descripcion], pant_UsuarioCreador, pant_FechaCreacion)
+VALUES ('Actividades',1, GETDATE());
+
 GO
 	  -------Insertar RolesXPantallas-----
 INSERT INTO [acce].[tbRolesXPantallas](role_ID, pant_ID, roleXpant_UsuarioCreador)

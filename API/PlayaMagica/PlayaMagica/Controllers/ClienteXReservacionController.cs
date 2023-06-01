@@ -30,5 +30,12 @@ namespace PlayaMagica.Controllers
             var respuesta = _actividadesServices.InsertarClienteXReservacion(ClienteXReservacion);
             return Ok(respuesta);
         }
+
+        [HttpGet("ListClientesByIdRese{id}")]
+        public IActionResult ListClientesByIdRese(int id)
+        {
+            var listado = _actividadesServices.ListClientesByIdRese(id);
+            return Ok(listado);
+        }
     }
 }

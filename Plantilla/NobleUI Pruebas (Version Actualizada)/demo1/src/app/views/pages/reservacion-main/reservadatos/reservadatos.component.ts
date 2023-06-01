@@ -3,15 +3,16 @@ import { Router } from '@angular/router';
 import { ServicesService } from '../../Service/services.service';
 import 'jspdf-autotable';
 import jsPDF from 'jspdf';
-import { FactuList } from '../../Model/ListaFactura';
-import { Cliente } from '../../Model/Clientes';
 import { Reservaciones } from '../../Model/Reservaciones';
+import { Cliente } from '../../Model/Clientes';
+import { Encargados } from '../../Model/Encargados';
+
 @Component({
-  selector: 'app-factura',
-  templateUrl: './factura.component.html',
-  styleUrls: ['./factura.component.scss']
+  selector: 'app-reservadatos',
+  templateUrl: './reservadatos.component.html',
+  styleUrls: ['./reservadatos.component.scss']
 })
-export class FacturaComponent implements OnInit {
+export class ReservadatosComponent implements OnInit {
   @ViewChild('pdfViewer') pdfViewer!: ElementRef;
   errorMessage: string;
 
@@ -19,32 +20,31 @@ export class FacturaComponent implements OnInit {
     private router:Router,) { }
 
   ngOnInit(): void {
-    setTimeout(()=>{
-      this.generatePDF2();
-    },150)
+    this.generatePDF();
   }
 
-
-  generatePDF2(): void {
+  generatePDF(): void {
     const doc = new jsPDF();
     const header = function (doc: any) {
       doc.setFontSize(18);
       const pageWidth = doc.internal.pageSize.width;
       doc.setTextColor(40);
+      
       // Agregar imagen
       doc.addImage(
         'https://i.ibb.co/W3vSBmv/Green-Yellow-Abstract-Summers-Island-Logo-1-removebg-preview.png',
         'png',
         pageWidth - 70,
         -10,
-        65,
-        65
+        80,
+        80
       );
   
       // Agregar texto
       doc.setFontSize(30);
-      doc.setFont('Pacifico', 'normal');
-      doc.text('FACTURA', 10, 30);
+      doc.setFont('', 'normal');
+      doc.setTextColor('#004447');
+      doc.text('Datos de su reservación', 10, 30);
     };
   
     const footer = function (doc: any) {
@@ -75,19 +75,18 @@ export class FacturaComponent implements OnInit {
         doc.internal.pageSize.getHeight() - footerHeight + 35
       );
     };
+    
   
-    console.log(localStorage.getItem('idF')!.toString());
-    console.log(localStorage.getItem('array'))
-    const arrayFromLocalStorage = JSON.parse(localStorage.getItem('array')!);
-    console.log(arrayFromLocalStorage); 
+    
     this.service
-      .getFactura(parseInt(localStorage.getItem('idF')!.toString()))
+      .getDatosReservacion(parseInt(localStorage.getItem('idR')!.toString()))
       .subscribe(
-        (response: FactuList[]) => {
+        (response: Reservaciones[]) => {
+          const DATA1: Reservaciones = response[0];
+
           doc.setLineWidth(1); // Establecer el grosor de la línea en 1 (puedes ajustar este valor según tus necesidades)
           doc.setDrawColor(0, 0, 0); // Establecer el color de la línea en negro (valores RGB: 0, 0, 0)
-          doc.line(10, 47, doc.internal.pageSize.getWidth() - 10, 47);
-          const data: FactuList = response[0];
+          doc.line(10, 53, doc.internal.pageSize.getWidth() - 10, 53);
           doc.setFontSize(18);
           const pageWidth = doc.internal.pageSize.width;
           doc.setTextColor(40);
@@ -97,30 +96,24 @@ export class FacturaComponent implements OnInit {
           // Agregar datos de la factura
           doc.setFontSize(14); 
           doc.setFont("Pacifico", "bold");
-          doc.text("Numero", 10, 54);
+          doc.text("Reservación Nº", 10, 60);
 
-          doc.setLineWidth(1); 
-          doc.setDrawColor(0, 0, 0); 
-          doc.line(10, 47, 50, 47);
           doc.setFontSize(13); 
           doc.setFont("Pacifico", "normal");
-          doc.text(data.fuct_Id.toString(), 13, 58);
+          doc.text(DATA1.rese_Id.toString(), 24, 64);
 
           doc.setFontSize(14); 
           doc.setFont("Pacifico", "bold");
-          doc.text("Información de la factura", 35, 54);
+          doc.text("Información de la reservación", 60, 60);
 
-          doc.setFontSize(12); 
-          doc.setFont("Pacifico", "normal");
-          doc.text("Empleado: "+ data.nombreCompleto , 37, 58);
-
-          doc.setFontSize(12); 
-          doc.setFont("Pacifico", "normal");
-          doc.text("Dirección empresa: San Pedro sula, Barrio san juan, a saber donde", 37, 62);
-
-          doc.setFontSize(12);
-          doc.text(`Fecha de Reservación: ${data.rese_FechaReservacion}`, 37, 66);
+          doc.setFontSize(13); 
+          doc.setFont("Pacifico", "Normal");
+          doc.text("N# de participantes: " + DATA1.rese_Cantidad, 63, 64);
         
+          doc.setFontSize(13); 
+          doc.setFont("Pacifico", "Normal");
+          doc.text("Fecha reservación: " + DATA1.rese_FechaReservacion, 120, 64);
+
 
           doc.setFontSize(12);
 
@@ -130,51 +123,115 @@ export class FacturaComponent implements OnInit {
 
           doc.setFontSize(14); 
           doc.setFont("Pacifico", "bold");
-          doc.text("Información del cliente", 10, 78);
+          doc.text("Información del cliente", 60, 78);
+
+          doc.setFontSize(14); 
+          doc.setFont("Pacifico", "bold");
+          doc.text("Cliente id: ", 10, 78);
 
           doc.setFontSize(12);
           doc.setFont("Pacifico", "Normal");
-          doc.text(`Id del cliente: ${data.clie_id}`, 13, 82);
+          doc.text(DATA1.clie_id.toString(), 16, 82);
 
           doc.setFontSize(12);
           doc.setFont("Pacifico", "Normal");
-          doc.text(`Nombre: ${data.clie_NombreCompleto}`, 13, 86);
+          doc.text(`Nombre: ${DATA1.clie_NombreCompleto}`, 63, 82);
 
           doc.setFontSize(12);
           doc.setFont("Pacifico", "Normal");
-          doc.text(`DNI: ${data.clie_DNI}`, 100, 86);
+          doc.text(`DNI: ${DATA1.clie_DNI}`, 120, 82);
           
           doc.setFontSize(12);
           doc.setFont("Pacifico", "Normal");
-          doc.text(`Email: ${data.clie_Email}`, 100, 82);
+          doc.text(`Email: ${DATA1.clie_Email}`, 63, 88);
           // Agregar más datos según sea necesario
           doc.setLineWidth(1); // Establecer el grosor de la línea en 1 (puedes ajustar este valor según tus necesidades)
           doc.setDrawColor(0, 0, 0); // Establecer el color de la línea en negro (valores RGB: 0, 0, 0)
-          doc.line(10, 91, doc.internal.pageSize.getWidth() - 10, 91);
-  
-          // Llamar a las funciones de encabezado y pie de página
+          doc.line(10, 94, doc.internal.pageSize.getWidth() - 10, 94);
+
+
+          doc.setFontSize(14); 
+          doc.setFont("Pacifico", "bold");
+          doc.text("Información de la actividad", 60, 102);
+
+          doc.setFontSize(14); 
+          doc.setFont("Pacifico", "bold");
+          doc.text("Actividad id: ", 10, 102);
+
+          doc.setFontSize(12);
+          doc.setFont("Pacifico", "Normal");
+          doc.text(DATA1.acti_Id.toString(), 16, 106);
+
+          doc.setFontSize(12);
+          doc.setFont("Pacifico", "Normal");
+          doc.text(`Nombre: ${DATA1.acti_Nombre}`, 63, 106);
+
+          doc.setFontSize(12);
+          doc.setFont("Pacifico", "Normal");
+          doc.text(`Precio : ${DATA1.acti_Precio}LPS/P`, 120, 106);
+          
+          doc.setLineWidth(1); // Establecer el grosor de la línea en 1 (puedes ajustar este valor según tus necesidades)
+          doc.setDrawColor(0, 0, 0); // Establecer el color de la línea en negro (valores RGB: 0, 0, 0)
+          doc.line(10, 112, doc.internal.pageSize.getWidth() - 10, 112);
+
+
+
+          
           header(doc);
           footer(doc);
           const headerColor = '#F49334';
-        
+
+
+
+          this.service
+          .getEncargadosByIdReport2(DATA1.acti_Id)
+          .subscribe(
+            (response: Encargados[]) => {
+              const data = response.map((Encarga: Encargados) => [
+                Encarga.nombreCompletoEnca,
+                Encarga.enca_Telefono,
+                Encarga.enca_Email
+              ]);
+
+
+              (doc as any).autoTable({
+                head: [['Nombres encargados', 'DNI encargados', 'Email encargados']],
+                body: data,         
+                startY: 130,
+                margin: { top: 10 },
+                theme: 'grid', // Aplica un tema (opcional)
+                  styles: {
+                    headStyles: {
+                      fillColor: headerColor, // Cambia el color de relleno de la barra de encabezado
+                      textColor: '#F49334', // Cambia el color del texto de la barra de encabezado
+                    },
+                  },
+              });
+              doc.text('Información sobre los encargados de la actividad: ', 14, 125); 
+              
+              const secondTableY = (doc as any).autoTable.previous.finalY + 10;
+
+
+          
+
           this.service
           .getClientesByIdRese(parseInt(localStorage.getItem('idR')!.toString()))
           .subscribe(
             (response: Cliente[]) => {
               console.log(response);
               const clientesData = response.map(element => [
-                element.clie_id,
                 element.clie_Nombres,
                 element.clie_Apellidos,
                 element.clie_DNI,
                 element.clie_Email
               ]);
-        
+              doc.text('Participantes de la actividad: ', 14, secondTableY);
+              
               (doc as any).autoTable({
-                head: [['ID', 'Nombres', 'Apellidos', 'DNI', 'Email']],
+                head: [[ 'Nombres', 'Apellidos', 'DNI', 'Email']],
                 body: clientesData,
-                startY: 112,
-                margin: { top: 10 },
+                startY: secondTableY + 10, // Ajusta el valor de desplazamiento vertical según tus necesidades
+                margin: { top: 200, right: 15, bottom: 10 },
                 theme: 'grid',
                 styles: {
                   headStyles: {
@@ -183,31 +240,11 @@ export class FacturaComponent implements OnInit {
                   },
                 },
               });
-        
-              (doc as any).autoTable({
-                body: [
-                  ['SubTotal:', data.fuct_Subtotal],
-                  ['IVA:', data.fuct_Isv],
-                  ['TOTAL:', data.fuct_Total]
-                ],
-                startY: (doc as any).autoTable.previous.finalY + 1,
-                margin: { top: 150, right: 15, bottom: 20, left: 115 },
-                theme: 'grid',
-                styles: {
-                  cellWidth: 'wrap',
-                  cellPadding: 2,
-                  fontSize: 10
-                },
-                columnStyles: {
-                  1: { cellWidth: 25 } // Elige el valor que necesites
-                },
-                headStyles: {
-                  fillColor: headerColor, // Cambia el color de relleno de la barra de encabezado
-                  textColor: '#F49334', // Cambia el color del texto de la barra de encabezado
-                },
-              });
-        
-              doc.text('Participantes de la actividad: ', 14, 106);
+
+                     
+
+
+             
         
               // Mostrar el PDF en el visor
               const pdfDataUri = doc.output('datauristring');
@@ -218,10 +255,12 @@ export class FacturaComponent implements OnInit {
               console.error(error);
             }
           );
+            });
         })
   }
 
   Regresar(){
     this.router.navigate(['reservaciones']);
   }
+
 }

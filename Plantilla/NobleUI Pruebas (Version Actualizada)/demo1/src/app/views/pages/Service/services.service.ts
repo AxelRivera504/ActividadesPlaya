@@ -277,4 +277,13 @@ export class ServicesService {
     return this.http.get<FactuList[]>(this.Url + "/Factura/ListarFacturaIndex")
   }
 
+  getClientesByIdRese(id: number){
+    return this.http.get<Cliente[]>(this.Url + "/ClienteXReservacion/ListClientesByIdRese" + id)
+  }
+
+  getDatosReservacion(id: number){
+    return this.http.get<Reservaciones[]>(this.Url + "/Reservaciones/ListarDatosReservacionById" + id)
+  }
+
+
 }

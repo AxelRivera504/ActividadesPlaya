@@ -533,6 +533,20 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
                 return resultado.Error(ex.Message);
             }
         }
+
+        public IEnumerable<tbReservaciones> ListarDatosReservacionById(int id)
+        {
+            try
+            {
+                var list = _reservacionesRepository.ListarDatosReservacionById(id);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return Enumerable.Empty<tbReservaciones>();
+            }
+        }
         #endregion
 
         #region ClientesXReservacion
@@ -548,6 +562,18 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             catch (Exception ex)
             {
                 return resultado.Error(ex.Message);
+            }
+        }
+
+        public IEnumerable<tbClienteXReservacion> ListClientesByIdRese(int id)
+        {
+            try
+            {
+                return _clienteXReservacionRepository.ListClientesByIdRese(id);
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<tbClienteXReservacion>();
             }
         }
         #endregion

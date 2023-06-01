@@ -15,4 +15,7 @@ export class FactuList {
       nombreCompleto!:String;
       dire_DireccionExacta!:String;
       clie_NombreCompleto!:String;
+      clie_id!:number;
+      clie_DNI!:String;
+      clie_Email!:String;
 }

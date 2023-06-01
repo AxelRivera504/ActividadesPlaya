@@ -1065,12 +1065,47 @@ GO
 		SELECT * FROM Acti.VW_tbReservaciones
 	END
 
+	GO
 
-	SELECT t1.rese_Id,
-			t3.
-	FROM  Acti.tbClienteXReservacion t1 INNER JOIN Acti.tbReservaciones t2
-	ON		t1.rese_Id = t2.rese_Id INNER JOIN Acti.tbClientes t3
-	ON		t1.clie_Id = t3.clie_id
+	CREATE OR ALTER PROCEDURE Acti.UDP_tbReservacion_ListarInfoActiXRese
+	 @rese_Id	INT
+	AS
+	BEGIN
+		BEGIN TRY
+			SELECT	t4.rese_Id,
+					t4.rese_FechaReservacion,
+					t4.rese_Cantidad,
+					t4.acti_Id,
+					t3.acti_Nombre,
+					t3.acti_Precio,
+					t3.acti_ImgUrl,
+					t6.clie_id,
+					t6.clie_Nombres +' '+ t6.clie_Apellidos as clie_NombreCompleto,
+					t6.clie_DNI,
+					t6.clie_Email,
+					t7.play_Playa,
+					t8.dire_DireccionExacta,
+					t9.muni_Descripcion,
+					t10.dept_Descripcion
+			FROM	Acti.tbEncargadosXActividades t1 INNER JOIN Acti.tbEncargados t2
+			ON		t1.enca_Id = t2.enca_id INNER JOIN Acti.tbActividades t3
+			ON		t1.acti_Id = t3.acti_Id INNER JOIN Acti.tbReservaciones t4
+			ON		t4.acti_Id = t3.acti_Id INNER JOIN Acti.tbClienteXReservacion t5
+			ON		t4.rese_Id = t5.rese_Id INNER JOIN Acti.tbClientes t6
+			ON		t5.clie_Id = t6.clie_id INNER JOIN Acti.tbPlayas t7
+			ON		t3.play_Id = t7.play_Id INNER JOIN Gral.tbDirecciones t8
+			ON		t7.dire_Id = t8.dire_Id INNER JOIN Gral.tbMunicipios t9
+			ON		t8.muni_Id = t9.muni_id INNER JOIN Gral.tbDepartamentos t10
+			ON		t9.dept_id = t10.dept_id
+			WHERE	t4.rese_Id = @rese_Id 
+			AND		t5.rese_OwnerPayy = 1
+		
+		END TRY
+		BEGIN CATCH
+			SELECT  0
+		END CATCH
+	END
+
 	
 
 	/*Reservaciones Insert*/
@@ -1572,7 +1607,7 @@ END
 
 
 
-/*RolesXPantallas_Select_ByRoleID */
+/*RolesXPantallas_Select_ByRoleID */ClienteXReservacion
 GO
 CREATE OR ALTER PROCEDURE Acce.UDP_tbRolesXPantallas_Select_ByRoleID 
 @role_ID INT
@@ -1686,13 +1721,15 @@ BEGIN
  BEGIN TRY
  		IF NOT EXISTS(SELECT * FROM Acce.tbUsuarios WHERE usua_Usuario = @usua_Usuario)
 			BEGIN
-				DECLARE @contraEncriptada NVARCHAR(MAX) = HASHBYTES('SHA2_512', @usua_Clave);
+				DECLARE @Pass AS NVARCHAR(MAX);
+					SET @Pass = CONVERT(NVARCHAR(MAX), HASHBYTES('sha2_512', @usua_Clave), 2);
+
 				INSERT INTO Acce.tbUsuarios(usua_Usuario, usua_Clave, 
 				enca_ID, 
 				role_ID, usua_Estado, 
 				usua_UsuarioCreador, usua_FechaCreacion, 
 				usua_UsuarioModificador, usua_FechaModificacion)
-				VALUES(@usua_Usuario,@contraEncriptada,@enca_ID,
+				VALUES(@usua_Usuario,@Pass,@enca_ID,
 				@role_ID,1,@usua_UsuarioCreador,
 				GETDATE(),NULL,NULL)
 				SELECT 1
@@ -2001,7 +2038,7 @@ BEGIN
 END
 GO
 
-CREATE OR ALTER PROCEDURE Acti.UDP_tbFacturas_ListarInfoFactById
+CREATE OR ALTER PROCEDURE Acti.UDP_tbFacturas_ListarInfoFactById 
 	@fuct_Id INT
 AS
 BEGIN
@@ -2020,7 +2057,11 @@ BEGIN
 				t7.muni_Descripcion,
 				t8.dept_Descripcion,
 				t9.mepa_Descripcion,
-				t11.enca_Nombres +' '+ t11.enca_Apellidos as NombreCompleto
+				t11.enca_Nombres +' '+ t11.enca_Apellidos as NombreCompleto,
+				t12.clie_Id,
+				t13.clie_Nombres +' '+ t13.clie_Apellidos as clie_NombreCompleto,
+				t13.clie_DNI,
+				t13.clie_Email
 		FROM    Acti.tbFactura t1 INNER JOIN Acti.tbReservaciones t2
 		ON		t1.rese_Id = t2.rese_Id  INNER JOIN Acti.tbActividades t4
 		ON		t2.acti_Id = t4.acti_Id INNER JOIN Acti.tbPlayas t5
@@ -2030,8 +2071,11 @@ BEGIN
 		ON		t7.dept_id = t8.dept_id INNER JOIN Gral.tbMetodosPago t9
 		ON		t1.mepa_id = t9.mepa_id INNER JOIN Acce.tbUsuarios t10
 		ON		t2.rese_UsuarioCreador = t10.usua_ID INNER JOIN Acti.tbEncargados t11
-		ON		t10.enca_ID = t11.enca_id
-		WHERE	t1.fuct_Id = @fuct_Id
+		ON		t10.enca_ID = t11.enca_id INNER JOIN Acti.tbClienteXReservacion t12
+		ON		t12.rese_Id = t2.rese_Id INNER JOIN Acti.tbClientes t13
+		ON		t12.clie_Id = t13.clie_id
+		WHERE	t1.fuct_Id = @fuct_Id AND
+		t12.rese_OwnerPayy = 1
 	END TRY
 	BEGIN CATCH
 		SELECT 0
@@ -2079,6 +2123,29 @@ BEGIN
 		SELECT 0
 	END CATCH
 END
+
+GO
+
+CREATE OR ALTER PROCEDURE Acti.UDP_tbClienteXReservacion_ListarByIdReservacion
+	@rese_Id	INT
+AS
+BEGIN
+	BEGIN TRY
+		SELECT	t2.clie_id,
+				t2.clie_Nombres,
+				t2.clie_Apellidos,
+				t2.clie_DNI,
+				t2.clie_Email
+		FROM	Acti.tbClienteXReservacion t1 INNER JOIN Acti.tbClientes t2
+		ON		t1.clie_Id = t2.clie_id
+		WHERE   rese_Id = @rese_Id
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+
+
 
 
 --*************************************************** /UDP Y VISTA tbReservacionesXClientes****************************************************************************--

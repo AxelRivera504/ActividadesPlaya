@@ -405,10 +405,12 @@ export class ReservacionesComponent implements OnInit {
       .getFactura(parseInt(localStorage.getItem('idF')!.toString()))
       .subscribe(
         (response: FactuList[]) => {
+          
           doc.setLineWidth(1); // Establecer el grosor de la línea en 1 (puedes ajustar este valor según tus necesidades)
           doc.setDrawColor(0, 0, 0); // Establecer el color de la línea en negro (valores RGB: 0, 0, 0)
           doc.line(10, 47, doc.internal.pageSize.getWidth() - 10, 47);
           const data: FactuList = response[0];
+          console.log(data)
           doc.setFontSize(18);
           const pageWidth = doc.internal.pageSize.width;
           doc.setTextColor(40);
@@ -639,10 +641,31 @@ export class ReservacionesComponent implements OnInit {
                         this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{//Service para insertar los cliente pasando como parameter el model de clienteXReservación
                           console.log('Se inserto el cliente:'+cont);
                           if(cont === this.selectedPeople.length){//Validacion para verificar cuando se insertaron los clientes
-                            //Aqui no se insertara la factura ya que no quiso ser pagada en este momento por el cliente
-                            this.wizardForm.goToNextStep();//Tabula a la siguiente tabulación
-                            this.LimpiarTodo()//Limpia todos lo que se ha utilizado
-                            this.generatePDF();//genera el pdf de de la información de la reservación
+                            this.factu.rese_Id = idreser;
+                            this.factu.mepa_id = 0;
+                            this.factu.fuct_Isv = 0;
+                            this.factu.fuct_Subtotal = 0 ;
+                            this.factu.fuct_Total = 0;
+                            this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
+                              console.log(data.data.codeStatus)
+                              this.fact_Id = data.data.codeStatus;
+                              localStorage.setItem('idF',data.data.codeStatus)
+                              if(data.data.codeStatus >= 1){
+                                this.wizardForm.goToNextStep();
+                                this.LimpiarTodo()
+                                this.generatePDF();
+                              }else{
+                                Swal.fire({
+                                  toast: true,
+                                  position: 'top-end',
+                                  showConfirmButton: false,
+                                  timer: 1500,
+                                  timerProgressBar: true,
+                                  title: '¡ERROR!, ¡oh no!, hubo un error.',
+                                  icon: 'error'
+                                })
+                              }
+                            })
                           }
                         })              
                     }          
@@ -685,10 +708,31 @@ export class ReservacionesComponent implements OnInit {
                       this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{//Service para insertar los cliente pasando como parameter el model de clienteXReservación
                         console.log('Se inserto el cliente:'+cont);
                         if(cont === this.selectedPeople.length){//Validacion para verificar cuando se insertaron los clientes
-                          //Aqui no se insertara la factura ya que no quiso ser pagada en este momento por el cliente
-                          this.wizardForm.goToNextStep();//Tabula a la siguiente tabulación
-                          this.LimpiarTodo()//Limpia todos lo que se ha utilizado
-                          this.generatePDF();//genera el pdf de de la información de la reservación
+                          this.factu.rese_Id = idreser;
+                          this.factu.mepa_id = 0;
+                          this.factu.fuct_Isv = 0;
+                          this.factu.fuct_Subtotal = 0 ;
+                          this.factu.fuct_Total = 0;
+                          this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
+                            console.log(data.data.codeStatus)
+                            this.fact_Id = data.data.codeStatus;
+                            localStorage.setItem('idF',data.data.codeStatus)
+                            if(data.data.codeStatus >= 1){
+                              this.wizardForm.goToNextStep();
+                              this.LimpiarTodo()
+                              this.generatePDF();
+                            }else{
+                              Swal.fire({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 1500,
+                                timerProgressBar: true,
+                                title: '¡ERROR!, ¡oh no!, hubo un error.',
+                                icon: 'error'
+                              })
+                            }
+                          })
                         }
                       })              
                   }          

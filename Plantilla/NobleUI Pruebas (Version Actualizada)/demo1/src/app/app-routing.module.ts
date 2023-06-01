@@ -124,6 +124,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/reservacion-main/factura/factura.module').then(m => m.FacturaModule)
       },
       {
+        path: 'Reservadatos',
+        loadChildren: () => import('./views/pages/reservacion-main/reservadatos/reservadatos.module').then(m => m.ReservadatosModule)
+      },
+      {
         path: 'departamentos',
         loadChildren: () => import('./views/pages/departamentos/departamentos.module').then(m => m.DepartamentosModule)
       },

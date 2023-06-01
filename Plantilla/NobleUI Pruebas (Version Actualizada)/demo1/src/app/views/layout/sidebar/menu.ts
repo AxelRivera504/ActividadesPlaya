@@ -73,6 +73,7 @@ export const MENU: MenuItem[] = [
     link: '/clientes'
   },
   {
+    id:19,
     label: 'Encargados',
     icon: 'user-check',
     link: '/encargados'

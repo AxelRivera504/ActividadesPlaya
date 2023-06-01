@@ -45,6 +45,11 @@ export class ReservacionMainComponent implements OnInit {
     this.router.navigate(['factura']);
   }
 
+  Reservacion(id2:number){
+    localStorage.setItem('idR',id2.toString())
+    this.router.navigate(['Reservadatos']);
+  }
+
 
   rerender(): void {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {

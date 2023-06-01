@@ -5,6 +5,7 @@ import { ReservacionMainComponent } from './reservacion-main.component';
 import { DataTablesModule } from 'angular-datatables';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FacturaComponent } from './factura/factura.component';
+import { ReservadatosComponent } from './reservadatos/reservadatos.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: 'factura',
     component: FacturaComponent
+  },
+  {
+    path: 'Reservadatos',
+    component: ReservadatosComponent
   }
 ];
 

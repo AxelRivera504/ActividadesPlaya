@@ -37,5 +37,12 @@ namespace PlayaMagica.Controllers
             var respuesta = _actividadesServices.InsertarReservacionesExiste(reservaciones);
             return Ok(respuesta);
         }
+
+        [HttpGet("ListarDatosReservacionById{id}")]
+        public IActionResult ListarDatosReservacionById(int id)
+        {
+            var list = _actividadesServices.ListarDatosReservacionById(id);
+            return Ok(list);
+        }
     }
 }

@@ -42,6 +42,14 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             result.CodeStatus = answer;
             return result;
         }
+
+        public IEnumerable<tbReservaciones> ListarDatosReservacionById(int id)
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@rese_Id", id, DbType.Int32, ParameterDirection.Input);
+            return db.Query<tbReservaciones>(ScriptsDataBase.UDP_tbReservaciones_ListarDatosReservacion, parametros, commandType: CommandType.StoredProcedure);
+        }
         public RequestStatus Delete(tbReservaciones item)
         {
             throw new NotImplementedException();
