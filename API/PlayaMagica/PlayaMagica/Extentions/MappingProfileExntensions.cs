@@ -34,6 +34,7 @@ namespace PlayaMagica.Extentions
             CreateMap<tbActividades, ActividadesViewModel>().ReverseMap();
             CreateMap<tbEquipoXActividades, EquipoXActividadesViewModel>().ReverseMap();
             CreateMap<tbEncargadosXActividades, EncargadosXActividadesViewModel>().ReverseMap();
+            CreateMap<tbMantenimientoXEquipo, MantenimientoXEquipoViewModel>().ReverseMap();
         }
     }
 }

@@ -43,6 +43,15 @@ export class EquiposEditarComponent implements OnInit {
 
   onUploadError(event: any): void {
     console.log('onUploadError:', event);
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      title: 'Ha ocurrido un error al subir la imagen',
+      icon: 'error'
+    })
   }
 
   onUploadSuccess(event: any): void {
@@ -130,6 +139,11 @@ export class EquiposEditarComponent implements OnInit {
 
   imgEdit(){
     this.imgchanging = !this.imgchanging
+  }
+
+  
+  Regresar(){
+    this.router.navigate(["/equipos"])
   }
 
 }

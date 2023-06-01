@@ -127,4 +127,7 @@ export class EquiposCrearComponent implements OnInit {
     }
   }
 
+  Regresar(){
+    this.router.navigate(["/equipos"])
+  }
 }

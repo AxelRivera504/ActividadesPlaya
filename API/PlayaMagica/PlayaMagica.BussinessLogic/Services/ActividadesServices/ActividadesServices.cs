@@ -21,8 +21,8 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
         private readonly ActividadesXFechaRepository _actividadesXFechaRepository;
         private readonly FacturaRepository _facturaRepository;
         private readonly EquipoXActividadesRepository _equipoxactividadesrepository;
-        private readonly EquiposRepository _equiposrepository;
         private readonly EncargadosXActividadesRepository _encargadosxactividadesrepository;
+        private readonly MantenimientoXEquipoRepository _mantenimientoxequiporepository;
         public ActividadesServices(FacturaRepository facturaRepository ,
             ActividadesXFechaRepository actividadesXFechaRepository, 
             ClienteXReservacionRepository clienteXReservacionRepository, 
@@ -34,8 +34,8 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             ClientesRepository clientesRepository, 
             PlayasRepository playasRepository,
             EquipoXActividadesRepository equipoxactividadesrepository,
-            EquiposRepository equiposrepository,
-            EncargadosXActividadesRepository encargadosxactividadesrepository)
+            EncargadosXActividadesRepository encargadosxactividadesrepository,
+            MantenimientoXEquipoRepository mantenimientoxequiporepository)
         {
             _clientesRepository = clientesRepository;
             _encargadosRepository = encargadosRepository;
@@ -48,8 +48,8 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             _actividadesXFechaRepository = actividadesXFechaRepository;
             _facturaRepository = facturaRepository;
             _equipoxactividadesrepository = equipoxactividadesrepository;
-            _equiposrepository = equiposrepository;
             _encargadosxactividadesrepository = encargadosxactividadesrepository;
+            _mantenimientoxequiporepository = mantenimientoxequiporepository;
         }
 
 
@@ -436,6 +436,21 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
         }
 
+        public ServiceResult EquipoMantenimiento(tbEquipos item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Equipos = _equipoRepository.EquipoMantenimiento(item);
+                return resultado.Ok(Equipos);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
         public ServiceResult UpdateEquipos(tbEquipos item)
         {
             var resultado = new ServiceResult();
@@ -620,6 +635,23 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             try
             {
                 var reservaciones = _encargadosxactividadesrepository.Delete(item);
+                return resultado.Ok(reservaciones);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+        #endregion
+
+        #region MantenimientoXEquipo
+        public ServiceResult MantenimientoXEquipo(tbMantenimientoXEquipo item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var reservaciones = _mantenimientoxequiporepository.Insert(item);
                 return resultado.Ok(reservaciones);
             }
             catch (Exception ex)

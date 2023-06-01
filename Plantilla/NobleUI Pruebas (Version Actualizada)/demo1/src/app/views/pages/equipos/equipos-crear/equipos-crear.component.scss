@@ -44,3 +44,7 @@ border-radius: 0% !important;
   width: auto; / Calcula automáticamente el ancho manteniendo la proporción de la imagen /
   object-fit: cover; / Ajusta la imagen para que se ajuste dentro del contenedor sin deformarse */
 }
+
+.borrar{
+  display: none;
+}

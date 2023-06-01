@@ -890,7 +890,7 @@ WHERE
 
  /*Mantenimiento equipo*/
  GO
- CREATE OR ALTER PROCEDURE Acti.UDP_tbEquipos_Mantenimiento
+ CREATE OR ALTER PROCEDURE Acti.UDP_tbEquipos_Mantenimiento 1
  @equi_Id INT
  AS
  BEGIN
@@ -2218,3 +2218,18 @@ END
 
 
 --**************************************************** ///UDP Y Vista EncargadosXActividades****************************************************************--
+
+/*Procedimiento para reporte*/
+GO
+CREATE OR ALTER PROCEDURE Acti.UDP_Reporte
+    @fechaInicio DATE,
+    @fechaFin DATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    SELECT *
+    FROM Acti.tbMantenimientoXEquipo
+    WHERE maeq_FechaCreacion >= @fechaInicio
+        AND maeq_FechaCreacion <= @fechaFin;
+END

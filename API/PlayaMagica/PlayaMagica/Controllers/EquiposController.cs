@@ -62,5 +62,13 @@ namespace PlayaMagica.Controllers
             var respuesta = _actividadesServices.DeleteEquipos(equipos);
             return Ok(respuesta);
         }
+
+        [HttpPost("Mantenimiento")]
+        public IActionResult Mantenimiento(EquiposViewModel item)
+        {
+            var equipos = _mapper.Map<tbEquipos>(item);
+            var respuesta = _actividadesServices.EquipoMantenimiento(equipos);
+            return Ok(respuesta);
+        }
     }
 }

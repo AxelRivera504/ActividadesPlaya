@@ -25,6 +25,7 @@ import { pantallas } from '../Model/pantallas';
 import { usuarios } from '../Model/Usuarios';
 import { EncargadosXActividad } from '../Model/EncargadosXActividad';
 import { FactuList } from '../Model/FactuList';
+import { MantenimientoXEquipo } from '../Model/MantenimientoXEquipo';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +49,14 @@ export class ServicesService {
 
   deleteEquipos(equipos: Equipos){
     return this.http.post<Equipos[]>(this.Url + "/Equipos/DeleteEquipos",equipos);
+  }
+
+  equipoMantenimiento(equipos: Equipos){
+    return this.http.post<Equipos[]>(this.Url + "/Equipos/Mantenimiento",equipos);
+  }
+
+  createMantenimientoXEquipo(MantenimientoXEquipo: MantenimientoXEquipo){
+    return this.http.post<MantenimientoXEquipo[]>(this.Url + "/MantenimientoXEquipo/Insert",MantenimientoXEquipo)
   }
 
   getPlayas(){

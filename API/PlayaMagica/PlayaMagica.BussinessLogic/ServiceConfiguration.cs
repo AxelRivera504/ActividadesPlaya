@@ -39,8 +39,8 @@ namespace PlayaMagica.BussinessLogic
             services.AddScoped<ActividadesXFechaRepository>();
             services.AddScoped<FacturaRepository>();
             services.AddScoped<EquipoXActividadesRepository>();
-            services.AddScoped<EquiposRepository>();
             services.AddScoped<EncargadosXActividadesRepository>();
+            services.AddScoped<MantenimientoXEquipoRepository>();
 
             PlayaMagicaContext.BuildConnectionString(connection);
         }

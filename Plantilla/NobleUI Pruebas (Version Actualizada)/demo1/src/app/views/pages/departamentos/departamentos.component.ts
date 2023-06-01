@@ -93,6 +93,24 @@ export class DepartamentosComponent implements OnInit {
     });
   } 
 
+  validateInput(event: KeyboardEvent) {
+    const inputChar = String.fromCharCode(event.keyCode);
+    const pattern = /^[0-9]*$/;
+  
+    if (!pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
+  limitLength(event: any) {
+    const inputValue = event.target.value;
+  
+    if (inputValue.length > 2) {
+      event.target.value = inputValue.slice(0, 2);
+    }
+  }
+  
+  
 
   Guardar(){
     var x = true;

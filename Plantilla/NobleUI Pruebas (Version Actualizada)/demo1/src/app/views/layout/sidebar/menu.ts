@@ -45,6 +45,7 @@ export const MENU: MenuItem[] = [
     link: '/direcciones'
   },
   {
+    id:19,
     label: 'Actividades',
     isTitle: true
   },
@@ -73,12 +74,13 @@ export const MENU: MenuItem[] = [
     link: '/clientes'
   },
   {
+    id:18,
     label: 'Encargados',
     icon: 'user-check',
     link: '/encargados'
   },
   {
-    id:18,
+    id:19,
     label: 'Actividades',
     icon: 'sun',
     link: '/actividades'

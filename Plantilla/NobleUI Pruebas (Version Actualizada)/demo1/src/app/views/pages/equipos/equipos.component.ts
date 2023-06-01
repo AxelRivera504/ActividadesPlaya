@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import { Console } from 'console';
 import { data } from 'jquery';
 import { Mantenimiento } from '../Model/Mantenimiento';
+import { MantenimientoXEquipo } from '../Model/MantenimientoXEquipo';
 
 @Component({
   selector: 'app-equipos',
@@ -23,6 +24,7 @@ export class EquiposComponent implements OnInit {
   Mantenimientos!:Mantenimiento[];
   EquiposModel = new Equipos()
   MantenimientosModel = new Mantenimiento()
+  ManteniminetoXEquipoModel = new MantenimientoXEquipo()
   modalRef: NgbModalRef | undefined;
   basicModalCloseResult: string = '';
   submitted: boolean = false
@@ -63,6 +65,7 @@ export class EquiposComponent implements OnInit {
       this.basicModalCloseResult = "Modal closed" + result;
     }).catch((res) => {});
   }
+
   openBasicModal4(content: TemplateRef<any>, equipo: Equipos) {
     this.EquiposModel =  equipo;
     
@@ -153,7 +156,61 @@ export class EquiposComponent implements OnInit {
     }
 
     if (x){
+      this.service.equipoMantenimiento(this.EquiposModel)
+      .subscribe((data:any)=>{
+        const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
+        if (idUsuario !== undefined) {
+          this.EquiposModel.equi_UsuarioCreador = idUsuario;
+          this.ManteniminetoXEquipoModel.maeq_UsuarioCreador = idUsuario;
+        }
+        if(data.data.codeStatus == 1){
+          this.modalService.dismissAll()
+          setTimeout(() => {
+            this.service.getEquipos()
+            .subscribe((data:any)=>{
+              this.Equipos = data
+              this.rerender()
+            })
+          }, 1);
 
+            this.ManteniminetoXEquipoModel.equi_Id = this.EquiposModel.equi_Id
+            this.ManteniminetoXEquipoModel.mant_Id = this.MantenimientosModel.mant_Id
+            this.service.createMantenimientoXEquipo(this.ManteniminetoXEquipoModel)
+            .subscribe((data:any)=>{
+              console.log("todo bien pa")
+            })
+
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            title: '¡Mantenimiento realizado con exito!',
+            icon: 'success'
+          })
+        }else if(data.data.codeStatus == 2){
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            title: '¡Este equipo no necesita mantenimiento!',
+            icon: 'warning'
+          })
+        }else{
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            title: '¡Ha ocurrido un error!',
+            icon: 'error'
+          })
+        }
+      })
     }else{
       this.submitted = true
     }

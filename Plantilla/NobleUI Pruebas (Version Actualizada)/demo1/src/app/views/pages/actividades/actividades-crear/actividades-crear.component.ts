@@ -228,4 +228,7 @@ export class ActividadesCrearComponent implements OnInit {
     }
   }
 
+  Regresar(){
+    this.router.navigate(["/actividades"])
+  }
 }

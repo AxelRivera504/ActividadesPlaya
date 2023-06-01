@@ -98,6 +98,7 @@ export class MunicipiosComponent implements OnInit {
       });
     } 
 
+
     onDepartamentoChange() {
       this.municipioCreate.muni_Id = this.municipioCreate.dept_Id
       }
@@ -109,6 +110,24 @@ export class MunicipiosComponent implements OnInit {
           this.municipioCreate.muni_Descripcion = nombre
         }
         }
+
+        validateInput(event: KeyboardEvent) {
+          const inputChar = String.fromCharCode(event.keyCode);
+          const pattern = /^[0-9]*$/;
+        
+          if (!pattern.test(inputChar)) {
+            event.preventDefault();
+          }
+        }
+        
+        limitLength(event: any) {
+          const inputValue = event.target.value;
+        
+          if (inputValue.length > 4) {
+            event.target.value = inputValue.slice(0, 4);
+          }
+        }
+        
 
   Guardar(){
   var x = true

@@ -103,8 +103,6 @@ import { never } from 'rxjs';
             this.encargadosSeleccionados = data
           })
         },300);
-
-        
       }
     
     onUploadError(event: any): void {
@@ -264,4 +262,7 @@ import { never } from 'rxjs';
       this.imgchanging = !this.imgchanging
     } 
 
+    Regresar(){
+      this.router.navigate(["/actividades"])
+    }
   }
