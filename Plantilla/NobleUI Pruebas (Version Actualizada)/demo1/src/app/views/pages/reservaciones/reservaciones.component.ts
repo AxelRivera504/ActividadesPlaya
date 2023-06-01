@@ -610,7 +610,7 @@ export class ReservacionesComponent implements OnInit {
             console.log("quiere pagar ahorita")
             
             resolve(true);
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
+          }else if (result.dismiss === Swal.DismissReason.cancel) {
             //El Usuario no quiere pagar de momento la factura y le imprimira en la factura el reporte de la información de reseravación     
             console.log("No quiere pagar ahorita")      
             this.submittedMeto = false; //apagar alerta del metodo de pago
@@ -628,24 +628,24 @@ export class ReservacionesComponent implements OnInit {
                   console.log( this.clienReser.rese_Id+'-id reservacion para el clienteXReservacion' );//Verificar que el id de la reservacion este dentro del modelo de clienteXReservacion
                   const selectedPeopleString = JSON.stringify(this.selectedPeople);
                   localStorage.setItem('array', selectedPeopleString);//Metemos las personas seleccionadas en un localstorage en forma de arreglo para meterlo en el reporte de información de la reservación
-                  for(var i = 0 ; i <= this.selectedPeople.length ; i++){ //Recorremos el array de clientes seleccionados y tomamos cada id para insertarlo uno por uno en clienteXReservación
-                    this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;
-                      if(cont == 0){
-                        this.clienReser.rese_OwnerPayy = true;
-                      }else{
-                        this.clienReser.rese_OwnerPayy = false;
-                      }//Recorrido del array  
-                      cont ++;//Contador que ir aumentado de a uno, para saber en que momento termino de insertar los clientes  
-                      this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{//Service para insertar los cliente pasando como parameter el model de clienteXReservación
-                        console.log('Se inserto el cliente:'+cont);
-                        if(cont === this.selectedPeople.length){//Validacion para verificar cuando se insertaron los clientes
-                          //Aqui no se insertara la factura ya que no quiso ser pagada en este momento por el cliente
-                          this.wizardForm.goToNextStep();//Tabula a la siguiente tabulación
-                          this.LimpiarTodo()//Limpia todos lo que se ha utilizado
-                          this.generatePDF();//genera el pdf de de la información de la reservación
-                        }
-                      })              
-                  }          
+                    for(var i = 0 ; i <= this.selectedPeople.length ; i++){ //Recorremos el array de clientes seleccionados y tomamos cada id para insertarlo uno por uno en clienteXReservación
+                      this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;
+                        if(cont == 0){
+                          this.clienReser.rese_OwnerPayy = true;
+                        }else{
+                          this.clienReser.rese_OwnerPayy = false;
+                        }//Recorrido del array  
+                        cont ++;//Contador que ir aumentado de a uno, para saber en que momento termino de insertar los clientes  
+                        this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{//Service para insertar los cliente pasando como parameter el model de clienteXReservación
+                          console.log('Se inserto el cliente:'+cont);
+                          if(cont === this.selectedPeople.length){//Validacion para verificar cuando se insertaron los clientes
+                            //Aqui no se insertara la factura ya que no quiso ser pagada en este momento por el cliente
+                            this.wizardForm.goToNextStep();//Tabula a la siguiente tabulación
+                            this.LimpiarTodo()//Limpia todos lo que se ha utilizado
+                            this.generatePDF();//genera el pdf de de la información de la reservación
+                          }
+                        })              
+                    }          
                 }else{
                   Swal.fire({
                     toast: true,
@@ -712,9 +712,9 @@ export class ReservacionesComponent implements OnInit {
             console.log("cerro el modal")
             reject();
           }
-        });
-      });
-    }else{
+            });
+          });
+        }else{
              //El Usuario quiere pagar la factura y escogio el de un solo el metodo de pago y debe le imprimir la factura el reporte de la información de la factura completa
             //El Usuario no quiere pagar de momento la factura y le imprimira en la factura el reporte de la información de reseravación     
             console.log("No quiere pagar ahorita")      
@@ -723,39 +723,36 @@ export class ReservacionesComponent implements OnInit {
               console.log("EXISTE EL ACTI")
               this.service.InsertarReservacionesExiste(this.reservaciones).subscribe((data:any)=>{  //Pasar Model reservación para insertar la reservación
                 var cont = 0;     
-                console.log("PASO 1")
-                if(data.data.codeStatus != 0){//Verificar si se inserto correctamente la reservacion
-                  const idreser = data.data.codeStatus;//Capturar el id de la reservacion
+                if(data.data.codeStatus != 0){
+                  const idreser = data.data.codeStatus;
                   console.log(idreser)
                   if (idUsuario !== undefined) {
-                    this.clienReser.clre_UsuarioCreador = idUsuario;//Comenzamos a llenar el model para insertar los clientes en la tabla de ClienteXReservación, en este caso el Usua_Creador
+                    this.clienReser.clre_UsuarioCreador = idUsuario;
                   }
-                  this.clienReser.rese_Id  = data.data.codeStatus;//Meter el id de la reservación a la cual perteneceran esos clientes o participantes
-                  console.log( this.clienReser.rese_Id+'-id reservacion para el clienteXReservacion' );//Verificar que el id de la reservacion este dentro del modelo de clienteXReservacion
+                  this.clienReser.rese_Id  = data.data.codeStatus;
+                  console.log("No existe")
                   const selectedPeopleString = JSON.stringify(this.selectedPeople);
-                  localStorage.setItem('array', selectedPeopleString);//Metemos las personas seleccionadas en un localstorage en forma de arreglo para meterlo en el reporte de información de la reservación
+                  localStorage.setItem('array', selectedPeopleString);
                   for(var i = 0 ; i <= this.selectedPeople.length ; i++){
-                    console.log("PASO 2") //Recorremos el array de clientes seleccionados y tomamos cada id para insertarlo uno por uno en clienteXReservación
                     this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;
-                      if(cont == 0){
+                      if(i === 0){
+                        console.log("OWNER")
                         this.clienReser.rese_OwnerPayy = true;
                       }else{
+                        console.log("NO OWNER")
                         this.clienReser.rese_OwnerPayy = false;
                       }//Recorrido del array  
-                      cont ++;//Contador que ir aumentado de a uno, para saber en que momento termino de insertar los clientes  
                       this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
-                        console.log("PASO 3")//Service para insertar los cliente pasando como parameter el model de clienteXReservación
-                        console.log('Se inserto el cliente:'+cont);
-                        if(cont === this.selectedPeople.length){//Validacion para verificar cuando se insertaron los clientes
-                          //Aqui no se insertara la factura ya que no quiso ser pagada en este momento por el cliente
+                        cont ++;
+                        console.log(cont)  
+                        if(cont === this.selectedPeople.length){                                        
                           this.factu.rese_Id = idreser;
                           this.factu.mepa_id = parseInt(this.metodoSeleccionado.toString());
                           this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
-                            console.log("PASO 4")
                             console.log(data.data.codeStatus)
                             this.fact_Id = data.data.codeStatus;
                             localStorage.setItem('idF',data.data.codeStatus)
-                            if(data.data.codeStatus >= 1){                           
+                            if(data.data.codeStatus >= 1){
                               this.wizardForm.goToNextStep();
                               this.LimpiarTodo()
                               this.generatePDF2();
@@ -770,7 +767,7 @@ export class ReservacionesComponent implements OnInit {
                                 icon: 'error'
                               })
                             }
-                          })  
+                          })
                         }
                       })              
                   }          
@@ -781,7 +778,7 @@ export class ReservacionesComponent implements OnInit {
                     showConfirmButton: false,
                     timer: 1500,
                     timerProgressBar: true,
-                    title: '!ERROR!, hubo un error al intentar insertar la reservación',
+                    title: '!ERROR!, hubo un error al intentar insertar los datos',
                     icon:'error'
                   })
                 }
@@ -789,43 +786,38 @@ export class ReservacionesComponent implements OnInit {
             }else{//Aqui significa que la actividad No existe por lo cual se debe realalizar un insert a la BD
               console.log("NO EXISTE EL ACTI")
               console.log("PASO 1")
-              this.service.InsertarReservaciones(this.reservaciones).subscribe((data:any)=>{  //Pasar Model reservación para insertar la reservación
+              this.service.InsertarReservaciones(this.reservaciones).subscribe((data:any)=>{  
                 var cont = 0;     
-                if(data.data.codeStatus != 0){//Verificar si se inserto correctamente la reservacion
-                  const idreser = data.data.codeStatus;//Capturar el id de la reservacion
+                if(data.data.codeStatus != 0){
+                  const idreser = data.data.codeStatus;
                   console.log(idreser)
                   if (idUsuario !== undefined) {
-                    this.clienReser.clre_UsuarioCreador = idUsuario;//Comenzamos a llenar el model para insertar los clientes en la tabla de ClienteXReservación, en este caso el Usua_Creador
+                    this.clienReser.clre_UsuarioCreador = idUsuario;
                   }
-                  console.log("PASO 2 E")
-                  this.clienReser.rese_Id  = data.data.codeStatus;//Meter el id de la reservación a la cual perteneceran esos clientes o participantes
-                  console.log( this.clienReser.rese_Id+'-id reservacion para el clienteXReservacion' );//Verificar que el id de la reservacion este dentro del modelo de clienteXReservacion
+                  this.clienReser.rese_Id  = data.data.codeStatus;
+                  console.log("No existe")
                   const selectedPeopleString = JSON.stringify(this.selectedPeople);
-                  localStorage.setItem('array', selectedPeopleString);//Metemos las personas seleccionadas en un localstorage en forma de arreglo para meterlo en el reporte de información de la reservación
+                  localStorage.setItem('array', selectedPeopleString);
                   for(var i = 0 ; i <= this.selectedPeople.length ; i++){
-                    console.log("PASO 3 E") //Recorremos el array de clientes seleccionados y tomamos cada id para insertarlo uno por uno en clienteXReservación
                     this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;
-                    if(cont === 0){
-                      console.log("1")
-                      this.clienReser.rese_OwnerPayy = true;
-                    }else{
-                      console.log("0")
-                      this.clienReser.rese_OwnerPayy = false;
-                    }//Recorrido del array  
-                    cont ++;//Contador que ir aumentado de a uno, para saber en que momento termino de insertar los clientes  
+                      if(i === 0){
+                        console.log("OWNER")
+                        this.clienReser.rese_OwnerPayy = true;
+                      }else{
+                        console.log("NO OWNER")
+                        this.clienReser.rese_OwnerPayy = false;
+                      }//Recorrido del array  
                       this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
-                        console.log("PASO 4E")//Service para insertar los cliente pasando como parameter el model de clienteXReservación
-                        console.log('Se inserto el cliente:'+cont);
-                        if(cont === this.selectedPeople.length){//Validacion para verificar cuando se insertaron los clientes
-                          //Aqui no se insertara la factura ya que no quiso ser pagada en este momento por el cliente
+                        cont ++;
+                        console.log(cont)  
+                        if(cont === this.selectedPeople.length){                                        
                           this.factu.rese_Id = idreser;
                           this.factu.mepa_id = parseInt(this.metodoSeleccionado.toString());
                           this.service.InsertarFactura(this.factu).subscribe((data:any)=>{
                             console.log(data.data.codeStatus)
                             this.fact_Id = data.data.codeStatus;
                             localStorage.setItem('idF',data.data.codeStatus)
-                            if(data.data.codeStatus >= 1){   
-                              console.log("PASO 5")                        
+                            if(data.data.codeStatus >= 1){
                               this.wizardForm.goToNextStep();
                               this.LimpiarTodo()
                               this.generatePDF2();
@@ -840,7 +832,7 @@ export class ReservacionesComponent implements OnInit {
                                 icon: 'error'
                               })
                             }
-                          })  
+                          })
                         }
                       })              
                   }          
@@ -851,11 +843,11 @@ export class ReservacionesComponent implements OnInit {
                     showConfirmButton: false,
                     timer: 1500,
                     timerProgressBar: true,
-                    title: '!ERROR!, hubo un error al intentar insertar la reservación',
+                    title: '!ERROR!, hubo un error al intentar insertar los datos',
                     icon:'error'
                   })
                 }
-              })
+              })   
             }
       this.Activo = true;
       console.log("Cuando se escoge un un metodo de pago de un solo")
@@ -1279,7 +1271,7 @@ export class ReservacionesComponent implements OnInit {
       })
       this.isForm1Submitted = true;
     }
-    
+      
   }
 
 

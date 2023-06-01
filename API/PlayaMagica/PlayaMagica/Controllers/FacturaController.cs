@@ -22,9 +22,17 @@ namespace PlayaMagica.Controllers
             _actividadesServices = actividadesServices;
             _mapper = mapper;
         }
+
+        [HttpGet("ListarFacturaIndex")]
+        public IActionResult ListarFacturaIndex()
+        {
+            var list = _actividadesServices.ListarFacturaIndex();
+            return Ok(list);
+        }
+
         [HttpPost("InsertarFactura")]
         public IActionResult InsertarActividades(FacturaViewModel item)
-        {
+         {
             var facturas = _mapper.Map<tbFactura>(item);
             var respuesta = _actividadesServices.InsertarFactura(facturas);
             return Ok(respuesta);

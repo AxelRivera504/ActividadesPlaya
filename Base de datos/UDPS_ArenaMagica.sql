@@ -2038,6 +2038,27 @@ BEGIN
 	END CATCH
 END
 GO
+
+CREATE OR ALTER PROCEDURE Acti.UDP_tbFactura_ListarFacturaIndex
+AS
+BEGIN
+	SELECT	t3.rese_Id,
+			t4.fuct_Id,
+			t2.clie_Nombres +' '+ t2.clie_Apellidos AS clie_NombreCompleto,
+			t5.acti_Nombre,
+			t4.fuct_Subtotal,
+			t4.fuct_Isv,
+			t4.fuct_Total
+	FROM	Acti.tbClienteXReservacion t1 INNER JOIN Acti.tbClientes t2
+	ON		t1.clie_Id = t2.clie_id INNER JOIN Acti.tbReservaciones t3
+	ON		t1.rese_Id = t3.rese_Id INNER JOIN Acti.tbFactura t4
+	ON		t3.rese_Id = t4.rese_Id INNER JOIN Acti.tbActividades t5
+	ON		t5.acti_Id = t3.acti_Id
+	WHERE	t1.rese_OwnerPayy = 1
+END
+GO
+
+
 --***************************************************///UDP Y VISTA Factura****************************************************************************--
 
 --*************************************************** UDP Y VISTA tbReservacionesXClientes****************************************************************************--

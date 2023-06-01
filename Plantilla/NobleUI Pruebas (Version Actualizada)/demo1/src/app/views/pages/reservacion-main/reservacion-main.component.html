@@ -1,1 +1,37 @@
-<p>reservacion-main works!</p>
+<div class="card">
+    <div class="card-body">
+        <div class="card-title text-center"><h3>Reservaciones</h3></div>
+        <div class="text-center">
+            <button type="button" class="btn btn-primary" (click)="Crear()">
+              <i class="feather icon-plus"></i>
+              Nuevo
+            </button>
+          </div>
+        <div class="table table-responsive">
+          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+            <thead>
+              <tr>
+                <th>Factura id</th>
+                <th>Reservación id</th>
+                <th>Cliente</th>
+                <th>Estado reservación</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of factu">
+                <td>{{item.fuct_Id}}</td>
+                <td>{{item.rese_Id}}</td>
+                <td>{{item.clie_NombreCompleto}}</td>
+                <td>{{item.fuct_Total}}</td>
+                <td><button type="button" class="btn btn-warning" >    <i class="feather icon-edit"></i></button>
+                    |
+                    <button type="button" class="btn btn-info" (click)="Factura(item.fuct_Id)">       <i class="feather icon-credit-card"></i></button>
+                    |
+                    <button type="button" class="btn btn-info" >       <i class="feather icon-list"></i></button>
+                </td>
+              </tr>
+          </table>
+        </div>
+      </div>
+</div>

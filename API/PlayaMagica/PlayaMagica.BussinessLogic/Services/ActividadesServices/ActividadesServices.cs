@@ -571,6 +571,18 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
         #endregion
 
         #region Facturas
+         public IEnumerable<tbFactura> ListarFacturaIndex()
+        {
+            try
+            {
+                return _facturaRepository.ListarFacturaIndex();
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<tbFactura>();
+            }
+        }
+
         public ServiceResult InsertarFactura(tbFactura item)
         {
             var resultado = new ServiceResult();

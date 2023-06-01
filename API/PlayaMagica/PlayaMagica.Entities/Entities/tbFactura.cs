@@ -34,6 +34,8 @@ namespace PlayaMagica.Entities.Entities
         public string dept_Descripcion { get; set; }
         [NotMapped]
         public string NombreCompleto { get; set; }
+        [NotMapped]
+        public string clie_NombreCompleto { get; set; }
 
         public int? fuct_UsuarioCreador { get; set; }
         public DateTime? fuct_FechaCreacion { get; set; }

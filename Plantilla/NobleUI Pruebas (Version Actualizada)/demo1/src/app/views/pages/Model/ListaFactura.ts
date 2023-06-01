@@ -14,4 +14,5 @@ export class FactuList {
       dept_Descripcion!:String
       nombreCompleto!:String;
       dire_DireccionExacta!:String;
+      clie_NombreCompleto!:String;
 }

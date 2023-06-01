@@ -113,7 +113,15 @@ const routes: Routes = [
       },
       {
         path: 'reservaciones',
+        loadChildren: () => import('./views/pages/reservacion-main/reservacion-main.module').then(m => m.ReservacionMainModule)
+      },
+      {
+        path: 'reservacionesCrear',
         loadChildren: () => import('./views/pages/reservaciones/reservaciones.module').then(m => m.ReservacionesModule)
+      },
+      {
+        path: 'factura',
+        loadChildren: () => import('./views/pages/reservacion-main/factura/factura.module').then(m => m.FacturaModule)
       },
       {
         path: 'departamentos',

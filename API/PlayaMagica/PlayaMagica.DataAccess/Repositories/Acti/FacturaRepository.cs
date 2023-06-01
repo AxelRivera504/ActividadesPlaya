@@ -12,6 +12,7 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
 {
     public class FacturaRepository : IRepository<tbFactura>
     {
+
         public RequestStatus InsertarFactura(tbFactura item)
         {
             using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
@@ -29,6 +30,12 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             return result;
         }
 
+        public IEnumerable<tbFactura> ListarFacturaIndex()
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            return db.Query<tbFactura>(ScriptsDataBase.UDP_tbFactura_ListarIndex, null, commandType: CommandType.StoredProcedure);
+        }
+
         public IEnumerable<tbFactura> ListarFactura(int id)
         {
             using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
@@ -36,6 +43,7 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             parametros.Add("@fuct_Id", id, DbType.Int32, ParameterDirection.Input);
             return db.Query<tbFactura>(ScriptsDataBase.UDP_tbFactura_ListarFacturabyId, parametros, commandType: CommandType.StoredProcedure);
         }
+
 
 
         public RequestStatus Delete(tbFactura item)

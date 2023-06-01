@@ -12,13 +12,10 @@ import { ErrorPageComponent } from './views/pages/error-page/error-page.componen
 
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { DataTablesModule } from 'angular-datatables';
-import { ReservacionMainComponent } from './views/pages/reservacion-main/reservacion-main.component';
-
 @NgModule({
   declarations: [
     AppComponent,
     ErrorPageComponent,
-    ReservacionMainComponent,
   ],
   imports: [
     BrowserModule,

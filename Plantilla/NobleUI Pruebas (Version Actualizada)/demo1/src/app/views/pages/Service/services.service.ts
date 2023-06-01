@@ -273,5 +273,8 @@ export class ServicesService {
     return this.http.get<Encargados[]>(this.Url + "/EncargadosXActividad/ListarEncargadosById" + id)
   }
 
+  getFacturaIndex(){
+    return this.http.get<FactuList[]>(this.Url + "/Factura/ListarFacturaIndex")
+  }
 
 }
