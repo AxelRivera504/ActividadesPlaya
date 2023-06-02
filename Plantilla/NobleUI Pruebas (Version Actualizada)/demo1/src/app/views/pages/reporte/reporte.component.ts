@@ -18,6 +18,7 @@ export class ReporteComponent implements OnInit {
   @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective
   mantenimientoXEquipo!: MantenimientoXEquipo[]
+  mantenimientoXEquipoFiltered!: MantenimientoXEquipo[]
   basicModalCloseResult: string = '';
 
   hoveredDate: NgbDate | null = null;
@@ -94,8 +95,9 @@ export class ReporteComponent implements OnInit {
     if(fechaInicio != fechaFin){
       this.service.getMantenimientoXEquipoFiltered(fechaInicio,fechaFin)
       .subscribe((data:any)=>{
-        console.log(data)
-          
+        localStorage.setItem('reporteData', JSON.stringify(data));
+        this.modalService.dismissAll()
+        this.router.navigate(["/reporteFiltered"])
       })
     }else{
       Swal.fire({

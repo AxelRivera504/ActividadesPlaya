@@ -91,9 +91,25 @@ export class ListplayitasComponent implements OnInit{
     });
         }, 1);
       }else if(data.data.codeStatus == 2){
-
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          title: '¡El registro no puede ser eliminado!',
+          icon: 'warning'
+        })
       }else{
-
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          title: '¡Ha ocurrido un error!',
+          icon: 'error'
+        })
       }
     })
   }

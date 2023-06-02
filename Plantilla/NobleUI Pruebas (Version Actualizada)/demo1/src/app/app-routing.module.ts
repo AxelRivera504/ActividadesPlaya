@@ -224,6 +224,10 @@ const routes: Routes = [
         path: 'reporte',
         loadChildren: () => import('./views/pages/reporte/reporte.module').then(m => m.ReporteModule)
       },
+      {
+        path: 'reporteFiltered',
+        loadChildren: () => import('./views/pages/reporte/reporte-filtrado/reporte-filtrado.module').then(m => m.ReporteFiltradoModule)
+      },
       
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, 
       // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
