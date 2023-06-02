@@ -5,6 +5,8 @@ import { ServicesService } from '../Service/services.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { Factura } from '../Model/Factura';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-reservacion-main',
@@ -15,7 +17,7 @@ export class ReservacionMainComponent implements OnInit {
   @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
   factu!: FactuList[];
-
+  FacturaVer: Factura = new Factura();
   constructor(private service: ServicesService,
     private modalService: NgbModal, 
     private router:Router,) { }
@@ -41,8 +43,46 @@ export class ReservacionMainComponent implements OnInit {
   }
 
   Factura(id:number){
-    localStorage.setItem('idF',id.toString())
-    this.router.navigate(['factura']);
+    this.FacturaVer.fuct_Id = id
+    this.service.VerificarEstadoFactura(this.FacturaVer).subscribe((response:any)=>{
+      if(response.data.codeStatus === 1){
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          title: 'Esta reservación no ha sido cancelada \nPuede editar la factura para cancelarla',
+          icon: 'error'
+        })   
+      }else{
+        localStorage.setItem('idF',id.toString())
+        this.router.navigate(['factura']);
+      }
+    })
+  }
+
+  Edicion(id:number, id2:number){
+    this.FacturaVer.fuct_Id = id
+    this.service.VerificarEstadoFactura(this.FacturaVer).subscribe((response:any)=>{
+      if(response.data.codeStatus === 1){
+        localStorage.setItem('idFacturaEdit',id.toString())
+        localStorage.setItem('idReservaEdit',id.toString())
+        this.router.navigate(['reservacionesEditar']);
+       
+      }else{
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          title: 'La reservación ya ha sido cancelada',
+          icon: 'error'
+        })  
+
+      }
+    })
   }
 
   Reservacion(id2:number){

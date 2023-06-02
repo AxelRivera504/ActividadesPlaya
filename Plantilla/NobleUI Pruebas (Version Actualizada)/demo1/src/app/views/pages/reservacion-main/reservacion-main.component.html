@@ -11,8 +11,8 @@
           <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
             <thead>
               <tr>
-                <th>Factura id</th>
                 <th>Reservación id</th>
+                <th>Factura id</th>
                 <th>Cliente</th>
                 <th>Estado reservación</th>
                 <th>Acciones</th>
@@ -20,11 +20,15 @@
             </thead>
             <tbody>
               <tr *ngFor="let item of factu">
-                <td>{{item.fuct_Id}}</td>
                 <td>{{item.rese_Id}}</td>
+                <td>{{item.fuct_Id}}</td>
                 <td>{{item.clie_NombreCompleto}}</td>
-                <td>{{item.fuct_Total}}</td>
-                <td><button type="button" class="btn btn-warning" >    <i class="feather icon-edit"></i></button>
+                <td>
+                  <span [class]="'badge ' + (item.fuct_Total > 0 ? 'bg-success' : 'bg-warning')">
+                    {{item.fuct_Total > 0 ? 'Cancelado' : 'Pendiente'}}
+                  </span>
+                </td>
+                <td><button type="button" class="btn btn-warning" (click)="Edicion(item.fuct_Id,item.rese_Id)" >    <i class="feather icon-edit"></i></button>
                     |
                     <button type="button" class="btn btn-info" (click)="Factura(item.fuct_Id)">       <i class="feather icon-credit-card"></i></button>
                     |

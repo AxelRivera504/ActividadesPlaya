@@ -151,6 +151,7 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbFactura_Update = "Acti.UDP_tbFactura_Delete";
         public static string UDP_tbFactura_ListarFacturabyId = "Acti.UDP_tbFacturas_ListarInfoFactById";
         public static string UDP_tbFactura_ListarIndex = "Acti.UDP_tbFactura_ListarFacturaIndex";
+        public static string UDP_tbFactura_VerificarFactura = "Acti.UDP_tbFactura_VerificarEstadoFactura";
         #endregion
 
         #region ClienteXReservacion

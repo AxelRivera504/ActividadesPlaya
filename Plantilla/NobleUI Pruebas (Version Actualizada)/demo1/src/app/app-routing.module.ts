@@ -120,6 +120,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/reservaciones/reservaciones.module').then(m => m.ReservacionesModule)
       },
       {
+        path: 'reservacionesEditar',
+        loadChildren: () => import('./views/pages/reservacion-main/reservacion-edit/reservacion-edit.module').then(m => m.ReservacionEditModule)
+      },
+      {
         path: 'factura',
         loadChildren: () => import('./views/pages/reservacion-main/factura/factura.module').then(m => m.FacturaModule)
       },

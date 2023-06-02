@@ -1,26 +1,29 @@
 import { Component, OnInit, ViewChild,ElementRef,TemplateRef } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Cliente } from '../Model/Clientes';
+import { Cliente } from '../../Model/Clientes';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { ServicesService } from '../Service/services.service';
+import { ServicesService } from '../../Service/services.service';
 import { NgSelectConfig } from '@ng-select/ng-select';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Person, PeoplesData } from 'src/app/core/dummy-datas/peoples.data';
-import {ClienteDdl} from '../Model/ClienteDdl';
+import { ClienteDdl } from '../../Model/ClienteDdl';
 import { FormBuilder} from '@angular/forms';
-import { Actividades } from '../Model/Actividades';
+import { Actividades } from '../../Model/Actividades';
+import { ActividadesXFecha } from '../../Model/ActividadesXFecha';
 import { NgbModal,NgbModalRef  } from '@ng-bootstrap/ng-bootstrap';
-import { Reservaciones } from '../Model/Reservaciones';
-import { ClienteXReservacion } from '../Model/ClienteXReservacion';
+import { Reservaciones } from '../../Model/Reservaciones';
+import { ClienteXReservacion } from '../../Model/ClienteXReservacion';
 import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
-import { metodospago } from '../Model/metodospago';
-import { Factura } from '../Model/Factura';
+import { metodospago } from '../../Model/metodospago';
+import { Factura } from '../../Model/Factura';
 import 'jspdf-autotable';
-import { Encargados } from '../Model/Encargados';
+import { Encargados } from '../../Model/Encargados';
 import jsPDF from 'jspdf';
-import { FactuList } from '../Model/ListaFactura';
-import { ReportData } from '../Model/ReportData';
+import { FactuList } from '../../Model/ListaFactura';
+import { ReportData } from '../../Model/ReportData';
+import { WizardComponent as BaseWizardComponent } from 'angular-archwizard';
+import Swal from 'sweetalert2';
 
 const fillJustifyNav = {
   htmlCode: 
@@ -92,15 +95,12 @@ export class CardsComponent {}`
 }
 
 
-import { WizardComponent as BaseWizardComponent } from 'angular-archwizard';
-import Swal from 'sweetalert2';
-import { ActividadesXFecha } from '../Model/ActividadesXFecha';
 @Component({
-  selector: 'app-reservaciones',
-  templateUrl: './reservaciones.component.html',
-  styleUrls: ['./reservaciones.component.scss']
+  selector: 'app-reservacion-edit',
+  templateUrl: './reservacion-edit.component.html',
+  styleUrls: ['./reservacion-edit.component.scss']
 })
-export class ReservacionesComponent implements OnInit {
+export class ReservacionEditComponent implements OnInit {
   @ViewChild('pdfViewer') pdfViewer!: ElementRef;
   errorMessage: string;
 
@@ -164,7 +164,6 @@ export class ReservacionesComponent implements OnInit {
    Activo: boolean = true;
    ExistsOrNot: boolean = false;
   constructor(private calendar: NgbCalendar,public formBuilder: UntypedFormBuilder,private router: Router, private service: ServicesService, private config: NgSelectConfig,private modalService: NgbModal) { 
-   
     this.form = new FormGroup({
       clie_Sexo: new FormControl(null),
     });

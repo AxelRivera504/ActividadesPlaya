@@ -30,6 +30,23 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             return result;
         }
 
+        public RequestStatus InsertarFacturaNoPaga(tbFactura item)
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@rese_Id", item.rese_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@fuct_Subtotal", item.fuct_Subtotal, DbType.Decimal, ParameterDirection.Input);
+            parametros.Add("@fuct_Isv", item.fuct_Isv, DbType.Decimal, ParameterDirection.Input);
+            parametros.Add("@fuct_Total", item.fuct_Total, DbType.Decimal, ParameterDirection.Input);
+            parametros.Add("@mepa_id", null, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@fuct_UsuarioCreador", item.fuct_UsuarioCreador, DbType.String, ParameterDirection.Input);
+            var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbFactura_Insert, parametros, commandType: CommandType.StoredProcedure);
+
+            result.CodeStatus = answer;
+            return result;
+        }
+
         public IEnumerable<tbFactura> ListarFacturaIndex()
         {
             using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
@@ -44,7 +61,17 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             return db.Query<tbFactura>(ScriptsDataBase.UDP_tbFactura_ListarFacturabyId, parametros, commandType: CommandType.StoredProcedure);
         }
 
+        public RequestStatus VerificarFactura(tbFactura item)
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@fuct_Id", item.fuct_Id, DbType.Int32, ParameterDirection.Input);
+            var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbFactura_VerificarFactura, parametros, commandType: CommandType.StoredProcedure);
 
+            result.CodeStatus = answer;
+            return result;
+        }
 
         public RequestStatus Delete(tbFactura item)
         {

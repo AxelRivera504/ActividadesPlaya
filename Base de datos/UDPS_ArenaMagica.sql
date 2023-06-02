@@ -2012,7 +2012,7 @@ BEGIN
 		
 		SELECT	TOP 1 t1.fuct_Id
 		FROM    Acti.tbFactura t1
-		Order by t1.fuct_Id
+		Order by t1.fuct_Id DESC
 	END TRY
 
 	BEGIN CATCH
@@ -2102,7 +2102,27 @@ BEGIN
 END
 GO
 
-
+CREATE OR ALTER PROCEDURE Acti.UDP_tbFactura_VerificarEstadoFactura
+	@fuct_Id INT
+AS
+BEGIN
+	BEGIN TRY
+		DECLARE @mepa NVARCHAR;
+		SET @mepa = (SELECT mepa_Id FROM Acti.tbFactura WHERE fuct_Id = @fuct_Id)
+		IF(@mepa IS NULL)
+		BEGIN 
+			SELECT 1
+		END
+		ELSE
+		BEGIN 
+			SELECT 2
+		END
+	END TRY
+	BEGIN CATCH
+		SELECT -5
+	END CATCH
+END
+GO
 --***************************************************///UDP Y VISTA Factura****************************************************************************--
 
 --*************************************************** UDP Y VISTA tbReservacionesXClientes****************************************************************************--

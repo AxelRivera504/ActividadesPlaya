@@ -217,6 +217,14 @@ export class ServicesService {
     return this.http.post<Factura[]>(this.Url + "/Factura/InsertarFactura",factura)
   }
 
+  InsertarFacturaNoPaga(factura:Factura){
+    return this.http.post<Factura[]>(this.Url + "/Factura/InsertarFacturaNoPaga",factura)
+  }
+
+  VerificarEstadoFactura(factura:Factura){
+    return this.http.post<Factura[]>(this.Url + "/Factura/VerificarFactura",factura)
+  }
+
   getRoles(){
     return this.http.get<roles[]>(this.Url + "/Roles/ListarRoles");
   }

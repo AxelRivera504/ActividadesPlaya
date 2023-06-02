@@ -31,10 +31,18 @@ namespace PlayaMagica.Controllers
         }
 
         [HttpPost("InsertarFactura")]
-        public IActionResult InsertarActividades(FacturaViewModel item)
+        public IActionResult InsertarFactura(FacturaViewModel item)
          {
             var facturas = _mapper.Map<tbFactura>(item);
             var respuesta = _actividadesServices.InsertarFactura(facturas);
+            return Ok(respuesta);
+        }
+
+        [HttpPost("InsertarFacturaNoPaga")]
+        public IActionResult InsertarFacturaNoPaga(FacturaViewModel item)
+        {
+            var facturas = _mapper.Map<tbFactura>(item);
+            var respuesta = _actividadesServices.InsertarFacturaNoPaga(facturas);
             return Ok(respuesta);
         }
 
@@ -43,6 +51,14 @@ namespace PlayaMagica.Controllers
          {
             var listado = _actividadesServices.ListarFactura(id);
             return Ok(listado);
+        }
+
+        [HttpPost("VerificarFactura")]
+        public IActionResult VerificarFactura(FacturaViewModel item)
+        {
+            var facturas = _mapper.Map<tbFactura>(item);
+            var respuesta = _actividadesServices.VerificarFactura(facturas);
+            return Ok(respuesta);
         }
     }
 }

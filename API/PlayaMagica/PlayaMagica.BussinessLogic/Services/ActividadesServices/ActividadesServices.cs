@@ -624,6 +624,21 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
         }
 
+        public ServiceResult InsertarFacturaNoPaga(tbFactura item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Factura = _facturaRepository.InsertarFacturaNoPaga(item);
+                return resultado.Ok(Factura);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
         public IEnumerable<tbFactura> ListarFactura(int id)
         {
             try
@@ -633,6 +648,21 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             catch (Exception e)
             {
                 return Enumerable.Empty<tbFactura>();
+            }
+        }
+
+        public ServiceResult VerificarFactura(tbFactura item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Factura = _facturaRepository.VerificarFactura(item);
+                return resultado.Ok(Factura);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
             }
         }
         #endregion
