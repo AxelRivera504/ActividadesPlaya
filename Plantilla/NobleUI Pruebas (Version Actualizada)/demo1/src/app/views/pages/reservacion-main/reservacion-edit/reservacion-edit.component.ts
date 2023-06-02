@@ -988,6 +988,7 @@ export class ReservacionEditComponent implements OnInit {
   }
 }
 
+
   Guardar(){
     const clie_SexoControl = this.form.get('clie_Sexo');
   
@@ -1121,7 +1122,7 @@ export class ReservacionEditComponent implements OnInit {
                 position: 'top-end',
                 showConfirmButton: false,
                 timer: 4500,
-                timerProgressBar: true,
+                 timerProgressBar: true,
                 title: 'Ya no hay cupos para esta actividad',
                 icon: 'error'
               })
@@ -1139,6 +1140,15 @@ export class ReservacionEditComponent implements OnInit {
   
 
   ngOnInit(): void { 
+    setTimeout(()=>{
+    this.service.getClientesByIdRese(parseInt(localStorage.getItem('idReservaEdit')!.toString())).
+    subscribe((data:any)=>{
+      console.log(data)
+      this.selectedPeople = data
+    })
+  },0)  
+
+  
     this.LimpiarTodo()
     this.service.getMetodosPago().subscribe(data => {
       this.metodos = data;
@@ -1152,10 +1162,28 @@ export class ReservacionEditComponent implements OnInit {
       this.Clientes = data;
     })
     
-    this.service.getActividades().subscribe(data=>{
+    this.service.getActividades().subscribe(data => {
       this.actividades = data;
+      
+      this.service.ListarInfoActividadSelected(parseInt(localStorage.getItem('idReservaEdit')!.toString())).subscribe(
+        (data: any) => {
+          console.log(data);
+          if (data && data.length > 0) {
+            this.selectedActivity = this.actividades.find(activity => activity.acti_Id === data[0].acti_Id) || null;
+            console.log(this.selectedActivity)
+          } else {
+            this.selectedActivity = null;
+          }
+        }
+      );
+    });
+
+    this.service.getDatosReservacion(parseInt(localStorage.getItem('idReservaEdit')!.toString())).subscribe
+    ((data:any)=>{
+      this.selectedDate1 =data.rese_FechaReservacion
     })
-    
+
+
     this.fillJustifyNavCode = fillJustifyNav;
 
     /**
@@ -1377,12 +1405,51 @@ export class ReservacionEditComponent implements OnInit {
    * Go to next step while form value is valid
    */
   form1Submit() {
+    const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
     if(this.validationForm1.valid) {
-      this.wizardForm.goToNextStep();
-      this.XD = true
-      this.isChecked = true;
-      const CKX = document.getElementById('ckXD');
-      CKX!.style.display = '';
+      this.clienReser.rese_Id = parseInt(localStorage.getItem('idReservaEdit')!.toString()) 
+      this.service.DeleteClienteXReservacionByIdRese(this.clienReser).subscribe((data:any)=>{
+        var cont = 0;
+        if(data.data.codeStatus === 1){
+          if (idUsuario !== undefined) {
+            this.clienReser.clre_UsuarioCreador = idUsuario;
+          }
+          this.clienReser.rese_Id  = parseInt(localStorage.getItem('idReservaEdit')!.toString());
+          const selectedPeopleString = JSON.stringify(this.selectedPeople);
+          localStorage.setItem('array', selectedPeopleString);
+          for(var i = 0 ; i <= this.selectedPeople.length ; i++){
+            this.clienReser.clie_Id =  this.selectedPeople[i].clie_id;
+              if(i === 0){
+                console.log("OWNER")
+                this.clienReser.rese_OwnerPayy = true;
+              }else{
+                console.log("NO OWNER")
+                this.clienReser.rese_OwnerPayy = false;
+              }//Recorrido del array  
+              this.service.InsertarClientesXReservacion(this.clienReser).subscribe((data:any)=>{
+                cont ++;
+                if(cont === this.selectedPeople.length){                                        
+                  this.wizardForm.goToNextStep();
+                  this.XD = true
+                  this.isChecked = true;
+                  const CKX = document.getElementById('ckXD');
+                  CKX!.style.display = '';        
+                }
+              })
+            }
+        }else{
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            title: '¡ERROR!, ¡oh no!, hubo un error.',
+            icon: 'error'
+          })
+        }
+      })
+    
     }else{
       Swal.fire({
         toast: true,

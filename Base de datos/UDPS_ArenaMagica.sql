@@ -1040,6 +1040,21 @@ GO
 		END CATCH
 	END
 
+	GO
+
+	CREATE OR ALTER PROCEDURE Acti.UDP_tbActividades_ActividadByReseId
+		@rese_Id	INT
+	AS
+	BEGIN 
+		BEGIN TRY
+			SELECT *
+			FROM  Acti.tbActividades
+			WHERE acti_Id = (SELECT acti_Id FROM Acti.tbReservaciones WHERE rese_Id = @rese_Id)
+		END TRY
+		BEGIN CATCH
+			SELECT 0
+		END CATCH
+	END
 
 	--******************* ********************************////UDP Y VISTA Actividades  *************************************************************************--
 
@@ -2155,10 +2170,28 @@ BEGIN
 				t2.clie_Nombres,
 				t2.clie_Apellidos,
 				t2.clie_DNI,
-				t2.clie_Email
+				t2.clie_Email,
+				t2.clie_Nombres +' '+ t2.clie_Apellidos as clie_NombreCompleto
 		FROM	Acti.tbClienteXReservacion t1 INNER JOIN Acti.tbClientes t2
 		ON		t1.clie_Id = t2.clie_id
 		WHERE   rese_Id = @rese_Id
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+
+GO
+
+CREATE OR ALTER PROCEDURE Acti.UDP_tbClienteXReservacion_DeleteClienteByIdRese
+	@rese_Id  INT
+AS
+BEGIN
+	BEGIN TRY
+		DELETE 
+		FROM    Acti.tbClienteXReservacion
+		WHERE   rese_Id = @rese_Id
+		SELECT 1
 	END TRY
 	BEGIN CATCH
 		SELECT 0

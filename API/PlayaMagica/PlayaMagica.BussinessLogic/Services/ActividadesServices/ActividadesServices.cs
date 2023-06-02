@@ -393,6 +393,18 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
                 return resultado.Error(ex.Message);
             }
         }
+
+        public IEnumerable<tbActividades> ListarInfoActividadSelected(int id)
+        {
+            try
+            {
+                return _actividadesRepository.ListarInfoActividadSelected(id);
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<tbActividades>();
+            }
+        }
         #endregion
 
         #region Equipos
@@ -557,6 +569,21 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             try
             {
                 var ClienteXReservacion = _clienteXReservacionRepository.InsertarClienteXReservacion(item);
+                return resultado.Ok(ClienteXReservacion);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult DeleteClientexReservacion(tbClienteXReservacion item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var ClienteXReservacion = _clienteXReservacionRepository.DeleteClienteXReservacion(item);
                 return resultado.Ok(ClienteXReservacion);
             }
             catch (Exception ex)

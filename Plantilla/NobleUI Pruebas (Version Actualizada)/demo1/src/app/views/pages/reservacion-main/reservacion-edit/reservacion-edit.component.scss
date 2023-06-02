@@ -1,0 +1,59 @@
+.is-invalid {
+    background-repeat: no-repeat !important;
+    border: 1px solid #ff3366;
+    border-radius: 4px;
+  }
+
+.input-invalid-text{
+    margin-top: 0.25rem;
+    width: 100%;
+    font-size: 0.875em;
+    color: #ff3366;
+}
+
+.card.selected {
+  box-shadow: 0 0 8px rgba(101, 113, 255, 1); /* Agrega una sombra para indicar la selección */
+}
+
+.card.selected .card-body {
+  cursor: default; /* Evita el cursor de selección de texto dentro de la tarjeta */
+}
+
+.card-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+.card-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Define el número máximo de líneas a mostrar */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.custom-img {
+  height: 200px; /* Establece la altura deseada */
+  width: auto; /* Calcula automáticamente el ancho manteniendo la proporción de la imagen */
+  object-fit: cover; /* Ajusta la imagen para que se ajuste dentro del contenedor sin deformarse */
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  margin-left: 10px; /* Ajusta el margen según sea necesario */
+}
+
+.custom-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #000;
+  margin-right: 5px; /* Ajusta el margen entre el checkbox y la etiqueta según sea necesario */
+}
+
+.custom-checkbox label {
+  margin: 0;
+}

@@ -324,9 +324,6 @@ export class ReservacionesComponent implements OnInit {
           doc.setDrawColor(0, 0, 0); // Establecer el color de la línea en negro (valores RGB: 0, 0, 0)
           doc.line(10, 112, doc.internal.pageSize.getWidth() - 10, 112);
 
-
-
-          
           header(doc);
           footer(doc);
           const headerColor = '#F49334';
@@ -390,12 +387,6 @@ export class ReservacionesComponent implements OnInit {
                   },
                 },
               });
-
-                     
-
-
-             
-        
               // Mostrar el PDF en el visor
               const pdfDataUri = doc.output('datauristring');
               this.pdfViewer.nativeElement.src = pdfDataUri;

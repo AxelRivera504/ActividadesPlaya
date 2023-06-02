@@ -225,6 +225,14 @@ export class ServicesService {
     return this.http.post<Factura[]>(this.Url + "/Factura/VerificarFactura",factura)
   }
 
+  DeleteClienteXReservacionByIdRese(ClienteXReservacion:ClienteXReservacion){
+    return this.http.post<ClienteXReservacion[]>(this.Url + "/ClienteXReservacion/DeleteClientexReservacion",ClienteXReservacion)
+  }
+
+  ListarInfoActividadSelected(rese_Id: number){
+    return this.http.get<Actividades[]>(this.Url + "/Actividades/ListarActividades"+rese_Id)
+  }
+
   getRoles(){
     return this.http.get<roles[]>(this.Url + "/Roles/ListarRoles");
   }

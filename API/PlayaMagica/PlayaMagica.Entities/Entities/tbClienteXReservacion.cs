@@ -20,6 +20,9 @@ namespace PlayaMagica.Entities.Entities
         public string clie_DNI { get; set; }
         [NotMapped]
         public string clie_Email { get; set; }
+        [NotMapped]
+        public string clie_NombreCompleto { get; set; }
+
         public bool? rese_OwnerPayy { get; set; }
         public bool? clre_Estado { get; set; }
         public int? clre_UsuarioCreador { get; set; }

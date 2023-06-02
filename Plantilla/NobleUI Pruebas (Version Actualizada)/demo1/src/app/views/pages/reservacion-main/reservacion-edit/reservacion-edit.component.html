@@ -188,17 +188,17 @@
             <div class="card-body">
               <div class="row">
                 <div *ngFor="let item of getFilteredActividades() | slice:(defaultPaginationCurrentPage-1)*itemsPerPage:defaultPaginationCurrentPage*itemsPerPage" class="col-sm-4 mb-3">
-                  <div class="card" [class.selected]="item.selected" (click)="selectActivity(item)" [style.pointerEvents]="isSelectionBlocked ? 'none' : 'auto'" [class.disabled]="isSelectionBlocked">  
+                  <div class="card" [class.selected]="item === selectedActivity" (click)="selectActivity(item)" [style.pointerEvents]="isSelectionBlocked ? 'none' : 'auto'" [class.disabled]="isSelectionBlocked">  
                     <img [src]="item.acti_ImgUrl" class="card-img-top custom-img" alt="...">
                     <div class="card-body">
                       <h5 class="card-title">Actividad: {{item.acti_Nombre}}</h5>
                       <p class="card-text mb-3">Cupo de la actividad: {{item.acti_Cupo}}</p>
                       <p class="card-text mb-3">Precio: {{item.acti_Precio}} LPS</p>
-                      <input type="radio" [checked]="item.selected" [name]="'actividad'" style="position: center;" >
+                      <input type="radio" [checked]="item === selectedActivity" [name]="'actividad'" style="position: center;">
                     </div>
                   </div>
                 </div>
-              </div>
+              </div>             
             </div>
             <ngb-pagination
             [(page)]="defaultPaginationCurrentPage"

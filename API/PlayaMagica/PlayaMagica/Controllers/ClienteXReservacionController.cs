@@ -31,6 +31,14 @@ namespace PlayaMagica.Controllers
             return Ok(respuesta);
         }
 
+        [HttpPost("DeleteClientexReservacion")]
+        public IActionResult DeleteClientexReservacion(ClienteXReservacionViewModel item)
+        {
+            var ClienteXReservacion = _mapper.Map<tbClienteXReservacion>(item);
+            var respuesta = _actividadesServices.DeleteClientexReservacion(ClienteXReservacion);
+            return Ok(respuesta);
+        }
+
         [HttpGet("ListClientesByIdRese{id}")]
         public IActionResult ListClientesByIdRese(int id)
         {
