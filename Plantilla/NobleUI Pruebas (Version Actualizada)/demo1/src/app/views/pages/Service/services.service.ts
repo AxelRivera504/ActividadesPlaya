@@ -55,6 +55,14 @@ export class ServicesService {
     return this.http.post<Equipos[]>(this.Url + "/Equipos/Mantenimiento",equipos);
   }
 
+  getMantenimientoXEquipo(){
+    return this.http.get<playas[]>(this.Url + "/MantenimientoXEquipo/List");
+  }
+
+  getMantenimientoXEquipoFiltered(fechaInicio: string, fechaFin: string){
+    return this.http.get<playas[]>(this.Url + `/MantenimientoXEquipo/Reporte?FechaInicio=${fechaInicio}&FechaFin=${fechaFin}`);
+  }
+
   createMantenimientoXEquipo(MantenimientoXEquipo: MantenimientoXEquipo){
     return this.http.post<MantenimientoXEquipo[]>(this.Url + "/MantenimientoXEquipo/Insert",MantenimientoXEquipo)
   }

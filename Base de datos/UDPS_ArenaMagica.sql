@@ -1912,11 +1912,10 @@ GO
 CREATE OR ALTER PROCEDURE Acti.UDP_tbMantenimientoXEquipo_Select
 AS
 BEGIN
-	SELECT maeq_Id, equi_Id, 
-	mant_Id, maeq_Estado, 
-	maeq_UsuarioCreador, maeq_FechaCreacion, 
-	maeq_UsuarioModificador, maeq_FechaModificacion
-	FROM [Acti].[tbMantenimientoXEquipo]
+ SELECT [maeq_Id], maeq.[equi_Id],equi.equi_Descripcion,equi.equi_ImgUrL, maeq.[mant_Id],mant.mant_Descricion, [maeq_Estado], [maeq_UsuarioCreador], [maeq_FechaCreacion], [maeq_UsuarioModificador], [maeq_FechaModificacion]
+    FROM Acti.tbMantenimientoXEquipo maeq INNER JOIN Acti.tbEquipos equi
+	ON maeq.equi_Id = equi.equi_Id INNER JOIN Acti.tbMantenimiento mant
+	ON maeq.mant_Id = mant.mant_Id
 	WHERE maeq_Estado = 1
 END
 
@@ -2221,15 +2220,17 @@ END
 
 /*Procedimiento para reporte*/
 GO
-CREATE OR ALTER PROCEDURE Acti.UDP_Reporte
+CREATE OR ALTER PROCEDURE Acti.UDP_Reporte 
     @fechaInicio DATE,
     @fechaFin DATE
 AS
 BEGIN
     SET NOCOUNT ON;
     
-    SELECT *
-    FROM Acti.tbMantenimientoXEquipo
+    SELECT [maeq_Id], maeq.[equi_Id],equi.equi_Descripcion,equi.equi_ImgUrL, maeq.[mant_Id],mant.mant_Descricion, [maeq_Estado], [maeq_UsuarioCreador], [maeq_FechaCreacion], [maeq_UsuarioModificador], [maeq_FechaModificacion]
+    FROM Acti.tbMantenimientoXEquipo maeq INNER JOIN Acti.tbEquipos equi
+	ON maeq.equi_Id = equi.equi_Id INNER JOIN Acti.tbMantenimiento mant
+	ON maeq.mant_Id = mant.mant_Id
     WHERE maeq_FechaCreacion >= @fechaInicio
         AND maeq_FechaCreacion <= @fechaFin;
 END

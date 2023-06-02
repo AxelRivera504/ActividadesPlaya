@@ -31,5 +31,19 @@ namespace PlayaMagica.Controllers
             var listado = _actividadesServices.MantenimientoXEquipo(listadoMapeado);
             return Ok(listado);
         }
+
+        [HttpGet("Reporte")]
+        public IActionResult ListarEquipos(DateTime FechaInicio, DateTime FechaFin)
+        {
+            var list = _actividadesServices.Reporte(FechaInicio, FechaFin);
+            return Ok(list);
+        }
+
+        [HttpGet("List")]
+        public IActionResult Listar()
+        {
+            var list = _actividadesServices.MantenimientoXEquiposListado();
+            return Ok(list);
+        }
     }
 }

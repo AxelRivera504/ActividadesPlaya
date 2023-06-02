@@ -12,7 +12,8 @@ import { ErrorPageComponent } from './views/pages/error-page/error-page.componen
 
 import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { DataTablesModule } from 'angular-datatables';
-import { ReservacionesMainComponent } from './views/pages/reservaciones-main/reservaciones-main.component'; 
+import { ReservacionesMainComponent } from './views/pages/reservaciones-main/reservaciones-main.component';
+import { ReporteComponent } from './views/pages/reporte/reporte.component'; 
 
 @NgModule({
   declarations: [

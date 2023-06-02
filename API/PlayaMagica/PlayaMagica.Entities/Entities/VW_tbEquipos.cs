@@ -15,11 +15,11 @@ namespace PlayaMagica.Entities.Entities
         public string equi_ImgUrL { get; set; }
         public bool? equi_Estado { get; set; }
         public int? equi_UsuarioCreador { get; set; }
-        public string? mantenimiento { get; set; }
         public string equi_UsuarioCreador_Nombre { get; set; }
         public DateTime? equi_FechaCreacion { get; set; }
         public int? equi_UsuarioModificador { get; set; }
         public string equi_UsuarioModificador_Nombre { get; set; }
         public DateTime? equi_FechaModificacion { get; set; }
+        public string mantenimiento { get; set; }
     }
 }

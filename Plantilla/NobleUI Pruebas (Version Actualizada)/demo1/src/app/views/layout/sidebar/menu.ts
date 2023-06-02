@@ -107,4 +107,10 @@ export const MENU: MenuItem[] = [
     icon: 'user-plus',
     link: '/usuarios'
   },
+  {
+    id:20,
+    label: 'Reporte',
+    icon: 'user-plus',
+    link: '/reporte'
+  },
 ];

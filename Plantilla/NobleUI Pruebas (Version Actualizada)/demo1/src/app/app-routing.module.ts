@@ -220,6 +220,10 @@ const routes: Routes = [
         path: 'general',
         loadChildren: () => import('./views/pages/general/general.module').then(m => m.GeneralModule)
       },
+      {
+        path: 'reporte',
+        loadChildren: () => import('./views/pages/reporte/reporte.module').then(m => m.ReporteModule)
+      },
       
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, 
       // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }

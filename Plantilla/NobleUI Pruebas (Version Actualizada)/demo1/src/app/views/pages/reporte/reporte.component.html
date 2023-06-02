@@ -1,0 +1,79 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title text-center my-0">
+                <h3>Reportes de Mantenimientos</h3>  
+            <br>
+            <button button type="button" class="btn btn-primary" (click)="openBasicModal(basicModal)">
+                <i class="feather icon-plus"></i>
+                Reportes
+            </button>
+        </div>
+        </div>
+        <div class="card-body">
+            <div class="table table-responsive">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Equipo</th>
+                            <th>Descripcion del mantenimiento</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of mantenimientoXEquipo">
+                            <td>{{item.maeq_Id}}</td>
+                            <td>{{item.equi_Descripcion}}</td>
+                            <td>{{item.mant_Descricion}}</td>
+                            <td><button type="button" class="btn btn-warning btn-icon-text">
+                                <i class="feather icon-edit "></i>
+                            </button>
+                                |
+                                <button type="button" class="btn btn-info btn-icon-text">
+                                    <i class="feather icon-list "></i>
+                                </button>
+                                |
+                                <button type="button" class="btn btn-danger btn-icon-text">
+                                    <i class="feather icon-trash "></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #basicModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Seleccione un rango</h5>
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="form-group col-6">
+                <ngb-datepicker class="range-selection" #dp (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
+                </ngb-datepicker>
+                
+                <ng-template #t let-date let-focused="focused">
+                  <span class="custom-day"
+                        [class.focused]="focused"
+                        [class.range]="isRange(date)"
+                        [class.faded]="isHovered(date) || isInside(date)"
+                        (mouseenter)="hoveredDate = date"
+                        (mouseleave)="hoveredDate = null">
+                    {{ date.day }}
+                  </span>
+                </ng-template>
+                <p class="mt-3 text-muted">From: {{ fromDate | json }}</p>
+                <p class="text-muted">To: {{ toDate | json }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+      <button type="button" class="btn btn-primary" (click)="Reporte()">Ver reporte</button>
+    </div>
+  </ng-template>

@@ -659,6 +659,30 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
                 return resultado.Error(ex.Message);
             }
         }
+
+        public IEnumerable<tbMantenimientoXEquipo> Reporte(DateTime FechaInicio,DateTime FechaFin)
+        {
+            try
+            {
+                return _mantenimientoxequiporepository.Reporte(FechaInicio,FechaFin);
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<tbMantenimientoXEquipo>();
+            }
+        }
+
+        public IEnumerable<tbMantenimientoXEquipo> MantenimientoXEquiposListado()
+        {
+            try
+            {
+                return _mantenimientoxequiporepository.List();
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<tbMantenimientoXEquipo>();
+            }
+        }
         #endregion
     }
 }
