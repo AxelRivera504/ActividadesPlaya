@@ -165,6 +165,13 @@ export class UsuariosComponent implements OnInit {
   Guardar(){
     var tets = true
   
+    if(this.UsuariosCreate.role_ID == undefined || this.UsuariosCreate.role_ID == ""){
+      tets = false
+     }
+    
+     if(this.UsuariosCreate.enca_ID == undefined || this.UsuariosCreate.enca_ID == 0){
+      tets = false
+     }
     if(this.UsuariosCreate.usua_Usuario == undefined || this.UsuariosCreate.usua_Usuario == ""){
       tets = false
     }
@@ -322,7 +329,7 @@ export class UsuariosComponent implements OnInit {
     console.log('datos',this.UsuariosEdit),
     console.log('usuario',this.UsuariosEdit.usua_ID)
 
-    if(this.UsuariosEdit.usua_ID == usua_id?.toString())
+    if(this.UsuariosEdit.usua_ID.toString() != localStorage.getItem("IdUsuario")?.toString())
    {
     this.service.deleteUsuarios(this.UsuariosEdit).subscribe((data: any) => {
     console.log(data);

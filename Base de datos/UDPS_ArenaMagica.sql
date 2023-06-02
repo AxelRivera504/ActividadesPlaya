@@ -1662,7 +1662,7 @@ GO
 CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_DDLencargadosTieneusuario
 AS
 BEGIN
-	SELECT t2.enca_id, 
+	SELECT distinct(t2.enca_id), 
 		   t2.enca_Nombres+' '+  t2.enca_Apellidos as enca_NombreCompleto		  
 	  FROM Acce. tbUsuarios  t1 
  FULL JOIN Acti.tbEncargados  t2  
@@ -2190,3 +2190,12 @@ BEGIN
 END
 
 --**************************************************** ///UDP Y Vista tbActividadesXFecha ****************************************************************--
+SELECT T4.acti_Nombre, 
+       SUM(CASE WHEN t3.clie_Sexo = 'M' THEN 1 ELSE 0 END) AS Num_Masculino,
+       SUM(CASE WHEN t3.clie_Sexo = 'F' THEN 1 ELSE 0 END) AS Num_Femenino
+FROM [Acti].[tbClienteXReservacion] T1 
+INNER JOIN [Acti].[tbReservaciones] T2 ON T1.rese_Id = T2.rese_Id 
+INNER JOIN [Acti].[tbClientes] T3 ON T1.clie_Id = T3.clie_id 
+INNER JOIN [Acti].[tbActividades] T4 ON T2.acti_Id = T4.acti_Id
+GROUP BY T4.acti_Id, T4.acti_Nombre;
+

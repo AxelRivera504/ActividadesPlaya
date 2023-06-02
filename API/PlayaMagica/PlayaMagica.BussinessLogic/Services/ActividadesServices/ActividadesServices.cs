@@ -564,6 +564,20 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
                 return resultado.Error(ex.Message);
             }
         }
+
+
+
+        public IEnumerable<tbClienteXReservacion> clienteXReservacions(tbClienteXReservacion item)
+        {
+            try
+            {
+                return _clienteXReservacionRepository.SexoClientes(item);
+            }
+            catch (Exception e)
+            {
+                return Enumerable.Empty<tbClienteXReservacion>();
+            }
+        }
         #endregion
 
         #region ActividadesXFecha

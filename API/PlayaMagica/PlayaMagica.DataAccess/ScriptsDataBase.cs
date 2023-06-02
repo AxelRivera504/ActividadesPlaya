@@ -154,6 +154,8 @@ namespace PlayaMagica.DataAccess
 
         #region ClienteXReservacion
         public static string UDP_tbClienteXReservacion_Insert = "Acti.UDP_tbClienteXReservacion_Insertar";
+        public static string UDP_tbClienteXReservacion_Sexo = "UDP_SexoXActividad_tbActividades";
+
         #endregion
 
         #region ActividadesXFecha
