@@ -38,7 +38,8 @@ namespace PlayaMagica.Controllers
         {
 
             var listado = _mapper.Map<tbClienteXReservacion>(item);
-            return Ok(listado);
+            var respuesta = _actividadesServices.clienteXReservacions(listado);
+            return Ok(respuesta);
         }
 
 

@@ -8,10 +8,10 @@ namespace PlayaMagica.Models
 {
     public class ClienteXReservacionViewModel
     {
-       [NotMapped]
+        [NotMapped]
         public string acti_Nombre { get; set; }
-        public int? Num_Masculino { get; set; }
-        public int? Num_Femenino { get; set; }
+        public int Num_Masculino { get; set; }
+        public int Num_Femenino { get; set; }
         public int acti_Id { get; set; }
         public int clre_Id { get; set; }
         public int? clie_Id { get; set; }

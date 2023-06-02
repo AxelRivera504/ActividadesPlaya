@@ -36,13 +36,6 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
         }
 
 
-
-
-
-
-
-
-
         public RequestStatus Delete(tbClienteXReservacion item)
         {
             throw new NotImplementedException();

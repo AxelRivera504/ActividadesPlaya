@@ -70,6 +70,7 @@ export class ActividadesCrearComponent implements OnInit {
     .subscribe((data: any)=>{
       this.equipos = data
     })
+   
   }
 
   onUploadError(event: any): void {

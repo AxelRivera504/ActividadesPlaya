@@ -25,6 +25,9 @@ import { pantallas } from '../Model/pantallas';
 import { usuarios } from '../Model/Usuarios';
 import { FactuList } from '../Model/ListaFactura';
 
+
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -282,6 +285,10 @@ getEncargadosddl(){
 
 getVisitantesXFecha(){
   return this.http.get<ActividadesXFecha[]>(this.Url + "/ActividadesXFecha/visitantes");
+}
+
+getClientesXsexo(Actividades : any){
+  return this.http.post<ClienteXReservacion[]>(this.Url + "/ClienteXReservacion/ClientesXactividad",Actividades);
 }
 
 }

@@ -9,7 +9,6 @@ namespace PlayaMagica.Models
     public class ActividadesViewModel
     {
         public int acti_Id { get; set; }
-
         [NotMapped]
         public string acti_Nombre { get; set; }
         public int? acti_Cupo { get; set; }
