@@ -1140,13 +1140,15 @@ export class ReservacionEditComponent implements OnInit {
   
 
   ngOnInit(): void { 
+    console.log(localStorage.getItem('idReservaEdit')!.toString())
+    console.log(this.selectedPeople)
     setTimeout(()=>{
     this.service.getClientesByIdRese(parseInt(localStorage.getItem('idReservaEdit')!.toString())).
     subscribe((data:any)=>{
       console.log(data)
       this.selectedPeople = data
     })
-  },0)  
+  },500)  
 
   
     this.LimpiarTodo()
@@ -1178,10 +1180,20 @@ export class ReservacionEditComponent implements OnInit {
       );
     });
 
-    this.service.getDatosReservacion(parseInt(localStorage.getItem('idReservaEdit')!.toString())).subscribe
-    ((data:any)=>{
-      this.selectedDate1 =data.rese_FechaReservacion
-    })
+   this.service.getDatosReservacion(parseInt(localStorage.getItem('idReservaEdit')!.toString())).subscribe((data: any) => {
+      console.log(data);
+      console.log(data[0].rese_FechaReservacion);
+
+      // Convertir la cadena de texto a un objeto Date
+      const fechaReservacion = new Date(data[0].rese_FechaReservacion);
+
+      // Asignar los componentes de fecha al objeto NgbDateStruct
+      this.selectedDate1 = {
+        year: fechaReservacion.getFullYear(),
+        month: fechaReservacion.getMonth() + 1,
+        day: fechaReservacion.getDate()
+      };
+    });
 
 
     this.fillJustifyNavCode = fillJustifyNav;
@@ -1207,10 +1219,8 @@ export class ReservacionEditComponent implements OnInit {
 
   }
 
-  Next2(content: TemplateRef<any>){
-    console.log(this.selectedPeople)
-    console.log(this.selectedPeople.length)
-    if( this.validar2 == false){
+  Next2(content: TemplateRef<any>) {
+    if (!this.selectedActivity) {
       Swal.fire({
         toast: true,
         position: 'top-end',
@@ -1219,15 +1229,15 @@ export class ReservacionEditComponent implements OnInit {
         timerProgressBar: true,
         title: '¡ERROR!, Debe escoger una actividad a realizar',
         icon: 'error'
-      })
-    }else{  
+      });
+    } else {
       this.modalRef = this.modalService.open(content, {});
       this.modalRef.result.then((result) => {
         this.basicModalCloseResult = "Modal closed" + result;
       }).catch((res) => {});        
     }
   }
-
+  
 
   Siguiente(){
     if ( !this.fechaValida1 || !this.fechaFormatoValido1 ) {
@@ -1405,6 +1415,7 @@ export class ReservacionEditComponent implements OnInit {
    * Go to next step while form value is valid
    */
   form1Submit() {
+    console.log(this.selectedPeople + "Aqui estoy en el form1")
     const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
     if(this.validationForm1.valid) {
       this.clienReser.rese_Id = parseInt(localStorage.getItem('idReservaEdit')!.toString()) 
