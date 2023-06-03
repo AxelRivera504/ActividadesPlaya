@@ -90,6 +90,15 @@ export class ReporteComponent implements OnInit {
   const fechaInicio = `${this.fromDate.year}-${this.fromDate.month}-${this.fromDate.day}`
   const fechaFin = this.toDate ? `${this.toDate.year}-${this.toDate.month}-${this.toDate.day}` : '';
 
+  const fechas = {
+    fechaInicio: fechaInicio,
+    fechaFin: fechaFin
+  };
+
+  const almacenado = localStorage.getItem('fechas');
+let arregloFechas = almacenado ? JSON.parse(almacenado) : [];
+arregloFechas.push(fechas);
+localStorage.setItem('fechas', JSON.stringify(arregloFechas));
 
   if(fechaInicio != "" && fechaFin != ""){
     if(fechaInicio != fechaFin){
