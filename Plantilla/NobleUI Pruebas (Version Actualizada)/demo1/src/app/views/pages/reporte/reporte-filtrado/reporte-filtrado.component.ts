@@ -2,8 +2,10 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServicesService } from '../../Service/services.service';
 import { MantenimientoXEquipo } from '../../Model/MantenimientoXEquipo';
-import 'jspdf-autotable';
 import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
 @Component({
   selector: 'app-reporte-filtrado',
@@ -11,8 +13,6 @@ import jsPDF from 'jspdf';
   styleUrls: ['./reporte-filtrado.component.scss']
 })
 export class ReporteFiltradoComponent implements OnInit {
-  @ViewChild('pdfViewer') pdfViewer!: ElementRef;
-  errorMessage: string;
   MantenimientoXEquipo!: MantenimientoXEquipo[];
 
   constructor(private service: ServicesService, private router: Router) { }
@@ -23,87 +23,30 @@ export class ReporteFiltradoComponent implements OnInit {
       this.MantenimientoXEquipo = JSON.parse(getReporte);
       console.log(getReporte);
       setTimeout(() => {
-        this.generatePDF();
+
       });
     }
   }
+
+  generarPDF(): void {
+    const documentDefinition: any = {
+      content: [] as any[]
+    };
   
-  generatePDF(): void {
-    const doc = new jsPDF();
-
-    const header = function (doc: any) {
-      doc.setFontSize(18);
-      const pageWidth = doc.internal.pageSize.width;
-      doc.setTextColor(40);
-
-      // Agregar imagen
-      doc.addImage(
-        'https://i.ibb.co/ZddkzHw/Green-Yellow-Abstract-Summers-Island-Logo-1.png',
-        'png',
-        pageWidth - 70,
-        -15,
-        80,
-        80
+    // Itera sobre cada objeto del arreglo MantenimientoXEquipo
+    this.MantenimientoXEquipo.forEach(mantenimiento => {
+      // Agrega la descripción del equipo y la descripción del mantenimiento al contenido del PDF
+      documentDefinition.content.push(
+        { text: 'Equipo: ' + mantenimiento.equi_Descripcion, style: 'header' },
+        { text: 'Mantenimiento: ' + mantenimiento.mant_Descricion, style: 'subheader' },
+        { text: '\n' }
       );
-
-      // Agregar texto
-      doc.setFontSize(30);
-      doc.setFont('Pacifico', 'normal');
-      doc.text('Mantenimiento de Equipos', 10, 30);
-    };
-
-    const footer = function (doc: any) {
-      doc.setFontSize(12);
-      doc.setFont('Pacifico', 'normal');
-      doc.text(
-        '¡Gracias por utilizar nuestro servicio de mantenimiento de equipos!',
-        60,
-        doc.internal.pageSize.height - 10
-      );
-
-      doc.setFontSize(12);
-      doc.setFont('Pacifico', 'normal');
-      doc.text(
-        '¡Equipo mágico te desea un excelente mantenimiento!',
-        45,
-        doc.internal.pageSize.height - 20
-      );
-    };
-
-    const mantenimientos: MantenimientoXEquipo[] = this.MantenimientoXEquipo;
-    const columns = [
-      { header: 'ID', dataKey: 'maeq_Id' },
-    ] as { header: string; dataKey: keyof MantenimientoXEquipo }[];
-
-    doc.setFontSize(18);
-    const pageWidth = doc.internal.pageSize.width;
-    doc.setTextColor(40);
-    doc.setTextColor(40);
-    doc.setDrawColor(0, 0, 0);
-    doc.setLineWidth(0.5);
-
-    // Llamar a las funciones de encabezado y pie de página
-    header(doc);
-    footer(doc);
-
-    const tableData = mantenimientos.map((mantenimiento: MantenimientoXEquipo) => ({
-      maeq_Id: mantenimiento.maeq_Id.toString(),
-    }));
-
-    (doc as any).autoTable({
-      head: columns.map((column) => column.header),
-      body: tableData,
-      startY: 60,
-      margin: { top: 10 },  
     });
-
-    // Generar el PDF
-    const pdfOutput = doc.output('blob');
-
-    // Crear una URL a partir del blob
-    const url = URL.createObjectURL(pdfOutput);
-
-    // Mostrar el PDF en el visor
-    this.pdfViewer.nativeElement.src = url;
+  
+    // Genera el PDF y ábrelo en un nuevo tab del navegador
+    pdfMake.createPdf(documentDefinition).open();
   }
+  
+  
+
 }
