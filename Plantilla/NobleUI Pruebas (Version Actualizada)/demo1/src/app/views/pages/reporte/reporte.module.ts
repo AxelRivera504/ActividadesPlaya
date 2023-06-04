@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DataTablesModule } from 'angular-datatables';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+
 const routes: Routes = [
   {
     path: '',
@@ -18,7 +19,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     DataTablesModule,
-    NgbModule
+    NgbModule,
   ]
 })
 export class ReporteModule { }
