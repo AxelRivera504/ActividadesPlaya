@@ -158,7 +158,7 @@ export class FacturaComponent implements OnInit {
           const headerColor = '#F49334';
         
           this.service
-          .getClientesByIdRese(parseInt(localStorage.getItem('idR')!.toString()))
+          .getClientesByIdRese(parseInt(localStorage.getItem('idReservaMain')!.toString()))
           .subscribe(
             (response: Cliente[]) => {
               console.log(response);

@@ -229,6 +229,27 @@ export class ServicesService {
     return this.http.post<ClienteXReservacion[]>(this.Url + "/ClienteXReservacion/DeleteClientexReservacion",ClienteXReservacion)
   }
 
+  /* Servicios de reservacion */
+  UpdateReservacion(rese: Reservaciones){
+    return this.http.post<Reservaciones[]>(this.Url +"/Reservaciones/UpdateRegisterReservacion",rese)
+  }
+
+  EditarReservacionExiste(rese: Reservaciones){
+    return this.http.post<Reservaciones[]>(this.Url +"/Reservaciones/EditarReservacionExiste",rese)
+  }
+
+  EditarReservacionNoExiste(rese: Reservaciones){
+    return this.http.post<Reservaciones[]>(this.Url +"/Reservaciones/EditarReservacionNoExiste",rese)
+  }
+
+  UpdateFactura(factura:Factura){
+    return this.http.post<Factura[]>(this.Url + "/Factura/EditarFactura",factura)
+  }
+
+  UpdateFacturaNoPaga(factura:Factura){
+    return this.http.post<Factura[]>(this.Url + "/Factura/EditarFacturaNoPaga",factura)
+  }
+
   ListarInfoActividadSelected(rese_Id: number){
     return this.http.get<Actividades[]>(this.Url + "/Actividades/ListarActividades"+rese_Id)
   }

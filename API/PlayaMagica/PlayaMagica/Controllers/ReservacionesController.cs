@@ -44,5 +44,29 @@ namespace PlayaMagica.Controllers
             var list = _actividadesServices.ListarDatosReservacionById(id);
             return Ok(list);
         }
+
+        [HttpPost("UpdateRegisterReservacion")]
+        public IActionResult UpdateRegisterReservacion(ReservacionesViewModel item)
+        {
+            var reservaciones = _mapper.Map<tbReservaciones>(item);
+            var respuesta = _actividadesServices.UpdateRegisterReservacion(reservaciones);
+            return Ok(respuesta);
+        }
+
+        [HttpPost("EditarReservacionExiste")]
+        public IActionResult EditarReservacionExiste(ReservacionesViewModel item)
+        {
+            var reservaciones = _mapper.Map<tbReservaciones>(item);
+            var respuesta = _actividadesServices.EditarReservacionExiste(reservaciones);
+            return Ok(respuesta);
+        }
+
+        [HttpPost("EditarReservacionNoExiste")]
+        public IActionResult EditarReservacionNoExiste(ReservacionesViewModel item)
+        {
+            var reservaciones = _mapper.Map<tbReservaciones>(item);
+            var respuesta = _actividadesServices.EditarReservacionNoExiste(reservaciones);
+            return Ok(respuesta);
+        }
     }
 }

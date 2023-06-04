@@ -122,6 +122,9 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbReservaciones_Delete = "Acti.UDP_tbReservacion_Delete";
         public static string UDP_tbReservaciones_InsertExiste = "Acti.UDP_tbReservaciones_InsertExiste";
         public static string UDP_tbReservaciones_ListarDatosReservacion = "Acti.UDP_tbReservacion_ListarInfoActiXRese";
+        public static string UPD_tbReservaciones_UpdateReservacionCliten = "Acti.UDP_tbReservacion_UpdateReservacion";
+        public static string UDP_tbReservaciones_EditarActividadExiste = "Acti.UDP_tbReservaciones_EditarActividadExiste";
+        public static string UDP_tbReservaciones_EditarActividadNoExiste = "Acti.UDP_tbReservaciones_EditarActividadNoExiste";
         #endregion
 
         #region Clientes
@@ -153,6 +156,7 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbFactura_ListarFacturabyId = "Acti.UDP_tbFacturas_ListarInfoFactById";
         public static string UDP_tbFactura_ListarIndex = "Acti.UDP_tbFactura_ListarFacturaIndex";
         public static string UDP_tbFactura_VerificarFactura = "Acti.UDP_tbFactura_VerificarEstadoFactura";
+        public static string UDP_tbFactura_EditarFactura = "Acti.UDP_tbFactura_UpdateFactura";
         #endregion
 
         #region ClienteXReservacion

@@ -60,5 +60,21 @@ namespace PlayaMagica.Controllers
             var respuesta = _actividadesServices.VerificarFactura(facturas);
             return Ok(respuesta);
         }
+
+        [HttpPost("EditarFacturaNoPaga")]
+        public IActionResult EditarFacturaNoPaga(FacturaViewModel item)
+        {
+            var facturas = _mapper.Map<tbFactura>(item);
+            var respuesta = _actividadesServices.EditarFacturaNoPaga(facturas);
+            return Ok(respuesta);
+        }
+
+        [HttpPost("EditarFactura")]
+        public IActionResult EditarFactura(FacturaViewModel item)
+        {
+            var facturas = _mapper.Map<tbFactura>(item);
+            var respuesta = _actividadesServices.EditarFactura(facturas);
+            return Ok(respuesta);
+        }
     }
 }

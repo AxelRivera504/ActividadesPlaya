@@ -1317,8 +1317,163 @@ BEGIN
 END
 GO
 
+CREATE OR ALTER PROCEDURE Acti.UDP_tbReservacion_UpdateReservacion
+	@rese_Id				INT,
+	@acti_Id				INT,
+	@rese_FechaReservacion	DATE,
+	@CantidadClientes		INT	
+AS
+BEGIN	
+	BEGIN TRY
+		DECLARE @CantidadActiXFecha INT;
+		DECLARE @CantidadReservacion INT;
+		DECLARE @FechaReservacion DATE;
+		DECLARE @CantidadLimite INT;
+		SET @CantidadActiXFecha = (SELECT acfe_Cantidad FROM Acti.tbActividadesXFecha WHERE [acti_Id] = @acti_Id AND acfe_Fecha = @rese_FechaReservacion)
+		SET @CantidadReservacion = (SELECT rese_Cantidad FROM Acti.tbReservaciones WHERE rese_Id = @rese_Id)
+		SET @FechaReservacion = (SELECT rese_FechaReservacion FROM Acti.tbReservaciones WHERE rese_Id = @rese_Id)
+		SET @CantidadLimite = (SELECT acti_Cupo FROM Acti.tbActividades WHERE acti_Id = @acti_Id)
+		DECLARE @Resultado INT;
+		SET @Resultado = (@CantidadActiXFecha + @CantidadReservacion)
 
+			IF(@CantidadClientes <= @Resultado AND @CantidadActiXFecha >= 0)
+				BEGIN	
 
+					UPDATE Acti.tbReservaciones
+					SET  rese_Cantidad = @CantidadClientes
+					WHERE	rese_Id = @rese_Id
+
+					UPDATE Acti.tbActividadesXFecha
+					SET [acfe_Cantidad] = ([acfe_Cantidad] + @CantidadReservacion) - @CantidadClientes
+					WHERE acfe_Fecha = @rese_FechaReservacion AND acti_Id = @acti_Id
+
+					SELECT 1
+
+				END
+				
+			ELSE
+				BEGIN 
+					SELECT -5
+				END
+				
+	END TRY
+	BEGIN CATCH
+		SELECT 0 
+	END CATCH
+END
+
+GO
+
+CREATE OR ALTER PROCEDURE Acti.UDP_tbReservaciones_EditarActividadExiste
+	@rese_Id				INT,
+	@acti_Id				INT,
+	@rese_FechaReservacion	DATE,
+	@CantidadClientes		INT
+AS
+BEGIN 
+	BEGIN TRY
+		DECLARE @CantidadReservacion INT;
+		DECLARE @CantidadActiXFechaAnt INT;
+		DECLARE @FechaReservacionAnt DATE;
+		DECLARE @acti_IdAnt INT;
+		DECLARE @CantidadLimite INT;
+		DECLARE @CantidadActiXFechaNueva INT;
+		SET @CantidadActiXFechaNueva = (SELECT acfe_Cantidad FROM Acti.tbActividadesXFecha WHERE [acti_Id] = @acti_Id AND acfe_Fecha = @rese_FechaReservacion)
+		SET @CantidadReservacion = (SELECT rese_Cantidad FROM Acti.tbReservaciones WHERE rese_Id = @rese_Id)
+		SET @FechaReservacionAnt = (SELECT rese_FechaReservacion FROM Acti.tbReservaciones WHERE rese_Id = @rese_Id)
+		SET @CantidadLimite = (SELECT acti_Cupo FROM Acti.tbActividades WHERE acti_Id = @acti_Id)
+		SET @acti_IdAnt = (SELECT acti_Id FROM Acti.tbReservaciones WHERE rese_Id = @rese_Id)
+		SET @CantidadActiXFechaAnt = (SELECT acfe_Cantidad FROM Acti.tbActividadesXFecha WHERE acti_Id = @acti_IdAnt AND acfe_Fecha = @FechaReservacionAnt)
+
+		DECLARE @Resultado INT;
+		SET @Resultado = (@CantidadActiXFechaAnt + @CantidadReservacion)
+
+		UPDATE Acti.tbActividadesXFecha
+		SET acfe_Cantidad = @Resultado
+		WHERE acti_Id = @acti_IdAnt AND acfe_Fecha = @FechaReservacionAnt
+
+		UPDATE Acti.tbReservaciones 
+		SET  rese_FechaReservacion = @rese_FechaReservacion,
+			 acti_Id = @acti_Id
+		WHERE rese_Id = @rese_Id
+
+		UPDATE Acti.tbActividadesXFecha
+		SET acfe_Cantidad = @CantidadActiXFechaNueva - @CantidadClientes
+		WHERE acti_Id = @acti_Id AND acfe_Fecha = @rese_FechaReservacion
+
+		SELECT 1
+
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+
+GO
+
+CREATE OR ALTER PROCEDURE Acti.UDP_tbReservaciones_EditarActividadNoExiste
+	@rese_Id				INT,
+	@acti_Id				INT,
+	@rese_FechaReservacion	DATE,
+	@CantidadClientes		INT,
+	@rese_UsuarioCreador	INT
+AS
+BEGIN
+	BEGIN TRY
+		DECLARE @CantidadReservacion INT;
+		DECLARE @CantidadActiXFechaAnt INT;
+		DECLARE @FechaReservacionAnt DATE;
+		DECLARE @acti_IdAnt INT;
+		DECLARE @CantidadLimite INT;
+		DECLARE @CantidadActiXFechaNueva INT;
+		SET @CantidadActiXFechaNueva = (SELECT acfe_Cantidad FROM Acti.tbActividadesXFecha WHERE [acti_Id] = @acti_Id AND acfe_Fecha = @rese_FechaReservacion)
+		SET @CantidadReservacion = (SELECT rese_Cantidad FROM Acti.tbReservaciones WHERE rese_Id = @rese_Id)
+		SET @FechaReservacionAnt = (SELECT rese_FechaReservacion FROM Acti.tbReservaciones WHERE rese_Id = @rese_Id)
+		SET @CantidadLimite = (SELECT acti_Cupo FROM Acti.tbActividades WHERE acti_Id = @acti_Id)
+		SET @acti_IdAnt = (SELECT acti_Id FROM Acti.tbReservaciones WHERE rese_Id = @rese_Id)
+		SET @CantidadActiXFechaAnt = (SELECT acfe_Cantidad FROM Acti.tbActividadesXFecha WHERE acti_Id = @acti_IdAnt AND acfe_Fecha = @FechaReservacionAnt)
+		DECLARE @CantidadActividad INT = (SELECT acti_Cupo FROM Acti.tbActividades WHERE acti_Id = @acti_Id)
+		DECLARE @Resultado INT;
+
+		DECLARE @Resultado2 INT = @CantidadActividad - @CantidadClientes;
+		SET @Resultado = (@CantidadActiXFechaAnt + @CantidadReservacion)
+
+		UPDATE Acti.tbActividadesXFecha
+		SET acfe_Cantidad = @Resultado
+		WHERE acti_Id = @acti_IdAnt AND acfe_Fecha = @FechaReservacionAnt
+
+		UPDATE Acti.tbReservaciones 
+		SET  rese_FechaReservacion = @rese_FechaReservacion,
+			 acti_Id = @acti_Id
+		WHERE rese_Id = @rese_Id
+
+		
+		INSERT INTO [Acti].[tbActividadesXFecha]
+				([acti_Id]
+				,[acfe_Fecha]
+				,[acfe_Cantidad]
+				,[acfe_Estado]
+				,[acfe_UsuarioCreador]
+				,[acfe_FechaCreacion]
+				,[acfe_UsuarioModificador]
+				,[acfe_FechaModificacion])
+			VALUES
+				(@acti_Id
+				,@rese_FechaReservacion
+				,@Resultado2
+				,1
+				,@rese_UsuarioCreador
+				,GETDATE()
+				,NULL
+				,NULL)
+
+		SELECT 1
+
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
 --******************* ********************************///UDP Y VISTA Reservaciones  *************************************************************************--
 --******************* ********************************UDP Y VISTA Clientes  ****************************************************************************--
 /*Vista Clientes*/
@@ -1622,7 +1777,7 @@ END
 
 
 
-/*RolesXPantallas_Select_ByRoleID */ClienteXReservacion
+/*RolesXPantallas_Select_ByRoleID */
 GO
 CREATE OR ALTER PROCEDURE Acce.UDP_tbRolesXPantallas_Select_ByRoleID 
 @role_ID INT
@@ -2137,6 +2292,53 @@ BEGIN
 		SELECT -5
 	END CATCH
 END
+GO
+
+CREATE OR ALTER PROCEDURE Acti.UDP_tbClienteXReservacion_InsertarEditar
+	@clie_Id				INT,
+	@rese_Id				INT,
+	@rese_OwnerPayy			BIT,
+	@clre_UsuarioCreador	INT
+AS
+BEGIN
+	BEGIN TRY
+		INSERT INTO Acti.tbClienteXReservacion([clie_Id], [rese_Id],[rese_OwnerPayy], [clre_Estado], [clre_UsuarioCreador], [clre_FechaCreacion], [clre_UsuarioModificador], [clre_FechaModificacion])
+		VALUES (@clie_Id,@rese_Id,@rese_OwnerPayy,1,@clre_UsuarioCreador,GETDATE(),NULL, NULL ) 
+		SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+GO
+
+CREATE OR ALTER PROCEDURE Acti.UDP_tbFactura_UpdateFactura
+@fuct_Id				INT,
+@rese_Id				INT,
+@fuct_Subtotal			DECIMAL(18,2),
+@fuct_Isv				DECIMAL(18,2),
+@fuct_Total				DECIMAL(18,2),
+@mepa_id				INT,
+@fuct_UsuarioCreador	INT
+AS
+BEGIN	
+	BEGIN TRY
+
+		UPDATE Acti.tbFactura
+		SET fuct_Subtotal = @fuct_Subtotal,
+			fuct_Isv = @fuct_Isv,
+			fuct_Total = @fuct_Total,
+			mepa_id = @mepa_id,
+			fuct_UsuarioModificador = @fuct_UsuarioCreador
+		WHERE fuct_Id = @fuct_Id AND rese_Id = @rese_Id
+		
+		SELECT	1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+
 GO
 --***************************************************///UDP Y VISTA Factura****************************************************************************--
 

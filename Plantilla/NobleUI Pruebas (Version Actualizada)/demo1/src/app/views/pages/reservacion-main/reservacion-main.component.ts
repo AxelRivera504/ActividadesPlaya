@@ -42,7 +42,7 @@ export class ReservacionMainComponent implements OnInit {
     };
   }
 
-  Factura(id:number){
+  Factura(id:number, id2:number){
     this.FacturaVer.fuct_Id = id
     this.service.VerificarEstadoFactura(this.FacturaVer).subscribe((response:any)=>{
       if(response.data.codeStatus === 1){
@@ -57,6 +57,7 @@ export class ReservacionMainComponent implements OnInit {
         })   
       }else{
         localStorage.setItem('idF',id.toString())
+        localStorage.setItem('idReservaMain',id2.toString())
         this.router.navigate(['factura']);
       }
     })
@@ -67,7 +68,8 @@ export class ReservacionMainComponent implements OnInit {
     this.service.VerificarEstadoFactura(this.FacturaVer).subscribe((response:any)=>{
       if(response.data.codeStatus === 1){
         localStorage.setItem('idFacturaEdit',id.toString())
-        localStorage.setItem('idReservaEdit',id.toString())
+        localStorage.setItem('idReservaEdit',id2.toString())
+        console.log(localStorage.getItem('idReservaEdit'))
         this.router.navigate(['reservacionesEditar']);
        
       }else{

@@ -25,7 +25,7 @@ namespace PlayaMagica.Controllers
 
         [HttpPost("InsertarClienteXReservacion")]
         public IActionResult InsertarClienteXReservacion(ClienteXReservacionViewModel item)
-         {
+          {
             var ClienteXReservacion = _mapper.Map<tbClienteXReservacion>(item);
             var respuesta = _actividadesServices.InsertarClienteXReservacion(ClienteXReservacion);
             return Ok(respuesta);

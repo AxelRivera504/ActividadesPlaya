@@ -176,9 +176,9 @@
             <div class="row">
               <div class="col-sm-1"></div>
               <div class="col-sm-7">
-                <div class="custom-checkbox" id="CKActi" style="display: none;">
-                  <input type="checkbox" id="CKActi" (change)="toggleCheckbox1()">
-                  <label for="ck">¿Desea cambiar de actividad?</label>
+                <div class="custom-checkbox" >
+                  <input type="checkbox" #checkbox checked (change)="toggleCheckbox1()">
+                  <label for="ck">¿Resetear la selección?</label>
                 </div>
               </div>
               <div class="col-sm-3">

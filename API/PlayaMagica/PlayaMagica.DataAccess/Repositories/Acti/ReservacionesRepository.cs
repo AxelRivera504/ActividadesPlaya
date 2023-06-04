@@ -50,6 +50,52 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             parametros.Add("@rese_Id", id, DbType.Int32, ParameterDirection.Input);
             return db.Query<tbReservaciones>(ScriptsDataBase.UDP_tbReservaciones_ListarDatosReservacion, parametros, commandType: CommandType.StoredProcedure);
         }
+
+        public RequestStatus UpdateRegisterReservacion(tbReservaciones item)
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@rese_Id", item.rese_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@acti_Id", item.acti_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@CantidadClientes", item.rese_Cantidad, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@rese_FechaReservacion", item.rese_FechaReservacion, DbType.Date, ParameterDirection.Input);
+            var answer = db.QueryFirst<int>(ScriptsDataBase.UPD_tbReservaciones_UpdateReservacionCliten, parametros, commandType: CommandType.StoredProcedure);
+
+            result.CodeStatus = answer;
+            return result;
+        }
+
+        public RequestStatus EditarReservacionExiste(tbReservaciones item)
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@rese_Id", item.rese_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@acti_Id", item.acti_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@CantidadClientes", item.rese_Cantidad, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@rese_FechaReservacion", item.rese_FechaReservacion, DbType.Date, ParameterDirection.Input);
+            var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbReservaciones_EditarActividadExiste, parametros, commandType: CommandType.StoredProcedure);
+
+            result.CodeStatus = answer;
+            return result;
+        }
+
+        public RequestStatus EditarReservacionNoExiste(tbReservaciones item)
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@rese_Id", item.rese_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@acti_Id", item.acti_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@CantidadClientes", item.rese_Cantidad, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@rese_FechaReservacion", item.rese_FechaReservacion, DbType.Date, ParameterDirection.Input);
+            parametros.Add("@rese_UsuarioCreador", item.rese_UsuarioCreador, DbType.Int32, ParameterDirection.Input);
+            var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbReservaciones_EditarActividadNoExiste, parametros, commandType: CommandType.StoredProcedure);
+
+            result.CodeStatus = answer;
+            return result;
+        }
         public RequestStatus Delete(tbReservaciones item)
         {
             throw new NotImplementedException();

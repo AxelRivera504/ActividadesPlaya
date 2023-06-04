@@ -559,6 +559,51 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
                 return Enumerable.Empty<tbReservaciones>();
             }
         }
+
+        public ServiceResult UpdateRegisterReservacion(tbReservaciones item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var reservaciones = _reservacionesRepository.UpdateRegisterReservacion(item);
+                return resultado.Ok(reservaciones);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult EditarReservacionExiste(tbReservaciones item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var reservaciones = _reservacionesRepository.EditarReservacionExiste(item);
+                return resultado.Ok(reservaciones);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult EditarReservacionNoExiste(tbReservaciones item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var reservaciones = _reservacionesRepository.EditarReservacionNoExiste(item);
+                return resultado.Ok(reservaciones);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
         #endregion
 
         #region ClientesXReservacion
@@ -685,6 +730,36 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             try
             {
                 var Factura = _facturaRepository.VerificarFactura(item);
+                return resultado.Ok(Factura);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult EditarFacturaNoPaga(tbFactura item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Factura = _facturaRepository.EditarFacturaNoPaga(item);
+                return resultado.Ok(Factura);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult EditarFactura(tbFactura item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Factura = _facturaRepository.EditarFactura(item);
                 return resultado.Ok(Factura);
             }
             catch (Exception ex)
