@@ -12,6 +12,7 @@ namespace PlayaMagica.Models
         public int? equi_UsoActual { get; set; }
         public int? equi_UsoLimite { get; set; }
         public string? equi_ImgUrL { get; set; }
+        public string? mantenimiento { get; set; }
         public bool? equi_Estado { get; set; }
         public int? equi_UsuarioCreador { get; set; }
         public DateTime? equi_FechaCreacion { get; set; }

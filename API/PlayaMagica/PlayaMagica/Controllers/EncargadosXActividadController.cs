@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PlayaMagica.BussinessLogic.Services.ActividadesServices;
+using PlayaMagica.Entities.Entities;
+using PlayaMagica.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +22,23 @@ namespace PlayaMagica.Controllers
         {
             _actividadesServices = actividadesServices;
             _mapper = mapper;
+        }
+
+
+        [HttpPost("Insert")]
+        public IActionResult InsertarPlayas(EncargadosXActividadViewModel item)
+        {
+            var mapeado = _mapper.Map<tbEncargadosXActividades>(item);
+            var respuesta = _actividadesServices.InsertarEncargadosXActivades(mapeado);
+            return Ok(respuesta);
+        }
+
+        [HttpPost("Delete")]
+        public IActionResult EliminarPlayas(EncargadosXActividadViewModel item)
+        {
+            var mapeado = _mapper.Map<tbEncargadosXActividades>(item);
+            var respuesta = _actividadesServices.EliminarEncargadosXActivades(mapeado);
+            return Ok(respuesta);
         }
 
         [HttpGet("ListarEncargadosById{id}")]

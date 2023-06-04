@@ -46,6 +46,14 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             parametros.Add("@rese_Id", id, DbType.Int32, ParameterDirection.Input);
             return db.Query<tbClienteXReservacion>(ScriptsDataBase.UDP_tbClienteXReservacion_ListByIdRese, parametros, commandType: CommandType.StoredProcedure);
         }
+
+        public IEnumerable<tbClienteXReservacion> SexoClientes(tbClienteXReservacion item)
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@acti_Id", item.acti_Id, DbType.Int32, ParameterDirection.Input);
+            return db.Query<tbClienteXReservacion>(ScriptsDataBase.UDP_tbClienteXReservacion_Sexo, parametros, commandType: CommandType.StoredProcedure);
+        }
         public RequestStatus Delete(tbClienteXReservacion item)
         {
             throw new NotImplementedException();

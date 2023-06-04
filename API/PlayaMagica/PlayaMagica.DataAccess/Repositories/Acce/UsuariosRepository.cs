@@ -12,16 +12,21 @@ namespace PlayaMagica.DataAccess.Repositories.Acce
 {
     public class UsuariosRepository : IRepository<tbUsuarios, VW_tbUsuarios>
     {
-        public RequestStatus Delete(int id)
+        public RequestStatus Delete(tbUsuarios item)
         {
             RequestStatus result = new RequestStatus();
             using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
             var parametros = new DynamicParameters();
 
-            parametros.Add("@usua_id",id, DbType.Int32, ParameterDirection.Input);
-            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_tbRoles_Delete, parametros, commandType: CommandType.StoredProcedure);
-            result.MessageStatus = answer;
+            parametros.Add("@usua_id", item.usua_ID, DbType.Int32, ParameterDirection.Input);
+            var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbUsuarios_Delete, parametros, commandType: CommandType.StoredProcedure);
+            result.CodeStatus = answer;
             return result;
+        }
+
+        public RequestStatus Delete(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public VW_tbUsuarios Find(int id)
@@ -68,16 +73,14 @@ namespace PlayaMagica.DataAccess.Repositories.Acce
 
         public RequestStatus Update(tbUsuarios item)
         {
-
             using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
             RequestStatus result = new RequestStatus();
             var parametros = new DynamicParameters();
             parametros.Add("@usua_id", item.usua_ID, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@usua_Usuario", item.usua_Usuario, DbType.String, ParameterDirection.Input);
-            parametros.Add("@usua_Clave", item.usua_Clave, DbType.String, ParameterDirection.Input);
             parametros.Add("@enca_ID", item.enca_ID, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@role_ID", item.role_ID, DbType.Int32, ParameterDirection.Input);
-            parametros.Add("@usua_UsuarioCreador", item.usua_UsuarioCreador, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@usua_UsuarioModificador", item.usua_UsuarioModificador, DbType.Int32, ParameterDirection.Input);
 
             var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbUsuarios_Update, parametros, commandType: CommandType.StoredProcedure);
 

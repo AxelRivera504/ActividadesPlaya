@@ -61,6 +61,18 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             return result;
         }
 
+        public RequestStatus EquipoMantenimiento(tbEquipos item)
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@equi_Id", item.equi_Id, DbType.Int32, ParameterDirection.Input);
+            var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_EquipoMantenimiento, parametros, commandType: CommandType.StoredProcedure);
+
+            result.CodeStatus = answer;
+            return result;
+        }
+
         public VW_tbEquipos Find(int id)
         {
             throw new NotImplementedException();

@@ -25,7 +25,6 @@ C:\Users\axel2\OneDrive\Documentos\ActividadesPlaya\API\PlayaMagica\PlayaMagica.
 C:\Users\axel2\OneDrive\Documentos\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\PlayaMagica.Entities.dll
 C:\Users\axel2\OneDrive\Documentos\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\ref\PlayaMagica.Entities.dll
 C:\Users\axel2\OneDrive\Documentos\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\PlayaMagica.Entities.pdb
-C:\Users\axel2\OneDrive\Documentos\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.csproj.AssemblyReference.cache
 C:\Users\axel2\OneDrive\Documentos\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\axel2\OneDrive\Documentos\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.AssemblyInfoInputs.cache
 C:\Users\axel2\OneDrive\Documentos\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.AssemblyInfo.cs

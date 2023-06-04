@@ -12,15 +12,15 @@ namespace PlayaMagica.DataAccess.Repositories.Acce
 {
     public class RolesPantallaRepository : IRepository<tbRolesXPantallas, tbRolesXPantallas>
     {
-        public RequestStatus Delete(tbRolesXPantallas item)
+        public RequestStatus DeleteRolesXPantallas(tbRolesXPantallas item)
         {
-            RequestStatus result = new RequestStatus();
             using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
             var parametros = new DynamicParameters();
-
             parametros.Add("@role_ID", item.role_ID, DbType.Int32, ParameterDirection.Input);
-            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_tbRolesPorPantalla_Delete, parametros, commandType: CommandType.StoredProcedure);
-            result.MessageStatus = answer;
+            var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbRolesPorPantalla_Delete, parametros, commandType: CommandType.StoredProcedure);
+
+            result.CodeStatus = answer;
             return result;
         }
 

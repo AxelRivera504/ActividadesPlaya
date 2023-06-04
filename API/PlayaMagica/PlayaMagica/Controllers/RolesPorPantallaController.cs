@@ -37,7 +37,7 @@ namespace PlayaMagica.Controllers
         public IActionResult Eliminar(RolesPorPantallaViewModel item)
         {
             var listadoMapeado = _mapper.Map<tbRolesXPantallas>(item);
-            var listado = _accesoService.DeleteRolesXPantalla(listadoMapeado);
+            var listado = _accesoService.DeleteRolesXpantallas(listadoMapeado);
             return Ok(listado);
         }
 

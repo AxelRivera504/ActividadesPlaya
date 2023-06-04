@@ -45,5 +45,14 @@ namespace PlayaMagica.Controllers
             var listado = _actividadesServices.ListClientesByIdRese(id);
             return Ok(listado);
         }
+
+        [HttpPost("ClientesXactividad")]
+        public IActionResult clientesXactividad(ClienteXReservacionViewModel item)
+        {
+
+            var listado = _mapper.Map<tbClienteXReservacion>(item);
+            var respuesta = _actividadesServices.clienteXReservacions(listado);
+            return Ok(respuesta);
+        }
     }
 }
