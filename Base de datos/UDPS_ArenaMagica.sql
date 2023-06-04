@@ -912,39 +912,6 @@ GO
 	SELECT * FROM Acti.VW_tbActividades
 	END
 
-	--******************* ********************************UDP Y VISTA Actividades  *************************************************************************--
-	/*Vista Actividades*/
-	GO
-	CREATE OR ALTER VIEW Acti.VW_tbActividades
-	AS
-	SELECT acti_Id, 
-	acti_Nombre,  
-	acti_Cupo, 
-	acti_Precio,
-	acti_ImgUrl,
-	play_playa,
-	acti.play_Id, 
-	acti_Estado, 
-	acti_UsuarioCreador,
-	[UsuarioCreador].usua_Usuario AS acti_UsuarioCreador_Nombre, 
-	acti_FechaCreacion, 
-	acti_UsuarioModificador,
-	[UsuarioModificador].usua_Usuario AS acti_UsuarioModificador_Nombre, 
-	acti_FechaModificacion
-	FROM Acti.tbActividades	acti INNER JOIN Acce.tbUsuarios [UsuarioCreador]
-	ON acti.acti_UsuarioCreador = [UsuarioCreador].usua_ID LEFT JOIN Acce.tbUsuarios [UsuarioModificador] 
-	ON acti.acti_UsuarioModificador = [UsuarioModificador].usua_ID INNER JOIN Acti.tbPlayas playa
-	ON	acti.play_Id = playa.play_Id
-	WHERE acti_Estado = 1
-
-	--/*Vista Actividades UDP*/
-	GO 
-	CREATE OR ALTER PROCEDURE Acti.UDP_tbActividades_VW
-	AS
-	BEGIN
-	SELECT * FROM Acti.VW_tbActividades
-	END
-
 	/*Insertar Actividades*/
 	GO
 	CREATE OR ALTER PROCEDURE Acti.UDP_tbActividades_Insert
@@ -1246,46 +1213,46 @@ GO
 	/*Reservacion Update*/
 	GO
 	CREATE OR ALTER PROCEDURE Acti.UDP_tbReservaciones_Update
-(
-  @rese_Id INT,
-  @rese_Cantidad INT,
-  @rese_FechaReservacion DATE,
-  @resultado INT OUT
-)
-AS
-BEGIN
-  -- Obtener la actividad asociada a la reservación
-  DECLARE @acti_Id INT
-  SELECT @acti_Id = acti_Id
-  FROM Acti.tbReservaciones
-  WHERE rese_Id = @rese_Id
+	(
+	  @rese_Id INT,
+	  @rese_Cantidad INT,
+	  @rese_FechaReservacion DATE,
+	  @resultado INT OUT
+	)
+	AS
+	BEGIN
+	  -- Obtener la actividad asociada a la reservación
+	  DECLARE @acti_Id INT
+	  SELECT @acti_Id = acti_Id
+	  FROM Acti.tbReservaciones
+	  WHERE rese_Id = @rese_Id
 
-  -- Verificar si hay cupo disponible
-  DECLARE @cuposDisponibles INT
-  SELECT @cuposDisponibles = acti_Cupo - ISNULL(SUM(acfe_Cantidad), 0)
-  FROM Acti.tbActividades a
-  LEFT JOIN Acti.ActividadesXFecha axf ON a.acti_Id = axf.acti_Id
-  WHERE a.acti_Id = @acti_Id
-    AND axf.acfe_Fecha = @rese_FechaReservacion
-  GROUP BY a.acti_Cupo
+	  -- Verificar si hay cupo disponible
+	  DECLARE @cuposDisponibles INT
+	  SELECT @cuposDisponibles = acti_Cupo - ISNULL(SUM(acfe_Cantidad), 0)
+	  FROM Acti.tbActividades a
+	  LEFT JOIN Acti.ActividadesXFecha axf ON a.acti_Id = axf.acti_Id
+	  WHERE a.acti_Id = @acti_Id
+		AND axf.acfe_Fecha = @rese_FechaReservacion
+	  GROUP BY a.acti_Cupo
 
-  -- Actualizar reservación si hay cupo disponible
-  IF @cuposDisponibles >= (@rese_Cantidad - (SELECT rese_Cantidad FROM Acti.tbReservaciones WHERE rese_Id = @rese_Id))
-  BEGIN
-    UPDATE Acti.tbReservaciones
-    SET rese_Cantidad = @rese_Cantidad,
-        rese_FechaReservacion = @rese_FechaReservacion,
-        rese_FechaModificacion = GETDATE()
-    WHERE rese_Id = @rese_Id
+	  -- Actualizar reservación si hay cupo disponible
+	  IF @cuposDisponibles >= (@rese_Cantidad - (SELECT rese_Cantidad FROM Acti.tbReservaciones WHERE rese_Id = @rese_Id))
+	  BEGIN
+		UPDATE Acti.tbReservaciones
+		SET rese_Cantidad = @rese_Cantidad,
+			rese_FechaReservacion = @rese_FechaReservacion,
+			rese_FechaModificacion = GETDATE()
+		WHERE rese_Id = @rese_Id
 
-    SET @resultado = 1 -- Éxito: reservación actualizada
-  END
-  ELSE
-  BEGIN
-    SET @resultado = 0 -- Error: no hay cupo disponible
-  END
-END
-GO
+		SET @resultado = 1 -- Éxito: reservación actualizada
+	  END
+	  ELSE
+	  BEGIN
+		SET @resultado = 0 -- Error: no hay cupo disponible
+	  END
+	END
+	GO
 
 /*Reservaciones Delete*/
 GO
@@ -2294,23 +2261,6 @@ BEGIN
 END
 GO
 
-CREATE OR ALTER PROCEDURE Acti.UDP_tbClienteXReservacion_InsertarEditar
-	@clie_Id				INT,
-	@rese_Id				INT,
-	@rese_OwnerPayy			BIT,
-	@clre_UsuarioCreador	INT
-AS
-BEGIN
-	BEGIN TRY
-		INSERT INTO Acti.tbClienteXReservacion([clie_Id], [rese_Id],[rese_OwnerPayy], [clre_Estado], [clre_UsuarioCreador], [clre_FechaCreacion], [clre_UsuarioModificador], [clre_FechaModificacion])
-		VALUES (@clie_Id,@rese_Id,@rese_OwnerPayy,1,@clre_UsuarioCreador,GETDATE(),NULL, NULL ) 
-		SELECT 1
-	END TRY
-	BEGIN CATCH
-		SELECT 0
-	END CATCH
-END
-GO
 
 CREATE OR ALTER PROCEDURE Acti.UDP_tbFactura_UpdateFactura
 @fuct_Id				INT,
@@ -2400,8 +2350,25 @@ BEGIN
 	END CATCH
 END
 
+GO
 
-
+CREATE OR ALTER PROCEDURE Acti.UDP_tbClienteXReservacion_InsertarEditar
+	@clie_Id				INT,
+	@rese_Id				INT,
+	@rese_OwnerPayy			BIT,
+	@clre_UsuarioCreador	INT
+AS
+BEGIN
+	BEGIN TRY
+		INSERT INTO Acti.tbClienteXReservacion([clie_Id], [rese_Id],[rese_OwnerPayy], [clre_Estado], [clre_UsuarioCreador], [clre_FechaCreacion], [clre_UsuarioModificador], [clre_FechaModificacion])
+		VALUES (@clie_Id,@rese_Id,@rese_OwnerPayy,1,@clre_UsuarioCreador,GETDATE(),NULL, NULL ) 
+		SELECT 1
+	END TRY
+	BEGIN CATCH
+		SELECT 0
+	END CATCH
+END
+GO
 
 --*************************************************** /UDP Y VISTA tbReservacionesXClientes****************************************************************************--
 
@@ -2513,7 +2480,23 @@ BEGIN
     SELECT [acfe_Fecha], SUM([acfe_Cantidad]) AS CantidadVisitantes
     FROM [Acti].[tbActividadesXFecha] t1
     GROUP BY [acfe_Fecha]
-	order by [acfe_Fecha]
+    order by [acfe_Fecha]
 END
 
+--** ///UDP Y Vista tbActividadesXFecha **--
+GO
+CREATE OR ALTER PROCEDURE UDP_SexoXActividad_tbActividades
+    @acti_Id INT
+AS
+BEGIN
+    SELECT T4.acti_Nombre, 
+           SUM(CASE WHEN t3.clie_Sexo = 'M' THEN 1 ELSE 0 END) AS Num_Masculino,
+           SUM(CASE WHEN t3.clie_Sexo = 'F' THEN 1 ELSE 0 END) AS Num_Femenino
+    FROM [Acti].[tbClienteXReservacion] T1 
+    INNER JOIN [Acti].[tbReservaciones] T2 ON T1.rese_Id = T2.rese_Id 
+    INNER JOIN [Acti].[tbClientes] T3 ON T1.clie_Id = T3.clie_id 
+    INNER JOIN [Acti].[tbActividades] T4 ON T2.acti_Id = T4.acti_Id
+    WHERE T4.acti_Id = @acti_Id
+    GROUP BY T4.acti_Id, T4.acti_Nombre;
+END;
 --**************************************************** ///UDP Y Vista tbActividadesXFecha ****************************************************************--
