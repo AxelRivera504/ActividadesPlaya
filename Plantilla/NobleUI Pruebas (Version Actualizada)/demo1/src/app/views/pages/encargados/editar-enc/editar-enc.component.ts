@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ServicesService } from '../../Service/services.service';
 import Swal from 'sweetalert2';
 import { estadosciviles } from '../../Model/estadosciviles';
+import { estadoscivilesEdit } from '../../Model/EstadosCivilesEdit';
 @Component({
   selector: 'app-editar-enc',
   templateUrl: './editar-enc.component.html',
@@ -14,7 +15,7 @@ import { estadosciviles } from '../../Model/estadosciviles';
 export class EditarEncComponent implements OnInit {
   estadocivil!: estadosciviles[];
   
-  EstadoCivilSeleccionado: String;
+  civil: estadoscivilesEdit = new estadoscivilesEdit();
 
   encargados!: Encargados;
   submitted: boolean = false;
@@ -36,22 +37,34 @@ export class EditarEncComponent implements OnInit {
       this.estadocivil = data;
     });
 
-    const encarga = localStorage.getItem('encargadosEd');
+    setTimeout(()=>{
+      const encarga = localStorage.getItem('encargadosEd');
     if (encarga) {
       this.encargados = JSON.parse(encarga);
       console.log(this.encargados);
-  
-      // Obtener la fecha de nacimiento del cliente
-      const fechaNacimiento = new Date(this.encargados.enca_FechaNac);
-      this.EstadoCivilSeleccionado = this.encargados.esci_Descripcion.toString();
-      // Crear el objeto NgbDateStruct con la fecha de nacimiento
-      this.selectedDate = {
-        year: fechaNacimiento.getFullYear(),
-        month: fechaNacimiento.getMonth() + 1,
-        day: fechaNacimiento.getDate()
-      };
-      this.fechaValida = true;
-    }
+
+      // Obtener el estado civil del cliente desde el localStorage
+      const estadoCivilCliente = this.encargados.esci_Descripcion.toString();
+      console.log(estadoCivilCliente);
+
+      // Buscar el estado civil correspondiente en la lista de estados civiles
+      const estadoCivilSeleccionado = this.estadocivil.find(estadocivil => estadocivil.esci_Descripcion === estadoCivilCliente);
+
+      if (estadoCivilSeleccionado) {
+        this.civil.esci_id = estadoCivilSeleccionado.esci_id;
+      } else {
+        console.log('Estado civil no encontrado en la lista');
+        // Aquí puedes manejar el caso en que el estado civil no se encuentre en la lista
+      }
+        const fechaNacimiento = new Date(this.encargados.enca_FechaNac);
+        this.selectedDate = {
+          year: fechaNacimiento.getFullYear(),
+          month: fechaNacimiento.getMonth() + 1,
+          day: fechaNacimiento.getDate()
+        };
+        this.fechaValida = true;
+      }
+    },500)
   }
 
   Regresar(){
@@ -70,7 +83,7 @@ export class EditarEncComponent implements OnInit {
   
     if (!this.encargados.enca_Nombres || !this.encargados.enca_Apellidos ||
         !this.encargados.enca_DNI || !this.encargados.enca_Email ||
-        !this.encargados.enca_Telefono || !this.encargados.enca_Sexo || !this.EstadoCivilSeleccionado || !this.fechaValida || !this.fechaFormatoValido ) {
+        !this.encargados.enca_Telefono || !this.encargados.enca_Sexo || !this.civil || !this.fechaValida || !this.fechaFormatoValido ) {
       this.submitted = true;  
       this.submitte1 = true;  
       Swal.fire({
@@ -90,8 +103,8 @@ export class EditarEncComponent implements OnInit {
     const idUsuario : number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined: parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
     if (idUsuario !== undefined) {
       this.encargados.enca_UsuarioModificador = idUsuario;
-    }
-    this.encargados.esci_id = parseInt(this.EstadoCivilSeleccionado.toString())
+    } 
+    this.encargados.esci_id = parseInt(this.civil.esci_id.toString())
     this.encargados.enca_FechaNac = this.convertToDate(this.selectedDate);
     this.service.ActualizarEncargados(this.encargados).
     subscribe((data:any)=>{

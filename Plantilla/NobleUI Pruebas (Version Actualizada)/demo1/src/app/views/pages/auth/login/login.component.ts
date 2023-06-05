@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
 
   returnUrl: any;
   usuario: string = '';
@@ -20,6 +20,29 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     this.submitted = false;
+  }
+
+  ngAfterViewInit(): void {
+    this.showHiddenPass('input-pass', 'input-icon');
+  }
+
+  showHiddenPass(inputPass: string, inputIcon: string) {
+    const input = document.getElementById(inputPass) as HTMLInputElement;
+    const iconEye = document.getElementById(inputIcon);
+
+    if (input && iconEye) {
+      iconEye.addEventListener('click', () => {
+        if (input.getAttribute('type') === 'password') {
+          input.setAttribute('type', 'text');
+          iconEye.classList.add('ri-eye-line');
+          iconEye.classList.remove('ri-eye-off-line');
+        } else {
+          input.setAttribute('type', 'password');
+          iconEye.classList.remove('ri-eye-line');
+          iconEye.classList.add('ri-eye-off-line');
+        }
+      });
+    }
   }
 
   onLoggedin(e: MouseEvent) {
@@ -69,7 +92,7 @@ export class LoginComponent implements OnInit {
             title: '¡Inicio de sesión exitoso!\nBienvenido(a) ' + response.data.enca_NombreCompleto,
             icon: 'success'
           });
-        } else {         
+        } else {
           Swal.fire({
             toast: true,
             position: 'top-end',

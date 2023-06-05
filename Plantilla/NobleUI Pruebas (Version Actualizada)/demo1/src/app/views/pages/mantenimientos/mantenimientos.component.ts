@@ -78,6 +78,16 @@ export class MantenimientosComponent implements OnInit {
             this.Mantenimiento = data;
             this.rerender();
       })
+      }if(data.data.codeStatus == -5){
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          title: '¡ERROR!, Este registro esta siendo utilizado',
+            icon: 'error'
+        })
       }else{
         Swal.fire({
           toast: true,

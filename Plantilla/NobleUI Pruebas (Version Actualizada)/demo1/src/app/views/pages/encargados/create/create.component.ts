@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Encargados } from '../../Model/Encargados';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct,NgbDatepickerI18n  } from '@ng-bootstrap/ng-bootstrap';
+import { CustomDatepickerI18n } from '../../custom-datepicker-i18n';
 import { ServicesService } from '../../Service/services.service';
 import { NgSelectConfig } from '@ng-select/ng-select';
 import { estadosciviles } from '../../Model/estadosciviles';

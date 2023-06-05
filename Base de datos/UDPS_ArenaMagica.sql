@@ -732,14 +732,20 @@ GO
  AS
  BEGIN
 	BEGIN TRY
-		UPDATE Acti.tbEncargados
-		SET enca_Estado = 0,
-			enca_UsuarioModificador = @enca_UsuarioModificador,
-			enca_FechaModificacion = GETDATE()
-		WHERE enca_id = @enca_id
-		SELECT 1
+		IF NOT EXISTS(SELECT enac_Id FROM [Acti].[tbEncargadosXActividades] WHERE enca_Id = @enca_id)
+			BEGIN
+				UPDATE Acti.tbEncargados
+				SET enca_Estado = 0,
+					enca_UsuarioModificador = @enca_UsuarioModificador,
+					enca_FechaModificacion = GETDATE()
+				WHERE enca_id = @enca_id
+				SELECT 1
+			END
+		ELSE
+			BEGIN
+				SELECT -5
+			END
 	END TRY
-
 	BEGIN CATCH
 		SELECT 0
 	END CATCH
@@ -1559,14 +1565,20 @@ CREATE OR ALTER PROCEDURE Acti.UDP_tbClientes_Delete
 AS
 BEGIN
 	BEGIN TRY
-			UPDATE Acti.tbClientes
-			SET clie_Estado = 0,
-				clie_UsuarioModificador = @clie_UsuarioModificador,
-				clie_FechaModificacion = GETDATE()
-			WHERE clie_id = @clie_id
-			SELECT 1
+		IF NOT EXISTS(SELECT clre_Id FROM [Acti].[tbClienteXReservacion] WHERE clie_Id = @clie_id)
+			BEGIN
+				UPDATE Acti.tbClientes
+				SET clie_Estado = 0,
+					clie_UsuarioModificador = @clie_UsuarioModificador,
+					clie_FechaModificacion = GETDATE()
+				WHERE clie_id = @clie_id
+				SELECT 1
+			END
+		ELSE
+			BEGIN
+				SELECT -5
+			END
 	END TRY
-
 	BEGIN CATCH
 	SELECT 0
 	END CATCH
@@ -2024,10 +2036,17 @@ CREATE OR ALTER PROCEDURE Acti.UDP_tbMantenimiento_Delete
 AS
 BEGIN
 	BEGIN TRY
-		UPDATE Acti.tbMantenimiento
-		SET	mant_Estado = 0
-		WHERE mant_Id = @mant_Id
-		SELECT 1
+	IF NOT EXISTS(SELECT maeq_Id FROM [Acti].[tbMantenimientoXEquipo] WHERE mant_Id = @mant_Id)
+		BEGIN
+			UPDATE Acti.tbMantenimiento
+			SET	mant_Estado = 0
+			WHERE mant_Id = @mant_Id
+			SELECT 1
+		END
+	ELSE
+		BEGIN
+			SELECT -5
+		END	
 	END TRY
 	BEGIN CATCH
 		SELECT 0

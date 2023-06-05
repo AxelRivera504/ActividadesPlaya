@@ -88,13 +88,22 @@ export class ClientesComponent implements OnInit {
           this.service.getCliente().subscribe(data=>{
             this.Cliente = data;
             this.rerender();
-      })
+      })}else if(data.data.codeStatus == -5){
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          title: '¡ERROR!, Este registro esta siendo utilizado',
+            icon: 'error'
+        })
       }else{
         Swal.fire({
           toast: true,
           position: 'top-end',
           showConfirmButton: false,
-          timer: 30000,
+          timer: 3009,
           timerProgressBar: true,
           title: '¡ERROR!,¡oh no!, hubo un error al eliminar el registro',
             icon: 'error'

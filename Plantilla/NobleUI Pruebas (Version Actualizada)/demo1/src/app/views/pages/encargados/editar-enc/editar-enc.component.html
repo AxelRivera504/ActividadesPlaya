@@ -83,9 +83,9 @@
                 <div class="col-sm-6">
                     <label for="Nombre">Estado Civil Encargado:</label>
                     <br>
-                    <ng-select [(ngModel)]="EstadoCivilSeleccionado" [appendTo]="'body'" placeholder="--Seleccione una opción--"
-                    name="EstadoCivilSeleccionado" #esci="ngModel" required [ngClass]="{ 'is-invalid': submitted && esci.invalid }">
-                      <ng-option *ngFor="let item of estadocivil" [value]="item.esci_id">{{item.esci_Descripcion}}</ng-option>
+                    <ng-select [(ngModel)]="civil.esci_id" bindValue="esci_id" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+                    name="civil.esci_id" #esci="ngModel" required [ngClass]="{ 'is-invalid': submitted && esci.invalid }" >
+                      []<ng-option *ngFor="let item of estadocivil" [value]="item.esci_id">{{item.esci_Descripcion}}</ng-option>
                     </ng-select>
                     <div class="invalid-feedback" *ngIf="esci?.errors?.required && submitted">Debe escoger un estado civil</div> 
                 </div>
