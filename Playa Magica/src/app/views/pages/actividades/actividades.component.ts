@@ -73,7 +73,7 @@ export class ActividadesComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500,
           timerProgressBar: true,
-          title: '¡Registro Ingresado con exito!',
+          title: '¡Registro eliminado con exito!',
           icon: 'success'
         })
 

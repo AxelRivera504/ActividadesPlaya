@@ -129,8 +129,8 @@ export class EditarEncComponent implements OnInit {
           showConfirmButton: false,
           timer: 3000,
           timerProgressBar: true,
-          title: '¡ERROR!, Ya existe un encargado con el DNI digitado',
-          icon: 'error'
+          title: 'Ya existe un encargado con el DNI digitado',
+          icon: 'warning'
         })
       }
      

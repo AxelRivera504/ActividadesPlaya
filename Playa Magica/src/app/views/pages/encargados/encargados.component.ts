@@ -103,7 +103,7 @@ export class EncargadosComponent implements OnInit {
           timer: 3000,
           timerProgressBar: true,
           title: '¡El registro esta siendo utilizado!',
-            icon: 'error'
+            icon: 'warning'
         })
       }else{
         Swal.fire({

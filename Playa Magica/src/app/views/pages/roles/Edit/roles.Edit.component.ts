@@ -143,12 +143,12 @@ export class RolesEditarComponent implements OnInit {
             this.rolesXpantallas.pant_ID = element.pant_ID
             this.rolesXpantallas.roleXpant_UsuarioCreador = 1
             this.rolesXpantallas.role_ID = roleid
+            console.log("Role Id: "+ roleid)
             this.service.createRolesXpantallas(this.rolesXpantallas)
             .subscribe((data:any)=>{
-              console.log("registro a insertar: " + data.role_ID)
+              console.log("registro a insertar: " + data.role_Id)
             });
-
-          },2000);
+          },3000);
          })
 
 

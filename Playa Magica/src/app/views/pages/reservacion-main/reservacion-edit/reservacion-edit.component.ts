@@ -24,6 +24,7 @@ import { FactuList } from '../../Model/ListaFactura';
 import { ReportData } from '../../Model/ReportData';
 import { WizardComponent as BaseWizardComponent } from 'angular-archwizard';
 import Swal from 'sweetalert2';
+import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 
 const fillJustifyNav = {
   htmlCode: 
@@ -114,6 +115,10 @@ export class ReservacionEditComponent implements OnInit {
   fillJustifyNavCode: any;
   validationForm1: UntypedFormGroup;
   validationForm2: UntypedFormGroup;
+
+  finish:boolean = false;
+   recipientEmail:String;
+   nombre:String;
 
   selectedActivity: Actividades | null = null;
   defaultCardCode: any;
@@ -761,7 +766,6 @@ export class ReservacionEditComponent implements OnInit {
                 this.fact_Id = data.data.codeStatus;
                 if(data.data.codeStatus >= 1){
                   this.wizardForm.goToNextStep();
-                  this.LimpiarTodo()
                   this.generatePDF();
                 }else{
                   Swal.fire({
@@ -798,7 +802,6 @@ export class ReservacionEditComponent implements OnInit {
                 this.fact_Id = data.data.codeStatus;
                 if(data.data.codeStatus >= 1){
                   this.wizardForm.goToNextStep();
-                  this.LimpiarTodo()
                   this.generatePDF2();
                 }else{
                   Swal.fire({
@@ -1312,16 +1315,47 @@ export class ReservacionEditComponent implements OnInit {
    * Wizard finish function
    */
   finishFunction() {
-    Swal.fire({
-      titleText: '¡Reservación editada exitosamente!',
-      position: 'center',
-      timerProgressBar: true,
-      timer:5000,
-      icon: 'success'
-    })
-    this.router.navigate(['reservaciones']);    
-  }
+    console.log(this.selectedPeople)
+      if(this.finish){
+        this.nombre = this.selectedPeople[0].clie_NombreCompleto;
+        this.recipientEmail = this.selectedPeople[0].clie_Email;
+        console.log(this.recipientEmail)
+        console.log(this.nombre)
+        const serviceId = 'service_69ndc0f';
+        const templateId = 'template_fbw959i';
+        const userId = 'lIrJhqKJBHhvBPhs-';
+        const emailParams = {
+          cliente: this.recipientEmail,
+          nombre: this.nombre
+        };
 
+        emailjs.send(serviceId, templateId, emailParams, userId)
+          .then((result: EmailJSResponseStatus) => {
+            console.log('Correo electrónico enviado:', result.text);
+            Swal.fire({
+              titleText: '¡Reservación realizada exitosamente!',
+              position: 'center',
+              timerProgressBar: true,
+              timer:5000,
+              icon: 'success'
+            })
+            this.LimpiarTodo();
+            this.router.navigate(['reservaciones']);
+          })
+          .catch((error) => {
+            console.error('Error al enviar el correo electrónico:', error);
+          });
+      }else{
+        Swal.fire({
+          titleText: '¡Reservación realizada exitosamente!',
+          position: 'center',
+          timerProgressBar: true,
+          timer:5000,
+          icon: 'success'
+        })
+        this.router.navigate(['reservaciones']);
+      }
+    }
   /**
    * Returns form
    */

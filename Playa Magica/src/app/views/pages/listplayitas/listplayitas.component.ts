@@ -79,7 +79,7 @@ export class ListplayitasComponent implements OnInit{
           showConfirmButton: false,
           timer: 1500,
           timerProgressBar: true,
-          title: '¡Registro Ingresado con exito!',
+          title: '¡Registro eliminado con exito!',
           icon: 'success'
         })
 
@@ -97,7 +97,7 @@ export class ListplayitasComponent implements OnInit{
           showConfirmButton: false,
           timer: 1500,
           timerProgressBar: true,
-          title: '¡El registro no puede ser eliminado!',
+          title: '¡El registro ya esta en uso!',
           icon: 'warning'
         })
       }else{

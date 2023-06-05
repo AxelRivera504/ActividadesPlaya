@@ -68,7 +68,7 @@ export class EquiposComponent implements OnInit {
 
   openBasicModal4(content: TemplateRef<any>, equipo: Equipos) {
     this.EquiposModel =  equipo;
-    
+    this.MantenimientosModel = new Mantenimiento()
     this.modalRef = this.modalService.open(content, {});
     this.modalRef.result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result;

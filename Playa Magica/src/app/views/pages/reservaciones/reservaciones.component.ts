@@ -21,6 +21,7 @@ import { Encargados } from '../Model/Encargados';
 import jsPDF from 'jspdf';
 import { FactuList } from '../Model/ListaFactura';
 import { ReportData } from '../Model/ReportData';
+import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 
 const fillJustifyNav = {
   htmlCode: 
@@ -152,6 +153,10 @@ export class ReservacionesComponent implements OnInit {
   itemsPerPage = 6;
   filteredActividades: any[] = [];
   searchTerm: string = '';
+
+  finish:boolean = false;
+   recipientEmail:String;
+   nombre:String;
 
    XD: boolean = false;
    public isChecked: boolean = false;
@@ -858,7 +863,6 @@ export class ReservacionesComponent implements OnInit {
                             if(data.data.codeStatus >= 1){
                               localStorage.setItem('idF',data.data.codeStatus)
                               this.wizardForm.goToNextStep();
-                              this.LimpiarTodo()
                               this.generatePDF2();
                             }else{
                               Swal.fire({
@@ -924,7 +928,6 @@ export class ReservacionesComponent implements OnInit {
                             if(data.data.codeStatus >= 1){
                               localStorage.setItem('idF',data.data.codeStatus)
                               this.wizardForm.goToNextStep();
-                              this.LimpiarTodo()
                               this.generatePDF2();
                             }else{
                               Swal.fire({
@@ -1325,15 +1328,47 @@ export class ReservacionesComponent implements OnInit {
    * Wizard finish function
    */
   finishFunction() {
-    Swal.fire({
-      titleText: '¡Reservación realizada exitosamente!',
-      position: 'center',
-      timerProgressBar: true,
-      timer:5000,
-      icon: 'success'
-    })
-    this.router.navigate(['reservaciones']);    
-  }
+    console.log(this.selectedPeople)
+      if(this.finish){
+        this.nombre = this.selectedPeople[0].clie_NombreCompleto;
+        this.recipientEmail = this.selectedPeople[0].clie_Email;
+        console.log(this.recipientEmail)
+        console.log(this.nombre)
+        const serviceId = 'service_69ndc0f';
+        const templateId = 'template_fbw959i';
+        const userId = 'lIrJhqKJBHhvBPhs-';
+        const emailParams = {
+          cliente: this.recipientEmail,
+          nombre: this.nombre
+        };
+
+        emailjs.send(serviceId, templateId, emailParams, userId)
+          .then((result: EmailJSResponseStatus) => {
+            console.log('Correo electrónico enviado:', result.text);
+            Swal.fire({
+              titleText: '¡Reservación realizada exitosamente!',
+              position: 'center',
+              timerProgressBar: true,
+              timer:5000,
+              icon: 'success'
+            })
+            this.LimpiarTodo();
+            this.router.navigate(['reservaciones']);
+          })
+          .catch((error) => {
+            console.error('Error al enviar el correo electrónico:', error);
+          });
+      }else{
+        Swal.fire({
+          titleText: '¡Reservación realizada exitosamente!',
+          position: 'center',
+          timerProgressBar: true,
+          timer:5000,
+          icon: 'success'
+        })
+        this.router.navigate(['reservaciones']);
+      }
+    }
 
   /**
    * Returns form

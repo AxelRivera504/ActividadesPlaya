@@ -492,11 +492,16 @@ CREATE OR ALTER PROCEDURE Acti.UDP_tbPlayas_EliminarPlayas
 AS
 BEGIN
 BEGIN TRY		
-	
-		UPDATE	Acti.tbPlayas					
-		SET		play_Estado = 0
-		WHERE	play_id = @play_id
+	IF NOT EXISTS(SELECT play_Id FROM Acti.tbActividades WHERE play_id = @play_id AND acti_Estado = 1)
+		BEGIN
+				UPDATE	Acti.tbPlayas					
+				SET		play_Estado = 0
+				WHERE	play_id = @play_id
 		SELECT 1
+		END
+	ELSE BEGIN
+		SELECT 2
+	END
 	END TRY
 	BEGIN CATCH
 		SELECT 0
@@ -1511,7 +1516,7 @@ CREATE OR ALTER PROCEDURE Acce.UDP_tbRoles_Update
 AS
 BEGIN
 	BEGIN TRY
-		IF NOT EXISTS(SELECT * FROM Acce.tbRoles WHERE role_Descripcion = @role_Descripcion AND role_ID != @role_ID)
+		IF NOT EXISTS(SELECT role_Descripcion FROM Acce.tbRoles WHERE role_Descripcion = @role_Descripcion AND role_ID != @role_ID)
 			BEGIN
 				UPDATE Acce.tbRoles
 				SET role_Descripcion = @role_Descripcion,
@@ -1532,29 +1537,21 @@ END
 
 /*Roles Delete*/
 GO
-CREATE OR ALTER PROCEDURE Acce.UDP_tbRoles_Delete 19
+CREATE OR ALTER PROCEDURE Acce.UDP_tbRoles_Delete
 @role_ID INT
 AS
 BEGIN
 	BEGIN TRY
-		DECLARE @existe INT= 1
-
-		IF EXISTS(SELECT [role_ID] FROM [Acce].[tbUsuarios] WHERE [role_ID] = @role_ID)
-			BEGIN
-				SET @existe = 2
-			END
-
-		IF @existe = 1
+		IF NOT EXISTS (SELECT role_Id FROM Acce.tbUsuarios WHERE role_Id = @role_Id)
 			BEGIN
 				UPDATE Acce.tbRoles
 				SET role_Estado = 0
 				WHERE role_ID = @role_ID
-				SELECT @existe
+				SELECT 1
 			END
-			ELSE BEGIN
-				SELECT @existe
-			END
-
+		ELSE BEGIN
+			SELECT 2
+		END
 	END TRY
 
 	BEGIN CATCH

@@ -98,8 +98,8 @@ this.form = new FormGroup({
           showConfirmButton: false,
           timer: 3000,
           timerProgressBar: true,
-          title: '¡ERROR!, Ya existe un cliente con el DNI digitado',
-          icon: 'error'
+          title: ' Ya existe un cliente con el DNI digitado',
+          icon: 'warning'
         })
       }
      

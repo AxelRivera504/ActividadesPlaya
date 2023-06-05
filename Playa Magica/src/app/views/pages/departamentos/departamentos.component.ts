@@ -153,14 +153,16 @@ export class DepartamentosComponent implements OnInit {
               icon: 'success'
             })
             this.modalService.dismissAll()
-            this.service.getDepartamentos().subscribe(data => {
-              console.log(data);
-              const latestDepartamento = data[data.length - 1]; // Obtener el último registro
-              if (latestDepartamento) {
-                this.departamento.push(latestDepartamento); // Agregar el último registro al arreglo
-              }
+            setTimeout(()=>{
+              this.service.getDepartamentos().subscribe(data => {
+                console.log(data);
+                const latestDepartamento = data[data.length - 1]; // Obtener el último registro
+                if (latestDepartamento) {
+                  this.departamento.push(latestDepartamento); // Agregar el último registro al arreglo
+                }
+              });
               this.rerender()
-            });
+            },1000)
           }else if(data.data.codeStatus == 2){
             Swal.fire({
               toast: true,

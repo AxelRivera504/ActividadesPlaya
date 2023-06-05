@@ -32,7 +32,7 @@ export class MunicipiosComponent implements OnInit {
     private router:Router,  
     private config: NgSelectConfig) { 
     /*Cosas del select*/
-    this.config.notFoundText = 'Custom not found';
+    this.config.notFoundText = 'No se encuentran registros';
     this.config.appendTo = 'body';
     this.config.bindValue = 'value';
     /*/Cosas del select*/

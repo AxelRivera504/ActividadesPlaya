@@ -61,7 +61,7 @@
 
         <div class="form-group col-6">
           <label>Contraseña</label>
-          <input type="text" class="form-control" placeholder="Contraseña" required [(ngModel)]="UsuariosCreate.usua_Clave"
+          <input type="password" class="form-control" placeholder="Contraseña" required [(ngModel)]="UsuariosCreate.usua_Clave"
             name="UsuariosCreate.usua_Clave" #Usuarios="ngModel" />
           <div class="input-invalid-text"  *ngIf="!UsuariosCreate.usua_Clave && submitted" style="color: red;">La Contraseña es requerida</div>
         </div>

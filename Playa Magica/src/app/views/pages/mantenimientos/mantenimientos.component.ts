@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { Subject } from 'rxjs';
 import { MantenimientoEdit } from '../Model/MantenimientoEdit';
 import { DataTableDirective } from 'angular-datatables';
+import { NgSelectConfig } from '@ng-select/ng-select';
 @Component({
   selector: 'app-mantenimientos',
   templateUrl: './mantenimientos.component.html',
@@ -29,7 +30,15 @@ export class MantenimientosComponent implements OnInit {
   dtElement: DataTableDirective;
   
   @ViewChild('myTable', { static: false }) table!: ElementRef;
-  constructor(private service: ServicesService, private router: Router,private http: HttpClient,private modalService: NgbModal) { }
+  constructor(private service: ServicesService, private router: Router,private http: HttpClient,private modalService: NgbModal,
+    private config: NgSelectConfig) 
+  { 
+        /*Cosas del select*/
+        this.config.notFoundText = 'No se encuentran registros';
+        this.config.appendTo = 'body';
+        this.config.bindValue = 'value';
+        /*/Cosas del select*/
+  }
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject <any> = new Subject<any>();
 
@@ -85,8 +94,8 @@ export class MantenimientosComponent implements OnInit {
           showConfirmButton: false,
           timer: 30000,
           timerProgressBar: true,
-          title: '¡ERROR!,¡oh no!, hubo un error al eliminar el registro',
-            icon: 'error'
+          title: 'Este registro ya esta en uso',
+            icon: 'warning'
         })
       }
     })
@@ -118,6 +127,7 @@ export class MantenimientosComponent implements OnInit {
 
   openBasicModal3(content: TemplateRef<any>,MantenimientoEdit: MantenimientoEdit) {
     this.MantenimientoEdit = {...MantenimientoEdit};
+    this.Mantenimientos = new Mantenimiento();
     console.log(MantenimientoEdit)
     this.modalRef = this.modalService.open(content, {});
     this.modalRef.result.then((result) => {
@@ -186,7 +196,7 @@ export class MantenimientosComponent implements OnInit {
 
 
   InsertarMantenimiento(e: Event){
-    const apiUrl = 'https://localhost:44312/api/Mantenimientos/InsertarMantenimientos';
+    const apiUrl = 'http://ActividadesPlayeras.somee.com/api/Mantenimientos/InsertarMantenimientos';
 
     e.preventDefault();
     if (!this.mantenimientoValue ) {
@@ -198,8 +208,8 @@ export class MantenimientosComponent implements OnInit {
         timer: 6000,
         timerProgressBar: true,
       }).fire({
-        title: '¡ERROR!, El campo de mantenimiento no puede estar vacio',
-        icon: 'error'
+        title: 'El campo de mantenimiento no puede estar vacio',
+        icon: 'warning'
       });
       return;
     }
