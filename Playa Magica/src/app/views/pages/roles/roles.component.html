@@ -13,6 +13,7 @@
       <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" >
       <thead>
           <tr>
+            <th> </th>
             <th>ID</th>
             <th>Descripción</th>
             <th>Acciones</th>
@@ -21,6 +22,12 @@
         <tbody>
           <ng-container *ngFor="let item of roles; let i = index">
             <tr>
+              <td>  
+                <button type="button" class="btn btn-info btn-icon" (click)="mostrarPantallas(item.role_ID)">
+                  <i class="feather icon-plus"></i>
+                </button>
+              </td>
+              
               <td>{{ item.role_ID }}</td>
               <td>{{ item.role_Descripcion }}</td>
               <td>
@@ -36,38 +43,30 @@
                   <i class="feather icon-trash"></i>
                 </button>
                 |
-                <button type="button" class="btn btn-info" (click)="mostrarPantallas(item.role_ID)">
-                  <i class="feather icon-plus"></i>
-                </button>
+               
               </td>
             </tr>
             <tr *ngIf="mostrarTablaMaestra && rolSeleccionado === item.role_ID">
-              <td [attr.colspan]="3">
+              <td [attr.colspan]="4">
                 <div class="card mt-4">
                   <div class="card-body">
-                    <div class="table-responsive">
-                      <table datatable [dtOptions]="dtOptions" class="row-border hover">
-                        <thead>
-                          <tr>
-                            <th>Pantallas</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let pantalla of pantallas">
-                            <td>{{ pantalla.pant_Descripcion }}</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <h5 class="card-title">Pantallas</h5>
+                    <div class="row">
+                      <div class="col-md-4" *ngFor="let pantalla of pantallas; let i = index">
+                        <div class="mb-3">
+                          {{ pantalla.pant_Descripcion }}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </td>
-            </tr>
+            </tr>            
           </ng-container>
         </tbody>
       </table>
     </div>
-  </div>
+  </div> 
 </div>
 
 <ng-template #basicModal2 let-modal>
