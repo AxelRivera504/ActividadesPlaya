@@ -164,6 +164,8 @@ export class ReservacionesComponent implements OnInit {
    Activo: boolean = true;
    ExistsOrNot: boolean = false;
    finish:boolean = false;
+   recipientEmail:String;
+   nombre:String;
   constructor(private calendar: NgbCalendar,public formBuilder: UntypedFormBuilder,private router: Router, private service: ServicesService, private config: NgSelectConfig,private modalService: NgbModal) { 
    
     this.form = new FormGroup({
@@ -860,7 +862,6 @@ export class ReservacionesComponent implements OnInit {
                               localStorage.setItem('idF',data.data.codeStatus)
                               this.finish = true;
                               this.wizardForm.goToNextStep();
-                              this.LimpiarTodo()
                               this.generatePDF2();
                             }else{
                               Swal.fire({
@@ -927,7 +928,6 @@ export class ReservacionesComponent implements OnInit {
                               localStorage.setItem('idF',data.data.codeStatus)
                               this.finish = true;
                               this.wizardForm.goToNextStep();
-                              this.LimpiarTodo()
                               this.generatePDF2();
                             }else{
                               Swal.fire({
@@ -1328,15 +1328,18 @@ export class ReservacionesComponent implements OnInit {
    * Wizard finish function
    */
   finishFunction() {
+    console.log(this.selectedPeople)
       if(this.finish){
+        this.nombre = this.selectedPeople[0].clie_NombreCompleto;
+        this.recipientEmail = this.selectedPeople[0].clie_Email;
+        console.log(this.recipientEmail)
+        console.log(this.nombre)
         const serviceId = 'service_69ndc0f';
         const templateId = 'template_fbw959i';
         const userId = 'lIrJhqKJBHhvBPhs-';
-        const recipientEmail = this.selectedPeople[0].clie_Email;
-        const nombre = this.selectedPeople[0].clie_NombreCompleto ;
         const emailParams = {
-          cliente: recipientEmail,
-          nombre: nombre
+          cliente: this.recipientEmail,
+          nombre: this.nombre
         };
       
         emailjs.send(serviceId, templateId, emailParams, userId)
@@ -1349,6 +1352,7 @@ export class ReservacionesComponent implements OnInit {
               timer:5000,
               icon: 'success'
             })
+            this.LimpiarTodo();
             this.router.navigate(['reservaciones']);  
           })
           .catch((error) => {
