@@ -112,11 +112,11 @@ export class ServicesService {
   }
 
   createEncargadosXActividad(EncargadosXActividad: EncargadosXActividad){
-    return this.http.post<EncargadosXActividad[]>(this.Url + "/EncargadosXActividades/Insert", EncargadosXActividad);
+    return this.http.post<EncargadosXActividad[]>(this.Url + "/EncargadosXActividad/Insert", EncargadosXActividad);
   }
 
   deleteEncargadosXActividad(EncargadosXActividad: EncargadosXActividad){
-    return this.http.post<EncargadosXActividad[]>(this.Url + "/EncargadosXActividades/Delete", EncargadosXActividad);
+    return this.http.post<EncargadosXActividad[]>(this.Url + "/EncargadosXActividad/Delete", EncargadosXActividad);
   }
 
   getActividades(){
@@ -341,7 +341,7 @@ export class ServicesService {
   }
   
   updateUsuarios(usuarios: usuarios){
-    return this.http.post<usuarios[]>(this.Url + "/Usuario/Insertar", usuarios);
+    return this.http.post<usuarios[]>(this.Url + "/Usuario/Actualizar", usuarios);
   }
      
   deleteUsuarios(usuarios : usuarios ) {

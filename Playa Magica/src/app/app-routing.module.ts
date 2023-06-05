@@ -102,7 +102,15 @@ const routes: Routes = [
       {
         path: 'Create',
         loadChildren: () => import('./views/pages/roles/Create/create.module').then(m => m.CreateModule)
-      },  
+      }, 
+      {
+        path: 'rolesEdit',
+        loadChildren: () => import('./views/pages/roles/Edit/roles.Edit.module').then(m => m.RolesEditarModule)
+      },   
+      {
+        path: 'rolesDetalles',
+        loadChildren: () => import('./views/pages/roles/DetailsRoles/roles.details.modeule').then(m => m.RolesDetallesModule)
+      },   
       {
         path: 'editar-enc',
         loadChildren: () => import('./views/pages/encargados/editar-enc/editar-enc.module').then(m => m.EditarEncModule)

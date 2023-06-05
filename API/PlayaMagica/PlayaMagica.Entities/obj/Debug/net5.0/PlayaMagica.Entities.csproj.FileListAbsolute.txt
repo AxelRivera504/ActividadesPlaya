@@ -9,18 +9,6 @@ C:\Users\LAB02\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj
 C:\Users\LAB02\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.dll
 C:\Users\LAB02\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\ref\PlayaMagica.Entities.dll
 C:\Users\LAB02\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.pdb
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\PlayaMagica.Entities.deps.json
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\PlayaMagica.Entities.dll
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\ref\PlayaMagica.Entities.dll
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\PlayaMagica.Entities.pdb
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.csproj.AssemblyReference.cache
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.AssemblyInfoInputs.cache
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.AssemblyInfo.cs
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.csproj.CoreCompileInputs.cache
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.dll
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\ref\PlayaMagica.Entities.dll
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.pdb
 C:\Users\axel2\OneDrive\Documentos\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\PlayaMagica.Entities.deps.json
 C:\Users\axel2\OneDrive\Documentos\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\PlayaMagica.Entities.dll
 C:\Users\axel2\OneDrive\Documentos\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\ref\PlayaMagica.Entities.dll
@@ -69,3 +57,15 @@ C:\Users\Chris\Desktop\Temp\Merge God final\API\PlayaMagica\PlayaMagica.Entities
 C:\Users\Chris\Desktop\Temp\Merge God final\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.dll
 C:\Users\Chris\Desktop\Temp\Merge God final\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\ref\PlayaMagica.Entities.dll
 C:\Users\Chris\Desktop\Temp\Merge God final\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.pdb
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\PlayaMagica.Entities.deps.json
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\PlayaMagica.Entities.dll
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\ref\PlayaMagica.Entities.dll
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\PlayaMagica.Entities.pdb
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.csproj.AssemblyReference.cache
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.AssemblyInfoInputs.cache
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.AssemblyInfo.cs
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.csproj.CoreCompileInputs.cache
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.dll
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\ref\PlayaMagica.Entities.dll
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.pdb

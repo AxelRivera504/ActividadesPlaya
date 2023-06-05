@@ -37,6 +37,9 @@ export class DireccionesComponent implements OnInit {
   openBasicModal(content: TemplateRef<any>) {
     this.submitted = false;
     this.direccionesModel = new direcciones()
+    this.departamentoModel = new departamentos()
+    this.municipioModel = new municipios()
+    this.municipioddl = []
     this.modalService.open(content, {}).result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result
     }).catch((res) => {});
@@ -47,6 +50,7 @@ export class DireccionesComponent implements OnInit {
     this.service.getMunicipios().subscribe(data => {this.municipioddl = data;});
     this.direccionesModel = { ...direcciones }
     this.municipioModel.muni_Id = direcciones.muni_Id
+    this.municipioddl = []
     setTimeout(() => {
       const municipiosDepartamento = this.municipio.filter(item => item.muni_Id === this.municipioModel.muni_Id);
       this.departamentoModel.dept_Id = municipiosDepartamento[0].dept_Id;
@@ -61,6 +65,7 @@ export class DireccionesComponent implements OnInit {
   openBasicModal2(content: TemplateRef<any>,direcciones: direcciones) {
     this.direccionesModel = { ...direcciones }
     this.submitted = false;
+    this.municipioddl = []
     this.modalService.open(content, {}).result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result
     }).catch((res) => {});
@@ -71,7 +76,7 @@ export class DireccionesComponent implements OnInit {
     private router:Router,  
     private config: NgSelectConfig) {
           /*Cosas del select*/
-    this.config.notFoundText = 'Custom not found';
+    this.config.notFoundText = 'Seleccione un departamento';
     this.config.appendTo = 'body';
     this.config.bindValue = 'value';
     /*/Cosas del select*/

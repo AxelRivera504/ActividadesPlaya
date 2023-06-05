@@ -55,7 +55,7 @@
           <input type="text" class="form-control" placeholder="ID de municipio" required #municipios
           [(ngModel)]="municipioCreate.muni_Id" [ngClass]="{ 'is-invalid': submitted && !municipioCreate.muni_Id || !nice}"
           (ngModelChange)="onIdChange()" (keypress)="validateInput($event)" (input)="limitLength($event)"/>
-        <div class="invalid-feedback" *ngIf="municipio?.errors?.required && submitted || !nice">Ingrese un Id valido</div>
+        <div class="invalid-feedback" *ngIf="!municipioCreate.muni_Id && submitted || !nice">Ingrese un Id valido</div>
         </div>
 
         <div class="form-group col-6 mt-3">

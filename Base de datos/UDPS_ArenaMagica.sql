@@ -538,7 +538,7 @@ CREATE OR ALTER PROCEDURE Gral.UDP_tbDirecciones_InsertarDirecciones
 AS
 BEGIN
 	BEGIN TRY
-		IF NOT EXISTS (SELECT * FROM Gral.tbDirecciones WHERE dire_DireccionExacta = @dire_DireccionExacta)
+		IF NOT EXISTS (SELECT * FROM Gral.tbDirecciones WHERE dire_DireccionExacta = @dire_DireccionExacta AND muni_Id = @muni_Id)
 			BEGIN
 				INSERT INTO Gral.tbDirecciones(dire_DireccionExacta, muni_Id, dire_Estado, dire_UsuarioCreador, dire_FechaCreacion, dire_UsuarioModificador, dire_FechaModificacion)
 				VALUES(@dire_DireccionExacta,@muni_Id,1,@dire_UsuarioCreador,GETDATE(),NULL,NULL)
@@ -1759,24 +1759,44 @@ END
 GO
 CREATE OR ALTER PROCEDURE Acce.UDP_tbUsuarios_Update
 @usua_ID INT,
-@usua_EsAdmin INT,
 @enca_ID INT,
 @role_ID INT,
+@usua_Usuario NVARCHAR(350),
 @usua_UsuarioModificador INT
 AS
 BEGIN
-	BEGIN TRY
-				UPDATE Acce.tbUsuarios	
-				SET	enca_ID = @enca_ID,
-					role_ID = @role_ID,
-					usua_FechaModificacion = GETDATE(),
-					usua_UsuarioModificador = @usua_UsuarioModificador
-				SELECT 1
-	END TRY
+    BEGIN TRY
+             IF @enca_ID != -1
+              BEGIN
+                UPDATE Acce.tbUsuarios
+                SET
+                    enca_ID = @enca_ID,
+                    usua_Usuario = @usua_Usuario,
+                    role_ID = @role_ID,
+                    usua_FechaModificacion = GETDATE(),
+                    usua_UsuarioModificador = @usua_UsuarioModificador
+                WHERE usua_ID = @usua_ID
 
-	BEGIN CATCH
-		SELECT 0 
-	END CATCH
+                SELECT 1
+            END 
+            ELSE
+            BEGIN
+               UPDATE Acce.tbUsuarios
+                SET
+                    usua_Usuario = @usua_Usuario,
+                    role_ID = @role_ID,
+                    usua_FechaModificacion = GETDATE(),
+                    usua_UsuarioModificador = @usua_UsuarioModificador
+                WHERE usua_ID = @usua_ID
+
+                SELECT 1
+            END 
+
+    END TRY
+
+    BEGIN CATCH
+        SELECT 0 
+    END CATCH
 END
 
 /*Usuarios Delete*/
@@ -2125,7 +2145,7 @@ END
 
 /*EquipoXActividad*/
 GO
-CREATE OR ALTER PROCEDURE Acti.UDP_EquipoXActividad 
+CREATE OR ALTER PROCEDURE Acti.UDP_EquipoXActividad
 @acti_Id INT
 AS
 BEGIN

@@ -53,11 +53,6 @@ export class UsuariosComponent implements OnInit {
     }).catch((res) => {});
   }
   
- 
-
-
-
-
   openBasicModal1(content: TemplateRef<any>, usuario: usuarios) {
     this.UsuariosEdit.role_ID = usuario.role_ID;
     this.UsuariosEdit.usua_ID = usuario.usua_ID;
@@ -363,7 +358,7 @@ export class UsuariosComponent implements OnInit {
       timer: 1500,
       timerProgressBar: true,
       title: '¡El usuario que intentas borrar esta en uso!',
-      icon: 'error'
+      icon: 'warning'
     })
    }
 }

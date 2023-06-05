@@ -6,6 +6,8 @@ import { DataTablesModule } from 'angular-datatables';
 import { CreateClientesComponent } from './create-clientes/create-clientes.component';
 import { DetailscliComponent } from './detailscli/detailscli.component';
 import { EditarClientesComponent } from './editar-clientes/editar-clientes.component';
+import { NgbModule,NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
+import { CustomDatepickerI18n } from '../custom-datepicker-i18n';
 const routes: Routes = [
   {
     path: '',
@@ -30,6 +32,9 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     DataTablesModule
+  ],
+  providers: [
+    { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }, // Proporciona el proveedor CustomDatepickerI18n
   ]
 })
 export class ClientesModule { }

@@ -51,7 +51,7 @@ export class RolesEditarComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal,) {
     /*Cosas del select*/
-    this.config.notFoundText = 'Custom not found';
+    this.config.notFoundText = 'No se encuentran registros';
     this.config.appendTo = 'body';
     this.config.bindValue = 'value';
     /*/Cosas del select*/
@@ -110,7 +110,7 @@ export class RolesEditarComponent implements OnInit {
     if (x) {
       const idUsuario: number | undefined = isNaN(parseInt(localStorage.getItem('IdUsuario') ?? '', 0)) ? undefined : parseInt(localStorage.getItem('IdUsuario') ?? '', 0);
       if (idUsuario !== undefined) {
-        this.roles.role_UsuarioCreador = idUsuario;
+        this.roles.role_UsuarioModificador = idUsuario;
       }
 
 
@@ -125,15 +125,6 @@ export class RolesEditarComponent implements OnInit {
               .subscribe((data: any) => {
                 console.log('La data',data.data.codeStatus)
                 if (data.data.codeStatus == 1) {
-                    this.pantallas1.forEach(element => {
-                      this.rolesXpantallas.pant_ID = element.pant_ID
-                      this.rolesXpantallas.roleXpant_UsuarioCreador = 1
-                      this.rolesXpantallas.role_ID = roleid
-                      this.service.createRolesXpantallas(this.rolesXpantallas).subscribe();
-
-                    });
-                 
-
                   Swal.fire({
                     toast: true,
                     position: 'top-end',
@@ -147,7 +138,18 @@ export class RolesEditarComponent implements OnInit {
                 }
               })
 
+         setTimeout(()=>{
+          this.pantallas1.forEach(element => {
+            this.rolesXpantallas.pant_ID = element.pant_ID
+            this.rolesXpantallas.roleXpant_UsuarioCreador = 1
+            this.rolesXpantallas.role_ID = roleid
+            this.service.createRolesXpantallas(this.rolesXpantallas)
+            .subscribe((data:any)=>{
+              console.log("registro a insertar: " + data.role_ID)
+            });
 
+          },2000);
+         })
 
 
           } else if (data.data.codeStatus == 2) {

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, TemplateRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
@@ -8,35 +8,38 @@ import { pantallas } from '../Model/pantallas';
 import { RolesXpantallas } from '../Model/RolesXPantallas';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-
+import { DataTable } from 'simple-datatables';
 
 @Component({
   selector: 'app-roles',
   templateUrl: './roles.component.html',
   styleUrls: ['./roles.component.scss']
 })
-export class RolesComponent implements OnInit {
+export class RolesComponent implements OnInit, AfterViewInit {
   roles: roles[] = [];
   pantallas: RolesXpantallas[] = [];
   mostrarTablaMaestra: boolean = false;
   rolSeleccionado: number | null = null;
-  role: roles = new roles()
+  role: roles = new roles();
   basicModalCode: any;
   basicModalCloseResult: string = '';
   modalRef: NgbModalRef | undefined;
 
   constructor(private service: ServicesService, private router: Router, private modalService: NgbModal) { }
 
-  @ViewChild(DataTableDirective, { static: false })
+  @ViewChild('myTable', { static: false })
   private datatableElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
 
   ngOnInit(): void {
-    this.service.getRoles().subscribe(data => {
-      console.log(data);
-      this.roles = data;
-    });
+    setTimeout(()=>{
+      this.service.getRoles().subscribe(data => {
+        console.log(data);
+        this.roles = data;
+        this.dtTrigger.next(null);
+      });
+    },500)
 
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -52,17 +55,17 @@ export class RolesComponent implements OnInit {
 
   Editar(roles: roles) {
     localStorage.setItem('roles', JSON.stringify(roles));
-    this.router.navigate(["EditarRoles"])
+    this.router.navigate(["rolesEdit"]);
   }
-  
-  openBasicModal1(content: TemplateRef<any>, id:number) {
+
+  openBasicModal1(content: TemplateRef<any>, id: number) {
     this.modalRef = this.modalService.open(content, {});
     this.modalRef.result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result;
-    }).catch((res) => {});
-    localStorage.setItem("role_ID",id.toString())
+    }).catch((res) => { });
+    localStorage.setItem("role_ID", id.toString());
   }
-  
+
   crear() {
     this.router.navigate(["Create"]);
   }
@@ -102,63 +105,61 @@ export class RolesComponent implements OnInit {
     return this.service.obtenerPantallasPorRol(roleID);
   }
 
-  Detalles(roles: roles){
+  Detalles(roles: roles) {
     localStorage.setItem('roles', JSON.stringify(roles));
-    this.router.navigate(["/DetallesRoles"])
+    this.router.navigate(["/rolesDetalles"]);
   }
-  
-  
-  Eliminar( ){
-    const role_Id : number | undefined = isNaN(parseInt(localStorage.getItem("role_ID") ?? '', 0)) ? undefined: parseInt(localStorage.getItem("role_ID") ?? '', 0);
-    
-    console.log(this.roles)
+
+
+  Eliminar() {
+    const role_Id: number | undefined = isNaN(parseInt(localStorage.getItem("role_ID") ?? '', 0)) ? undefined : parseInt(localStorage.getItem("role_ID") ?? '', 0);
+
+    console.log(this.roles);
     if (role_Id !== undefined) {
       this.role.role_ID = role_Id;
     }
 
-  this.service.deleteRoles(this.role).subscribe((data: any) => {
-    console.log(data);
-    console.log(data.data.codeStatus)
-    if (data.data.codeStatus == 1) {
-      console.log(data.data.codeStatus)
-      Swal.fire({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-        title: '¡Roles eliminado con éxito!',
-        icon: 'success'
-      });
-      this.modalService.dismissAll()
-      setTimeout(() => {
-        this.service.getRoles().subscribe(data => {
-          this.roles = data;
+    this.service.deleteRoles(this.role).subscribe((data: any) => {
+      console.log(data);
+      console.log(data.data.codeStatus);
+      if (data.data.codeStatus == 1) {
+        console.log(data.data.codeStatus);
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          title: '¡Roles eliminado con éxito!',
+          icon: 'success'
         });
+        this.modalService.dismissAll();
+        setTimeout(() => {
+          this.service.getRoles().subscribe(data => {
+            this.roles = data;
+          });
 
-      }, 0.5);
-    }
-    else if(data.data.codeStatus == 2)
-     {
-      Swal.fire({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-        title: '¡El rol que quiere eliminar esta en uso!',
-        icon: 'error'
-      })
-      this.modalService.dismissAll()
-      setTimeout(() => {
-        this.service.getRoles().subscribe(data => {
-          this.roles = data;
+        }, 0.5);
+      }
+      else if (data.data.codeStatus == 2) {
+        Swal.fire({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          title: '¡El rol que quiere eliminar esta en uso!',
+          icon: 'warning'
         });
+        this.modalService.dismissAll();
+        setTimeout(() => {
+          this.service.getRoles().subscribe(data => {
+            this.roles = data;
+          });
 
-      }, 0.5);
-     }
+        }, 0.5);
+      }
 
-  });
-  
-}
+    });
+  }
 }

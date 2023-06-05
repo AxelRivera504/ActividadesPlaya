@@ -102,7 +102,7 @@ export class EncargadosComponent implements OnInit {
           showConfirmButton: false,
           timer: 3000,
           timerProgressBar: true,
-          title: '¡ERROR!, Este registro esta siendo utilizado',
+          title: '¡El registro esta siendo utilizado!',
             icon: 'error'
         })
       }else{
@@ -112,7 +112,7 @@ export class EncargadosComponent implements OnInit {
           showConfirmButton: false,
           timer: 3000,
           timerProgressBar: true,
-          title: '¡ERROR!,¡Oh no! hubo error al querer eliminar el registro',
+          title: '¡Ha ocurrido un error!',
             icon: 'error'
         })
       }

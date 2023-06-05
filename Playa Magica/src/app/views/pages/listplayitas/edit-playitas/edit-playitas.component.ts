@@ -122,6 +122,7 @@ export class EditPlayitasComponent implements OnInit {
   openBasicModal(content: TemplateRef<any>) {
     this.submitted1 = false;
     this.direccionesModel = new direcciones()
+    this.municipioddl = []
     this.modalService.open(content, {}).result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result
     }).catch((res) => {});

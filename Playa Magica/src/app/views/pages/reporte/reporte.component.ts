@@ -102,18 +102,30 @@ localStorage.setItem('fechas', JSON.stringify(arregloFechas));
 
   if(fechaInicio != "" && fechaFin != ""){
     if(fechaInicio != fechaFin){
-      this.service.getMantenimientoXEquipoFiltered(fechaInicio,fechaFin)
-      .subscribe((data:any)=>{
-        localStorage.setItem('reporteData', JSON.stringify(data));
-        this.modalService.dismissAll()
-        this.router.navigate(["/reporteFiltered"])
-      })
+      this.service.getMantenimientoXEquipoFiltered(fechaInicio, fechaFin).subscribe((data: any) => {
+        if (data.length > 0) {
+          localStorage.setItem('reporteData', JSON.stringify(data));
+          this.modalService.dismissAll();
+          this.router.navigate(['/reporteFiltered']);
+        } else {
+          Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            title: '¡No hay mantenimientos en ese rango de fechas!',
+            icon: 'warning'
+          })
+        }
+      });
+      
     }else{
       Swal.fire({
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 1500,
+        timer: 3000,
         timerProgressBar: true,
         title: '¡Las fechas tienen que ser diferentes!',
         icon: 'warning'

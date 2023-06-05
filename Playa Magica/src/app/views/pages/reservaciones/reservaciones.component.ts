@@ -1181,8 +1181,8 @@ export class ReservacionesComponent implements OnInit {
         showConfirmButton: false,
         timer: 3000,
         timerProgressBar: true,
-        title: '¡ERROR!, Debe escoger una actividad a realizar',
-        icon: 'error'
+        title: '¡Debe escoger una actividad!',
+        icon: 'warning'
       })
     }else{  
       this.modalRef = this.modalService.open(content, {});

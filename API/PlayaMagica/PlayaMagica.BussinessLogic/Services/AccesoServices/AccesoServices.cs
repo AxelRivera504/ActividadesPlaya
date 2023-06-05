@@ -58,23 +58,13 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             try
             {
                 var insert = _usuariosRepository.Insert(item);
-                if (insert.CodeStatus == 1)
-                {
-                    return result.Ok(insert.MessageStatus);
-                }
-                else if (insert.CodeStatus == 2)
-                {
-                    return result.Conflict(insert.MessageStatus);
-                }
-                else
-                {
-                    return result.BadRequest(insert.MessageStatus);
-                }
+
+                return result.Ok(insert);
+
             }
             catch (Exception e)
             {
-                string message = e.Message;
-                return null;
+                return result.Error(e.Message);
             }
         }
 
@@ -84,19 +74,13 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             try
             {
                 var insert = _usuariosRepository.Update(item);
-                if (insert.CodeStatus == 1)
-                {
-                    return result.Ok(insert.MessageStatus);
-                }
-                else
-                {
-                    return result.BadRequest(insert.MessageStatus);
-                }
+
+                return result.Ok(insert);
+
             }
             catch (Exception e)
             {
-                string message = e.Message;
-                return null;
+                return result.Error(e.Message);
             }
         }
 
@@ -115,9 +99,7 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             }
 
         }
-
-
-
+ 
         #endregion
 
         #region Roles
@@ -155,18 +137,12 @@ namespace PlayaMagica.BussinessLogic.Services.AccesoServices
             try
             {
                 var insert = _rolesRepository.Update(item);
-                if (insert.CodeStatus == 1)
-                {
-                    return result.Ok(insert.MessageStatus);
-                }
-                else
-                {
-                    return result.BadRequest(insert.MessageStatus);
-                }
+
+                return result.Ok(insert);
+
             }
             catch (Exception e)
             {
-                string message = e.Message;
                 return result.Error(e.Message);
             }
         }

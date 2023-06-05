@@ -115,6 +115,9 @@ export class CreatePlayitasComponent implements OnInit {
   openBasicModal(content: TemplateRef<any>) {
     this.submitted1 = false;
     this.direccionesModel = new direcciones()
+    this.municipioModel = new municipios()
+    this.departamentoModel = new departamentos()
+    this.municipioddl = []
     this.modalService.open(content, {}).result.then((result) => {
       this.basicModalCloseResult = "Modal closed" + result
     }).catch((res) => {});

@@ -32,23 +32,6 @@ C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\P
 C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.BussinessLogic\bin\Debug\net5.0\PlayaMagica.DataAccess.pdb
 C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.BussinessLogic\bin\Debug\net5.0\PlayaMagica.Entities.pdb
 C:\Users\LAB01\Documents\GitHub\Nueva\ActividadesPlaya\API\PlayaMagica - copia\PlayaMagica.BussinessLogic\obj\Debug\net5.0\PlayaMagica.BussinessLogic.csproj.CopyComplete
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Debug\net5.0\PlayaMagica.BussinessLogic.deps.json
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Debug\net5.0\PlayaMagica.BussinessLogic.dll
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Debug\net5.0\ref\PlayaMagica.BussinessLogic.dll
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Debug\net5.0\PlayaMagica.BussinessLogic.pdb
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Debug\net5.0\PlayaMagica.DataAccess.dll
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Debug\net5.0\PlayaMagica.Entities.dll
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Debug\net5.0\PlayaMagica.DataAccess.pdb
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Debug\net5.0\PlayaMagica.Entities.pdb
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\PlayaMagica.BussinessLogic.csproj.AssemblyReference.cache
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\PlayaMagica.BussinessLogic.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\PlayaMagica.BussinessLogic.AssemblyInfoInputs.cache
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\PlayaMagica.BussinessLogic.AssemblyInfo.cs
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\PlayaMagica.BussinessLogic.csproj.CoreCompileInputs.cache
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\PlayaMagica.BussinessLogic.csproj.CopyComplete
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\PlayaMagica.BussinessLogic.dll
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\ref\PlayaMagica.BussinessLogic.dll
-C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\PlayaMagica.BussinessLogic.pdb
 C:\Users\axel2\OneDrive\Documentos\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Debug\net5.0\PlayaMagica.BussinessLogic.deps.json
 C:\Users\axel2\OneDrive\Documentos\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Debug\net5.0\PlayaMagica.BussinessLogic.dll
 C:\Users\axel2\OneDrive\Documentos\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Debug\net5.0\ref\PlayaMagica.BussinessLogic.dll
@@ -117,3 +100,20 @@ C:\Users\Chris\Desktop\Temp\Merge God final\API\PlayaMagica\PlayaMagica.Bussines
 C:\Users\Chris\Desktop\Temp\Merge God final\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\PlayaMagica.BussinessLogic.dll
 C:\Users\Chris\Desktop\Temp\Merge God final\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\ref\PlayaMagica.BussinessLogic.dll
 C:\Users\Chris\Desktop\Temp\Merge God final\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\PlayaMagica.BussinessLogic.pdb
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Debug\net5.0\PlayaMagica.BussinessLogic.deps.json
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Debug\net5.0\PlayaMagica.BussinessLogic.dll
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Debug\net5.0\ref\PlayaMagica.BussinessLogic.dll
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Debug\net5.0\PlayaMagica.BussinessLogic.pdb
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Debug\net5.0\PlayaMagica.DataAccess.dll
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Debug\net5.0\PlayaMagica.Entities.dll
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Debug\net5.0\PlayaMagica.DataAccess.pdb
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Debug\net5.0\PlayaMagica.Entities.pdb
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\PlayaMagica.BussinessLogic.csproj.AssemblyReference.cache
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\PlayaMagica.BussinessLogic.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\PlayaMagica.BussinessLogic.AssemblyInfoInputs.cache
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\PlayaMagica.BussinessLogic.AssemblyInfo.cs
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\PlayaMagica.BussinessLogic.csproj.CoreCompileInputs.cache
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\PlayaMagica.BussinessLogic.csproj.CopyComplete
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\PlayaMagica.BussinessLogic.dll
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\ref\PlayaMagica.BussinessLogic.dll
+C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Debug\net5.0\PlayaMagica.BussinessLogic.pdb

@@ -50,10 +50,10 @@ export class ReservacionMainComponent implements OnInit {
           toast: true,
           position: 'top-end',
           showConfirmButton: false,
-          timer: 1500,
+          timer: 3000,
           timerProgressBar: true,
           title: 'Esta reservación no ha sido cancelada \nPuede editar la factura para cancelarla',
-          icon: 'error'
+          icon: 'warning'
         })   
       }else{
         localStorage.setItem('idF',id.toString())
@@ -77,10 +77,10 @@ export class ReservacionMainComponent implements OnInit {
           toast: true,
           position: 'top-end',
           showConfirmButton: false,
-          timer: 1500,
+          timer: 3000,
           timerProgressBar: true,
           title: 'La reservación ya ha sido cancelada',
-          icon: 'error'
+          icon: 'warning'
         })  
 
       }

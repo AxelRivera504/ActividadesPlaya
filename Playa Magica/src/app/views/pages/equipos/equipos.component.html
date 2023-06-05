@@ -32,9 +32,9 @@
                             <td>
             <span [ngClass]="{
   'badge': true,
-  'rounded-pill bg-success': item.mantenimiento === 'Requerido',
+  'rounded-pill bg-danger': item.mantenimiento === 'Requerido',
   'rounded-pill bg-warning': item.mantenimiento === 'Recomendado',
-  'rounded-pill bg-danger': item.mantenimiento === 'No requerido'
+  'rounded-pill bg-success': item.mantenimiento === 'No requerido'
 }">{{item.mantenimiento}}</span>
                             </td>
                             

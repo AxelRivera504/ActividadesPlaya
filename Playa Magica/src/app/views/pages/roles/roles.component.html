@@ -1,15 +1,17 @@
 <div class="card">
   <div class="card-body">
-    <div class="card-title text-center"><h3>Roles</h3></div>
+    <div class="card-title text-center">
+      <h3>Roles</h3>
+    </div>
     <div class="text-center">
       <button type="button" class="btn btn-primary" (click)="crear()">
         <i class="feather icon-plus"></i>
         Nuevo
       </button>
     </div>
-    <div class="table-responsive">
-      <table class="table table-striped table-bordered">
-        <thead>
+    <div class="table table-responsive">
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover" >
+      <thead>
           <tr>
             <th>ID</th>
             <th>Descripción</th>
@@ -22,15 +24,15 @@
               <td>{{ item.role_ID }}</td>
               <td>{{ item.role_Descripcion }}</td>
               <td>
-                <button type="button" (click)="Editar(item)" class="btn btn-warning" >
+                <button type="button" (click)="Editar(item)" class="btn btn-warning">
                   <i class="feather icon-edit"></i>
                 </button>
                 |
-                <button type="button" class="btn btn-info" (click)="Detalles(item)"> 
+                <button type="button" class="btn btn-info" (click)="Detalles(item)">
                   <i class="feather icon-list"></i>
                 </button>
                 |
-                <button type="button" class="btn btn-danger" (click)="openBasicModal1(basicModal2,item.role_ID)"   >
+                <button type="button" class="btn btn-danger" (click)="openBasicModal1(basicModal2, item.role_ID)">
                   <i class="feather icon-trash"></i>
                 </button>
                 |
@@ -44,7 +46,7 @@
                 <div class="card mt-4">
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table class="table table-striped table-bordered">
+                      <table datatable [dtOptions]="dtOptions" class="row-border hover">
                         <thead>
                           <tr>
                             <th>Pantallas</th>
@@ -74,12 +76,10 @@
     <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
   </div>
   <div class="modal-body">
-    
-              <h4> ¿Desea eliminar este rol?</h4>
+    <h4>¿Desea eliminar este rol?</h4>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
     <button type="button" class="btn btn-primary" (click)="Eliminar()">Eliminar</button>
   </div>
 </ng-template>
-

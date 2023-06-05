@@ -95,8 +95,8 @@ export class ClientesComponent implements OnInit {
           showConfirmButton: false,
           timer: 3000,
           timerProgressBar: true,
-          title: '¡ERROR!, Este registro esta siendo utilizado',
-            icon: 'error'
+          title: '¡El registro esta siendo utilizado',
+            icon: 'warning'
         })
       }else{
         Swal.fire({
@@ -105,7 +105,7 @@ export class ClientesComponent implements OnInit {
           showConfirmButton: false,
           timer: 3009,
           timerProgressBar: true,
-          title: '¡ERROR!,¡oh no!, hubo un error al eliminar el registro',
+          title: '¡Ha ocurrido un error',
             icon: 'error'
         })
       }

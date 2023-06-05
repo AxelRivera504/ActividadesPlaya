@@ -20,10 +20,7 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             parametros.Add("@acti_Id", id, DbType.Int32, ParameterDirection.Input);
             return db.Query<tbEncargadosXActividades>(ScriptsDataBase.ListarEncargadosById, parametros, commandType: CommandType.StoredProcedure);
         }
-        public RequestStatus Delete(tbEncargadosXActividades item)
-        {
-            throw new NotImplementedException();
-        }
+     
 
         public tbEncargadosXActividades Find(int? id)
         {
@@ -32,7 +29,27 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
 
         public RequestStatus Insert(tbEncargadosXActividades item)
         {
-            throw new NotImplementedException();
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@enca_Id", item.enca_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@acti_Id", item.acti_Id, DbType.Int32, ParameterDirection.Input);
+            parametros.Add("@enac_UsuarioCreador", item.enac_UsuarioCreador, DbType.Int32, ParameterDirection.Input);
+            var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_EncargadosXActividad_Insert, parametros, commandType: CommandType.StoredProcedure);
+            result.CodeStatus = answer;
+            return result;
+        }
+
+
+        public RequestStatus Delete(tbEncargadosXActividades item)
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@actividadId", item.acti_Id, DbType.Int32, ParameterDirection.Input);
+            var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_EncargadosXActividad_Delete, parametros, commandType: CommandType.StoredProcedure);
+            result.CodeStatus = answer;
+            return result;
         }
 
         public IEnumerable<tbEncargadosXActividades> List()
