@@ -1,0 +1,17 @@
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Release\net5.0\PlayaMagica.BussinessLogic.deps.json
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Release\net5.0\PlayaMagica.BussinessLogic.dll
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Release\net5.0\ref\PlayaMagica.BussinessLogic.dll
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Release\net5.0\PlayaMagica.BussinessLogic.pdb
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Release\net5.0\PlayaMagica.DataAccess.dll
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Release\net5.0\PlayaMagica.Entities.dll
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Release\net5.0\PlayaMagica.DataAccess.pdb
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\bin\Release\net5.0\PlayaMagica.Entities.pdb
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Release\net5.0\PlayaMagica.BussinessLogic.csproj.AssemblyReference.cache
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Release\net5.0\PlayaMagica.BussinessLogic.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Release\net5.0\PlayaMagica.BussinessLogic.AssemblyInfoInputs.cache
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Release\net5.0\PlayaMagica.BussinessLogic.AssemblyInfo.cs
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Release\net5.0\PlayaMagica.BussinessLogic.csproj.CoreCompileInputs.cache
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Release\net5.0\PlayaMagica.BussinessLogic.csproj.CopyComplete
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Release\net5.0\PlayaMagica.BussinessLogic.dll
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Release\net5.0\ref\PlayaMagica.BussinessLogic.dll
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.BussinessLogic\obj\Release\net5.0\PlayaMagica.BussinessLogic.pdb

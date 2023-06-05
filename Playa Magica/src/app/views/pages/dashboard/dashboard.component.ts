@@ -31,9 +31,9 @@ export class DashboardComponent implements OnInit {
 
   // colors and font variables for apex chart
   obj = {
-    primary: "#6571ff",
-    secondary: "#7987a1",
-    success: "#05a34a",
+    primary: "#00979E",
+    secondary: "#F27022",
+    success: "#F27022",
     info: "#66d1d1",
     warning: "#fbbc06",
     danger: "#ff3366",

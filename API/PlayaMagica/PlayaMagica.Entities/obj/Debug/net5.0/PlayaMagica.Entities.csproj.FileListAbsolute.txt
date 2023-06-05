@@ -69,3 +69,15 @@ C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Ent
 C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.dll
 C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\ref\PlayaMagica.Entities.dll
 C:\Users\Chris\Documents\GitHub\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.pdb
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\PlayaMagica.Entities.deps.json
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\PlayaMagica.Entities.dll
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\ref\PlayaMagica.Entities.dll
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\bin\Debug\net5.0\PlayaMagica.Entities.pdb
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.csproj.AssemblyReference.cache
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.AssemblyInfoInputs.cache
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.AssemblyInfo.cs
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.csproj.CoreCompileInputs.cache
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.dll
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\ref\PlayaMagica.Entities.dll
+C:\Users\axel2\OneDrive\Desktop\ActividadesPlaya\API\PlayaMagica\PlayaMagica.Entities\obj\Debug\net5.0\PlayaMagica.Entities.pdb

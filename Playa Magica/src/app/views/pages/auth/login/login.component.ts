@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   onLoggedin(e: MouseEvent) {
     e.preventDefault();
-    const apiUrl = 'https://localhost:44312/api/Usuario/ValidarLogin';
+    const apiUrl = 'http://ActividadesPlayeras.somee.com/api/Usuario/ValidarLogin';
 
     if (!this.usuario || !this.password) {
       this.submitted = true;

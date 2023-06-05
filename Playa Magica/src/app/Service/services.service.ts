@@ -12,7 +12,7 @@ import { usuarios } from '../Models/Usuarios';
 })
 export class ServicesService {
 
-  url = "https://localhost:44312/api"
+  url = "http://ActividadesPlayeras.somee.com/api"
   constructor(private http:HttpClient) { }
 
   getDepartamentos(){
