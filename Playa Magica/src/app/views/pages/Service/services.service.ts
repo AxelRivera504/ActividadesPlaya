@@ -33,7 +33,7 @@ import { EncargadosXActividad } from '../Model/EncargadosXActividad';
 export class ServicesService {
 
   constructor(private http:HttpClient) { }
-    Url = "https://localhost:44312/api"
+    Url = "http://actividadesplayeras.somee.com/api"
     
     getEquipos(){
       return this.http.get<Equipos[]>(this.Url + "/Equipos/ListarEquipos");

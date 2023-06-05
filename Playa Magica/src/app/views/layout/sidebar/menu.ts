@@ -6,7 +6,8 @@ export const MENU: MenuItem[] = [
     isTitle: true
   },
   {
-    label: 'Dashboard',
+    id:21,
+    label: 'Inicio',
     icon: 'home',
     link: '/dashboard'
   },

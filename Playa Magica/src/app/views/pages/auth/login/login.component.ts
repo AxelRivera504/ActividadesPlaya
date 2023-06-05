@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   onLoggedin(e: MouseEvent) {
     e.preventDefault();
-    const apiUrl = 'https://localhost:44312/api/Usuario/ValidarLogin';
+    const apiUrl = 'http://actividadesplayeras.somee.com/api/Usuario/ValidarLogin';
 
     if (!this.usuario || !this.password) {
       this.submitted = true;
@@ -58,8 +58,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
         timer: 6000,
         timerProgressBar: true,
       }).fire({
-        title: '¡ERROR!, Los campos de contraseña y usuario están vacíos',
-        icon: 'error'
+        title: '¡Los campos de contraseña y usuario están vacíos!',
+        icon: 'warning'
       });
       return;
     }
@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             showConfirmButton: false,
             timer: 6000,
             timerProgressBar: true,
-            title: '¡ERROR!, Usuario o contraseña incorrectos',
+            title: '¡Usuario o contraseña incorrectos!',
             icon: 'error'
           });
         }
@@ -112,7 +112,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           timer: 6000,
           timerProgressBar: true,
         }).fire({
-          title: '¡ERROR!, Usuario o contraseña incorrectos',
+          title: '¡Usuario o contraseña incorrectos!,',
           icon: 'error'
         });
         console.error(error);

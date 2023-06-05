@@ -205,7 +205,7 @@
     <label>Actividad:</label>
     <ng-select [(ngModel)]="actividades.acti_Id" (ngModelChange)="getClientsByActivity(actividades)" [appendTo]="'body'"
       placeholder="--Seleccione una opción--" name="actividades.acti_Id" #Actividades="ngModel" required
-      [ngClass]="{ 'input-invalid': submitted && !actividades.acti_Id}">
+      [ngClass]="{ 'input-invalid': submitted && !actividades.acti_Id}" [dropdownPosition]="'bottom'">
       <ng-option *ngFor="let item of actividades" [value]="item.acti_Id">{{ item.acti_Nombre }}</ng-option>
     </ng-select>
   </div>
