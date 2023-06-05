@@ -1515,24 +1515,24 @@ CREATE OR ALTER PROCEDURE Acce.UDP_tbRoles_Update
 @role_UsuarioModificador INT
 AS
 BEGIN
-	BEGIN TRY
-		IF NOT EXISTS(SELECT role_Descripcion FROM Acce.tbRoles WHERE role_Descripcion = @role_Descripcion AND role_ID != @role_ID)
-			BEGIN
-				UPDATE Acce.tbRoles
-				SET role_Descripcion = @role_Descripcion,
-					role_UsuarioModificador = @role_UsuarioModificador,
-					role_FechaModificacion = GETDATE()
-				WHERE role_ID = @role_ID
-				SELECT 1
-			END
-		ELSE BEGIN
-			SELECT 2
-		END
-	END TRY
+    BEGIN TRY
+        IF NOT EXISTS(SELECT * FROM Acce.tbRoles WHERE role_Descripcion = @role_Descripcion AND role_ID != @role_ID)
+            BEGIN
+                UPDATE Acce.tbRoles
+                SET role_Descripcion = @role_Descripcion,
+                    role_UsuarioModificador = @role_UsuarioModificador,
+                    role_FechaModificacion = GETDATE()
+                WHERE role_ID = @role_ID
+                SELECT @role_ID
+            END
+        ELSE BEGIN
+            SELECT 2
+        END
+    END TRY
 
-	BEGIN CATCH
-		SELECT 0
-	END CATCH
+    BEGIN CATCH
+        SELECT 0
+    END CATCH
 END
 
 /*Roles Delete*/
