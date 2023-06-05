@@ -132,26 +132,6 @@ export class DashboardComponent implements OnInit {
     this.visitantesChartOptions = getVisitantesChartOptions(this.obj, visitantesData, fechasData);
   }
   
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
   getClientsByActivity(actividades: Actividades) {
     const request = {
       "acti_Id": actividades.acti_Id
