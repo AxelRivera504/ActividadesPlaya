@@ -21,7 +21,7 @@ import { Encargados } from '../Model/Encargados';
 import jsPDF from 'jspdf';
 import { FactuList } from '../Model/ListaFactura';
 import { ReportData } from '../Model/ReportData';
-
+import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 const fillJustifyNav = {
   htmlCode: 
 `<ul ngbNav #fillJustifyNav="ngbNav" class="nav-tabs nav-fill">
@@ -163,6 +163,7 @@ export class ReservacionesComponent implements OnInit {
 
    Activo: boolean = true;
    ExistsOrNot: boolean = false;
+   finish:boolean = false;
   constructor(private calendar: NgbCalendar,public formBuilder: UntypedFormBuilder,private router: Router, private service: ServicesService, private config: NgSelectConfig,private modalService: NgbModal) { 
    
     this.form = new FormGroup({
@@ -857,6 +858,7 @@ export class ReservacionesComponent implements OnInit {
                             localStorage.setItem('idF',data.data.codeStatus)
                             if(data.data.codeStatus >= 1){
                               localStorage.setItem('idF',data.data.codeStatus)
+                              this.finish = true;
                               this.wizardForm.goToNextStep();
                               this.LimpiarTodo()
                               this.generatePDF2();
@@ -923,6 +925,7 @@ export class ReservacionesComponent implements OnInit {
                             localStorage.setItem('idF',data.data.codeStatus)
                             if(data.data.codeStatus >= 1){
                               localStorage.setItem('idF',data.data.codeStatus)
+                              this.finish = true;
                               this.wizardForm.goToNextStep();
                               this.LimpiarTodo()
                               this.generatePDF2();
@@ -1325,15 +1328,43 @@ export class ReservacionesComponent implements OnInit {
    * Wizard finish function
    */
   finishFunction() {
-    Swal.fire({
-      titleText: '¡Reservación realizada exitosamente!',
-      position: 'center',
-      timerProgressBar: true,
-      timer:5000,
-      icon: 'success'
-    })
-    this.router.navigate(['reservaciones']);    
-  }
+      if(this.finish){
+        const serviceId = 'service_69ndc0f';
+        const templateId = 'template_fbw959i';
+        const userId = 'lIrJhqKJBHhvBPhs-';
+        const recipientEmail = this.selectedPeople[0].clie_Email;
+        const nombre = this.selectedPeople[0].clie_NombreCompleto ;
+        const emailParams = {
+          cliente: recipientEmail,
+          nombre: nombre
+        };
+      
+        emailjs.send(serviceId, templateId, emailParams, userId)
+          .then((result: EmailJSResponseStatus) => {
+            console.log('Correo electrónico enviado:', result.text);
+            Swal.fire({
+              titleText: '¡Reservación realizada exitosamente!',
+              position: 'center',
+              timerProgressBar: true,
+              timer:5000,
+              icon: 'success'
+            })
+            this.router.navigate(['reservaciones']);  
+          })
+          .catch((error) => {
+            console.error('Error al enviar el correo electrónico:', error);
+          });
+      }else{
+        Swal.fire({
+          titleText: '¡Reservación realizada exitosamente!',
+          position: 'center',
+          timerProgressBar: true,
+          timer:5000,
+          icon: 'success'
+        })
+        this.router.navigate(['reservaciones']);  
+      }
+    }     
 
   /**
    * Returns form
