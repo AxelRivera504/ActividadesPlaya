@@ -10,6 +10,8 @@ namespace PlayaMagica.Models
         public int acfe_Id { get; set; }
         public int? acti_Id { get; set; }
         public DateTime? acfe_Fecha { get; set; }
+        public DateTime? FechaInicio { get; set; }
+        public DateTime? FechaFin { get; set; }
         public int? acfe_Cantidad { get; set; }
         public bool? acfe_Estado { get; set; }
         public int? acfe_UsuarioCreador { get; set; }

@@ -12,6 +12,10 @@ namespace PlayaMagica.Entities.Entities
         public int? acti_Id { get; set; }
         public DateTime? acfe_Fecha { get; set; }
 
+        public DateTime? FechaInicio { get; set;}
+
+        public DateTime? FechaFin { get; set; }
+
         public int cantidadVisitantes {get; set;}
 
         public int? acfe_Cantidad { get; set; }

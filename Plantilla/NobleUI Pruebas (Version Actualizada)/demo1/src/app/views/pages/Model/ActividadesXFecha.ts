@@ -2,6 +2,8 @@ export class ActividadesXFecha{
      acfe_Id!:number; 
      acti_Id!:number;
      acfe_Fecha!:Date;
+      FechaInicio!: Date; 
+      FechaFin!: Date; 
      acfe_Cantidad!:number;
      cantidadVisitantes!: number;
      acfe_UsuarioCreador!:number;

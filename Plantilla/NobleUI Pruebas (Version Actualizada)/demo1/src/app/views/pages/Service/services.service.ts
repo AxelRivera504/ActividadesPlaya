@@ -287,6 +287,11 @@ getVisitantesXFecha(){
   return this.http.get<ActividadesXFecha[]>(this.Url + "/ActividadesXFecha/visitantes");
 }
 
+getVisitantesXFechafilter(actividadesXFecha : ActividadesXFecha){
+  return this.http.post<ActividadesXFecha[]>(this.Url + "/ActividadesXFecha/visitantes",actividadesXFecha);
+}
+
+
 getClientesXsexo(Actividades : any){
   return this.http.post<ClienteXReservacion[]>(this.Url + "/ClienteXReservacion/ClientesXactividad",Actividades);
 }

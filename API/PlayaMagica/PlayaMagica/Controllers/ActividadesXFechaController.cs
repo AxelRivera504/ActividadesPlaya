@@ -36,7 +36,13 @@ namespace PlayaMagica.Controllers
             var list = _actividadesServices.ListarVisitantesXFecha();
             return Ok(list);
         }
-
+        [HttpGet("visitantesFilter")]
+        public IActionResult ListarVisitantesXFechas(ActividadesXFechaViewModel item)
+        {
+            var actividadesXFecha = _mapper.Map<tbActividadesXFecha>(item);
+            var list = _actividadesServices.ListarVisitantesXFecha(actividadesXFecha);
+            return Ok(list);
+        }
 
     }
 }

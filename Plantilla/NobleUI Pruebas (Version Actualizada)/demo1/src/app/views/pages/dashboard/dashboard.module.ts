@@ -29,7 +29,8 @@ const routes: Routes = [
     NgbDropdownModule,
     NgbDatepickerModule,
     NgApexchartsModule,
-    NgSelectModule
+    NgSelectModule,
+    
   ]
 })
 export class DashboardModule { }
