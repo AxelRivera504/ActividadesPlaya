@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PlayaMagica.BussinessLogic.Services.ActividadesServices;
 using PlayaMagica.Entities.Entities;

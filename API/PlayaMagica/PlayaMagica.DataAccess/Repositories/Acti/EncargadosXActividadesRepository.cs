@@ -12,35 +12,27 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
 {
     public class EncargadosXActividadesRepository : IRepository<tbEncargadosXActividades>
     {
-   
-        public IEnumerable<tbEncargadosXActividades> Find(int? id)
+
+        public IEnumerable<tbEncargadosXActividades> ListarEncargadosById(int id)
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@acti_Id", id, DbType.Int32, ParameterDirection.Input);
+            return db.Query<tbEncargadosXActividades>(ScriptsDataBase.ListarEncargadosById, parametros, commandType: CommandType.StoredProcedure);
+        }
+        public RequestStatus Delete(tbEncargadosXActividades item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public tbEncargadosXActividades Find(int? id)
         {
             throw new NotImplementedException();
         }
 
         public RequestStatus Insert(tbEncargadosXActividades item)
         {
-            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
-            RequestStatus result = new RequestStatus();
-            var parametros = new DynamicParameters();
-            parametros.Add("@enca_Id", item.enca_Id, DbType.Int32, ParameterDirection.Input);
-            parametros.Add("@acti_Id", item.acti_Id, DbType.Int32, ParameterDirection.Input);
-            parametros.Add("@enac_UsuarioCreador", item.enac_UsuarioCreador, DbType.Int32, ParameterDirection.Input);
-            var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_EncargadosXActividad_Insert, parametros, commandType: CommandType.StoredProcedure);
-            result.CodeStatus = answer;
-            return result;
-        }
-
-  
-        public RequestStatus Delete(tbEncargadosXActividades item)
-        {
-            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
-            RequestStatus result = new RequestStatus();
-            var parametros = new DynamicParameters();
-            parametros.Add("@actividadId", item.acti_Id, DbType.Int32, ParameterDirection.Input);
-            var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_EncargadosXActividad_Delete, parametros, commandType: CommandType.StoredProcedure);
-            result.CodeStatus = answer;
-            return result;
+            throw new NotImplementedException();
         }
 
         public IEnumerable<tbEncargadosXActividades> List()

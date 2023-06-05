@@ -27,7 +27,6 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             return db.Query<VW_tbEncargados>(ScriptsDataBase.UDP_EncargadosXActividad, parametros, commandType: CommandType.StoredProcedure);
         }
 
-
         public RequestStatus InsertarEncargados(tbEncargados item)
         {
             using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
@@ -46,6 +45,13 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
 
             result.CodeStatus = answer;
             return result;
+        }
+
+        public IEnumerable<tbEncargados> ListarEncargadosddl()
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            return db.Query<tbEncargados>(ScriptsDataBase.UDP_tbEncargados_ddl, null, commandType: CommandType.StoredProcedure);
         }
 
         public RequestStatus UpdateEncargados(tbEncargados item)

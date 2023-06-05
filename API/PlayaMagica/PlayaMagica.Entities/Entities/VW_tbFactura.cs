@@ -8,12 +8,19 @@ namespace PlayaMagica.Entities.Entities
 {
     public partial class VW_tbFactura
     {
-        public int rese_Id { get; set; }
         public int fuct_Id { get; set; }
+        public int? rese_Id { get; set; }
         public string clie_NombreCompleto { get; set; }
         public string acti_Nombre { get; set; }
         public decimal? fuct_Subtotal { get; set; }
         public decimal? fuct_Isv { get; set; }
         public decimal? fuct_Total { get; set; }
+        public bool? fuct_Estado { get; set; }
+        public int? fuct_UsuarioCreador { get; set; }
+        public string fuct_UsuarioCreador_Nombre { get; set; }
+        public DateTime? fuct_FechaCreacion { get; set; }
+        public int? fuct_UsuarioModificador { get; set; }
+        public string fuct_UsuarioModificador_Nombre { get; set; }
+        public DateTime? fuct_FechaModificacion { get; set; }
     }
 }

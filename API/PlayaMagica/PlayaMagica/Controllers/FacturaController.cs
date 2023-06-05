@@ -22,19 +22,59 @@ namespace PlayaMagica.Controllers
             _actividadesServices = actividadesServices;
             _mapper = mapper;
         }
-        [HttpPost("InsertarFactura")]
-        public IActionResult InsertarActividades(FacturaViewModel item)
+
+        [HttpGet("ListarFacturaIndex")]
+        public IActionResult ListarFacturaIndex()
         {
+            var list = _actividadesServices.ListarFacturaIndex();
+            return Ok(list);
+        }
+
+        [HttpPost("InsertarFactura")]
+        public IActionResult InsertarFactura(FacturaViewModel item)
+         {
             var facturas = _mapper.Map<tbFactura>(item);
             var respuesta = _actividadesServices.InsertarFactura(facturas);
             return Ok(respuesta);
         }
 
+        [HttpPost("InsertarFacturaNoPaga")]
+        public IActionResult InsertarFacturaNoPaga(FacturaViewModel item)
+        {
+            var facturas = _mapper.Map<tbFactura>(item);
+            var respuesta = _actividadesServices.InsertarFacturaNoPaga(facturas);
+            return Ok(respuesta);
+        }
+
         [HttpGet("ListarFactura{id}")]
         public IActionResult ListarFactura(int id)
-        {
+         {
             var listado = _actividadesServices.ListarFactura(id);
             return Ok(listado);
+        }
+
+        [HttpPost("VerificarFactura")]
+        public IActionResult VerificarFactura(FacturaViewModel item)
+        {
+            var facturas = _mapper.Map<tbFactura>(item);
+            var respuesta = _actividadesServices.VerificarFactura(facturas);
+            return Ok(respuesta);
+        }
+
+        [HttpPost("EditarFacturaNoPaga")]
+        public IActionResult EditarFacturaNoPaga(FacturaViewModel item)
+        {
+            var facturas = _mapper.Map<tbFactura>(item);
+            var respuesta = _actividadesServices.EditarFacturaNoPaga(facturas);
+            return Ok(respuesta);
+        }
+
+        [HttpPost("EditarFactura")]
+        public IActionResult EditarFactura(FacturaViewModel item)
+        {
+            var facturas = _mapper.Map<tbFactura>(item);
+            var respuesta = _actividadesServices.EditarFactura(facturas);
+            return Ok(respuesta);
         }
     }
 }

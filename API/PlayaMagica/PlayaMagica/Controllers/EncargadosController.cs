@@ -31,6 +31,12 @@ namespace PlayaMagica.Controllers
             return Ok(list);
         }
 
+        [HttpGet("ListarEncargadosddl")]
+        public IActionResult ListarEncargadosddl()
+        {
+            var list = _actividadesServices.ListarEncargadosddl();
+            return Ok(list);
+        }
 
         [HttpGet("EncargadosXActividad")]
         public IActionResult EncargadosXActividad(int? id)
@@ -62,5 +68,7 @@ namespace PlayaMagica.Controllers
             var respuesta = _actividadesServices.DeleteEncargados(encargados);
             return Ok(respuesta);
         }
+
+
     }
 }

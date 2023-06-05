@@ -32,16 +32,15 @@ namespace PlayaMagica.BussinessLogic
             services.AddScoped<ClientesRepository>();
             services.AddScoped<EncargadosRepository>();
             services.AddScoped<MantenimientoRepository>();
-            services.AddScoped<EquipoRepository>();
             services.AddScoped<ActividadesRepository>();
             services.AddScoped<ReservacionesRepository>();
             services.AddScoped<ClienteXReservacionRepository>();
             services.AddScoped<ActividadesXFechaRepository>();
             services.AddScoped<FacturaRepository>();
             services.AddScoped<EquipoXActividadesRepository>();
+            services.AddScoped<EquipoRepository>();
             services.AddScoped<EncargadosXActividadesRepository>();
             services.AddScoped<MantenimientoXEquipoRepository>();
-
             PlayaMagicaContext.BuildConnectionString(connection);
         }
 

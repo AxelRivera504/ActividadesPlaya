@@ -1,0 +1,49 @@
+.dropzone {
+    border: 2px dashed #ccc;
+    min-height: 200px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  ::ng-deep .ng-dropdown-panel {
+    z-index: 9999999!important;
+}
+
+
+.input-invalid {
+    background-repeat: no-repeat !important;
+    border: 1px solid #ff3366;
+    border-radius: 4px;
+    padding: 0px;
+  }
+  
+  
+.input-invalid-text{
+    margin-top: 0.25rem;
+    width: 100%;
+    font-size: 0.875em;
+    color: #ff3366;
+}
+
+.invalid-image{
+  border: 1px solid red !important;
+}
+
+.modified{
+border-radius: 0% !important;
+}
+
+
+.scrollable-list {
+  max-height: 200px; /* Ajusta la altura máxima según tus necesidades */
+  overflow-y: auto;
+  padding-right: 16px; /* Agrega un padding derecho para compensar el ancho de la barra de desplazamiento */
+  box-sizing: content-box; 
+}
+
+
+.custom-border {
+  border: 1px solid black; /* Establece el borde de 1 píxel de ancho y sólido */
+  border-radius: 5px; /* Agrega esquinas redondeadas al borde */
+  padding: 10px; /* Agrega un espacio interno de 10 píxeles entre el borde y el contenido */
+}

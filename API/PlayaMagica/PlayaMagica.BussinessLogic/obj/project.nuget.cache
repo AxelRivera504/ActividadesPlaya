@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HSTf5V3wqUuOVSt++Y0rRt2hw+bVU2kiiTYskQybxQwJkAkkp8khTZWpwwYV2pW7zzQjUd1sGqExZTWALByYyQ==",
+  "dgSpecHash": "0gRoQcLXFIoXWiDrJitJaeBuWtbDfGmT3BCAMl74fZhc6D2+pwAvYTTJ+8j9pbrTVqYiW9imaOwVaxMhUhuCNw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Chris\\Documents\\GitHub\\ActividadesPlaya\\API\\PlayaMagica\\PlayaMagica.BussinessLogic\\PlayaMagica.BussinessLogic.csproj",
+  "projectFilePath": "C:\\Users\\Chris\\Desktop\\Temp\\Merge God final\\API\\PlayaMagica\\PlayaMagica.BussinessLogic\\PlayaMagica.BussinessLogic.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Chris\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\Chris\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

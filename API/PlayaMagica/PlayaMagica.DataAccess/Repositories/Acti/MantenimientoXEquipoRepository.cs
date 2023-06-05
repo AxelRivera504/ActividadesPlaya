@@ -12,17 +12,6 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
 {
     public class MantenimientoXEquipoRepository : IRepository<tbMantenimientoXEquipo>
     {
-        PlayaMagicaContext con = new PlayaMagicaContext();
-        public RequestStatus Delete(tbMantenimientoXEquipo item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public tbMantenimientoXEquipo Find(int? id)
-        {
-            throw new NotImplementedException();
-        }
-
         public RequestStatus Insert(tbMantenimientoXEquipo item)
         {
             using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
@@ -44,14 +33,23 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             return db.Query<tbMantenimientoXEquipo>(ScriptsDataBase.UDP_tbMantenimientoXEquipo_Select, null, commandType: CommandType.StoredProcedure);
         }
 
-        public IEnumerable<tbMantenimientoXEquipo> Reporte(DateTime fechaInicio,DateTime fechaFin)
+        public IEnumerable<tbMantenimientoXEquipo> Reporte(DateTime fechaInicio, DateTime fechaFin)
         {
-            
-           using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
-           var parametros = new DynamicParameters();
-           parametros.Add("@fechaInicio", fechaInicio, DbType.DateTime, ParameterDirection.Input);
-           parametros.Add("@fechaFin", fechaFin, DbType.DateTime, ParameterDirection.Input);
-           return db.Query<tbMantenimientoXEquipo>(ScriptsDataBase.UDP_tbMantenimientoXEquipo_Reporte, parametros, commandType: CommandType.StoredProcedure);
+
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@fechaInicio", fechaInicio, DbType.DateTime, ParameterDirection.Input);
+            parametros.Add("@fechaFin", fechaFin, DbType.DateTime, ParameterDirection.Input);
+            return db.Query<tbMantenimientoXEquipo>(ScriptsDataBase.UDP_tbMantenimientoXEquipo_Reporte, parametros, commandType: CommandType.StoredProcedure);
+        }
+        public RequestStatus Delete(tbMantenimientoXEquipo item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public tbMantenimientoXEquipo Find(int? id)
+        {
+            throw new NotImplementedException();
         }
 
         public RequestStatus Update(tbMantenimientoXEquipo item)

@@ -246,11 +246,6 @@ namespace PlayaMagica.DataAccess.Context
                 entity.Property(e => e.equi_UsuarioCreador_Nombre).HasMaxLength(100);
 
                 entity.Property(e => e.equi_UsuarioModificador_Nombre).HasMaxLength(100);
-
-                entity.Property(e => e.mantenimiento)
-                    .IsRequired()
-                    .HasMaxLength(12)
-                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<VW_tbEstadosCiviles>(entity =>
@@ -278,17 +273,19 @@ namespace PlayaMagica.DataAccess.Context
 
                 entity.ToView("VW_tbFactura", "Acti");
 
-                entity.Property(e => e.acti_Nombre).HasMaxLength(250);
+                entity.Property(e => e.fuct_FechaCreacion).HasColumnType("datetime");
 
-                entity.Property(e => e.clie_NombreCompleto)
-                    .HasMaxLength(601)
-                    .IsUnicode(false);
+                entity.Property(e => e.fuct_FechaModificacion).HasColumnType("datetime");
 
                 entity.Property(e => e.fuct_Isv).HasColumnType("decimal(8, 2)");
 
                 entity.Property(e => e.fuct_Subtotal).HasColumnType("decimal(8, 2)");
 
                 entity.Property(e => e.fuct_Total).HasColumnType("decimal(8, 2)");
+
+                entity.Property(e => e.fuct_UsuarioCreador_Nombre).HasMaxLength(100);
+
+                entity.Property(e => e.fuct_UsuarioModificador_Nombre).HasMaxLength(100);
             });
 
             modelBuilder.Entity<VW_tbMantenimiento>(entity =>

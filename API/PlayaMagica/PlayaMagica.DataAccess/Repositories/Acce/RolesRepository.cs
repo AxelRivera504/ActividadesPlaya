@@ -12,7 +12,7 @@ namespace PlayaMagica.DataAccess.Repositories.Acce
 {
     public class RolesRepository : IRepository<tbRoles, VW_tbRoles>
     {
-
+               
         public RequestStatus Delete(tbRoles item)
         {
             RequestStatus result = new RequestStatus();
@@ -20,8 +20,8 @@ namespace PlayaMagica.DataAccess.Repositories.Acce
             var parametros = new DynamicParameters();
 
             parametros.Add("@role_ID", item.role_ID, DbType.Int32, ParameterDirection.Input);
-            var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbRoles_Delete, parametros, commandType: CommandType.StoredProcedure);
-            result.CodeStatus = answer;
+            var answer = db.QueryFirst<string>(ScriptsDataBase.UDP_tbRoles_Delete, parametros, commandType: CommandType.StoredProcedure);
+            result.MessageStatus = answer;
             return result;
         }
 

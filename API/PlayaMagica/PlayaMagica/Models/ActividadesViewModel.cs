@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace PlayaMagica.Models
     public class ActividadesViewModel
     {
         public int acti_Id { get; set; }
+        [NotMapped]
         public string acti_Nombre { get; set; }
         public int? acti_Cupo { get; set; }
         public decimal? acti_Precio { get; set; }

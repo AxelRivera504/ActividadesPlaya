@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="login__content">
+    <img src="../../../../../assets/images/others/5431258.jpg" alt="login image" class="login__img">
+
+    <form class="login__form" [ngClass]="{ 'ng-submitted': submitted, 'needs-validation': submitted }" (ngSubmit)="onLoggedin($event)">
+      <div>
+        <h1 class="login__title">
+          <span>¡Bienvenido!</span>
+        </h1>
+        <p class="login__description">    
+          ¡Bienvenido a Playa Magíca! Por favor inicia sesión.
+        </p>
+      </div>
+
+      <div>
+        <div class="login__inputs">
+          <div>
+            <label for="" class="login__label">Email</label>
+            <input type="text" class="login__input form-control" id="exampleInputEmail1" #requried="ngModel" required placeholder="Nombre de usuario"
+            [(ngModel)]="usuario" name="usuario" [ngClass]="{ 'is-invalid': submitted && requried?.invalid }">
+            <div class="invalid-feedback" *ngIf="requried?.errors?.required && submitted">Nombre de usuario requerido</div>
+          </div>
+
+          <div>
+            <label for="" class="login__label">Contraseña</label>
+
+            <div class="login__box">
+              <input type="password" class="login__input form-control" id="exampleInputPassword1" #contra="ngModel" required autocomplete="current-password"
+              placeholder="Contraseña" name="password" [(ngModel)]="password" [ngClass]="{ 'is-invalid': submitted && contra?.invalid }">
+              <div class="invalid-feedback" *ngIf="contra?.errors?.required && submitted">Contraseña requerida</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="login__buttons text-center">
+          <button type="submit" class="login__button">Inicia sesión</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

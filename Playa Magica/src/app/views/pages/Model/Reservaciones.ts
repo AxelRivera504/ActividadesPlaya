@@ -1,0 +1,21 @@
+export class Reservaciones{
+      rese_Id!:number;
+      rese_Cantidad!:number;
+      acti_Id!:number;
+      rese_FechaReservacion!:Date;
+      rese_UsuarioCreador!:number;
+      rese_FechaCreacion!:Date
+      rese_UsuarioModificador!:number;
+      rese_FechaModificacion!:Date;
+      clie_id!:number;
+      acti_Nombre!:String;
+      acti_Precio!:number;
+      acti_ImgUrl!:String;
+      clie_NombreCompleto!:String; 
+      clie_DNI!:String;
+      clie_Email!:String;
+      play_Playa!:String;
+      dire_DireccionExacta!:String;
+      dept_Descripcion!:String;
+      muni_Descripcion!:String;
+}

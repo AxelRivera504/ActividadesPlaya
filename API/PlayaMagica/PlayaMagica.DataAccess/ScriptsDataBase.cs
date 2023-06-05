@@ -22,10 +22,6 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbMunicipios_Update = "Gral.UDP_tbMunicipios_EditarMunicipios";
         #endregion
 
-        #region Direcciones
-
-        #endregion
-
         #region TipoDePago
         public static string UDP_tbMetodosPago_Select = "Gral.UDP_tbMetodosPago_VW";
         public static string UDP_tbMetodosPago_Insert = "Gral.UDP_tbMetodosPago_InsertarMetodosPago";
@@ -93,6 +89,7 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbEncargados_Insert = "Acti.UDP_tbEncargados_Insert";
         public static string UDP_tbEncargados_Update = "Acti.UDP_tbEncargados_Update";
         public static string UDP_tbEncargados_Delete = "Acti.UDP_tbEncargados_Delete";
+        public static string UDP_tbEncargados_ddl = "Acce.UDP_tbUsuarios_DDLencargadosTieneusuario";
         #endregion
 
         #region Equipos
@@ -109,6 +106,7 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbActividades_Insert = "Acti.UDP_tbActividades_Insert";
         public static string UDP_tbActividades_Update = "Acti.UDP_tbActividades_Update";
         public static string UDP_tbActividades_Delete = "Acti.UDP_tbActividades_Delete";
+        public static string UDP_tbActividades_InfoActividad = "Acti.UDP_tbActividades_ActividadByReseId";
         #endregion
 
         #region Reservaciones
@@ -117,6 +115,10 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbReservaciones_Update = "Acti.UDP_tbReservaciones_Update";
         public static string UDP_tbReservaciones_Delete = "Acti.UDP_tbReservacion_Delete";
         public static string UDP_tbReservaciones_InsertExiste = "Acti.UDP_tbReservaciones_InsertExiste";
+        public static string UDP_tbReservaciones_ListarDatosReservacion = "Acti.UDP_tbReservacion_ListarInfoActiXRese";
+        public static string UPD_tbReservaciones_UpdateReservacionCliten = "Acti.UDP_tbReservacion_UpdateReservacion";
+        public static string UDP_tbReservaciones_EditarActividadExiste = "Acti.UDP_tbReservaciones_EditarActividadExiste";
+        public static string UDP_tbReservaciones_EditarActividadNoExiste = "Acti.UDP_tbReservaciones_EditarActividadNoExiste";
         #endregion
 
         #region Clientes
@@ -147,14 +149,21 @@ namespace PlayaMagica.DataAccess
         public static string UDP_tbFactura_Insert = "Acti.UDP_tbFactura_Insert";
         public static string UDP_tbFactura_Update = "Acti.UDP_tbFactura_Delete";
         public static string UDP_tbFactura_ListarFacturabyId = "Acti.UDP_tbFacturas_ListarInfoFactById";
+        public static string UDP_tbFactura_ListarIndex = "Acti.UDP_tbFactura_ListarFacturaIndex";
+        public static string UDP_tbFactura_VerificarFactura = "Acti.UDP_tbFactura_VerificarEstadoFactura";
+        public static string UDP_tbFactura_EditarFactura = "Acti.UDP_tbFactura_UpdateFactura";
         #endregion
 
         #region ClienteXReservacion
         public static string UDP_tbClienteXReservacion_Insert = "Acti.UDP_tbClienteXReservacion_Insertar";
+        public static string UDP_tbClienteXReservacion_ListByIdRese = "Acti.UDP_tbClienteXReservacion_ListarByIdReservacion";
+        public static string UDP_tbClienteXReservacion_DeleteClienteByIdRese = "Acti.UDP_tbClienteXReservacion_DeleteClienteByIdRese";
+        public static string UDP_tbClienteXReservacion_Sexo = "UDP_SexoXActividad_tbActividades";
         #endregion
 
         #region ActividadesXFecha
         public static string UDP_tbActividadesXFecha_VerificarCupos = "Acti.UDP_tbActividadesXFecha_VerificarCuposFecha";
+        public static string UDP_tbActividadesXFecha_Visitantes = "Acti_tbActividadesXFecha_ObtenerCantidadVisitantes";
         #endregion
 
         #region EquiposXActividades
@@ -166,6 +175,7 @@ namespace PlayaMagica.DataAccess
         public static string UDP_EncargadosXActividad_Insert = "Acti.UDP_tbEncargadosXActividad_Insert";
         public static string UDP_EncargadosXActividad_Delete = "Acti.UDP_tbEncargadosXActividad_Delete";
         public static string UDP_EncargadosXActividad = "Acti.UDP_tbEncargadosXActividad";
+        public static string ListarEncargadosById = "Acti.UDP_tbEncargadosXActividad_ListarEncargadosById";
         #endregion
 
         #endregion

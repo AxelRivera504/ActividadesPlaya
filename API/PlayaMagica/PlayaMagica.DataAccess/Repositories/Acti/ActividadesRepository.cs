@@ -65,6 +65,13 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             return result;
         }
 
+        public IEnumerable<tbActividades> ListarInfoActividadSelected(int id)
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@rese_Id", id, DbType.Int32, ParameterDirection.Input);
+            return db.Query<tbActividades>(ScriptsDataBase.UDP_tbActividades_InfoActividad, parametros, commandType: CommandType.StoredProcedure);
+        }
         public RequestStatus Delete(int id)
         {
             throw new NotImplementedException();
