@@ -1,0 +1,85 @@
+<div class="card">
+    <div class="card-header">      
+        <div class="card-title text-center my-0"><h4>Nueva Playa</h4></div>
+</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="form-group col-6">
+                <label>Playa:</label>
+                <input type="text" placeholder="Nombre de la playa" required class="form-control" name="playasModel.play_Playa" #playas="ngModel"
+                [(ngModel)]="playasModel.play_Playa" [ngClass]="{ 'is-invalid': submitted && !playasModel.play_Playa}">
+                <div class="invalid-feedback" *ngIf="submitted && !playasModel.play_Playa">Nombre requerido</div>
+            </div>
+            
+            <div class="form-group col-6 mt-0">
+                <label>Dirección:</label>
+                <div class="d-flex">
+                  <ng-select [(ngModel)]="playasModel.dire_Id" [appendTo]="'body'" placeholder="--Seleccione una opción--" name="playasModel.dire_Id"
+                    #Direccion="ngModel" required [ngClass]="{ 'input-invalid': submitted && !playasModel.dire_Id }" class="flex-grow-1">
+                    <ng-option *ngFor="let item of direcciones" [value]="item.dire_Id">{{item.dire_DireccionExacta}}</ng-option>
+                  </ng-select>
+                  <button class="btn btn-primary ml-2" (click)="openBasicModal(basicModal)">
+                    <i class="feather icon-plus"></i>
+                  </button>
+                </div>
+                <div class="input-invalid-text" *ngIf="submitted && !playasModel.dire_Id">Direccion requerida</div>
+              </div>
+              
+              
+
+              <div class="form-group col-6 mt-3">
+                <label>Imagen:</label>
+                <div class="col-12">
+                      <div class="dropzone" [dropzone]="configdropzone" [ngClass]="{'invalid-image': submitted && !playasModel.play_ImgUrl}" (error)="onUploadError($event)" (success)="onUploadSuccess($event)"></div>
+                      <div class="input-invalid-text" *ngIf="submitted && !playasModel.play_ImgUrl">Imagen requerida</div>
+                      <button class="btn btn-secondary mt-2" (click)="resetDropzoneUploads()">Borrar imagen</button>
+                </div> <!-- col -->
+              </div>
+              <div class="form-group col-12 mt-3 text-center">
+                <button class="btn btn-primary" (click)="Crear()"><i class="feather icon-save"></i>Guardar</button>
+              </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #basicModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Nueva Direccion</h5>
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+
+            <div class="form-group col-6">
+              <label>Departamento</label>
+              <ng-select [(ngModel)]="departamentoModel.dept_Id" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+              name="departamentoModel.dept_Id" #direcciones="ngModel" required [ngClass]="{ 'input-invalid': submitted1 && !departamentoModel.dept_Id}"
+              (ngModelChange)="onDepartamentoChange()"> 
+              <ng-option *ngFor="let item of departamentos" [value]="item.dept_Id">{{item.dept_Descripcion}}</ng-option>
+              </ng-select>
+                   <div class="input-invalid-text" *ngIf=" !departamentoModel.dept_Id && submitted1">El departamento es requerido</div>
+            </div>
+
+            <div class="form-group col-6">
+              <label>Municipio</label>
+              <ng-select [(ngModel)]="municipioModel.muni_Id" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+              name="municipioModel.muni_Id" #direcciones="ngModel" required [ngClass]="{ 'input-invalid': submitted1 && !municipioModel.muni_Id }">
+              <ng-option *ngFor="let item of municipioddl" [value]="item.muni_Id">{{item.muni_Descripcion}}</ng-option>
+            </ng-select>
+            <div class="input-invalid-text" *ngIf="!municipioModel.muni_Id && submitted1">El municipio es requerido</div>
+            </div>
+
+            <div class="form-group col-6 mt-3">
+              <label>Direccion Exacta</label>
+              <input type="text" class="form-control" [(ngModel)]="direccionesModel.dire_DireccionExacta" placeholder="Direccion Exacta" name="direccionesModel.dire_DireccionExacta"
+              #direcciones="ngModel" required [ngClass]="{ 'is-invalid': submitted1 && !direccionesModel.dire_DireccionExacta }" />
+              <div class="invalid-feedback" *ngIf="!direccionesModel.dire_DireccionExacta && submitted1">Nombre es requerido</div>
+            </div>
+            
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+      <button type="button" class="btn btn-primary" (click)="Guardar()">Guardar</button>
+    </div>
+  </ng-template>

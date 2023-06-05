@@ -20,5 +20,6 @@ namespace PlayaMagica.Entities.Entities
         public int? equi_UsuarioModificador { get; set; }
         public string equi_UsuarioModificador_Nombre { get; set; }
         public DateTime? equi_FechaModificacion { get; set; }
+        public string mantenimiento { get; set; }
     }
 }

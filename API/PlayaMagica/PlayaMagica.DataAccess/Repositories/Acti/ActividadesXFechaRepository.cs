@@ -24,10 +24,7 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             result.CodeStatus = answer;
             return result;
         }
-        public RequestStatus Delete(tbActividadesXFecha item)
-        {
-            throw new NotImplementedException();
-        }
+
         public IEnumerable<tbActividadesXFecha> CantidadVisitantesXfecha()
         {
             using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
@@ -43,8 +40,10 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             parametros.Add("@FechaFin", item.FechaFin, DbType.Date, ParameterDirection.Input);
             return db.Query<tbActividadesXFecha>(ScriptsDataBase.UDP_tbActividadesXFecha_Visitantes, parametros, commandType: CommandType.StoredProcedure);
         }
-
-
+        public RequestStatus Delete(tbActividadesXFecha item)
+        {
+            throw new NotImplementedException();
+        }
 
         public RequestStatus Delete(int id)
         {

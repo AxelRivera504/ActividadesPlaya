@@ -1,0 +1,99 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title text-center my-0">
+                <h3>Equipos</h3>  
+            <br>
+            <button button type="button" class="btn btn-primary" (click)="Crear()">
+                <i class="feather icon-plus"></i>
+                Nuevo
+            </button>
+        </div>
+        </div>
+        <div class="card-body">
+            <div class="table table-responsive">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" >
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Descripcion</th>
+                            <th>Uso actual</th>
+                            <th>Uso limite</th>
+                            <th>Mantenimiento</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of Equipos">
+                            <td>{{item.equi_Id}}</td>
+                            <td>{{item.equi_Descripcion}}</td>
+                            <td>{{item.equi_UsoActual}}</td>
+                            <td>{{item.equi_UsoLimite}}</td>
+                            <td>
+            <span [ngClass]="{
+  'badge': true,
+  'rounded-pill bg-success': item.mantenimiento === 'Requerido',
+  'rounded-pill bg-warning': item.mantenimiento === 'Recomendado',
+  'rounded-pill bg-danger': item.mantenimiento === 'No requerido'
+}">{{item.mantenimiento}}</span>
+                            </td>
+                            
+                            <td><button type="button" class="btn btn-warning btn-icon-text" (click)="Editar(item)">
+                                <i class="feather icon-edit "></i>
+                            </button>
+                                |
+                                <button type="button" class="btn btn-info btn-icon-text" (click)="Detalles(item)">
+                                    <i class="feather icon-list "></i>
+                                </button>
+                                |
+                                <button type="button" class="btn btn-danger btn-icon-text" (click)="openBasicModal3(basicModal3,item)">
+                                    <i class="feather icon-trash "></i>
+                                </button>
+                                |
+                                <button type="button" class="btn btn-success btn-icon-text" (click)="openBasicModal4(basicModal4,item)">
+                                    <i class="feather icon-settings "></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>    
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #basicModal3 let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Eliminar equipo</h5>
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <h4>¿Desea eliminar este registro?</h4>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+      <button type="button" class="btn btn-primary" (click)="Eliminar()">Eliminar</button>
+    </div>
+  </ng-template>
+
+  <ng-template #basicModal4 let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Mantenimiento del equipo</h5>
+      <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group col-12">
+        <label>Mantenimiento:</label>
+        <ng-select [(ngModel)]="MantenimientosModel.mant_Id" [appendTo]="'body'" placeholder="--Seleccione una opción--"
+        name="MantenimientosModel.mant_Id" required [ngClass]="{ 'input-invalid': submitted && !MantenimientosModel.mant_Id}">
+        <ng-option *ngFor="let item of Mantenimientos" [value]="item.mant_Id">{{item.mant_Descricion}}</ng-option>
+      </ng-select>
+      <div class="input-invalid-text" *ngIf="!MantenimientosModel.mant_Id && submitted">Descripcion de mantenimiento requerida</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Cerrar</button>
+      <button type="button" class="btn btn-primary" (click)="Mantenimiento()">Realizar</button>
+    </div>
+  </ng-template>
+

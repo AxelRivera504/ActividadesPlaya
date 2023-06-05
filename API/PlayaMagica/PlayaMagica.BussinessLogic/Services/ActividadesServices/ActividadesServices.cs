@@ -21,8 +21,8 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
         private readonly ActividadesXFechaRepository _actividadesXFechaRepository;
         private readonly FacturaRepository _facturaRepository;
         private readonly EquipoXActividadesRepository _equipoxactividadesrepository;
-        private readonly EquiposRepository _equiposrepository;
         private readonly EncargadosXActividadesRepository _encargadosXActividadesRepository;
+        private readonly MantenimientoXEquipoRepository _mantenimientoxequiporepository;
         public ActividadesServices(EncargadosXActividadesRepository encargadosXActividadesRepository,
             FacturaRepository facturaRepository ,
             ActividadesXFechaRepository actividadesXFechaRepository, 
@@ -35,7 +35,7 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             ClientesRepository clientesRepository, 
             PlayasRepository playasRepository,
             EquipoXActividadesRepository equipoxactividadesrepository,
-            EquiposRepository equiposrepository)
+            MantenimientoXEquipoRepository mantenimientoxequiporepository)
         {
             _clientesRepository = clientesRepository;
             _encargadosRepository = encargadosRepository;
@@ -48,8 +48,8 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             _actividadesXFechaRepository = actividadesXFechaRepository;
             _facturaRepository = facturaRepository;
             _equipoxactividadesrepository = equipoxactividadesrepository;
-            _equiposrepository = equiposrepository;
             _encargadosXActividadesRepository = encargadosXActividadesRepository;
+            _mantenimientoxequiporepository = mantenimientoxequiporepository;
         }
 
 
@@ -68,17 +68,17 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
         }
 
-        public IEnumerable<tbEncargados> ListarEncargadosddl()
+        public IEnumerable<VW_tbEncargados> EncargadosXActividad(int? id)
         {
             try
             {
-                var list = _encargadosRepository.ListarEncargadosddl();
+                var list = _encargadosRepository.EncargadosXActividad(id);
                 return list;
             }
             catch (Exception ex)
             {
                 string message = ex.Message;
-                return Enumerable.Empty<tbEncargados>();
+                return Enumerable.Empty<VW_tbEncargados>();
             }
         }
 
@@ -128,23 +128,20 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
         }
 
-
-        #endregion
-
-        #region EncargadosXActividades
-        public IEnumerable<tbEncargadosXActividades> ListarEncargadosById(int id)
+        public IEnumerable<tbEncargados> ListarEncargadosddl()
         {
             try
             {
-                var list = _encargadosXActividadesRepository.ListarEncargadosById(id);
+                var list = _encargadosRepository.ListarEncargadosddl();
                 return list;
             }
             catch (Exception ex)
             {
                 string message = ex.Message;
-                return Enumerable.Empty<tbEncargadosXActividades>();
+                return Enumerable.Empty<tbEncargados>();
             }
         }
+
         #endregion
 
         #region Clientes
@@ -407,6 +404,19 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
                 return resultado.Error(ex.Message);
             }
         }
+
+        public IEnumerable<tbActividades> ListarInfoActividadSelected(int id)
+        {
+            try
+            {
+                return _actividadesRepository.ListarInfoActividadSelected(id);
+            }
+            catch (Exception e)
+            {
+                string message = e.Message;
+                return Enumerable.Empty<tbActividades>();
+            }
+        }
         #endregion
 
         #region Equipos
@@ -446,6 +456,21 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             try
             {
                 var Equipos = _equipoRepository.InsertarEquipos(item);
+                return resultado.Ok(Equipos);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult EquipoMantenimiento(tbEquipos item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Equipos = _equipoRepository.EquipoMantenimiento(item);
                 return resultado.Ok(Equipos);
             }
             catch (Exception ex)
@@ -547,6 +572,65 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
                 return resultado.Error(ex.Message);
             }
         }
+
+        public IEnumerable<tbReservaciones> ListarDatosReservacionById(int id)
+        {
+            try
+            {
+                var list = _reservacionesRepository.ListarDatosReservacionById(id);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return Enumerable.Empty<tbReservaciones>();
+            }
+        }
+
+        public ServiceResult UpdateRegisterReservacion(tbReservaciones item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var reservaciones = _reservacionesRepository.UpdateRegisterReservacion(item);
+                return resultado.Ok(reservaciones);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult EditarReservacionExiste(tbReservaciones item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var reservaciones = _reservacionesRepository.EditarReservacionExiste(item);
+                return resultado.Ok(reservaciones);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult EditarReservacionNoExiste(tbReservaciones item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var reservaciones = _reservacionesRepository.EditarReservacionNoExiste(item);
+                return resultado.Ok(reservaciones);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
         #endregion
 
         #region ClientesXReservacion
@@ -565,7 +649,33 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
         }
 
+        public ServiceResult DeleteClientexReservacion(tbClienteXReservacion item)
+        {
+            var resultado = new ServiceResult();
 
+            try
+            {
+                var ClienteXReservacion = _clienteXReservacionRepository.DeleteClienteXReservacion(item);
+                return resultado.Ok(ClienteXReservacion);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public IEnumerable<tbClienteXReservacion> ListClientesByIdRese(int id)
+        {
+            try
+            {
+                return _clienteXReservacionRepository.ListClientesByIdRese(id);
+            }
+            catch (Exception e)
+            {
+                string message = e.Message;
+                return Enumerable.Empty<tbClienteXReservacion>();
+            }
+        }
 
         public IEnumerable<tbClienteXReservacion> clienteXReservacions(tbClienteXReservacion item)
         {
@@ -575,6 +685,7 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
             catch (Exception e)
             {
+                string message = e.Message;
                 return Enumerable.Empty<tbClienteXReservacion>();
             }
         }
@@ -595,7 +706,6 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
                 return resultado.Error(ex.Message);
             }
         }
-
 
         public IEnumerable<tbActividadesXFecha> ListarVisitantesXFecha()
         {
@@ -625,9 +735,24 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
                 return Enumerable.Empty<tbActividadesXFecha>();
             }
         }
+
+
         #endregion
 
         #region Facturas
+        public IEnumerable<tbFactura> ListarFacturaIndex()
+        {
+            try
+            {
+                return _facturaRepository.ListarFacturaIndex();
+            }
+            catch (Exception e)
+            {
+                string message = e.Message;
+                return Enumerable.Empty<tbFactura>();
+            }
+        }
+
         public ServiceResult InsertarFactura(tbFactura item)
         {
             var resultado = new ServiceResult();
@@ -635,6 +760,21 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             try
             {
                 var Factura = _facturaRepository.InsertarFactura(item);
+                return resultado.Ok(Factura);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult InsertarFacturaNoPaga(tbFactura item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Factura = _facturaRepository.InsertarFacturaNoPaga(item);
                 return resultado.Ok(Factura);
             }
             catch (Exception ex)
@@ -651,7 +791,142 @@ namespace PlayaMagica.BussinessLogic.Services.ActividadesServices
             }
             catch (Exception e)
             {
+                string message = e.Message;
                 return Enumerable.Empty<tbFactura>();
+            }
+        }
+
+        public ServiceResult VerificarFactura(tbFactura item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Factura = _facturaRepository.VerificarFactura(item);
+                return resultado.Ok(Factura);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult EditarFacturaNoPaga(tbFactura item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Factura = _facturaRepository.EditarFacturaNoPaga(item);
+                return resultado.Ok(Factura);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult EditarFactura(tbFactura item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var Factura = _facturaRepository.EditarFactura(item);
+                return resultado.Ok(Factura);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+        #endregion
+
+        #region EncargadosXActividades
+        public ServiceResult InsertarEncargadosXActivades(tbEncargadosXActividades item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var reservaciones = _encargadosXActividadesRepository.Insert(item);
+                return resultado.Ok(reservaciones);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public ServiceResult EliminarEncargadosXActivades(tbEncargadosXActividades item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var reservaciones = _encargadosXActividadesRepository.Delete(item);
+                return resultado.Ok(reservaciones);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public IEnumerable<tbEncargadosXActividades> ListarEncargadosById(int id)
+        {
+            try
+            {
+                var list = _encargadosXActividadesRepository.ListarEncargadosById(id);
+                return list;
+            }
+            catch (Exception ex)
+            {
+                string message = ex.Message;
+                return Enumerable.Empty<tbEncargadosXActividades>();
+            }
+        }
+        #endregion
+
+        #region MantenimientoXEquipo
+        public ServiceResult MantenimientoXEquipo(tbMantenimientoXEquipo item)
+        {
+            var resultado = new ServiceResult();
+
+            try
+            {
+                var reservaciones = _mantenimientoxequiporepository.Insert(item);
+                return resultado.Ok(reservaciones);
+            }
+            catch (Exception ex)
+            {
+                return resultado.Error(ex.Message);
+            }
+        }
+
+        public IEnumerable<tbMantenimientoXEquipo> Reporte(DateTime FechaInicio, DateTime FechaFin)
+        {
+            try
+            {
+                return _mantenimientoxequiporepository.Reporte(FechaInicio, FechaFin);
+            }
+            catch (Exception e)
+            {
+                string message = e.Message;
+                return Enumerable.Empty<tbMantenimientoXEquipo>();
+            }
+        }
+
+        public IEnumerable<tbMantenimientoXEquipo> MantenimientoXEquiposListado()
+        {
+            try
+            {
+                return _mantenimientoxequiporepository.List();
+            }
+            catch (Exception e)
+            {
+                string message = e.Message;
+                return Enumerable.Empty<tbMantenimientoXEquipo>();
             }
         }
         #endregion

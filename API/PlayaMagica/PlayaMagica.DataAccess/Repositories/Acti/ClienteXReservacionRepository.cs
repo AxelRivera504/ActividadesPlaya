@@ -27,6 +27,26 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             return result;
         }
 
+        public RequestStatus DeleteClienteXReservacion(tbClienteXReservacion item)
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            RequestStatus result = new RequestStatus();
+            var parametros = new DynamicParameters();
+            parametros.Add("@rese_Id", item.rese_Id, DbType.Int32, ParameterDirection.Input);
+            var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbClienteXReservacion_DeleteClienteByIdRese, parametros, commandType: CommandType.StoredProcedure);
+
+            result.CodeStatus = answer;
+            return result;
+        }
+
+        public IEnumerable<tbClienteXReservacion> ListClientesByIdRese(int id)
+        {
+            using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
+            var parametros = new DynamicParameters();
+            parametros.Add("@rese_Id", id, DbType.Int32, ParameterDirection.Input);
+            return db.Query<tbClienteXReservacion>(ScriptsDataBase.UDP_tbClienteXReservacion_ListByIdRese, parametros, commandType: CommandType.StoredProcedure);
+        }
+
         public IEnumerable<tbClienteXReservacion> SexoClientes(tbClienteXReservacion item)
         {
             using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
@@ -34,8 +54,6 @@ namespace PlayaMagica.DataAccess.Repositories.Acti
             parametros.Add("@acti_Id", item.acti_Id, DbType.Int32, ParameterDirection.Input);
             return db.Query<tbClienteXReservacion>(ScriptsDataBase.UDP_tbClienteXReservacion_Sexo, parametros, commandType: CommandType.StoredProcedure);
         }
-
-
         public RequestStatus Delete(tbClienteXReservacion item)
         {
             throw new NotImplementedException();

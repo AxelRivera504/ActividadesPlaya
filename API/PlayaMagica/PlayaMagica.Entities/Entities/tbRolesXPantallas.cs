@@ -20,7 +20,6 @@ namespace PlayaMagica.Entities.Entities
         public DateTime? roleXpant_FechaCreacion { get; set; }
         public int? roleXpant_UsuarioModificador { get; set; }
         public DateTime? roleXpant_FechaModificacion { get; set; }
-
         public virtual tbPantallas pant { get; set; }
         public virtual tbRoles role { get; set; }
         public virtual tbUsuarios roleXpant_UsuarioCreadorNavigation { get; set; }

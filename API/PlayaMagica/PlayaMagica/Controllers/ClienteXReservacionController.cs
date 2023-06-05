@@ -25,13 +25,26 @@ namespace PlayaMagica.Controllers
 
         [HttpPost("InsertarClienteXReservacion")]
         public IActionResult InsertarClienteXReservacion(ClienteXReservacionViewModel item)
-         {
+          {
             var ClienteXReservacion = _mapper.Map<tbClienteXReservacion>(item);
             var respuesta = _actividadesServices.InsertarClienteXReservacion(ClienteXReservacion);
             return Ok(respuesta);
         }
 
+        [HttpPost("DeleteClientexReservacion")]
+        public IActionResult DeleteClientexReservacion(ClienteXReservacionViewModel item)
+        {
+            var ClienteXReservacion = _mapper.Map<tbClienteXReservacion>(item);
+            var respuesta = _actividadesServices.DeleteClientexReservacion(ClienteXReservacion);
+            return Ok(respuesta);
+        }
 
+        [HttpGet("ListClientesByIdRese{id}")]
+        public IActionResult ListClientesByIdRese(int id)
+        {
+            var listado = _actividadesServices.ListClientesByIdRese(id);
+            return Ok(listado);
+        }
 
         [HttpPost("ClientesXactividad")]
         public IActionResult clientesXactividad(ClienteXReservacionViewModel item)
@@ -41,8 +54,5 @@ namespace PlayaMagica.Controllers
             var respuesta = _actividadesServices.clienteXReservacions(listado);
             return Ok(respuesta);
         }
-
-
-
     }
 }

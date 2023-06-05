@@ -13,10 +13,23 @@ namespace PlayaMagica.Entities.Entities
         public string acti_Nombre { get; set; }
         public int clre_Id { get; set; }
         public int? clie_Id { get; set; }
-        public int? Num_Masculino { get; set; }
-        public int? Num_Femenino  { get; set; }
-        public int acti_Id { get; set; }
         public int? rese_Id { get; set; }
+        [NotMapped]
+        public int? Num_Masculino { get; set; }
+        [NotMapped]
+        public int? Num_Femenino { get; set; }
+        [NotMapped]
+        public string clie_Nombres { get; set; }
+        [NotMapped]
+        public string clie_Apellidos { get; set; }
+        [NotMapped]
+        public string clie_DNI { get; set; }
+        [NotMapped]
+        public string clie_Email { get; set; }
+        [NotMapped]
+        public string clie_NombreCompleto { get; set; }
+        [NotMapped]
+        public int acti_Id { get; set; }
         public bool? rese_OwnerPayy { get; set; }
         public bool? clre_Estado { get; set; }
         public int? clre_UsuarioCreador { get; set; }

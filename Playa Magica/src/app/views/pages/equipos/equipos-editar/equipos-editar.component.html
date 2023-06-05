@@ -1,0 +1,48 @@
+<div class="card">
+    <div class="card-header text-center"><h3>Editar Equipo</h3></div>
+    <div class="card-body">
+        <div class="row">
+            <div class="form-group col-6 mt-3">
+                <label>Nombre:</label>
+                <input type="text" class="form-control" required placeholder="Descripcion del equipo" name="equiposModel.equi_Descripcion"
+                [(ngModel)]="equiposModel.equi_Descripcion" [ngClass]="{ 'is-invalid': submitted && !equiposModel.equi_Descripcion}" #Equipos="ngModel"/>
+                <div class="input-invalid-text" *ngIf="submitted && !equiposModel.equi_Descripcion">Nombre requerido</div>
+            </div>
+    
+            <div class="form-group col-6 mt-3">
+                <label>Uso Limite:</label>
+                <input type="number" class="form-control" required placeholder="Uso limite del equipo" name="equiposModel.equi_UsoLimite"
+                [(ngModel)]="equiposModel.equi_UsoLimite" [ngClass]="{ 'is-invalid': submitted && !equiposModel.equi_UsoLimite}" #Equipos="ngModel"/>
+                <div class="input-invalid-text" *ngIf="submitted && !equiposModel.equi_UsoLimite">Uso Limite requerido</div>
+            </div>
+    
+            <div class="form-group col-6 mt-3">
+                <div class="card" [ngClass]="{'img': imgchanging}">
+                    <div class="row mt-3">
+                            <img [src]="equiposModel.equi_ImgUrL" class="card-img-top custom-img" alt="...">
+                      <div class="form-group col-6">
+                        <button class="btn btn-info mt-3" [ngClass]="{'img': imgchanging}" (click)="imgEdit()">Cambiar imagen</button>
+                      </div>
+                    </div>           
+                </div>
+
+             <div class="col-12 mt-3" [ngClass]="{'img': !imgchanging}">
+                <label>Imagen: </label>
+                <div class="col-12">
+                    <div class="dropzone" [dropzone]="configdropzone" [ngClass]="{'invalid-image': submitted && !equiposModel.equi_ImgUrL}" (error)="onUploadError($event)" (success)="onUploadSuccess($event)"></div>
+                    <div class="input-invalid-text" *ngIf="submitted && !equiposModel.equi_ImgUrL">Imagen requerida</div>
+                               <!-- <button class="btn btn-danger mt-2"  (click)="resetDropzoneUploads()">Borrar imagen</button> -->
+                               <button class="btn btn-secondary mt-2" (click)="imgEdit()">Cancelar</button>
+                </div>
+             </div>
+            </div>
+
+            <div class="form-group col-12 mt-3 text-center">
+                <button type="button" class="btn btn-primary mt-3 me-3" (click)="Regresar()">
+                    <i class="feather icon-arrow-left"></i>Regresar
+                </button>
+                <button class="btn btn-primary mt-3 me-3" (click)="Guardar()"><i class="feather icon-save"></i>Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>

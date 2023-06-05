@@ -10,6 +10,8 @@ namespace PlayaMagica.Entities.Entities
     {
         public int fuct_Id { get; set; }
         public int? rese_Id { get; set; }
+        public string clie_NombreCompleto { get; set; }
+        public string acti_Nombre { get; set; }
         public decimal? fuct_Subtotal { get; set; }
         public decimal? fuct_Isv { get; set; }
         public decimal? fuct_Total { get; set; }

@@ -43,6 +43,5 @@ namespace PlayaMagica.Controllers
             var list = _actividadesServices.ListarVisitantesXFecha(actividadesXFecha);
             return Ok(list);
         }
-
     }
 }

@@ -44,7 +44,7 @@ namespace PlayaMagica.DataAccess.Repositories.Acce
             parametros.Add("@enca_ID", item.enca_ID, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@role_ID", item.role_ID, DbType.Int32, ParameterDirection.Input);
             parametros.Add("@usua_UsuarioCreador", item.usua_UsuarioCreador, DbType.Int32, ParameterDirection.Input);
-
+            
             var answer = db.QueryFirst<int>(ScriptsDataBase.UDP_tbUsuarios_Insert, parametros, commandType: CommandType.StoredProcedure);
 
             result.CodeStatus = answer;
@@ -73,7 +73,6 @@ namespace PlayaMagica.DataAccess.Repositories.Acce
 
         public RequestStatus Update(tbUsuarios item)
         {
-
             using var db = new SqlConnection(PlayaMagicaContext.ConnectionString);
             RequestStatus result = new RequestStatus();
             var parametros = new DynamicParameters();

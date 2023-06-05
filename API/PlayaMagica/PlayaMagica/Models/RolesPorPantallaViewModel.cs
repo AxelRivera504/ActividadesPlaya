@@ -8,7 +8,6 @@ namespace PlayaMagica.Models
 {
     public class RolesPorPantallaViewModel
     {
-
         public int roleXpant_ID { get; set; }
         public int? role_ID { get; set; }
         public int? pant_ID { get; set; }
