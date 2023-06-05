@@ -122,4 +122,8 @@ export class ReporteFiltradoComponent implements OnInit {
     // Mostrar el PDF en el visor
     this.pdfViewer.nativeElement.src = url;
   }
+
+  Regresar(){
+    this.router.navigate(["/reporte"])
+  }
 }

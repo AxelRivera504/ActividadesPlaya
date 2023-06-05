@@ -29,11 +29,15 @@
                             <td>{{item.equi_Descripcion}}</td>
                             <td>{{item.equi_UsoActual}}</td>
                             <td>{{item.equi_UsoLimite}}</td>
-                            <td [ngClass]="{
-                                'epa': item.mantenimiento === 'Requerido',
-                                'mmm': item.mantenimiento === 'Recomendado',
-                                'nice': item.mantenimiento === 'No requerido'
-                              }">{{item.mantenimiento}}</td>
+                            <td>
+            <span [ngClass]="{
+  'badge': true,
+  'rounded-pill bg-success': item.mantenimiento === 'Requerido',
+  'rounded-pill bg-warning': item.mantenimiento === 'Recomendado',
+  'rounded-pill bg-danger': item.mantenimiento === 'No requerido'
+}">{{item.mantenimiento}}</span>
+                            </td>
+                            
                             <td><button type="button" class="btn btn-warning btn-icon-text" (click)="Editar(item)">
                                 <i class="feather icon-edit "></i>
                             </button>
